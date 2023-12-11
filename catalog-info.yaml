@@ -1,0 +1,20 @@
+# For more information about the available options please visit: http://go/backstage (VPN required)
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  annotations:
+    github.com/project-slug: Unity-Technologies/a11y-public-sample
+  name: a11y-public-sample
+  description: "Sample project using the Unity Accessibility APIs"
+  labels:
+    costcenter: "5022"
+  tags:
+    - planned-public
+  links:
+    - url: https://unity.slack.com/messages/C0546MR0NHF/
+      title: "#devs-accessibility"
+      icon: chat
+spec:
+  type: other
+  lifecycle: production
+  owner: unity-technologies/accessibility

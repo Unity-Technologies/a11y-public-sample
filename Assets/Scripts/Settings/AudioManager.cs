@@ -46,7 +46,7 @@ namespace Unity.Samples.LetterSpell
 
             audioPlayingStatusChanged?.Invoke(m_MusicSource);
 
-            Invoke("PlayBackgroundMusic", 3f);
+            Invoke(nameof(PlayBackgroundMusic), 3f);
         }
 
         /// <summary>

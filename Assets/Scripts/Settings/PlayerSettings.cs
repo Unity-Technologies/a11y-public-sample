@@ -267,7 +267,7 @@ namespace Unity.Samples.LetterSpell
 
         void OnFontScaleValueChanged(float fontScale)
         {
-            string fontScaleText = fontScale.ToString("0.00");
+            var fontScaleText = fontScale.ToString("0.00");
 
             fontScaleAccessibleElement.value = fontScaleText;
             fontScaleValue.text = fontScaleText;

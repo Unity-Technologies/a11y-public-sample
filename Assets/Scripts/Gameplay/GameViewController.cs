@@ -253,8 +253,8 @@ namespace Unity.Samples.LetterSpell
             }
 
             // If we reach this code, it means we're dragging the card.
-            int selectedCardIndex = m_AccessibilitySelectedCard.transform.GetSiblingIndex();
-            int focusedCardIndex = m_AccessibilityFocusedCard.transform.GetSiblingIndex();
+            var selectedCardIndex = m_AccessibilitySelectedCard.transform.GetSiblingIndex();
+            var focusedCardIndex = m_AccessibilityFocusedCard.transform.GetSiblingIndex();
 
             // Move the card to the new position.
             if (selectedCardIndex > focusedCardIndex)
@@ -307,8 +307,8 @@ namespace Unity.Samples.LetterSpell
                     
                     // Add the node count to the element ID to match the ID of the node in the refreshed hierarchy,
                     // ensuring consistent focus even after rebuilding.
-                    int nodeToFocusId = element.node.id + AccessibilityManager.hierarchy.rootNodes.Count;
-                    nodeToFocusId += (shouldMoveLeft ? -count : count);
+                    var nodeToFocusId = element.node.id + AccessibilityManager.hierarchy.rootNodes.Count;
+                    nodeToFocusId += shouldMoveLeft ? -count : count;
 
                     this.DelayFocusOnNode(nodeToFocusId);   
                 }

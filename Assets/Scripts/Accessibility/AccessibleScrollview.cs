@@ -142,7 +142,7 @@ namespace Unity.Samples.Accessibility
 
         IEnumerator SmoothScroll(Vector2 targetPosition)
         {
-            float time = 0;
+            var time = 0f;
             var startPosition = m_ScrollRect.normalizedPosition;
 
             while (time < k_ScrollDuration)

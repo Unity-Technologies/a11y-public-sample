@@ -34,7 +34,7 @@ namespace Unity.Samples.Accessibility
                 }
 
                 m_PlaybackTime = value;
-                int nextIndex = -1;
+                var nextIndex = -1;
 
                 // Find the next item.
                 for (var i = 0; i < subtitle.items.Count; i++)

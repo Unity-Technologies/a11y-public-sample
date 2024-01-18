@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Unity.Samples.LetterSpell
 {
-    public class MusicManager : MonoBehaviour
+    public class AudioManager : MonoBehaviour
     {
-        public static MusicManager instance;
+        public static AudioManager instance;
 
         public AudioClip backgroundMusic;
         public AudioClip moveTileEffect;

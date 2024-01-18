@@ -79,9 +79,9 @@ namespace Unity.Samples.LetterSpell
 
             if (gameplay.IsShowingLastWord())
             {
-                if (MusicManager.instance != null)
+                if (AudioManager.instance != null)
                 {
-                    MusicManager.instance.PlayResult(gameplay.reorderedWordCount == gameplay.words.Count);
+                    AudioManager.instance.PlayResult(gameplay.reorderedWordCount == gameplay.words.Count);
                 }
 
                 gameplay.StopGame();

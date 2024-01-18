@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;
 
-public class TextStyleManager : MonoBehaviour
+public class FontManager : MonoBehaviour
 {
     public TMP_FontAsset defaultFont;
     public TMP_FontAsset boldFont;

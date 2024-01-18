@@ -309,9 +309,9 @@ namespace Unity.Samples.LetterSpell
 
                 word[newIndex] = tmp;
 
-                if (MusicManager.instance != null)
+                if (AudioManager.instance != null)
                 {
-                    MusicManager.instance.PlayMoveTile();
+                    AudioManager.instance.PlayMoveTile();
                 }
             }
         }

@@ -42,22 +42,22 @@ namespace Unity.Samples.Accessibility
         
         void Start()
         {
-            MusicManager.audioPlayingStatusChanged += MusicManagerOnAudioPlayingStatusChanged;
+            AudioManager.audioPlayingStatusChanged += OnAudioPlayingStatusChanged;
 
             // Create a map of audio clip names to subtitles.
-            m_SubtitleMap.Add(MusicManager.instance.welcomeEffect.name, subtitles[0]);
-            m_SubtitleMap.Add(MusicManager.instance.successEffect.name, subtitles[1]);
-            m_SubtitleMap.Add(MusicManager.instance.failureEffect.name, subtitles[2]);
+            m_SubtitleMap.Add(AudioManager.instance.welcomeEffect.name, subtitles[0]);
+            m_SubtitleMap.Add(AudioManager.instance.successEffect.name, subtitles[1]);
+            m_SubtitleMap.Add(AudioManager.instance.failureEffect.name, subtitles[2]);
         }
 
         void OnDestroy()
         {
             s_Instance = null;
-            MusicManager.audioPlayingStatusChanged -= MusicManagerOnAudioPlayingStatusChanged;
+            AudioManager.audioPlayingStatusChanged -= OnAudioPlayingStatusChanged;
         }
 
         // This method displays the corresponding subtitle when an audio clip plays.
-        void MusicManagerOnAudioPlayingStatusChanged(AudioSource audioSource)
+        void OnAudioPlayingStatusChanged(AudioSource audioSource)
         {
             if (!AccessibilitySettings.isClosedCaptioningEnabled) return;
 

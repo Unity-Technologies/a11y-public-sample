@@ -218,9 +218,9 @@ namespace Unity.Samples.LetterSpell
         {
             PlayerPrefs.SetFloat(musicPreference, value);
 
-            if (MusicManager.instance != null)
+            if (AudioManager.instance != null)
             {
-                MusicManager.instance.SetMusicVolume(value);
+                AudioManager.instance.SetMusicVolume(value);
             }
         }
 

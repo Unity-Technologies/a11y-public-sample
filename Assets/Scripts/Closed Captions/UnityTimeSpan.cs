@@ -21,7 +21,7 @@ namespace Unity.Samples.Accessibility
 
         public static UnityTimeSpan FromMilliseconds(int ms)
         {
-            return new UnityTimeSpan() {m_Milliseconds = ms};
+            return new UnityTimeSpan { m_Milliseconds = ms };
         }
 
         public override string ToString()

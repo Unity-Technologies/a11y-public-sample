@@ -14,11 +14,9 @@ namespace Unity.Samples.Accessibility
         public UIDocument surface;
         public SubtitleDisplaySettings displaySettings;
 
-
         ListView m_SubtitleView;
         VisualElement m_CachedRootVisualElement;
         SubtitlePlayer m_CachedPlayer;
-
 
         public SubtitleDisplaySettings currentDisplaySettings
         {

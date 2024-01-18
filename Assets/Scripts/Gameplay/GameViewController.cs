@@ -144,7 +144,6 @@ namespace Unity.Samples.LetterSpell
                 var element = card.AddComponent<AccessibleElement>();
                 element.label = letterCardModel.letter.ToString();
                 element.hint = "Double tap to start moving.";
-                
                 element.selected += OnLetterCardSelected;
             }
 

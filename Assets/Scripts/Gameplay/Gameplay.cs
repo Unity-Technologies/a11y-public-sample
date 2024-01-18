@@ -154,7 +154,6 @@ namespace Unity.Samples.LetterSpell
             }
 
             state = State.Stopped;
-
             SetCurrentWordIndex(-1);
 
             gameEnded?.Invoke();
@@ -278,13 +277,11 @@ namespace Unity.Samples.LetterSpell
             }
 
             MoveLetter(m_CurrentWordState, oldIndex, newIndex);
-
             wordReordered?.Invoke(oldIndex, newIndex);
 
             if (IsWordComplete())
             {
                 reorderedWordCount++;
-
                 wordReorderingCompleted?.Invoke();
             }
 

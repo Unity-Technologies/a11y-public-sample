@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace Unity.Samples.LetterSpellEditor
 {
-    
     [ScriptedImporter(1, "lsdata")]
     public class LSDataImporter : ScriptedImporter
     {

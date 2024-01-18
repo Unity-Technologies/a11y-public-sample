@@ -262,7 +262,6 @@ namespace Unity.Samples.LetterSpell
                 closedCaptionValue.text = k_SettingOff;
             }
             closedCaptionAccessibleElement.SetNodeProperties();
-            
         }
 
         void OnFontScaleValueChanged(float fontScale)

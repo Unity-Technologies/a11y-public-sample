@@ -40,7 +40,7 @@ namespace Unity.Samples.Accessibility
         }
         
         protected override void BindToControl()
-        { 
+        {
             if (m_Slider != null)
             {
                 m_Slider.onValueChanged.AddListener(UpdateValue);

@@ -2,6 +2,8 @@
 
 This sample code implements the game LetterSpell, which is compatible with screen reader use in mobile platforms. It demonstrates how to convert UI made with Unity, using uGUI (i.e. with a Canvas component), into data compatible with screen reader usage.
 
+Thanks for checking out this sample!
+
 * Requires Unity 2023.3.0b3 and above.
 
 ## Supported Platforms

@@ -13,10 +13,10 @@ namespace Unity.Samples.Accessibility
     /// </summary>
     public class SrtParser
     {
-        readonly string[] k_Delimiters = {"-->", "- >", "->"};
-        readonly string k_CannotReadErrorFormat = "Stream must be readable and seekable: readable: {0} - seekable: {1}";
-        readonly string k_InvalidSrtFormatError = "Stream is not in a valid Srt format";
-        readonly string k_NoSrtPartFoundError = "Parsing as srt returned no srt part.";
+        readonly string[] k_Delimiters = { "-->", "- >", "->" };
+        const string k_CannotReadErrorFormat = "Stream must be readable and seekable: readable: {0} - seekable: {1}";
+        const string k_InvalidSrtFormatError = "Stream is not in a valid Srt format";
+        const string k_NoSrtPartFoundError = "Parsing as srt returned no srt part.";
 
         /// <summary>
         /// Parses the specified stream to a srt file content and returns a list of subtitle items.

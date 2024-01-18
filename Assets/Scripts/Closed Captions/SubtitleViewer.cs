@@ -75,19 +75,21 @@ namespace Unity.Samples.Accessibility
 
             if (currentDisplaySettings.font)
             {
-                m_SubtitleView.style.unityFontDefinition = new FontDefinition { fontAsset = displaySettings.font };
+                m_SubtitleView.style.unityFontDefinition = new FontDefinition
+                {
+                    fontAsset = displaySettings.font
+                };
             }
 
             m_SubtitleView.style.fontSize = currentDisplaySettings.fontSize;
             m_SubtitleView.style.unityFontStyleAndWeight = currentDisplaySettings.fontStyle;
-            if (currentDisplaySettings.useDropShadow)
-            {
-                m_SubtitleView.style.textShadow = new TextShadow { color = currentDisplaySettings.dropShadowColor, offset = new Vector2(5, 5) };
-            }
-            else
-            {
-                m_SubtitleView.style.textShadow = new TextShadow();
-            }
+            m_SubtitleView.style.textShadow = currentDisplaySettings.useDropShadow ?
+                new TextShadow
+                {
+                    color = currentDisplaySettings.dropShadowColor,
+                    offset = new Vector2(5, 5)
+                } :
+                new TextShadow();
         }
 
         void ApplyStyle(Label label)

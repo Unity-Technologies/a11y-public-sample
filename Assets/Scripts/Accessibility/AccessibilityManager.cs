@@ -378,7 +378,12 @@ namespace Unity.Samples.Accessibility
                 // If we added a node to the hierarchy, push it to the hierarchy and set its properties.
                 if (node != null)
                 {
-                    var item = new HierarchyItem { transform = elementObject, node = node };
+                    var item = new HierarchyItem
+                    {
+                        transform = elementObject,
+                        node = node
+                    };
+
                     hierarchyStack.Push(item);
 
                     SetNodeProperties(node, element);

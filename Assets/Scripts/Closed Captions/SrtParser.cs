@@ -86,7 +86,9 @@ namespace Unity.Samples.Accessibility
 
                     subtitleItem.text = text;
 
-                    if ((subtitleItem.startTime.Milliseconds != 0 || subtitleItem.endTime.Milliseconds != 0) && !string.IsNullOrEmpty(subtitleItem.text))
+                    if ((subtitleItem.startTime.Milliseconds != 0
+                            || subtitleItem.endTime.Milliseconds != 0)
+                        && !string.IsNullOrEmpty(subtitleItem.text))
                     {
                         // Parsing succeeded.
                         subtitleItems.Add(subtitleItem);

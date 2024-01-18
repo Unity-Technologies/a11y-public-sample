@@ -240,7 +240,9 @@ namespace Unity.Samples.LetterSpell
 
         void MoveSelectedCard()
         {
-            if (!AssistiveSupport.isScreenReaderEnabled || m_AccessibilitySelectedCard == null || m_AccessibilityFocusedCard == null)
+            if (!AssistiveSupport.isScreenReaderEnabled
+                || m_AccessibilitySelectedCard == null
+                || m_AccessibilityFocusedCard == null)
             {
                 return;
             }

@@ -16,6 +16,7 @@ namespace Unity.Samples.LetterSpell
         AudioSource m_MusicSource;
         AudioSource m_MoveTileSource;
         AudioSource m_ResultSource;
+
         public static event Action<AudioSource> audioPlayingStatusChanged;
 
         void Awake()
@@ -42,7 +43,9 @@ namespace Unity.Samples.LetterSpell
         {
             m_MusicSource.clip = welcomeEffect;
             m_MusicSource.Play();
+
             audioPlayingStatusChanged?.Invoke(m_MusicSource);
+
             Invoke("PlayBackgroundMusic", 3f);
         }
         
@@ -51,7 +54,9 @@ namespace Unity.Samples.LetterSpell
         {
             m_MusicSource.clip = backgroundMusic;
             m_MusicSource.loop = true;
+
             m_MusicSource.Play();
+
             audioPlayingStatusChanged?.Invoke(m_MusicSource);
         }
 
@@ -73,6 +78,7 @@ namespace Unity.Samples.LetterSpell
                 m_ResultSource.clip = successEffect;
                 m_ResultSource.volume = PlayerPrefs.GetFloat(PlayerSettings.soundEffectsPreference, 0.5f);
                 m_ResultSource.Play();
+
                 audioPlayingStatusChanged?.Invoke(m_ResultSource);
             }
             else
@@ -80,6 +86,7 @@ namespace Unity.Samples.LetterSpell
                 m_ResultSource.clip = failureEffect;
                 m_ResultSource.volume = PlayerPrefs.GetFloat(PlayerSettings.soundEffectsPreference, 0.5f);
                 m_ResultSource.Play();
+
                 audioPlayingStatusChanged?.Invoke(m_ResultSource);
             }
         }

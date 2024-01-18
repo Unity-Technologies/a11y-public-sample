@@ -11,8 +11,10 @@ namespace Sample.Controls
     interface ITweenValue
     {
         void TweenValue(float floatPercentage);
+
         bool ignoreTimeScale { get; }
         float duration { get; }
+
         bool ValidTarget();
     }
 
@@ -71,7 +73,9 @@ namespace Sample.Controls
         public void TweenValue(float floatPercentage)
         {
             if (!ValidTarget())
+            {
                 return;
+            }
 
             var newColor = Color.Lerp(m_StartColor, m_TargetColor, floatPercentage);
 
@@ -85,6 +89,7 @@ namespace Sample.Controls
             {
                 newColor.a = m_StartColor.a;
             }
+
             m_Target.Invoke(newColor);
         }
 
@@ -153,7 +158,9 @@ namespace Sample.Controls
         public void TweenValue(float floatPercentage)
         {
             if (!ValidTarget())
+            {
                 return;
+            }
 
             var newValue = Mathf.Lerp(m_StartValue, m_TargetValue, floatPercentage);
             m_Target.Invoke(newValue);
@@ -195,7 +202,9 @@ namespace Sample.Controls
         static IEnumerator Start(T tweenInfo)
         {
             if (!tweenInfo.ValidTarget())
+            {
                 yield break;
+            }
 
             var elapsedTime = 0f;
             while (elapsedTime < tweenInfo.duration)
@@ -205,6 +214,7 @@ namespace Sample.Controls
                 tweenInfo.TweenValue(percentage);
                 yield return null;
             }
+
             tweenInfo.TweenValue(1f);
         }
 

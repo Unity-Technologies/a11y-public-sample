@@ -34,12 +34,13 @@ namespace Unity.Samples.Accessibility
                 var message = string.Format(k_CannotReadErrorFormat, srtStream.CanSeek, srtStream.CanSeek);
                 throw new ArgumentException(message);
             }
-            
+
             srtStream.Position = 0; // seek the beginning of the stream
+
             var reader = new StreamReader(srtStream, encoding, true);
             var items = new List<SubtitleItem>();
             var srtSubParts = GetSrtSubtitleParts(reader).ToList();
-            
+
             if (srtSubParts.Any())
             {
                 foreach (var srtSubPart in srtSubParts)
@@ -52,7 +53,7 @@ namespace Unity.Samples.Accessibility
                     var item = new SubtitleItem();
                     var text = "";
                     var timecodeRead = false;
-                    
+
                     for (var i = 1 /*skip the item number*/; i < lines.Count; ++i)
                     {
                         var line = lines[i];
@@ -62,7 +63,10 @@ namespace Unity.Samples.Accessibility
                             var success = TryParseTimecodeLine(line, out var startTc, out var endTc);
 
                             if (!success)
+                            {
                                 continue;
+                            }
+
                             item.startTime = UnityTimeSpan.FromMilliseconds(startTc);
                             item.endTime = UnityTimeSpan.FromMilliseconds(endTc);
                             timecodeRead = true;
@@ -71,7 +75,10 @@ namespace Unity.Samples.Accessibility
                         {
                             // Add new line after each line read
                             if (!string.IsNullOrEmpty(text))
+                            {
                                 text += "\n";
+                            }
+
                             text += line;
                         }
                     }
@@ -111,7 +118,7 @@ namespace Unity.Samples.Accessibility
             endTc = ParseSrtTimecode(parts[1]);
             return true;
         }
-        
+
         IEnumerable<string> GetSrtSubtitleParts(TextReader reader)
         {
             string line;
@@ -123,11 +130,12 @@ namespace Unity.Samples.Accessibility
                 {
                     // return only if not empty
                     var res = sb.ToString().TrimEnd();
-                    
+
                     if (!string.IsNullOrEmpty(res))
                     {
                         yield return res;
                     }
+
                     sb = new StringBuilder();
                 }
                 else
@@ -152,7 +160,10 @@ namespace Unity.Samples.Accessibility
         {
             var match = Regex.Match(timecodeToParse, "[0-9]+:[0-9]+:[0-9]+([,\\.][0-9]+)?");
 
-            if (!match.Success) return -1;
+            if (!match.Success)
+            {
+                return -1;
+            }
             
             timecodeToParse = match.Value;
                 

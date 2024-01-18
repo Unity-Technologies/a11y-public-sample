@@ -47,6 +47,7 @@ namespace Unity.Samples.Accessibility
                             alignItems = Align.Center
                         }
                     };
+
                     var label = new Label();
                     itemContainer.Add(label);
                     return itemContainer;
@@ -64,14 +65,19 @@ namespace Unity.Samples.Accessibility
         void ApplyStyle()
         {
             if (m_SubtitleView == null)
+            {
                 return;
+            }
 
             SetPickingModeToIgnore(m_CachedRootVisualElement);
+
             m_SubtitleView.style.opacity = currentDisplaySettings.opactity;
+
             if (currentDisplaySettings.font)
             {
                 m_SubtitleView.style.unityFontDefinition = new FontDefinition { fontAsset = displaySettings.font };
             }
+
             m_SubtitleView.style.fontSize = currentDisplaySettings.fontSize;
             m_SubtitleView.style.unityFontStyleAndWeight = currentDisplaySettings.fontStyle;
             if (currentDisplaySettings.useDropShadow)
@@ -93,12 +99,21 @@ namespace Unity.Samples.Accessibility
         void UpdateCachedPlayer()
         {
             if (m_CachedPlayer == player)
+            {
                 return;
+            }
+
             if (m_CachedPlayer)
+            {
                 DisconnectFromPlayer();
+            }
+
             m_CachedPlayer = player;
+
             if (m_CachedPlayer)
+            {
                 ConnectToPlayer();
+            }
         }
 
         void ConnectToPlayer()
@@ -120,11 +135,16 @@ namespace Unity.Samples.Accessibility
         void UpdateRootVisualElement()
         {
             var rootVe = (surface != null ? surface.rootVisualElement : null);
+
             if (m_CachedRootVisualElement == rootVe)
+            {
                 return;
+            }
 
             if (m_CachedRootVisualElement != null)
+            {
                 m_SubtitleView?.RemoveFromHierarchy();
+            }
 
             m_CachedRootVisualElement = rootVe;
 
@@ -134,14 +154,17 @@ namespace Unity.Samples.Accessibility
                 {
                     CreateSubtitleView();
                 }
+
                 m_CachedRootVisualElement.Add(m_SubtitleView);
             }
         }
-        
+
         void SetPickingModeToIgnore(VisualElement rootElement)
         {
             if (rootElement == null)
+            {
                 return;
+            }
             
             foreach (var child in rootElement.hierarchy.Children())
             {

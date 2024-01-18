@@ -29,7 +29,9 @@ namespace Unity.Samples.Accessibility
             set
             {
                 if (m_PlaybackTime == value)
+                {
                     return;
+                }
 
                 m_PlaybackTime = value;
                 int nextIndex = -1;
@@ -58,7 +60,9 @@ namespace Unity.Samples.Accessibility
             set
             {
                 if (m_State == value)
+                {
                     return;
+                }
 
                 m_State = value;
                 stateChanged?.Invoke();
@@ -71,7 +75,10 @@ namespace Unity.Samples.Accessibility
             private set
             {
                 if (m_CurrentItem == value)
+                {
                     return;
+                }
+
                 m_CurrentItem = value;
                 currentItemChanged?.Invoke(m_CurrentItem);
             }
@@ -79,6 +86,7 @@ namespace Unity.Samples.Accessibility
 
         public event Action<SubtitleItem> currentItemChanged;
         public event Action stateChanged;
+
         SubtitleItem m_CurrentItem;
 
         void Awake()
@@ -91,11 +99,15 @@ namespace Unity.Samples.Accessibility
             if (state != State.Stopped)
             {
                 if (m_PlayCoroutine == null)
+                {
                     StartPlaying();
+                }
                 else
                 {
                     if (state == State.Playing)
+                    {
                         IncrementPlaybackTime();
+                    }
                 }
             }
         }
@@ -103,7 +115,10 @@ namespace Unity.Samples.Accessibility
         public void Play(int timePosition = 0)
         {
             if (state != State.Stopped)
+            {
                 return;
+            }
+
             state = State.Playing;
             time = timePosition;
         }
@@ -111,7 +126,10 @@ namespace Unity.Samples.Accessibility
         public void Stop()
         {
             if (state == State.Stopped)
+            {
                 return;
+            }
+
             StopCoroutine(m_PlayCoroutine);
             Reset();
         }
@@ -146,6 +164,7 @@ namespace Unity.Samples.Accessibility
             {
                 yield return PlayNextItem();
             }
+
             OnPlaybackFinished();
         }
 
@@ -158,10 +177,13 @@ namespace Unity.Samples.Accessibility
         IEnumerator PlayNextItem()
         {
             yield return new WaitUntil(() => IsInPlaybackRange(subtitle.items[m_NextIndex]));
+
             var item = subtitle.items[m_NextIndex];
             m_NextIndex++;
             currentItem = item;
+
             yield return new WaitUntil(() => !IsInPlaybackRange(item));
+
             currentItem = null;
         }
     }

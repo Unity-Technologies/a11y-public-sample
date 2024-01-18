@@ -13,6 +13,7 @@ namespace Unity.Samples.Accessibility
     public class ClosedCaptionsManager : MonoBehaviour
     {
         public Subtitle[] subtitles;
+
         SubtitleDisplaySettings m_DisplaySettings;
         SubtitlePlayer m_SubtitlePlayer;
         SubtitleViewer m_SubtitleViewer;
@@ -53,13 +54,17 @@ namespace Unity.Samples.Accessibility
         void OnDestroy()
         {
             s_Instance = null;
+
             AudioManager.audioPlayingStatusChanged -= OnAudioPlayingStatusChanged;
         }
 
         // This method displays the corresponding subtitle when an audio clip plays.
         void OnAudioPlayingStatusChanged(AudioSource audioSource)
         {
-            if (!AccessibilitySettings.isClosedCaptioningEnabled) return;
+            if (!AccessibilitySettings.isClosedCaptioningEnabled)
+            {
+                return;
+            }
 
             if (audioSource.isPlaying)
             {

@@ -97,8 +97,16 @@ namespace Unity.Samples.Accessibility
                 for (var i = 0; i < v.Length; ++i)
                 {
                     var value = v[i].x;
-                    if (value < min) min = value;
-                    if (value > max) max = value;
+
+                    if (value < min)
+                    {
+                        min = value;
+                    }
+
+                    if (value > max)
+                    {
+                        max = value;
+                    }
                 }
             }
 
@@ -110,8 +118,16 @@ namespace Unity.Samples.Accessibility
                 for (var i = 0; i < v.Length; ++i)
                 {
                     var value = v[i].y;
-                    if (value < min) min = value;
-                    if (value > max) max = value;
+
+                    if (value < min)
+                    {
+                        min = value;
+                    }
+
+                    if (value > max)
+                    {
+                        max = value;
+                    }
                 }
             }
         }
@@ -138,6 +154,7 @@ namespace Unity.Samples.Accessibility
             if (m_PreviousOrientation != Screen.orientation)
             {
                 m_PreviousOrientation = Screen.orientation;
+
                 StartCoroutine(OnOrientationChanged());
             }
         }
@@ -145,6 +162,7 @@ namespace Unity.Samples.Accessibility
         void OnEnable()
         {
             s_Instance = this;
+
             DontDestroyOnLoad(gameObject);
             StartCoroutine(DelayInitialize());
         }
@@ -152,6 +170,7 @@ namespace Unity.Samples.Accessibility
         void OnDisable()
         {
             AssistiveSupport.activeHierarchy = null;
+
             s_Instance = null;
         }
 

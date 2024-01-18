@@ -246,6 +246,7 @@ namespace Unity.Samples.LetterSpell
                 boldTextAccessibleElement.value = k_SettingOff;
                 boldTextValue.text = k_SettingOff;
             }
+
             boldTextAccessibleElement.SetNodeProperties();
         }
         
@@ -261,14 +262,17 @@ namespace Unity.Samples.LetterSpell
                 closedCaptionAccessibleElement.value = k_SettingOff;
                 closedCaptionValue.text = k_SettingOff;
             }
+
             closedCaptionAccessibleElement.SetNodeProperties();
         }
 
         void OnFontScaleValueChanged(float fontScale)
         {
             string fontScaleText = fontScale.ToString("0.00");
+
             fontScaleAccessibleElement.value = fontScaleText;
             fontScaleValue.text = fontScaleText;
+
             fontScaleAccessibleElement.SetNodeProperties();
         }
     }

@@ -306,6 +306,7 @@ namespace Unity.Samples.LetterSpell
                     // ensuring consistent focus even after rebuilding.
                     int nodeToFocusId = element.node.id + AccessibilityManager.hierarchy.rootNodes.Count;
                     nodeToFocusId += (shouldMoveLeft ? -count : count);
+
                     this.DelayFocusOnNode(nodeToFocusId);   
                 }
                 else

@@ -33,42 +33,13 @@ namespace Sample.Controls
         public class ColorTweenCallback : UnityEvent<Color> { }
 
         ColorTweenCallback m_Target;
-        Color m_StartColor;
-        Color m_TargetColor;
-        ColorTweenMode m_TweenMode;
 
-        float m_Duration;
-        bool m_IgnoreTimeScale;
+        public Color startColor { get; set; }
+        public Color targetColor { get; set; }
+        public ColorTweenMode tweenMode { get; set; }
 
-        public Color startColor
-        {
-            get { return m_StartColor; }
-            set { m_StartColor = value; }
-        }
-
-        public Color targetColor
-        {
-            get { return m_TargetColor; }
-            set { m_TargetColor = value; }
-        }
-
-        public ColorTweenMode tweenMode
-        {
-            get { return m_TweenMode; }
-            set { m_TweenMode = value; }
-        }
-
-        public float duration
-        {
-            get { return m_Duration; }
-            set { m_Duration = value; }
-        }
-
-        public bool ignoreTimeScale
-        {
-            get { return m_IgnoreTimeScale; }
-            set { m_IgnoreTimeScale = value; }
-        }
+        public float duration { get; set; }
+        public bool ignoreTimeScale { get; set; }
 
         public void TweenValue(float floatPercentage)
         {
@@ -77,20 +48,20 @@ namespace Sample.Controls
                 return;
             }
 
-            var newColor = Color.Lerp(m_StartColor, m_TargetColor, floatPercentage);
+            var newColor = Color.Lerp(startColor, targetColor, floatPercentage);
 
-            switch (m_TweenMode)
+            switch (tweenMode)
             {
                 case ColorTweenMode.Alpha:
                 {
-                    newColor.r = m_StartColor.r;
-                    newColor.g = m_StartColor.g;
-                    newColor.b = m_StartColor.b;
+                    newColor.r = startColor.r;
+                    newColor.g = startColor.g;
+                    newColor.b = startColor.b;
                     break;
                 }
                 case ColorTweenMode.RGB:
                 {
-                    newColor.a = m_StartColor.a;
+                    newColor.a = startColor.a;
                     break;
                 }
             }
@@ -107,12 +78,12 @@ namespace Sample.Controls
 
         public bool GetIgnoreTimescale()
         {
-            return m_IgnoreTimeScale;
+            return ignoreTimeScale;
         }
 
         public float GetDuration()
         {
-            return m_Duration;
+            return duration;
         }
 
         public bool ValidTarget()
@@ -129,35 +100,12 @@ namespace Sample.Controls
         public class FloatTweenCallback : UnityEvent<float> { }
 
         FloatTweenCallback m_Target;
-        float m_StartValue;
-        float m_TargetValue;
 
-        float m_Duration;
-        bool m_IgnoreTimeScale;
+        public float startValue { get; set; }
+        public float targetValue { get; set; }
 
-        public float startValue
-        {
-            get { return m_StartValue; }
-            set { m_StartValue = value; }
-        }
-
-        public float targetValue
-        {
-            get { return m_TargetValue; }
-            set { m_TargetValue = value; }
-        }
-
-        public float duration
-        {
-            get { return m_Duration; }
-            set { m_Duration = value; }
-        }
-
-        public bool ignoreTimeScale
-        {
-            get { return m_IgnoreTimeScale; }
-            set { m_IgnoreTimeScale = value; }
-        }
+        public float duration { get; set; }
+        public bool ignoreTimeScale { get; set; }
 
         public void TweenValue(float floatPercentage)
         {
@@ -166,7 +114,7 @@ namespace Sample.Controls
                 return;
             }
 
-            var newValue = Mathf.Lerp(m_StartValue, m_TargetValue, floatPercentage);
+            var newValue = Mathf.Lerp(startValue, targetValue, floatPercentage);
             m_Target.Invoke(newValue);
         }
 
@@ -179,12 +127,12 @@ namespace Sample.Controls
 
         public bool GetIgnoreTimescale()
         {
-            return m_IgnoreTimeScale;
+            return ignoreTimeScale;
         }
 
         public float GetDuration()
         {
-            return m_Duration;
+            return duration;
         }
 
         public bool ValidTarget()

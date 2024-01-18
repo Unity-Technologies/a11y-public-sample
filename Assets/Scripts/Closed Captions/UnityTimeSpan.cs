@@ -3,13 +3,12 @@ using UnityEngine;
 
 namespace Unity.Samples.Accessibility
 {
-    [Serializable]
-    
     /// <summary>
     /// This class represents a time span in milliseconds.
     /// It is used to represent the start and end time of a subtitle item.
     /// This class is serializable so that it can be used in the inspector.
     /// </summary>
+    [Serializable]
     public struct UnityTimeSpan : IEquatable<UnityTimeSpan>
     {
         [SerializeField]

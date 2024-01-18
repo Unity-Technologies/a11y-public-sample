@@ -3,11 +3,10 @@ using UnityEngine.TextCore.Text;
 
 namespace Unity.Samples.Accessibility
 {
-    [CreateAssetMenu(menuName = "Accessibility/Subtitle Display Settings")]
-    
     /// <summary>
     /// This class is used to configure the appearance of subtitles.
     /// </summary>
+    [CreateAssetMenu(menuName = "Accessibility/Subtitle Display Settings")]
     class SubtitleDisplaySettings : ScriptableObject
     {
         public Color color = Color.white;

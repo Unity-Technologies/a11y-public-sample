@@ -5,11 +5,10 @@ using UnityEngine;
 
 namespace Unity.Samples.Accessibility
 {
-    [Serializable]
-    
     /// <summary>
     /// This class is the model for a single subtitle item.
     /// </summary>
+    [Serializable]
     public class SubtitleItem
     {
         public UnityTimeSpan startTime;

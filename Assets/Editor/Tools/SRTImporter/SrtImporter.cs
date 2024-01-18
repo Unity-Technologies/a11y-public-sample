@@ -3,11 +3,10 @@ using UnityEditor.AssetImporters;
 
 namespace Unity.Samples.Accessibility
 {
-    [ScriptedImporter(1, "srt")]
-    
     /// <summary>
     /// This class is used to import SRT files into Unity.
     /// </summary>
+    [ScriptedImporter(1, "srt")]
     public class SubtitleImporter : ScriptedImporter
     {
         SrtParser m_Parser;

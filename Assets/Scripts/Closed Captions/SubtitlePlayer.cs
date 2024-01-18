@@ -4,12 +4,11 @@ using UnityEngine;
 
 namespace Unity.Samples.Accessibility
 {
-    [AddComponentMenu("Accessibility/Subtitle Player")]
-    
     /// <summary>
     /// This class is used to play subtitles for the correct amount of time.
     /// It manages playback, pause, and stopping of subtitles.
     /// </summary>
+    [AddComponentMenu("Accessibility/Subtitle Player")]
     class SubtitlePlayer : MonoBehaviour
     {
         public enum State

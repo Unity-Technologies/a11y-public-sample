@@ -22,7 +22,6 @@ namespace Unity.Samples.Accessibility
 
             var subTitle = m_Parser.Parse(File.ReadAllText(ctx.assetPath));
 
-            // (Only the 'Main Asset' is eligible to become a Prefab.)
             ctx.AddObjectToAsset("main obj", subTitle);
             ctx.SetMainObject(subTitle);
         }

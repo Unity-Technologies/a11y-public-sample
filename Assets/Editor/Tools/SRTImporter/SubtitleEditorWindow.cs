@@ -15,7 +15,6 @@ namespace Unity.Samples.Accessibility
             else
             {
                 var contents = "1\n00:00:00,000 --> 00:00:10,000\nHello World.";
-                //var icon = EditorGUIUtility.IconContent<ThemeStyleSheet>().image as Texture2D;
                 ProjectWindowUtil.CreateAssetWithContent("Subtitle.srt", contents);
             }
         }

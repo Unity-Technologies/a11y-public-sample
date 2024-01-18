@@ -152,7 +152,6 @@ namespace Unity.Samples.Accessibility
             }
         }
 
-        // Start is called before the first frame update
         void Update()
         {
             UpdateCachedPlayer();

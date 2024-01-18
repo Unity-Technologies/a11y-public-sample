@@ -55,8 +55,7 @@ namespace Unity.Samples.LetterSpell
         {
             m_Model.letterCardsChanged += OnLetterCardsChanged;
             m_Model.gameplay = gameplay;
-            
-            // Update clue text is the clue setting changes.
+
             gameplay.stateChanged.AddListener(ShowOrHideClue);
 
             AssistiveSupport.nodeFocusChanged += OnNodeFocusChanged;

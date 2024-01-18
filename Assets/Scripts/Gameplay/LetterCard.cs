@@ -94,7 +94,6 @@ namespace Unity.Samples.LetterSpell
             // Set the item dirty.
             LayoutRebuilder.MarkLayoutForRebuild(m_RectTransform);
 
-            // Compute the index.
             var index = GetIndex();
 
             // Move the card.

@@ -1,4 +1,3 @@
-using Unity.Samples.LetterSpell;
 using UnityEngine;
 using UnityEngine.UIElements;
 

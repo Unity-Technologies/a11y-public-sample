@@ -1,5 +1,5 @@
-using UnityEditor.AssetImporters;
 using System.IO;
+using UnityEditor.AssetImporters;
 
 namespace Unity.Samples.Accessibility
 {

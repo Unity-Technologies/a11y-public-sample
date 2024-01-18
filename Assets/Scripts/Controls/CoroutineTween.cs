@@ -197,7 +197,7 @@ namespace Sample.Controls
             if (!tweenInfo.ValidTarget())
                 yield break;
 
-            var elapsedTime = 0.0f;
+            var elapsedTime = 0f;
             while (elapsedTime < tweenInfo.duration)
             {
                 elapsedTime += tweenInfo.ignoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime;
@@ -205,7 +205,7 @@ namespace Sample.Controls
                 tweenInfo.TweenValue(percentage);
                 yield return null;
             }
-            tweenInfo.TweenValue(1.0f);
+            tweenInfo.TweenValue(1f);
         }
 
         public void Init(MonoBehaviour coroutineContainer)

@@ -124,10 +124,9 @@ namespace Unity.Samples.Accessibility
 
         static IEnumerable<string> GetSrtSubtitleParts(TextReader textReader)
         {
-            string line;
             var stringBuilder = new StringBuilder();
 
-            while ((line = textReader.ReadLine()) != null)
+            while (textReader.ReadLine() is { } line)
             {
                 if (string.IsNullOrEmpty(line.Trim()))
                 {

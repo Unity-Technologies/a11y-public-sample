@@ -8,7 +8,7 @@ public class FontManager : MonoBehaviour
     public TMP_FontAsset defaultFont;
     public TMP_FontAsset boldFont;
 
-    const float k_DefaultLetterCardFonttSize = 132f;
+    const float k_DefaultLetterCardFontSize = 132f;
     const float k_DefaultHeaderFontSize = 75f;
     const float k_DefaultFontSize = 64f;
 
@@ -45,7 +45,7 @@ public class FontManager : MonoBehaviour
 
         foreach (var tmpText in tmpTexts)
         {
-            if (tmpText.fontSize == k_DefaultLetterCardFonttSize)
+            if (tmpText.fontSize == k_DefaultLetterCardFontSize)
             {
                 m_LetterCardTextComponents.Add(tmpText);
             }
@@ -92,7 +92,7 @@ public class FontManager : MonoBehaviour
     {
         foreach (var tmpText in m_LetterCardTextComponents)
         {
-            tmpText.fontSize = fontScale * k_DefaultLetterCardFonttSize;
+            tmpText.fontSize = fontScale * k_DefaultLetterCardFontSize;
         }
         
         foreach (var tmpText in m_HeaderTextComponents)

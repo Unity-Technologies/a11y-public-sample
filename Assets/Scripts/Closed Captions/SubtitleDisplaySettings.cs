@@ -12,7 +12,7 @@ namespace Unity.Samples.Accessibility
         public Color color = Color.white;
         public Color backgroundColor = Color.black;
         [Range(0, 1)]
-        public float opactity = 0.8f;
+        public float opacity = 0.8f;
         public FontAsset font;
         public int fontSize = 12;
         public FontStyle fontStyle = FontStyle.Normal;

@@ -71,7 +71,7 @@ namespace Unity.Samples.Accessibility
 
             SetPickingModeToIgnore(m_CachedRootVisualElement);
 
-            m_SubtitleView.style.opacity = currentDisplaySettings.opactity;
+            m_SubtitleView.style.opacity = currentDisplaySettings.opacity;
 
             if (currentDisplaySettings.font)
             {

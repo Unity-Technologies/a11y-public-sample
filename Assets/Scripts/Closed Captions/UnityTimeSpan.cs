@@ -12,7 +12,7 @@ namespace Unity.Samples.Accessibility
     public struct UnityTimeSpan : IEquatable<UnityTimeSpan>
     {
         [SerializeField]
-        private int m_Milliseconds;
+        int m_Milliseconds;
         
         public int Milliseconds
         {

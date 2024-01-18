@@ -81,7 +81,7 @@ namespace Unity.Samples.Accessibility
         public event Action stateChanged;
         SubtitleItem m_CurrentItem;
 
-        private void Awake()
+        void Awake()
         {
             Reset();
         }

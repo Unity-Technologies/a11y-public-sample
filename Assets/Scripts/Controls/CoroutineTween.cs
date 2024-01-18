@@ -8,7 +8,7 @@ namespace Sample.Controls
     // using an interface instead of
     // an abstract class as we want the
     // tweens to be structs.
-    internal interface ITweenValue
+    interface ITweenValue
     {
         void TweenValue(float floatPercentage);
         bool ignoreTimeScale { get; }
@@ -19,7 +19,7 @@ namespace Sample.Controls
     // Color tween class, receives the
     // TweenValue callback and then sets
     // the value on the target.
-    internal struct ColorTween : ITweenValue
+    struct ColorTween : ITweenValue
     {
         public enum ColorTweenMode
         {
@@ -30,13 +30,13 @@ namespace Sample.Controls
 
         public class ColorTweenCallback : UnityEvent<Color> { }
 
-        private ColorTweenCallback m_Target;
-        private Color m_StartColor;
-        private Color m_TargetColor;
-        private ColorTweenMode m_TweenMode;
+        ColorTweenCallback m_Target;
+        Color m_StartColor;
+        Color m_TargetColor;
+        ColorTweenMode m_TweenMode;
 
-        private float m_Duration;
-        private bool m_IgnoreTimeScale;
+        float m_Duration;
+        bool m_IgnoreTimeScale;
 
         public Color startColor
         {
@@ -115,16 +115,16 @@ namespace Sample.Controls
     // Float tween class, receives the
     // TweenValue callback and then sets
     // the value on the target.
-    internal struct FloatTween : ITweenValue
+    struct FloatTween : ITweenValue
     {
         public class FloatTweenCallback : UnityEvent<float> { }
 
-        private FloatTweenCallback m_Target;
-        private float m_StartValue;
-        private float m_TargetValue;
+        FloatTweenCallback m_Target;
+        float m_StartValue;
+        float m_TargetValue;
 
-        private float m_Duration;
-        private bool m_IgnoreTimeScale;
+        float m_Duration;
+        bool m_IgnoreTimeScale;
 
         public float startValue
         {
@@ -186,13 +186,13 @@ namespace Sample.Controls
     // Tween runner, executes the given tween.
     // The coroutine will live within the given
     // behaviour container.
-    internal class TweenRunner<T> where T : struct, ITweenValue
+    class TweenRunner<T> where T : struct, ITweenValue
     {
-        protected MonoBehaviour m_CoroutineContainer;
-        protected IEnumerator m_Tween;
+        MonoBehaviour m_CoroutineContainer;
+        IEnumerator m_Tween;
 
         // utility function for starting the tween
-        private static IEnumerator Start(T tweenInfo)
+        static IEnumerator Start(T tweenInfo)
         {
             if (!tweenInfo.ValidTarget())
                 yield break;

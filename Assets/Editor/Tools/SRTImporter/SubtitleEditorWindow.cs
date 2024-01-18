@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Unity.Samples.Accessibility
 {
     [EditorWindowTitle(title = "Subtitle Editor", useTypeNameAsIconName = true)]
-    public sealed class SubtitleEditorWindow : EditorWindow, IHasCustomMenu
+    public sealed class SubtitleEditorWindow : EditorWindow
     {
         [MenuItem("Assets/Create/Accessibility/Subtitle File", false, 500)]
         public static void CreateSRTFile()
@@ -18,11 +18,6 @@ namespace Unity.Samples.Accessibility
                 //var icon = EditorGUIUtility.IconContent<ThemeStyleSheet>().image as Texture2D;
                 ProjectWindowUtil.CreateAssetWithContent("Subtitle.srt", contents);
             }
-        }
-
-        public void AddItemsToMenu(GenericMenu menu)
-        {
-
         }
     }
 }

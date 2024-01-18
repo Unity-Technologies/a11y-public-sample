@@ -12,31 +12,31 @@ namespace Unity.Samples.Accessibility
     public struct UnityTimeSpan : IEquatable<UnityTimeSpan>
     {
         [SerializeField]
-        int m_Milliseconds;
+        int milliseconds;
         
         public int Milliseconds
         {
-            get => m_Milliseconds;
+            get => milliseconds;
         }
 
         public static UnityTimeSpan FromMilliseconds(int ms)
         {
-            return new UnityTimeSpan { m_Milliseconds = ms };
+            return new UnityTimeSpan { milliseconds = ms };
         }
 
         public override string ToString()
         {
-            return TimeSpan.FromMilliseconds(m_Milliseconds).ToString("c");
+            return TimeSpan.FromMilliseconds(milliseconds).ToString("c");
         }
 
         public bool Equals(UnityTimeSpan other)
         {
-            return m_Milliseconds == other.m_Milliseconds;
+            return milliseconds == other.milliseconds;
         }
 
         public override int GetHashCode()
         {
-            return m_Milliseconds;
+            return milliseconds;
         }
     }
 }

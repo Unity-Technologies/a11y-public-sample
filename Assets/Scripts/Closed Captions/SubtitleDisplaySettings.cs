@@ -19,16 +19,16 @@ namespace Unity.Samples.Accessibility
         public bool useDropShadow;
         public Color dropShadowColor = Color.black;
 
-        static SubtitleDisplaySettings m_Default;
+        static SubtitleDisplaySettings s_Default;
 
         public static SubtitleDisplaySettings GetDefault()
         {
-            if (m_Default == null)
+            if (s_Default == null)
             {
-                m_Default = CreateInstance<SubtitleDisplaySettings>();
+                s_Default = CreateInstance<SubtitleDisplaySettings>();
             }
 
-            return m_Default;
+            return s_Default;
         }
     }
 }

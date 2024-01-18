@@ -19,10 +19,10 @@ namespace Unity.Samples.Accessibility
         {
             m_Parser ??= new SrtParser();
 
-            var subTitle = m_Parser.Parse(File.ReadAllText(ctx.assetPath));
+            var subtitle = m_Parser.Parse(File.ReadAllText(ctx.assetPath));
 
-            ctx.AddObjectToAsset("main obj", subTitle);
-            ctx.SetMainObject(subTitle);
+            ctx.AddObjectToAsset("main obj", subtitle);
+            ctx.SetMainObject(subtitle);
         }
     }
 }

@@ -134,9 +134,9 @@ namespace Unity.Samples.Accessibility
 
         void UpdateRootVisualElement()
         {
-            var rootVe = (surface != null ? surface.rootVisualElement : null);
+            var rootVisualElement = surface != null ? surface.rootVisualElement : null;
 
-            if (m_CachedRootVisualElement == rootVe)
+            if (m_CachedRootVisualElement == rootVisualElement)
             {
                 return;
             }
@@ -146,7 +146,7 @@ namespace Unity.Samples.Accessibility
                 m_SubtitleView?.RemoveFromHierarchy();
             }
 
-            m_CachedRootVisualElement = rootVe;
+            m_CachedRootVisualElement = rootVisualElement;
 
             if (m_CachedRootVisualElement != null)
             {

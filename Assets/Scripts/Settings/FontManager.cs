@@ -41,21 +41,21 @@ public class FontManager : MonoBehaviour
 
     void FindAllTextComponents()
     {
-        var tmpTexts = FindObjectsByType<TMP_Text>(FindObjectsSortMode.None);
+        var texts = FindObjectsByType<TMP_Text>(FindObjectsSortMode.None);
 
-        foreach (var tmpText in tmpTexts)
+        foreach (var text in texts)
         {
-            if (tmpText.fontSize == k_DefaultLetterCardFontSize)
+            if (text.fontSize == k_DefaultLetterCardFontSize)
             {
-                m_LetterCardTextComponents.Add(tmpText);
+                m_LetterCardTextComponents.Add(text);
             }
-            else if (tmpText.fontSize == k_DefaultHeaderFontSize)
+            else if (text.fontSize == k_DefaultHeaderFontSize)
             {
-                m_HeaderTextComponents.Add(tmpText);
+                m_HeaderTextComponents.Add(text);
             }
             else
             {
-                m_TextComponents.Add(tmpText);
+                m_TextComponents.Add(text);
             }
         }
     }
@@ -67,19 +67,19 @@ public class FontManager : MonoBehaviour
 
     void UpdateFontStyle(TMP_FontAsset font)
     {
-        foreach (var tmpText in m_LetterCardTextComponents)
+        foreach (var text in m_LetterCardTextComponents)
         {
-            tmpText.font = font;
+            text.font = font;
         }
         
-        foreach (var tmpText in m_HeaderTextComponents)
+        foreach (var text in m_HeaderTextComponents)
         {
-            tmpText.font = font;
+            text.font = font;
         }
 
-        foreach (var tmpText in m_TextComponents)
+        foreach (var text in m_TextComponents)
         {
-            tmpText.font = font;
+            text.font = font;
         }
     }
 

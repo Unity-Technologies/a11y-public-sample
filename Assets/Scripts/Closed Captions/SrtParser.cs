@@ -38,39 +38,39 @@ namespace Unity.Samples.Accessibility
             // Seek the beginning of the stream.
             srtStream.Position = 0;
 
-            var reader = new StreamReader(srtStream, encoding, true);
-            var items = new List<SubtitleItem>();
-            var srtSubParts = GetSrtSubtitleParts(reader).ToList();
+            var streamReader = new StreamReader(srtStream, encoding, true);
+            var subtitleItems = new List<SubtitleItem>();
+            var subtitleParts = GetSrtSubtitleParts(streamReader).ToList();
 
-            if (srtSubParts.Any())
+            if (subtitleParts.Any())
             {
-                foreach (var srtSubPart in srtSubParts)
+                foreach (var srtSubtitlePart in subtitleParts)
                 {
                     var lines =
-                        srtSubPart.Split(new[] { Environment.NewLine }, StringSplitOptions.None)
+                        srtSubtitlePart.Split(new[] { Environment.NewLine }, StringSplitOptions.None)
                             .Select(s => s.Trim())
                             .Where(l => !string.IsNullOrEmpty(l))
                             .ToList();
-                    var item = new SubtitleItem();
+                    var subtitleItem = new SubtitleItem();
                     var text = "";
-                    var timecodeRead = false;
+                    var isTimecodeRead = false;
 
                     for (var i = 1 /* skip the item number */; i < lines.Count; ++i)
                     {
                         var line = lines[i];
 
-                        if (!timecodeRead)
+                        if (!isTimecodeRead)
                         {
-                            var success = TryParseTimecodeLine(line, out var startTc, out var endTc);
+                            var success = TryParseTimecodeLine(line, out var startTime, out var endTime);
 
                             if (!success)
                             {
                                 continue;
                             }
 
-                            item.startTime = UnityTimeSpan.FromMilliseconds(startTc);
-                            item.endTime = UnityTimeSpan.FromMilliseconds(endTc);
-                            timecodeRead = true;
+                            subtitleItem.startTime = UnityTimeSpan.FromMilliseconds(startTime);
+                            subtitleItem.endTime = UnityTimeSpan.FromMilliseconds(endTime);
+                            isTimecodeRead = true;
                         }
                         else
                         {
@@ -84,18 +84,18 @@ namespace Unity.Samples.Accessibility
                         }
                     }
 
-                    item.text = text;
+                    subtitleItem.text = text;
 
-                    if ((item.startTime.Milliseconds != 0 || item.endTime.Milliseconds != 0) && !string.IsNullOrEmpty(item.text))
+                    if ((subtitleItem.startTime.Milliseconds != 0 || subtitleItem.endTime.Milliseconds != 0) && !string.IsNullOrEmpty(subtitleItem.text))
                     {
                         // Parsing succeeded.
-                        items.Add(item);
+                        subtitleItems.Add(subtitleItem);
                     }
                 }
 
-                if (items.Any())
+                if (subtitleItems.Any())
                 {
-                    return items;
+                    return subtitleItems;
                 }
 
                 throw new ArgumentException(k_InvalidSrtFormatError);
@@ -123,31 +123,31 @@ namespace Unity.Samples.Accessibility
         IEnumerable<string> GetSrtSubtitleParts(TextReader reader)
         {
             string line;
-            var sb = new StringBuilder();
+            var stringBuilder = new StringBuilder();
 
             while ((line = reader.ReadLine()) != null)
             {
                 if (string.IsNullOrEmpty(line.Trim()))
                 {
                     // Return only if not empty.
-                    var res = sb.ToString().TrimEnd();
+                    var subtitlePart = stringBuilder.ToString().TrimEnd();
 
-                    if (!string.IsNullOrEmpty(res))
+                    if (!string.IsNullOrEmpty(subtitlePart))
                     {
-                        yield return res;
+                        yield return subtitlePart;
                     }
 
-                    sb = new StringBuilder();
+                    stringBuilder = new StringBuilder();
                 }
                 else
                 {
-                    sb.AppendLine(line);
+                    stringBuilder.AppendLine(line);
                 }
             }
 
-            if (sb.Length > 0)
+            if (stringBuilder.Length > 0)
             {
-                yield return sb.ToString();
+                yield return stringBuilder.ToString();
             }
         }
 

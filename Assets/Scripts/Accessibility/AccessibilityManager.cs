@@ -201,11 +201,11 @@ namespace Unity.Samples.Accessibility
 
             for (var i = SceneManager.sceneCount - 1; i >= 0; i--)
             {
-                var curScene = SceneManager.GetSceneAt(i);
+                var scene = SceneManager.GetSceneAt(i);
 
-                if (curScene.isLoaded)
+                if (scene.isLoaded)
                 {
-                    lastLoadedScene = curScene;
+                    lastLoadedScene = scene;
                     break;
                 }
             }

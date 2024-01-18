@@ -295,10 +295,10 @@ namespace Unity.Samples.LetterSpell
                 var otherSibling = draggable.transform.parent.GetChild(otherSiblingIndex);
                 
                 // Make the letter uppercase to ensure correct phonetic pronunciation.
-                var message = $"Moved {draggable.name.ToUpper()} {(shouldMoveLeft ? "before" : "after")} {otherSibling.name.ToUpper()}";
+                var announcement = $"Moved {draggable.name.ToUpper()} {(shouldMoveLeft ? "before" : "after")} {otherSibling.name.ToUpper()}";
 
                 // Announce that the card was moved.
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(message);
+                AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);
 
                 if (Application.platform == RuntimePlatform.IPhonePlayer)
                 {

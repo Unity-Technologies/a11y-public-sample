@@ -21,10 +21,7 @@
 }
 
 .unity-text-field {
-    margin-bottom: 4px;
-    margin-top: 4px;
-    margin-left: 0;
-    margin-right: 0;
+    margin: 4px 0;
 }
 
 .unity-list-view__item:checked .unity-text-field__input {
@@ -42,10 +39,7 @@
 
 #indexLabel {
     opacity: 0.79;
-    margin-left: 4px;
-    margin-right: 4px;
-    margin-top: 4px;
-    margin-bottom: 4px;
+    margin: 4px;
     min-width: 50px;
 }
 

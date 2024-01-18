@@ -19,19 +19,6 @@
     background-color: rgba(48, 48, 48, 0.67);
     border-color: rgb(40, 40, 40);
 }
-/*
-.subtitle-player__list-view{
-    border--width: 1px;
-    border-left-color: var(--unity-colors-default-border);
-    border-right-color: var(--unity-colors-default-border);
-    border-top-color: var(--unity-colors-default-border);
-    border-bottom-color: var(--unity-colors-default-border);
-    border-top-left-radius: var(--unity-metrics-default-border_radius);
-    border-bottom-left-radius: var(--unity-metrics-default-border_radius);
-    border-top-right-radius: var(--unity-metrics-default-border_radius);
-    border-bottom-right-radius: var(--unity-metrics-default-border_radius);
-    background-color: rgb(70, 70, 70);
-}*/
 
 .unity-text-field {
     margin-bottom: 4px;
@@ -39,27 +26,6 @@
     margin-left: 0;
     margin-right: 0;
 }
-/*
-.unity-text-field__input {
-    border-left-width: 0;
-    border-right-width: 0;
-    border-top-width: 0;
-    border-bottom-width: 0;
-    border-top-left-radius: var(--unity-metrics-default-border_radius);
-    border-bottom-left-radius: var(--unity-metrics-default-border_radius);
-    border-top-right-radius: var(--unity-metrics-default-border_radius);
-    border-bottom-right-radius: var(--unity-metrics-default-border_radius);
-    padding-left: 4px;
-    padding-right: 4px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    background-color: rgba(48, 48, 48, 0.67);
-}*/
-
-/*
-.unity-list-view__item:hover .unity-text-field__input {
-    background-color: rgba(0, 0, 0, 0);
-}*/
 
 .unity-list-view__item:checked .unity-text-field__input {
     background-color: rgba(0, 0, 0, 0);
@@ -150,10 +116,8 @@
 }
 
 .subtitle-timeline {
-    /*margin-top: 6px;*/
     min-height: 100px;
     height: 100px;
-   /* border-radius: var(--unity-metrics-default-border_radius);*/
     border-top-width: 1px;
     border-color: var(--unity-colors-default-border);
     background-color: rgb(80, 80, 80);
@@ -168,7 +132,6 @@
 .subtitle-preview {
     border-left-width: 1px;
     border-left-color: var(--unity-colors-default-border);
-    /*background-color: rgb(60, 60, 60);*/
     background-color: rgb(40, 50, 80);
 }
 #previewToolbar {
@@ -208,13 +171,3 @@ flex-direction: row;
     align-items: flex-end;
     margin-top: -1px;
 }
-
-/*#list-add-button, #list-remove-button
-{
-    border-color: var(--unity-colors-default-border);
-    border-width: 1px;
-    border-top-width: 0;
-    border-radius: var(--unity-metrics-default-border_radius);
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-}*/

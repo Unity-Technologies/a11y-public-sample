@@ -95,7 +95,7 @@ namespace Unity.Samples.LetterSpell
 
         IEnumerator Fade(float targetAlpha)
         {
-            var canvasGroup = gameObject.GetComponent<CanvasGroup>();
+            var canvasGroup = GetComponent<CanvasGroup>();
 
             var startAlpha = canvasGroup.alpha;
             var timePassed = 0f;

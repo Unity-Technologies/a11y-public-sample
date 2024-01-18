@@ -144,7 +144,7 @@ namespace Unity.Samples.Accessibility
 
             if (m_Dropdown != null)
             {
-                return m_Dropdown.gameObject.transform.childCount != 3;
+                return m_Dropdown.transform.childCount != 3;
             }
 
             return false;

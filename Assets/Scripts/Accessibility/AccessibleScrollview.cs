@@ -21,7 +21,7 @@ namespace Unity.Samples.Accessibility
         {
             isActive = false;
 
-            m_ScrollRect = gameObject.GetComponentInChildren<ScrollRect>();
+            m_ScrollRect = GetComponentInChildren<ScrollRect>();
         }
 
         void Update()

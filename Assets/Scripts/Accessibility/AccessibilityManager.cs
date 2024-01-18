@@ -309,7 +309,7 @@ namespace Unity.Samples.Accessibility
                     continue;
                 }
 
-                var elementObject = element.gameObject.transform;
+                var elementObject = element.transform;
                 AccessibilityNode node = null;
 
                 // If this is a root element or it is the first of its ancestors

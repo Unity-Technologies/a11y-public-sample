@@ -222,7 +222,7 @@ namespace Unity.Samples.Accessibility
 
         public Rect GetFrame()
         {
-            return getFrame?.Invoke() ?? AccessibilityManager.GetFrame(gameObject.transform as RectTransform);
+            return getFrame?.Invoke() ?? AccessibilityManager.GetFrame(transform as RectTransform);
         }
     }
 }

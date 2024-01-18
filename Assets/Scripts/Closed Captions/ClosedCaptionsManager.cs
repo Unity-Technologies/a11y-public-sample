@@ -16,7 +16,7 @@ namespace Unity.Samples.Accessibility
         SubtitleDisplaySettings m_DisplaySettings;
         SubtitlePlayer m_SubtitlePlayer;
         SubtitleViewer m_SubtitleViewer;
-        Dictionary<string, Subtitle> m_SubtitleMap = new Dictionary<string, Subtitle>();
+        Dictionary<string, Subtitle> m_SubtitleMap = new();
 
         static ClosedCaptionsManager s_Instance;
 

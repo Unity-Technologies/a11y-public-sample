@@ -45,7 +45,7 @@ namespace Unity.Samples.Accessibility
                 foreach (var srtSubPart in srtSubParts)
                 {
                     var lines =
-                        srtSubPart.Split(new string[] {Environment.NewLine}, StringSplitOptions.None)
+                        srtSubPart.Split(new[] { Environment.NewLine }, StringSplitOptions.None)
                             .Select(s => s.Trim())
                             .Where(l => !string.IsNullOrEmpty(l))
                             .ToList();

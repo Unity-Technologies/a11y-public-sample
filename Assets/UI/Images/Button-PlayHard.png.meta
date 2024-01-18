@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 672cdafa50b5e4313a282614e1c58ce9
+guid: af3eb02a4de514c51bacf872ea555a8d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5548797473707963332
-    second: Large-Button-UI-PlayEasy_0
+      213: 6008418101965696397
+    second: Large-Button-UI-PlayHard_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -70,7 +70,7 @@ TextureImporter:
   swizzle: 50462976
   cookieLightType: 0
   platformSettings:
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -83,7 +83,7 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -96,7 +96,7 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -109,8 +109,21 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: iPhone
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: CloudRendering
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -126,7 +139,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Large-Button-UI-PlayEasy_0
+      name: Large-Button-UI-PlayHard_0
       rect:
         serializedVersion: 2
         x: 0
@@ -136,20 +149,22 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 30, y: 30, z: 30, w: 30}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c3c4d01b816bef2b0800000000000000
-      internalID: -5548797473707963332
+      spriteID: d8d21b50e60326350800000000000000
+      internalID: 6008418101965696397
       vertices: []
       indices: 
       edges: []
       weights: []
     outline: []
+    customData: 
     physicsShape: []
     bones: []
-    spriteID: ff3c8e0b429264100baa6cd83e21b71f
+    spriteID: 3848f42da375b46dfb776dc4f2973f75
     internalID: 0
     vertices: []
     indices: 
@@ -157,7 +172,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Large-Button-UI-PlayEasy_0: -5548797473707963332
+      Large-Button-UI-PlayHard_0: 6008418101965696397
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

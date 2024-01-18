@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 364b68ded9ed04f07848b6c7de25fdad
+guid: 62af246e3a34d47ea9c7c97ef67bffd4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4602334432413793429
-    second: Intro Screen_0
+      213: -6883036388303849167
+    second: Input-UI_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -70,7 +70,7 @@ TextureImporter:
   swizzle: 50462976
   cookieLightType: 0
   platformSettings:
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -83,7 +83,7 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -96,7 +96,7 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -109,8 +109,21 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: iPhone
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: CloudRendering
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -126,30 +139,32 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Intro Screen_0
+      name: Input-UI_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 30
         y: 0
-        width: 1920
-        height: 1080
+        width: 919
+        height: 155
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 30, y: 30, z: 30, w: 30}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 59cb29538c6cedf30800000000000000
-      internalID: 4602334432413793429
+      spriteID: 139bf0b6fda8a70a0800000000000000
+      internalID: -6883036388303849167
       vertices: []
       indices: 
       edges: []
       weights: []
     outline: []
+    customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 0ade5eb2514ec4c868ac81a7c16536db
     internalID: 0
     vertices: []
     indices: 
@@ -157,7 +172,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Intro Screen_0: 4602334432413793429
+      Input-UI_0: -6883036388303849167
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

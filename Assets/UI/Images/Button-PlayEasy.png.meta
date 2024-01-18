@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 683a96c35b56d4e64902d17c7a6f2603
+guid: 672cdafa50b5e4313a282614e1c58ce9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7077636196241493399
-    second: Button-Pause_0
+      213: -5548797473707963332
+    second: Large-Button-UI-PlayEasy_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -70,7 +70,7 @@ TextureImporter:
   swizzle: 50462976
   cookieLightType: 0
   platformSettings:
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -83,7 +83,7 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -96,7 +96,7 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
+  - serializedVersion: 4
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -109,8 +109,21 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: iPhone
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: CloudRendering
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -126,30 +139,32 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Button-Pause_0
+      name: Large-Button-UI-PlayEasy_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 190
-        height: 137
+        width: 592
+        height: 360
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 30, y: 30, z: 30, w: 30}
+      customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9623491e06f27cd90800000000000000
-      internalID: -7077636196241493399
+      spriteID: c3c4d01b816bef2b0800000000000000
+      internalID: -5548797473707963332
       vertices: []
       indices: 
       edges: []
       weights: []
     outline: []
+    customData: 
     physicsShape: []
     bones: []
-    spriteID: 25ce4d80f2ae942bb9b77b883797b93a
+    spriteID: ff3c8e0b429264100baa6cd83e21b71f
     internalID: 0
     vertices: []
     indices: 
@@ -157,7 +172,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Button-Pause_0: -7077636196241493399
+      Large-Button-UI-PlayEasy_0: -5548797473707963332
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

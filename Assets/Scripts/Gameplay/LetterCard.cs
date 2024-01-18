@@ -34,14 +34,14 @@ namespace Unity.Samples.LetterSpell
 
             backgroundImage.gameObject.SetActive(true);
 
-            StartCoroutine(DelayedStart());
+            StartCoroutine(DelayStart());
         }
 
         /// <summary>
         /// Called when one frame has passed before the coroutine is started, to ensure that the layout has been
         /// updated.
         /// </summary>
-        IEnumerator DelayedStart()
+        IEnumerator DelayStart()
         {
             yield return new WaitForEndOfFrame();
         }

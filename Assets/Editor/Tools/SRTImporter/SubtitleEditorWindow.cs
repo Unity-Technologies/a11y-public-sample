@@ -8,11 +8,11 @@ namespace Unity.Samples.Accessibility
     public sealed class SubtitleEditorWindow : EditorWindow
     {
         [MenuItem("Assets/Create/Accessibility/Subtitle File", false, 500)]
-        public static void CreateSRTFile()
+        public static void CreateSrtFile()
         {
-            if (CommandService.Exists(nameof(CreateSRTFile)))
+            if (CommandService.Exists(nameof(CreateSrtFile)))
             {
-                CommandService.Execute(nameof(CreateSRTFile), CommandHint.Menu);
+                CommandService.Execute(nameof(CreateSrtFile), CommandHint.Menu);
             }
             else
             {

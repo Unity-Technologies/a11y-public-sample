@@ -32,13 +32,13 @@ namespace Unity.Samples.Accessibility
                     return;
                 }
 
-                DisconnectFromSelected();
-                DisconnectFromDismissed();
+                DisconnectNodeFromSelected();
+                DisconnectNodeFromDismissed();
 
                 m_Node = value;
 
-                ConnectToSelected();
-                ConnectToDismissed();
+                ConnectNodeToSelected();
+                ConnectNodeToDismissed();
             }
         }
 
@@ -51,14 +51,14 @@ namespace Unity.Samples.Accessibility
             add
             {
                 m_Selected += value;
-                ConnectToSelected();
+                ConnectNodeToSelected();
             }
             remove
             {
                 m_Selected -= value;
                 if (m_Selected == null)
                 {
-                    DisconnectFromSelected();
+                    DisconnectNodeFromSelected();
                 }
             }
         }
@@ -72,14 +72,14 @@ namespace Unity.Samples.Accessibility
             add
             {
                 m_Dismissed += value;
-                ConnectToDismissed();
+                ConnectNodeToDismissed();
             }
             remove
             {
                 m_Dismissed -= value;
                 if (m_Dismissed == null)
                 {
-                    DisconnectFromDismissed();
+                    DisconnectNodeFromDismissed();
                 }
             }
         }
@@ -119,7 +119,7 @@ namespace Unity.Samples.Accessibility
         {
         }
 
-        void ConnectToSelected()
+        void ConnectNodeToSelected()
         {
             // Do not connect if the node does not exist or selected is not yet implemented.
             if (node == null || m_Selected == null)
@@ -131,7 +131,7 @@ namespace Unity.Samples.Accessibility
             node.selected += InvokeSelected;
         }
 
-        void ConnectToDismissed()
+        void ConnectNodeToDismissed()
         {
             // Do not connect if the node does not exist or dismissed is not yet implemented.
             if (node == null || m_Dismissed == null)
@@ -143,7 +143,7 @@ namespace Unity.Samples.Accessibility
             node.dismissed += InvokeDismissed;
         }
 
-        void DisconnectFromSelected()
+        void DisconnectNodeFromSelected()
         {
             if (node == null)
             {
@@ -154,7 +154,7 @@ namespace Unity.Samples.Accessibility
             node.selected -= InvokeSelected;
         }
 
-        void DisconnectFromDismissed()
+        void DisconnectNodeFromDismissed()
         {
             if (node == null)
             {

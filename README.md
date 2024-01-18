@@ -25,6 +25,9 @@ On mobile devices, with screen reader:
 * Double tap to select the focused letter.
 * Use swipe gestures to move the letter forward or backward, OR tap another directly to insert focused letter in that position.
 
+# Acknowledgement
+
+LetterSpell was inspired by the [iOS game Letter Rooms](https://apps.apple.com/us/app/letter-rooms/id1563407977).
 
 # License
 

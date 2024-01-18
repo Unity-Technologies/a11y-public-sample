@@ -95,8 +95,7 @@ namespace Sample.Controls
 
         public void AddOnChangedCallback(UnityAction<Color> callback)
         {
-            if (m_Target == null)
-                m_Target = new ColorTweenCallback();
+            m_Target ??= new ColorTweenCallback();
 
             m_Target.AddListener(callback);
         }
@@ -168,8 +167,7 @@ namespace Sample.Controls
 
         public void AddOnChangedCallback(UnityAction<float> callback)
         {
-            if (m_Target == null)
-                m_Target = new FloatTweenCallback();
+            m_Target ??= new FloatTweenCallback();
 
             m_Target.AddListener(callback);
         }

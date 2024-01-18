@@ -19,8 +19,7 @@ namespace Unity.Samples.Accessibility
 
         public override string ToString()
         {
-            var res = string.Format("{0} --> {1}: {2}", startTime.ToString(), endTime.ToString(), text);
-            return res;
+            return $"{startTime.ToString()} --> {endTime.ToString()}: {text}";
         }
     }
 }

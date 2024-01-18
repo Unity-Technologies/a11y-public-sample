@@ -17,15 +17,7 @@ namespace Unity.Samples.Accessibility
         VisualElement m_CachedRootVisualElement;
         SubtitlePlayer m_CachedPlayer;
 
-        public SubtitleDisplaySettings currentDisplaySettings
-        {
-            get
-            {
-                if (displaySettings == null)
-                    return SubtitleDisplaySettings.GetDefault();
-                return displaySettings;
-            }
-        }
+        public SubtitleDisplaySettings currentDisplaySettings => displaySettings == null ? SubtitleDisplaySettings.GetDefault() : displaySettings;
 
         void CreateSubtitleView()
         {

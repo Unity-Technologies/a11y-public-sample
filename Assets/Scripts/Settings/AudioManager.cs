@@ -48,8 +48,10 @@ namespace Unity.Samples.LetterSpell
 
             Invoke("PlayBackgroundMusic", 3f);
         }
-        
-        //play the background music after some delay
+
+        /// <summary>
+        /// Play the background music after some delay.
+        /// </summary>
         public void PlayBackgroundMusic()
         {
             m_MusicSource.clip = backgroundMusic;

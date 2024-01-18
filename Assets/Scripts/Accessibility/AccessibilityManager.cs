@@ -8,33 +8,44 @@ using UnityEngine.Accessibility;
 namespace Unity.Samples.Accessibility
 {
     /// <summary>
-    /// This MonoBehaviour class is added to the Scene in order to detect the screen reader being on/off and automatically
-    /// converting the GUI from the game object hierarchy into the hierarchy (data model) for the screen reader.
-    /// The screen reader hierarchy order reflects the same order found in the scene.
+    /// This class is added to the scene in order to detect the screen reader being turned on/off and automatically
+    /// convert the GUI from the game object hierarchy into the accessibility hierarchy (data model) that the screen
+    /// reader needs.
+    /// The accessibility hierarchy order reflects the order of the game object hierarchy.
     /// </summary>
     public class AccessibilityManager : MonoBehaviour
     {
-        // Utility struct to help translate the game object hierarchy into the screen reader hierarchy.
+        /// <summary>
+        /// Utility struct to help translate the game object hierarchy into the accessibility hierarchy.
+        /// </summary>
         struct HierarchyItem
         {
             public Transform transform;
             public AccessibilityNode node;
         }
 
-        // The static instance of this class to allow other scripts to do updates of the screen reader hierarchy as
-        // necessary.
+        /// <summary>
+        /// The static instance of this class that allows other scripts to update the accessibility hierarchy as
+        /// necessary.
+        /// </summary>
         static AccessibilityManager s_Instance;
 
-        // The current screen reader hierarchy.
+        /// <summary>
+        /// The current accessibility hierarchy.
+        /// </summary>
         AccessibilityHierarchy m_Hierarchy;
-        
-        // Mapping from the AccessibilityNode from the screen reader hierarchy, to the MonoBehavior instance it was
-        // created from. This is often times necessary to access information about the node, like its transform to
-        // calculate positions for example.
+
+        /// <summary>
+        /// Mapping from the AccessibilityNode from the accessibility hierarchy to the MonoBehavior instance it was
+        /// created from. This is often necessary to access information about the node, like its transform to calculate
+        /// positions, for example.
+        /// </summary>
         Dictionary<AccessibilityNode, AccessibleElement> m_ElementForNodeMap = new();
 
-        // Tracks previous screen orientation (portrait/landscape) to allow the layout to be recalculated on orientation
-        // changes. This is necessary for the screen reader calculated frames to be correct.
+        /// <summary>
+        /// Tracks the previous screen orientation (portrait/landscape) to allow the layout to be recalculated on
+        /// orientation changes. This is necessary for the calculated accessibility frames to be correct.
+        /// </summary>
         ScreenOrientation m_PreviousOrientation;
 
         public static AccessibilityHierarchy hierarchy
@@ -46,8 +57,10 @@ namespace Unity.Samples.Accessibility
             }
         }
 
-        // Event triggered when the hierarchy gets refreshed to allow components to be able to execute actions when
-        // that happens (e.g. focusing the dropdown after it opens).
+        /// <summary>
+        /// Event triggered when the hierarchy is refreshed to allow components to be able to execute actions when that
+        /// happens (e.g. focusing the dropdown after it opens).
+        /// </summary>
         public static event Action hierarchyRefreshed;
 
         public static AccessibleElement GetAccessibleElementForNode(AccessibilityNode node)
@@ -56,7 +69,7 @@ namespace Unity.Samples.Accessibility
         }
 
         /// <summary>
-        /// Updates the whole hierarchy for the screen reader.
+        /// Updates the whole accessibility hierarchy.
         /// </summary>
         public static void RefreshHierarchy()
         {
@@ -64,12 +77,12 @@ namespace Unity.Samples.Accessibility
         }
 
         /// <summary>
-        /// Default method for calculating the Rect representing the frame in the GUI for the given RectTransform,
-        /// which comes from a GUI element (e.g. a Button instance). The screen reader uses that frame position to
-        /// highlight the area on the screen.
+        /// Default method for calculating the Rect representing the frame for the given RectTransform, which comes from
+        /// a GUI element (e.g. a Button instance). The screen reader uses this frame to highlight the area on the
+        /// screen when the corresponding accessibility node is focused.
         /// </summary>
         /// <param name="rectTransform">The RectTransform of the GUI element.</param>
-        /// <returns>The Rect representing the position of the GUI element in the screen.</returns>
+        /// <returns>The Rect representing the position of the GUI element on the screen.</returns>
         public static Rect GetFrame(RectTransform rectTransform)
         {
             var canvas = rectTransform.GetComponentInParent<Canvas>();
@@ -132,7 +145,10 @@ namespace Unity.Samples.Accessibility
             }
         }
 
-        // Restores the active state of all accessibility nodes that are not children of the transform parameter.
+        /// <summary>
+        /// Deactivates or restores the active state of all accessibility nodes that are not children of the given
+        /// transform.
+        /// </summary>
         public static void ActivateOtherAccessibilityNodes(bool activate, Transform transform)
         {
             var elements = FindObjectsByType<AccessibleElement>(FindObjectsSortMode.None);
@@ -214,16 +230,16 @@ namespace Unity.Samples.Accessibility
             // Wait until the end of the frame to make sure all of the GUI positions have been calculated.
             yield return new WaitForEndOfFrame();
 
-            // As scenes get loaded/unloaded, the screen reader hierarchy must be updated.
+            // As scenes get loaded/unloaded, the accessibility hierarchy must be updated.
             SceneManager.sceneLoaded += OnSceneLoaded;
             SceneManager.sceneUnloaded += OnSceneUnloaded;
 
-            // When the screen reader status changes, the screen reader hierarchy must be created (when turned on)
-            // or destroyed (when turned off).
+            // The accessibility hierarchy must be created when the screen reader is turned on and destroyed when the
+            // screen reader is turned off.
             AssistiveSupport.screenReaderStatusChanged += OnScreenReaderStatusChanged;
 
-            // Generate the hierarchy for the current scene and set it to AssistiveSupport.activeHierarchy so that
-            // the screen reader can use it.
+            // Generate the accessibility hierarchy for the current scene and set it to AssistiveSupport.activeHierarchy
+            // so that the screen reader can use it.
             var lastLoadedScene = GetLastLoadedScene();
             GenerateHierarchy(lastLoadedScene);
             AssistiveSupport.activeHierarchy = hierarchy;
@@ -240,7 +256,7 @@ namespace Unity.Samples.Accessibility
         {
             if (status)
             {
-                // Screen reader turned on, generate the hierarchy and set it.
+                // If the screen reader was turned on, generate and set the accessibility hierarchy.
                 var lastLoadedScene = GetLastLoadedScene();
 
                 if (lastLoadedScene.IsValid())
@@ -250,7 +266,7 @@ namespace Unity.Samples.Accessibility
             }
             else
             {
-                // Screen reader turned off, remove the hierarchy set.
+                // If the screen reader was turned off, remove the accessibility hierarchy.
                 AssistiveSupport.activeHierarchy = null;
             }
         }
@@ -269,7 +285,7 @@ namespace Unity.Samples.Accessibility
 
         IEnumerator DelayRebuildHierarchy(Scene scene)
         {
-            // Always end for the end of the frame to guarantee all the GUI positions have been set.
+            // Always wait for the end of the frame to guarantee that all the GUI positions have been set.
             yield return new WaitForEndOfFrame();
 
             GenerateHierarchy(scene);
@@ -305,8 +321,8 @@ namespace Unity.Samples.Accessibility
             var elements = new List<AccessibleElement>();
             HashSet<Transform> visitedObjects = new();
 
-            // The order of the hierarchy of game objects in the scene is what determines the order of the screen reader
-            // hierarchy. The order in the screen reader hierarchy is important to guarantee the navigation order when
+            // The order of the hierarchy of game objects in the scene is what determines the order of the accessibility
+            // hierarchy. The order in the accessibility hierarchy is important to guarantee the navigation order when
             // using the screen reader.
             foreach (var component in components)
             {
@@ -331,9 +347,8 @@ namespace Unity.Samples.Accessibility
                 var elementObject = element.transform;
                 AccessibilityNode node = null;
 
-                // If this is a root element or it is the first of its ancestors
-                // to be an AccessibleElement, add it as a root node of the
-                // hierarchy.
+                // If this is a root element or it is the first of its ancestors to be an AccessibleElement, add it as a
+                // root node of the hierarchy.
                 if (elementObject.parent == null || elementObject.parent.GetComponentInParent<AccessibleElement>() == null)
                 {
                     node = hierarchy.AddNode(element.label);
@@ -342,8 +357,7 @@ namespace Unity.Samples.Accessibility
                 {
                     var item = hierarchyStack.Pop();
 
-                    // Pop until we empty the hierarchy stack or we find a pair
-                    // with one of the element's ancestors.
+                    // Pop until we empty the hierarchy stack or we find a pair with one of the element's ancestors.
                     while (hierarchyStack.Count > 0 && elementObject.IsChildOf(item.transform) == false)
                     {
                         item = hierarchyStack.Pop();
@@ -351,8 +365,7 @@ namespace Unity.Samples.Accessibility
 
                     if (elementObject.IsChildOf(item.transform))
                     {
-                        // The AccessibleElement might have other descendants,
-                        // so push it back to the stack.
+                        // The AccessibleElement might have other descendants, so push it back to the stack.
                         hierarchyStack.Push(item);
                         node = hierarchy.AddNode(element.label, item.node);
                     }
@@ -362,8 +375,7 @@ namespace Unity.Samples.Accessibility
                     }
                 }
 
-                // If we added a node to the hierarchy, push it to the hierarchy
-                // and set its properties.
+                // If we added a node to the hierarchy, push it to the hierarchy and set its properties.
                 if (node != null)
                 {
                     var item = new HierarchyItem { transform = elementObject, node = node };

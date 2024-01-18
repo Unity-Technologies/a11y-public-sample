@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Unity.Samples.Accessibility
 {
     /// <summary>
-    /// This class hold the list of subtitle items.
+    /// This class holds the list of subtitle items.
     /// </summary>
     public class Subtitle : ScriptableObject
     {

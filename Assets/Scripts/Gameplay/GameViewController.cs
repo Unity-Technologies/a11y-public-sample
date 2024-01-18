@@ -154,7 +154,9 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
-        // Toggles the ability of the focused letter card to be reordered using the screen reader.
+        /// <summary>
+        /// Toggles the ability of the focused letter card to be reordered using the screen reader.
+        /// </summary>
         bool OnLetterCardSelected()
         {
             var letterCard = m_AccessibilityFocusedCard.GetComponent<LetterCard>();
@@ -188,8 +190,8 @@ namespace Unity.Samples.LetterSpell
             StartCoroutine(DelayWordReorderingCompleted());
             return;
             
-            // The delay is needed to ensure that the screen reader has enough time to announce the word reordering.
-            // It also ensures that announcement is not ignored by the screen reader.
+            // This delay is needed to ensure that the screen reader has enough time to announce the word reordering.
+            // It also ensures that the announcement is not ignored by the screen reader.
             IEnumerator DelayWordReorderingCompleted()
             {
                 const float fadeDuration = 0.3f;
@@ -211,7 +213,9 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
-        // Reset the selected card when the screen reader status is changed.
+        /// <summary>
+        /// Resets the selected card when the screen reader status changes.
+        /// </summary>
         void OnScreenReaderStatusChanged(bool isScreenReaderEnabled)
         {
             if (m_AccessibilitySelectedCard != null)
@@ -302,7 +306,7 @@ namespace Unity.Samples.LetterSpell
                     AccessibilityManager.RefreshHierarchy();
                     m_WasHierarchyRefreshed = true;
                     
-                    // Add node count to the element Id to match the node in refreshed hierarchy,
+                    // Add the node count to the element ID to match the ID of the node in the refreshed hierarchy,
                     // ensuring consistent focus even after rebuilding.
                     int nodeToFocusId = element.node.id + AccessibilityManager.hierarchy.rootNodes.Count;
                     nodeToFocusId += (shouldMoveLeft ? -count : count);

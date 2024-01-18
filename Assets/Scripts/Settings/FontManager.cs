@@ -20,7 +20,7 @@ public class FontManager : MonoBehaviour
     {
         FindAllTextComponents();
         
-        // Note: on Android, AccessibilitySettings.isBoldTextEnabled requires at least Android 12 (API level 31).
+        // Note: On Android, AccessibilitySettings.isBoldTextEnabled requires at least Android 12 (API level 31).
         UpdateFontStyle(AccessibilitySettings.isBoldTextEnabled ? boldFont : defaultFont);
         UpdateFontScale(AccessibilitySettings.fontScale);
     }
@@ -28,7 +28,7 @@ public class FontManager : MonoBehaviour
     void OnEnable()
     {
         // Note: AccessibilitySettings.boldTextStatusChanged is only available on iOS.
-        // On Android the app restarts AccessibilitySettings.isBoldTextEnabled changes.
+        // On Android, the app restarts when AccessibilitySettings.isBoldTextEnabled changes.
         AccessibilitySettings.boldTextStatusChanged += OnBoldTextStatusChanged;
         AccessibilitySettings.fontScaleChanged += OnFontScaleChanged;
     }

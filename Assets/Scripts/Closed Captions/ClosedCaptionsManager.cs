@@ -7,8 +7,8 @@ using UnityEngine.UIElements;
 namespace Unity.Samples.Accessibility
 {
     /// <summary>
-    /// This singleton manages audio subtitles in Unity, linking audio clips to
-    /// subtitles and displaying them when audio plays.
+    /// This singleton manages audio subtitles in Unity, linking audio clips to subtitles and displaying them when audio
+    /// plays.
     /// </summary>
     public class ClosedCaptionsManager : MonoBehaviour
     {
@@ -58,7 +58,7 @@ namespace Unity.Samples.Accessibility
             AudioManager.audioPlayingStatusChanged -= OnAudioPlayingStatusChanged;
         }
 
-        // This method displays the corresponding subtitle when an audio clip plays.
+        // Displays the corresponding subtitle when an audio clip plays.
         void OnAudioPlayingStatusChanged(AudioSource audioSource)
         {
             if (!AccessibilitySettings.isClosedCaptioningEnabled)

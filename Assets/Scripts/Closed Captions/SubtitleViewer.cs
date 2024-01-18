@@ -170,7 +170,7 @@ namespace Unity.Samples.Accessibility
             {
                 child.pickingMode = PickingMode.Ignore;
                     
-                // This is needed to prevent the input interaction with the subtitles UI
+                // Prevent the input interaction with the subtitles UI.
                 SetPickingModeToIgnore(child);
             }
         }

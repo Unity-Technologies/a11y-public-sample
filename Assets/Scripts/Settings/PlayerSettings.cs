@@ -190,8 +190,7 @@ namespace Unity.Samples.LetterSpell
 
         static void SaveToggleGroupState(ToggleGroup toggleGroup, string prefName)
         {
-            // Find the selected toggle in the ToggleGroup and save its index in
-            // the player preferences.
+            // Find the selected toggle in the ToggleGroup and save its index in the player preferences.
             var toggles = toggleGroup.GetComponentsInChildren<Toggle>();
 
             for (var i = 0; i < toggles.Length; i++)

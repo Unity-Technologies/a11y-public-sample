@@ -12,8 +12,7 @@ namespace Unity.Samples.Accessibility
         SrtParser m_Parser;
 
         /// <summary>
-        /// This function parses an asset file using an SrtParser and sets
-        /// the parsed result as the main asset during Unity import.
+        /// Parses an asset file using an SrtParser and sets the parsed result as the main asset during Unity import.
         /// </summary>
         /// <param name="ctx"></param>
         public override void OnImportAsset(AssetImportContext ctx)

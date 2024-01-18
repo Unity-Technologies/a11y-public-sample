@@ -6,7 +6,7 @@ namespace Unity.Samples.Accessibility
 {
     /// <summary>
     /// This class is used to play subtitles for the correct amount of time.
-    /// It manages playback, pause, and stopping of subtitles.
+    /// It manages playback, pausing and stopping of subtitles.
     /// </summary>
     [AddComponentMenu("Accessibility/Subtitle Player")]
     class SubtitlePlayer : MonoBehaviour
@@ -36,7 +36,7 @@ namespace Unity.Samples.Accessibility
                 m_PlaybackTime = value;
                 int nextIndex = -1;
 
-                // Find the next item
+                // Find the next item.
                 for (var i = 0; i < subtitle.items.Count; i++)
                 {
                     var item = subtitle.items[i];

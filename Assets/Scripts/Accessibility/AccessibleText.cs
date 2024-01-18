@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace Unity.Samples.Accessibility
 {
     /// <summary>
-    /// Component attached to the UI GameObjects that are considered as texts by the screen reader.
+    /// Component attached to the UI game objects that should be considered texts by the screen reader.
     /// </summary>
     [AddComponentMenu("Accessibility/Accessible Text"), DisallowMultipleComponent]
     [ExecuteAlways]

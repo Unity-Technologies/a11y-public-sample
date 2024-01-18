@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace Unity.Samples.Accessibility
 {
     /// <summary>
-    /// Component attached to the UI GameObjects that are considered as dropdowns by the screen reader.
+    /// Component attached to the UI game objects that should be considered dropdowns by the screen reader.
     /// </summary>
     [AddComponentMenu("Accessibility/Accessible Dropdown"), DisallowMultipleComponent]
     [ExecuteAlways]
@@ -96,9 +96,8 @@ namespace Unity.Samples.Accessibility
                 var isDropdownOpen = IsDropdownOpen();
 
                 // While the dropdown is open, the user should only be able to navigate within the dropdown itself.
-                // Therefore, we deactivate any other accessibility nodes on screen.
-                // After the dropdown is closed, we bring the other accessibility nodes back to their original active
-                // state.
+                // Therefore, we deactivate any other accessibility nodes on screen. After the dropdown is closed,
+                // we bring the other accessibility nodes back to their original active state.
                 AccessibilityManager.ActivateOtherAccessibilityNodes(!isDropdownOpen, transform);
 
                 AssistiveSupport.notificationDispatcher.SendLayoutChanged(node);

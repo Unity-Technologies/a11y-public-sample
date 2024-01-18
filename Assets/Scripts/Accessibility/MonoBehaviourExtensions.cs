@@ -6,8 +6,10 @@ namespace Unity.Samples.Accessibility
 {
     static class MonoBehaviourExtensions
     {
-        // Causes the screen reader hierarchy to be re-created (i.e. if there was a previous one, it gets
-        // destroyed and a new one is created).
+        /// <summary>
+        /// Recreates the accessibility hierarchy (i.e. if there was a previous one, it is destroyed and a new one is
+        /// created).
+        /// </summary>
         public static void DelayRefreshHierarchy(this MonoBehaviour behaviour)
         {
             behaviour.StartCoroutine(RefreshHierarchy());
@@ -20,7 +22,9 @@ namespace Unity.Samples.Accessibility
             }
         }
 
-        // Causes the screen reader hierarchy to have all its frames (i.e. screen positions) recalculated.
+        /// <summary>
+        /// Recalculates all the accessibility node frames (i.e. screen positions) in the accessibility hierarchy.
+        /// </summary>
         public static void DelayRefreshNodeFrames(this MonoBehaviour behaviour)
         {
             behaviour.StartCoroutine(RefreshNodeFrames());
@@ -33,7 +37,9 @@ namespace Unity.Samples.Accessibility
             }
         }
 
-        // Delays sending the layout changed notification with the new node to focus on.
+        /// <summary>
+        /// Sends the layout changed notification with the new node to focus on.
+        /// </summary>
         public static void DelayFocusOnNode(this MonoBehaviour behaviour, int nodeId)
         {
             behaviour.StartCoroutine(FocusOnNode());

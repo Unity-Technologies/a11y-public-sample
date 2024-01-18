@@ -170,7 +170,9 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
-        // Resumes the current game.
+        /// <summary>
+        /// Resumes the current game.
+        /// </summary>
         public void ResumeGame()
         {
             if (state == State.Paused)
@@ -244,7 +246,7 @@ namespace Unity.Samples.LetterSpell
                 {
                     m_CurrentWordState = new char[currentWord.word.Length];
 
-                    // Shuffle
+                    // Shuffle the letters.
                     currentWord.word.CopyTo(0, m_CurrentWordState, 0, currentWord.word.Length);
 
                     for (var n = m_CurrentWordState.Length; n > 1;)

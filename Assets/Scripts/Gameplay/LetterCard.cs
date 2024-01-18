@@ -37,8 +37,10 @@ namespace Unity.Samples.LetterSpell
             StartCoroutine(DelayedStart());
         }
 
-        // Called when one frame has passed before the coroutine is started, to
-        // ensure that the layout has been updated.
+        /// <summary>
+        /// Called when one frame has passed before the coroutine is started, to ensure that the layout has been
+        /// updated.
+        /// </summary>
         IEnumerator DelayedStart()
         {
             yield return new WaitForEndOfFrame();

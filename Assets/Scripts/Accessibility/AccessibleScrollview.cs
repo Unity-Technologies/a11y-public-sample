@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace Unity.Samples.Accessibility
 {
     /// <summary>
-    /// Component attached to the UI GameObjects that are considered as scroll views by the screen reader.
+    /// Component attached to the UI game objects that should be considered scroll views by the screen reader.
     /// </summary>
     [AddComponentMenu("Accessibility/Accessible Scroll View"), DisallowMultipleComponent]
     [ExecuteAlways]

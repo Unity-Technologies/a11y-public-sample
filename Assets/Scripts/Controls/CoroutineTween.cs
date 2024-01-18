@@ -4,10 +4,10 @@ using System.Collections;
 
 namespace Sample.Controls
 {
-    // Base interface for tweeners,
-    // using an interface instead of
-    // an abstract class as we want the
-    // tweens to be structs.
+    /// <summary>
+    /// Base interface for tweeners.
+    /// We use an interface instead of an abstract class as we want the tweens to be structs.
+    /// </summary>
     interface ITweenValue
     {
         void TweenValue(float floatPercentage);
@@ -18,9 +18,9 @@ namespace Sample.Controls
         bool ValidTarget();
     }
 
-    // Color tween class, receives the
-    // TweenValue callback and then sets
-    // the value on the target.
+    /// <summary>
+    /// Color tween class that receives the TweenValue callback and then sets the value on the target.
+    /// </summary>
     struct ColorTween : ITweenValue
     {
         public enum ColorTweenMode
@@ -117,9 +117,9 @@ namespace Sample.Controls
         }
     }
 
-    // Float tween class, receives the
-    // TweenValue callback and then sets
-    // the value on the target.
+    /// <summary>
+    /// Float tween class that receives the TweenValue callback and then sets the value on the target.
+    /// </summary>
     struct FloatTween : ITweenValue
     {
         public class FloatTweenCallback : UnityEvent<float> { }
@@ -190,15 +190,18 @@ namespace Sample.Controls
         }
     }
 
-    // Tween runner, executes the given tween.
-    // The coroutine will live within the given
-    // behaviour container.
+    /// <summary>
+    /// Tween runner that executes the given tween.
+    /// The coroutine will live within the given behaviour container.
+    /// </summary>
     class TweenRunner<T> where T : struct, ITweenValue
     {
         MonoBehaviour m_CoroutineContainer;
         IEnumerator m_Tween;
 
-        // utility function for starting the tween
+        /// <summary>
+        /// Utility function for starting the tween.
+        /// </summary>
         static IEnumerator Start(T tweenInfo)
         {
             if (!tweenInfo.ValidTarget())

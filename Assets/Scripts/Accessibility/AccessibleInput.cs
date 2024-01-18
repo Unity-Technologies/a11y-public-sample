@@ -5,7 +5,7 @@ using UnityEngine.UI;
 namespace Unity.Samples.Accessibility
 {
     /// <summary>
-    /// Component attached to the UI GameObjects that are considered as input fields by the screen reader.
+    /// Component attached to the UI game objects that should be considered input fields by the screen reader.
     /// </summary>
     [AddComponentMenu("Accessibility/Accessible Input"), DisallowMultipleComponent]
     [ExecuteAlways]

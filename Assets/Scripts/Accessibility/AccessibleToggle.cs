@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace Unity.Samples.Accessibility
 {
     /// <summary>
-    /// Component attached to the UI GameObjects that are considered as toggles by the screen reader.
+    /// Component attached to the UI game objects that should be considered toggles by the screen reader.
     /// </summary>
     [AddComponentMenu("Accessibility/Accessible Toggle"), DisallowMultipleComponent]
     [ExecuteAlways]

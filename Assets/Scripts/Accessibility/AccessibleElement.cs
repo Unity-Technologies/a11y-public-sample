@@ -6,7 +6,7 @@ using UnityEngine.Accessibility;
 namespace Unity.Samples.Accessibility
 {
     /// <summary>
-    /// Base class GameObjects that we want to be picked up by the screen reader.
+    /// Component attached to the game objects that should be picked up by the screen reader.
     /// </summary>
     [AddComponentMenu("Accessibility/Accessible Element")]
     [ExecuteAlways]

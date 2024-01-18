@@ -4,7 +4,7 @@ This sample code implements the game LetterSpell, which is compatible with scree
 
 Thanks for checking out this sample!
 
-* Requires Unity 2023.3.0b3 and above.
+* Requires Unity 2023.3.0a17 and above.
 
 ## Supported Platforms
 

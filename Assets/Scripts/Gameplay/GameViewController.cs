@@ -49,8 +49,6 @@ namespace Unity.Samples.LetterSpell
         /// </summary>
         bool m_WasHierarchyRefreshed;
 
-        const string k_SuccessAnnouncement = "Bravo! You found the correct word.";
-
         void OnEnable()
         {
             m_Model.letterCardsChanged += OnLetterCardsChanged;
@@ -198,8 +196,9 @@ namespace Unity.Samples.LetterSpell
                 FadeSuccessImageIn(fadeDuration);
 
                 const float announcementDelay = 1f;
+                const string successAnnouncement = "Bravo! You found the correct word.";
                 yield return new WaitForSeconds(announcementDelay);
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(k_SuccessAnnouncement);
+                AssistiveSupport.notificationDispatcher.SendAnnouncement(successAnnouncement);
 
                 const float imageDuration = 2f;
                 const float fadeOutDelay = imageDuration - announcementDelay - fadeDuration;

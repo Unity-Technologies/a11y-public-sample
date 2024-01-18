@@ -104,28 +104,28 @@ namespace Unity.Samples.Accessibility
             throw new FormatException(k_NoSrtPartFoundError);
         }
 
-        bool TryParseTimecodeLine(string line, out int startTc, out int endTc)
+        bool TryParseTimecodeLine(string line, out int startTime, out int endTime)
         {
             var parts = line.Split(k_Delimiters, StringSplitOptions.None);
             
             if (parts.Length != 2)
             {
-                startTc = -1;
-                endTc = -1;
+                startTime = -1;
+                endTime = -1;
                 return false;
             }
 
-            startTc = ParseSrtTimecode(parts[0]);
-            endTc = ParseSrtTimecode(parts[1]);
+            startTime = ParseSrtTimecode(parts[0]);
+            endTime = ParseSrtTimecode(parts[1]);
             return true;
         }
 
-        IEnumerable<string> GetSrtSubtitleParts(TextReader reader)
+        IEnumerable<string> GetSrtSubtitleParts(TextReader textReader)
         {
             string line;
             var stringBuilder = new StringBuilder();
 
-            while ((line = reader.ReadLine()) != null)
+            while ((line = textReader.ReadLine()) != null)
             {
                 if (string.IsNullOrEmpty(line.Trim()))
                 {
@@ -155,21 +155,21 @@ namespace Unity.Samples.Accessibility
         /// Takes an srt timecode as a string and parses it into a double (in seconds). A srt timecode reads as follows:
         /// 00:00:20,000
         /// </summary>
-        /// <param name="timecodeToParse">The timecode to parse</param>
+        /// <param name="timecode">The timecode to parse</param>
         /// <returns>The parsed timecode as a TimeSpan instance if the parsing was successful and -1 otherwise
         /// (subtitles should never show).</returns>
-         static int ParseSrtTimecode(string timecodeToParse)
+        static int ParseSrtTimecode(string timecode)
         {
-            var match = Regex.Match(timecodeToParse, "[0-9]+:[0-9]+:[0-9]+([,\\.][0-9]+)?");
+            var match = Regex.Match(timecode, "[0-9]+:[0-9]+:[0-9]+([,\\.][0-9]+)?");
 
             if (!match.Success)
             {
                 return -1;
             }
             
-            timecodeToParse = match.Value;
+            timecode = match.Value;
                 
-            if (TimeSpan.TryParse(timecodeToParse.Replace(',', '.'), out var result))
+            if (TimeSpan.TryParse(timecode.Replace(',', '.'), out var result))
             {
                 return (int)result.TotalMilliseconds;
             }

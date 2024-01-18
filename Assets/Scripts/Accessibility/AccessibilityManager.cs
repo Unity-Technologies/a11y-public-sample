@@ -102,14 +102,14 @@ namespace Unity.Samples.Accessibility
 
             return new Rect(minX, Screen.height - maxY, maxX - minX, maxY - minY);
 
-            void GetMinMaxX(Vector3[] v, out float min, out float max)
+            void GetMinMaxX(Vector3[] vector, out float min, out float max)
             {
                 min = float.MaxValue;
                 max = float.MinValue;
 
-                for (var i = 0; i < v.Length; ++i)
+                for (var i = 0; i < vector.Length; ++i)
                 {
-                    var value = v[i].x;
+                    var value = vector[i].x;
 
                     if (value < min)
                     {
@@ -123,14 +123,14 @@ namespace Unity.Samples.Accessibility
                 }
             }
 
-            void GetMinMaxY(Vector3[] v, out float min, out float max)
+            void GetMinMaxY(Vector3[] vector, out float min, out float max)
             {
                 min = float.MaxValue;
                 max = float.MinValue;
 
-                for (var i = 0; i < v.Length; ++i)
+                for (var i = 0; i < vector.Length; ++i)
                 {
-                    var value = v[i].y;
+                    var value = vector[i].y;
 
                     if (value < min)
                     {

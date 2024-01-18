@@ -14,15 +14,15 @@ namespace Unity.Samples.Accessibility
         /// <summary>
         /// Parses an asset file using an SrtParser and sets the parsed result as the main asset during Unity import.
         /// </summary>
-        /// <param name="ctx"></param>
-        public override void OnImportAsset(AssetImportContext ctx)
+        /// <param name="context"></param>
+        public override void OnImportAsset(AssetImportContext context)
         {
             m_Parser ??= new SrtParser();
 
-            var subtitle = m_Parser.Parse(File.ReadAllText(ctx.assetPath));
+            var subtitle = m_Parser.Parse(File.ReadAllText(context.assetPath));
 
-            ctx.AddObjectToAsset("main obj", subtitle);
-            ctx.SetMainObject(subtitle);
+            context.AddObjectToAsset("main obj", subtitle);
+            context.SetMainObject(subtitle);
         }
     }
 }

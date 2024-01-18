@@ -37,7 +37,7 @@
     top: 4px;
     bottom: 4px;
     left: 0;
-    background-color:  rgba(85, 95, 125, 0.7);
+    background-color: rgba(85, 95, 125, 0.7);
 }
 
 #indexLabel {
@@ -48,7 +48,6 @@
     margin-bottom: 4px;
     min-width: 50px;
 }
-
 
 .subtitle-item-listview-item #borderElement {
     position: absolute;
@@ -136,7 +135,7 @@
 }
 #previewToolbar {
     background-color: rgba(0,0, 0, 0.2);
-flex-direction: row;
+    flex-direction: row;
     padding: 4px;
 }
 

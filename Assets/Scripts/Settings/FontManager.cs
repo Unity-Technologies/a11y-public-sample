@@ -45,17 +45,23 @@ public class FontManager : MonoBehaviour
 
         foreach (var text in texts)
         {
-            if (text.fontSize == k_DefaultLetterCardFontSize)
+            switch (text.fontSize)
             {
-                m_LetterCardTextComponents.Add(text);
-            }
-            else if (text.fontSize == k_DefaultHeaderFontSize)
-            {
-                m_HeaderTextComponents.Add(text);
-            }
-            else
-            {
-                m_TextComponents.Add(text);
+                case k_DefaultLetterCardFontSize:
+                {
+                    m_LetterCardTextComponents.Add(text);
+                    break;
+                }
+                case k_DefaultHeaderFontSize:
+                {
+                    m_HeaderTextComponents.Add(text);
+                    break;
+                }
+                default:
+                {
+                    m_TextComponents.Add(text);
+                    break;
+                }
             }
         }
     }

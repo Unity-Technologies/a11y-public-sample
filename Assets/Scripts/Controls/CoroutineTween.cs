@@ -79,15 +79,20 @@ namespace Sample.Controls
 
             var newColor = Color.Lerp(m_StartColor, m_TargetColor, floatPercentage);
 
-            if (m_TweenMode == ColorTweenMode.Alpha)
+            switch (m_TweenMode)
             {
-                newColor.r = m_StartColor.r;
-                newColor.g = m_StartColor.g;
-                newColor.b = m_StartColor.b;
-            }
-            else if (m_TweenMode == ColorTweenMode.RGB)
-            {
-                newColor.a = m_StartColor.a;
+                case ColorTweenMode.Alpha:
+                {
+                    newColor.r = m_StartColor.r;
+                    newColor.g = m_StartColor.g;
+                    newColor.b = m_StartColor.b;
+                    break;
+                }
+                case ColorTweenMode.RGB:
+                {
+                    newColor.a = m_StartColor.a;
+                    break;
+                }
             }
 
             m_Target.Invoke(newColor);

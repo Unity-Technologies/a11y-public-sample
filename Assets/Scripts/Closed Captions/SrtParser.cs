@@ -120,7 +120,7 @@ namespace Unity.Samples.Accessibility
             return true;
         }
 
-        IEnumerable<string> GetSrtSubtitleParts(TextReader textReader)
+        static IEnumerable<string> GetSrtSubtitleParts(TextReader textReader)
         {
             string line;
             var stringBuilder = new StringBuilder();

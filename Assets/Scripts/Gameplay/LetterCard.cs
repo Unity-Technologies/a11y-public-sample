@@ -41,7 +41,7 @@ namespace Unity.Samples.LetterSpell
         /// Called when one frame has passed before the coroutine is started, to ensure that the layout has been
         /// updated.
         /// </summary>
-        IEnumerator DelayStart()
+        static IEnumerator DelayStart()
         {
             yield return new WaitForEndOfFrame();
         }

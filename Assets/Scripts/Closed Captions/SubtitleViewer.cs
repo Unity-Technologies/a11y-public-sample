@@ -159,7 +159,7 @@ namespace Unity.Samples.Accessibility
             }
         }
 
-        void SetPickingModeToIgnore(VisualElement rootElement)
+        static void SetPickingModeToIgnore(VisualElement rootElement)
         {
             if (rootElement == null)
             {

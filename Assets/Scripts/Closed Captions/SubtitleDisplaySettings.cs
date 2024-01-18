@@ -16,7 +16,7 @@ namespace Unity.Samples.Accessibility
         public FontAsset font;
         public int fontSize = 12;
         public FontStyle fontStyle = FontStyle.Normal;
-        public bool useDropShadow = false;
+        public bool useDropShadow;
         public Color dropShadowColor = Color.black;
 
         static SubtitleDisplaySettings m_Default;

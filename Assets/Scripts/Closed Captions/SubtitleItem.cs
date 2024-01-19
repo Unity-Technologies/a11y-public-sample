@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Unity.Samples.Accessibility
+namespace Unity.Samples.ClosedCaptions
 {
     /// <summary>
     /// This class is the model for a single subtitle item.

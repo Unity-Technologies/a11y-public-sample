@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Unity.Samples.Accessibility
+namespace Unity.Samples.ClosedCaptions
 {
     /// <summary>
     /// This class is used to play subtitles for the correct amount of time.

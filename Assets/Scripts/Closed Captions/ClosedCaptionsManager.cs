@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.UIElements;
 
-namespace Unity.Samples.Accessibility
+namespace Unity.Samples.ClosedCaptions
 {
     /// <summary>
     /// This singleton manages audio subtitles in Unity, linking audio clips to subtitles and displaying them when audio

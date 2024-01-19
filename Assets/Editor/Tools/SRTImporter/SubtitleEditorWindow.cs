@@ -2,7 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace Unity.Samples.Accessibility
+namespace Unity.Samples.ClosedCaptionsEditor
 {
     [EditorWindowTitle(title = "Subtitle Editor", useTypeNameAsIconName = true)]
     public sealed class SubtitleEditorWindow : EditorWindow

@@ -1,7 +1,8 @@
 using System.IO;
+using Unity.Samples.ClosedCaptions;
 using UnityEditor.AssetImporters;
 
-namespace Unity.Samples.Accessibility
+namespace Unity.Samples.ClosedCaptionsEditor
 {
     /// <summary>
     /// This class is used to import SRT files into Unity.

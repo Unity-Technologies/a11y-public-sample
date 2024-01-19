@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-namespace Unity.Samples.Accessibility
+namespace Unity.Samples.ClosedCaptions
 {
     /// <summary>
     /// This class is used to configure the appearance of subtitles.

@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace Unity.Samples.Accessibility
+namespace Unity.Samples.ClosedCaptions
 {
     /// <summary>
     /// This class is used to parse a srt file content to a list of subtitle items.

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Unity.Samples.Accessibility
+namespace Unity.Samples.ClosedCaptions
 {
     /// <summary>
     /// This class represents a time span in milliseconds.

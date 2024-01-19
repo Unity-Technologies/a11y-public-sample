@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.Accessibility;
 
-namespace Sample.Controls
+namespace Unity.Samples.Controls
 {
     [AddComponentMenu("UI/Accessibility/Sample/MultiSelectDropdown", 35)]
     [RequireComponent(typeof(RectTransform))]

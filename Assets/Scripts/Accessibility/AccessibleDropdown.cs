@@ -1,5 +1,5 @@
 using System.Collections;
-using Sample.Controls;
+using Unity.Samples.Controls;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;

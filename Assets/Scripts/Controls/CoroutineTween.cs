@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using System.Collections;
 
-namespace Sample.Controls
+namespace Unity.Samples.Controls
 {
     /// <summary>
     /// Base interface for tweeners.

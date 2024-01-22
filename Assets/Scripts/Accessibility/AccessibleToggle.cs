@@ -33,10 +33,12 @@ namespace Unity.Samples.Accessibility
             {
                 if (m_IsInsideDropdown)
                 {
+                    // Dropdown items are created dynamically, so we need to set the label here.
                     label = m_Text.text;
                 }
                 else
                 {
+                    // Do not override the label if it was set in the Editor.
                     label ??= m_Text.text;
                 }
             }
@@ -44,10 +46,12 @@ namespace Unity.Samples.Accessibility
             {
                 if (m_IsInsideDropdown)
                 {
+                    // Dropdown items are created dynamically, so we need to set the label here.
                     label = m_TMPText.text;
                 }
                 else
                 {
+                    // Do not override the label if it was set in the Editor.
                     label ??= m_TMPText.text;
                 }
             }
@@ -63,6 +67,13 @@ namespace Unity.Samples.Accessibility
             if (m_Toggle != null)
             {
                 m_Toggle.onValueChanged.AddListener(UpdateValue);
+
+                // By default, when the screen reader is on, the double-tap gesture sends a tap event to the center of
+                // the focused node's accessibility frame. This means that if the selectable game object is not in the
+                // center of its accessibility frame (which could also include the control's label, for example), it
+                // will not receive the tap event. To make sure the game object is selected by the screen reader no
+                // matter where it is in its accessibility frame, we implement the selected event, which is triggered on
+                // double-tap.
                 selected += OnSelected;
             }
         }
@@ -72,6 +83,7 @@ namespace Unity.Samples.Accessibility
             if (m_Toggle != null)
             {
                 selected -= OnSelected;
+
                 m_Toggle.onValueChanged.RemoveListener(UpdateValue);
             }
         }

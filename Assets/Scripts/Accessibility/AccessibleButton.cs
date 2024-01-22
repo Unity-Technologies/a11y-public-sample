@@ -38,6 +38,11 @@ namespace Unity.Samples.Accessibility
         {
             if (m_Button != null && Application.platform == RuntimePlatform.Android)
             {
+                // By default, when the screen reader is on, the double-tap gesture sends a tap event to the center of
+                // the focused node's accessibility frame. Therefore, implementing the selected event (which is
+                // triggered on double-tap) is not necessary for the button to be clicked. However, implementing this
+                // event explicitly tells the screen reader that the node is selectable, which may lead to better
+                // behaviour.
                 selected += OnSelected;
             }
         }

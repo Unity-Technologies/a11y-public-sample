@@ -17,6 +17,7 @@ namespace Unity.Samples.LetterSpell
 
         void Update()
         {
+            // Close this screen when the device's Back button is pressed. (This only applies to Android.)
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 OnDismissed();
@@ -25,11 +26,16 @@ namespace Unity.Samples.LetterSpell
 
         void OnEnable()
         {
+            // The pause screen is presented over the gameplay screen like a modal view, so all accessibility nodes
+            // outside the pause screen should be deactivated while it is open.
             AccessibilityManager.ActivateOtherAccessibilityNodes(false, transform);
 
+            // When the pause screen opens, move the accessibility focus to its status text (which is also the first
+            // accessibility node on the pause screen).
             var nodeToFocus = statusText.GetComponent<AccessibleElement>().node;
             AssistiveSupport.notificationDispatcher.SendLayoutChanged(nodeToFocus);
 
+            // Close this screen when the screen reader user performs the dismiss gesture.
             dismissButton.GetComponent<AccessibleButton>().dismissed += OnDismissed;
         }
 

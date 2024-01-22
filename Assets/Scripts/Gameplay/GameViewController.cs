@@ -162,14 +162,20 @@ namespace Unity.Samples.LetterSpell
             if (m_AccessibilitySelectedCard == null)
             {
                 m_AccessibilitySelectedCard = letterCard;
+
+                // When a letter card is selected, deactivate all accessibility nodes except the ones corresponding to
+                // the letter cards to allow the selected card to be moved correctly.
                 AccessibilityManager.ActivateOtherAccessibilityNodes(false, letterCardContainer);
+
                 letterCard.SetDraggingVisuals(true);
                 SetLetterCardsAccessibilityLabel(false);
             }
             else
             {
                 m_AccessibilitySelectedCard = null;
+
                 AccessibilityManager.ActivateOtherAccessibilityNodes(true, letterCardContainer);
+
                 letterCard.SetDraggingVisuals(false);
                 SetLetterCardsAccessibilityLabel(true);
             }
@@ -302,6 +308,9 @@ namespace Unity.Samples.LetterSpell
                 // Announce that the card was moved.
                 AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);
 
+                // On iOS, the accessibility hierarchy is flattened. This means that nodes don't have parents or
+                // children, so functions that require them (like AccessibilityHierarchy.MoveNode) won't work. Hence,
+                // we need to recreate the whole hierarchy instead.
                 if (Application.platform == RuntimePlatform.IPhonePlayer)
                 {
                     AccessibilityManager.RefreshHierarchy();

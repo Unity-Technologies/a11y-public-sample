@@ -45,6 +45,7 @@ namespace Unity.Samples.LetterSpell
 
         void Update()
         {
+            // Close this screen when the device's Back button is pressed. (This only applies to Android.)
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 OnDismissed();
@@ -58,6 +59,7 @@ namespace Unity.Samples.LetterSpell
                 Gameplay.instance.PauseGame();
             }
 
+            // Close this screen when the screen reader user performs the dismiss gesture.
             backButton.GetComponent<AccessibleButton>().dismissed += OnDismissed;
             
             // Load and apply the saved player preferences.

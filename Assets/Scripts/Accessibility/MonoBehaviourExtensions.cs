@@ -52,7 +52,8 @@ namespace Unity.Samples.Accessibility
                 
                 // Find the new node to focus on.
                 AccessibilityManager.hierarchy.TryGetNode(nodeId, out var node);
-                
+
+                // Move the accessibility focus to the node.
                 AssistiveSupport.notificationDispatcher.SendLayoutChanged(node);
             }
         }

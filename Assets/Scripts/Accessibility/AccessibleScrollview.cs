@@ -19,6 +19,9 @@ namespace Unity.Samples.Accessibility
 
         void Start()
         {
+            // The scroll view should not be accessible (i.e. focusable with the screen reader). The purpose of this
+            // component is to automatically scroll to the focused node inside the scroll view if it is not fully
+            // visible.
             isActive = false;
 
             m_ScrollRect = GetComponentInChildren<ScrollRect>();
@@ -52,6 +55,8 @@ namespace Unity.Samples.Accessibility
 
         void OnNodeFocusChanged(AccessibilityNode accessibilityNode)
         {
+            // If the focused node in inside this scroll view and is not fully visible, then automatically scroll the
+            // scroll view to make it fully visible.
             if (IsInsideScrollView(accessibilityNode) && !IsFullyVisibleInScrollView(accessibilityNode))
             {
                 ScrollIntoView(accessibilityNode);

@@ -121,7 +121,8 @@ namespace Unity.Samples.Accessibility
 
         void ConnectNodeToSelected()
         {
-            // Do not connect if the node does not exist or selected is not yet implemented.
+            // Implementing the selected event tells the screen reader that the node is selectable, which may lead to
+            // a specific behaviour. Therefore, we don't implement the node's selected event unless we actually need it.
             if (node == null || m_Selected == null)
             {
                 return;
@@ -133,7 +134,9 @@ namespace Unity.Samples.Accessibility
 
         void ConnectNodeToDismissed()
         {
-            // Do not connect if the node does not exist or dismissed is not yet implemented.
+            // Implementing the dismissed event tells the screen reader that the node is dismissible, which may lead to
+            // a specific behaviour. Therefore, we don't implement the node's dismissed event unless we actually need
+            // it.
             if (node == null || m_Dismissed == null)
             {
                 return;
@@ -212,6 +215,7 @@ namespace Unity.Samples.Accessibility
             node.role = role;
             node.state = state;
 
+            // AccessibilityNode.allowsDirectInteraction is not supported on Android.
             if (Application.isEditor || Application.platform == RuntimePlatform.IPhonePlayer)
             {
                 node.allowsDirectInteraction = allowsDirectInteraction;

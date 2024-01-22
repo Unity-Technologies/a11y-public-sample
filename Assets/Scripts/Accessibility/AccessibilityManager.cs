@@ -69,7 +69,7 @@ namespace Unity.Samples.Accessibility
         }
 
         /// <summary>
-        /// Updates the whole accessibility hierarchy.
+        /// Recreates the whole accessibility hierarchy.
         /// </summary>
         public static void RefreshHierarchy()
         {

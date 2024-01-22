@@ -100,6 +100,7 @@ namespace Unity.Samples.Accessibility
                 // we bring the other accessibility nodes back to their original active state.
                 AccessibilityManager.ActivateOtherAccessibilityNodes(!isDropdownOpen, transform);
 
+                // Move the accessibility focus to the dropdown.
                 AssistiveSupport.notificationDispatcher.SendLayoutChanged(node);
 
                 m_WasDropdownOpenedOrClosed = false;

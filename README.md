@@ -36,6 +36,7 @@ Some UI elements in the Options screen are there just to demonstrate how they ca
 ## Known Issues
 
 * On iOS, when in landscape, the accessibility focus indicator may be displayed with a smaller width than the actual width. This seems to appear for elements with a long width. This is an iOS bug, which we have already reported to Apple.
+* The letter cards' text style doesn't always update according to the system accessibility settings.
 
 ## Additional Resources
 

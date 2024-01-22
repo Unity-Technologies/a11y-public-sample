@@ -36,7 +36,7 @@ namespace Unity.Samples.Accessibility
 
         protected override void BindToControl()
         {
-            if (m_Button != null && Application.platform == RuntimePlatform.Android)
+            if (m_Button != null)
             {
                 // By default, when the screen reader is on, the double-tap gesture sends a tap event to the center of
                 // the focused node's accessibility frame. Therefore, implementing the selected event (which is
@@ -49,7 +49,7 @@ namespace Unity.Samples.Accessibility
 
         protected override void UnbindFromControl()
         {
-            if (m_Button != null && Application.platform == RuntimePlatform.Android)
+            if (m_Button != null)
             {
                 selected -= OnSelected;
             }

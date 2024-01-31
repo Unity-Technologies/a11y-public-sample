@@ -33,6 +33,11 @@ Some UI elements in the Options screen are there just to demonstrate how they ca
 * The color theme dropdown
 * The display size slider
 
+## Known Issues
+
+* On iOS, when in landscape, the accessibility focus indicator may be displayed with a smaller width than the actual width. This seems to appear for elements with a long width. This is an iOS bug, which we have already reported to Apple.
+* The letter cards' text style doesn't always update according to the system accessibility settings.
+
 ## Additional Resources
 
 Check out the documentation of the [Accessibility module APIs](https://docs.unity3d.com/2023.3/Documentation/ScriptReference/UnityEngine.AccessibilityModule.html).

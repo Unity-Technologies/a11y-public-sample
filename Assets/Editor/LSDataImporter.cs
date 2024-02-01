@@ -5,17 +5,16 @@ using UnityEngine;
 
 namespace Unity.Samples.LetterSpellEditor
 {
-    
     [ScriptedImporter(1, "lsdata")]
     public class LSDataImporter : ScriptedImporter
     {
-        public override void OnImportAsset(AssetImportContext ctx)
+        public override void OnImportAsset(AssetImportContext context)
         {
             var wordDatabase = ScriptableObject.CreateInstance<WordDatabase>();
-            JsonUtility.FromJsonOverwrite(File.ReadAllText(ctx.assetPath), wordDatabase);
+            JsonUtility.FromJsonOverwrite(File.ReadAllText(context.assetPath), wordDatabase);
             
-            ctx.AddObjectToAsset("main obj", wordDatabase);
-            ctx.SetMainObject(wordDatabase);
+            context.AddObjectToAsset("main obj", wordDatabase);
+            context.SetMainObject(wordDatabase);
         }
     } 
 }

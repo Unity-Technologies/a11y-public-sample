@@ -1,5 +1,5 @@
 using System.Collections;
-using Unity.Samples.Accessibility;
+using Unity.Samples.ScreenReader;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;
@@ -49,14 +49,11 @@ namespace Unity.Samples.LetterSpell
         /// </summary>
         bool m_WasHierarchyRefreshed;
 
-        const string k_SuccessAnnouncement = "Bravo! You found the correct word.";
-
         void OnEnable()
         {
             m_Model.letterCardsChanged += OnLetterCardsChanged;
             m_Model.gameplay = gameplay;
-            
-            // Update clue text is the clue setting changes.
+
             gameplay.stateChanged.AddListener(ShowOrHideClue);
 
             AssistiveSupport.nodeFocusChanged += OnNodeFocusChanged;
@@ -79,9 +76,9 @@ namespace Unity.Samples.LetterSpell
 
             if (gameplay.IsShowingLastWord())
             {
-                if (MusicManager.instance != null)
+                if (AudioManager.instance != null)
                 {
-                    MusicManager.instance.PlayResult(gameplay.reorderedWordCount == gameplay.words.Count);
+                    AudioManager.instance.PlayResult(gameplay.reorderedWordCount == gameplay.words.Count);
                 }
 
                 gameplay.StopGame();
@@ -144,7 +141,6 @@ namespace Unity.Samples.LetterSpell
                 var element = card.AddComponent<AccessibleElement>();
                 element.label = letterCardModel.letter.ToString();
                 element.hint = "Double tap to start moving.";
-                
                 element.selected += OnLetterCardSelected;
             }
 
@@ -156,7 +152,9 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
-        // Toggles the ability of the focused letter card to be reordered using the screen reader.
+        /// <summary>
+        /// Toggles the ability of the focused letter card to be reordered using the screen reader.
+        /// </summary>
         bool OnLetterCardSelected()
         {
             var letterCard = m_AccessibilityFocusedCard.GetComponent<LetterCard>();
@@ -164,14 +162,20 @@ namespace Unity.Samples.LetterSpell
             if (m_AccessibilitySelectedCard == null)
             {
                 m_AccessibilitySelectedCard = letterCard;
+
+                // When a letter card is selected, deactivate all accessibility nodes except the ones corresponding to
+                // the letter cards to allow the selected card to be moved correctly.
                 AccessibilityManager.ActivateOtherAccessibilityNodes(false, letterCardContainer);
+
                 letterCard.SetDraggingVisuals(true);
                 SetLetterCardsAccessibilityLabel(false);
             }
             else
             {
                 m_AccessibilitySelectedCard = null;
+
                 AccessibilityManager.ActivateOtherAccessibilityNodes(true, letterCardContainer);
+
                 letterCard.SetDraggingVisuals(false);
                 SetLetterCardsAccessibilityLabel(true);
             }
@@ -190,16 +194,17 @@ namespace Unity.Samples.LetterSpell
             StartCoroutine(DelayWordReorderingCompleted());
             return;
             
-            // The delay is needed to ensure that the screen reader has enough time to announce the word reordering.
-            // It also ensures that announcement is not ignored by the screen reader.
+            // This delay is needed to ensure that the screen reader has enough time to announce the word reordering.
+            // It also ensures that the announcement is not ignored by the screen reader.
             IEnumerator DelayWordReorderingCompleted()
             {
                 const float fadeDuration = 0.3f;
                 FadeSuccessImageIn(fadeDuration);
 
                 const float announcementDelay = 1f;
+                const string successAnnouncement = "Bravo! You found the correct word.";
                 yield return new WaitForSeconds(announcementDelay);
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(k_SuccessAnnouncement);
+                AssistiveSupport.notificationDispatcher.SendAnnouncement(successAnnouncement);
 
                 const float imageDuration = 2f;
                 const float fadeOutDelay = imageDuration - announcementDelay - fadeDuration;
@@ -213,7 +218,9 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
-        // Reset the selected card when the screen reader status is changed.
+        /// <summary>
+        /// Resets the selected card when the screen reader status changes.
+        /// </summary>
         void OnScreenReaderStatusChanged(bool isScreenReaderEnabled)
         {
             if (m_AccessibilitySelectedCard != null)
@@ -239,7 +246,9 @@ namespace Unity.Samples.LetterSpell
 
         void MoveSelectedCard()
         {
-            if (!AssistiveSupport.isScreenReaderEnabled || m_AccessibilitySelectedCard == null || m_AccessibilityFocusedCard == null)
+            if (!AssistiveSupport.isScreenReaderEnabled
+                || m_AccessibilitySelectedCard == null
+                || m_AccessibilityFocusedCard == null)
             {
                 return;
             }
@@ -252,8 +261,8 @@ namespace Unity.Samples.LetterSpell
             }
 
             // If we reach this code, it means we're dragging the card.
-            int selectedCardIndex = m_AccessibilitySelectedCard.transform.GetSiblingIndex();
-            int focusedCardIndex = m_AccessibilityFocusedCard.transform.GetSiblingIndex();
+            var selectedCardIndex = m_AccessibilitySelectedCard.transform.GetSiblingIndex();
+            var focusedCardIndex = m_AccessibilityFocusedCard.transform.GetSiblingIndex();
 
             // Move the card to the new position.
             if (selectedCardIndex > focusedCardIndex)
@@ -294,20 +303,24 @@ namespace Unity.Samples.LetterSpell
                 var otherSibling = draggable.transform.parent.GetChild(otherSiblingIndex);
                 
                 // Make the letter uppercase to ensure correct phonetic pronunciation.
-                var message = $"Moved {draggable.name.ToUpper()} {(shouldMoveLeft ? "before" : "after")} {otherSibling.name.ToUpper()}";
+                var announcement = $"Moved {draggable.name.ToUpper()} {(shouldMoveLeft ? "before" : "after")} {otherSibling.name.ToUpper()}";
 
                 // Announce that the card was moved.
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(message);
+                AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);
 
+                // On iOS, the accessibility hierarchy is flattened. This means that nodes don't have parents or
+                // children, so functions that require them (like AccessibilityHierarchy.MoveNode) won't work. Hence,
+                // we need to recreate the whole hierarchy instead.
                 if (Application.platform == RuntimePlatform.IPhonePlayer)
                 {
                     AccessibilityManager.RefreshHierarchy();
                     m_WasHierarchyRefreshed = true;
                     
-                    // Add node count to the element Id to match the node in refreshed hierarchy,
+                    // Add the node count to the element ID to match the ID of the node in the refreshed hierarchy,
                     // ensuring consistent focus even after rebuilding.
-                    int nodeToFocusId = element.node.id + AccessibilityManager.hierarchy.rootNodes.Count;
-                    nodeToFocusId += (shouldMoveLeft ? -count : count);
+                    var nodeToFocusId = element.node.id + AccessibilityManager.hierarchy.rootNodes.Count;
+                    nodeToFocusId += shouldMoveLeft ? -count : count;
+
                     this.DelayFocusOnNode(nodeToFocusId);   
                 }
                 else

@@ -34,12 +34,14 @@ namespace Unity.Samples.LetterSpell
 
             backgroundImage.gameObject.SetActive(true);
 
-            StartCoroutine(DelayedStart());
+            StartCoroutine(DelayStart());
         }
 
-        // Called when one frame has passed before the coroutine is started, to
-        // ensure that the layout has been updated.
-        IEnumerator DelayedStart()
+        /// <summary>
+        /// Called when one frame has passed before the coroutine is started, to ensure that the layout has been
+        /// updated.
+        /// </summary>
+        static IEnumerator DelayStart()
         {
             yield return new WaitForEndOfFrame();
         }
@@ -94,7 +96,6 @@ namespace Unity.Samples.LetterSpell
             // Set the item dirty.
             LayoutRebuilder.MarkLayoutForRebuild(m_RectTransform);
 
-            // Compute the index.
             var index = GetIndex();
 
             // Move the card.

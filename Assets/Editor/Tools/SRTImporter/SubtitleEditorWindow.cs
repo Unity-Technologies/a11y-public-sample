@@ -2,27 +2,23 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace Unity.Samples.Accessibility
+namespace Unity.Samples.ClosedCaptionsEditor
 {
     [EditorWindowTitle(title = "Subtitle Editor", useTypeNameAsIconName = true)]
-    public sealed class SubtitleEditorWindow : EditorWindow, IHasCustomMenu
+    public sealed class SubtitleEditorWindow : EditorWindow
     {
         [MenuItem("Assets/Create/Accessibility/Subtitle File", false, 500)]
-        public static void CreateSRTFile()
+        public static void CreateSrtFile()
         {
-            if (CommandService.Exists(nameof(CreateSRTFile)))
-                CommandService.Execute(nameof(CreateSRTFile), CommandHint.Menu);
+            if (CommandService.Exists(nameof(CreateSrtFile)))
+            {
+                CommandService.Execute(nameof(CreateSrtFile), CommandHint.Menu);
+            }
             else
             {
-                var contents = "1\n00:00:00,000 --> 00:00:10,000\nHello World.";
-                //var icon = EditorGUIUtility.IconContent<ThemeStyleSheet>().image as Texture2D;
+                const string contents = "1\n00:00:00,000 --> 00:00:10,000\nHello World.";
                 ProjectWindowUtil.CreateAssetWithContent("Subtitle.srt", contents);
             }
-        }
-
-        public void AddItemsToMenu(GenericMenu menu)
-        {
-
         }
     }
 }

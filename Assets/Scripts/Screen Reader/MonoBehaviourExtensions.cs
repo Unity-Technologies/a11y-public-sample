@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Accessibility;
 
-namespace Unity.Samples.Accessibility
+namespace Unity.Samples.ScreenReader
 {
     static class MonoBehaviourExtensions
     {

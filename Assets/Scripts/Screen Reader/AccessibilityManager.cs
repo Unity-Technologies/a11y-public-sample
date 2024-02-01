@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Accessibility;
 
-namespace Unity.Samples.Accessibility
+namespace Unity.Samples.ScreenReader
 {
     /// <summary>
     /// This class is added to the scene in order to detect the screen reader being turned on/off and automatically

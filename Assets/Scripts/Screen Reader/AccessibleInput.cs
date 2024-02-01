@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Unity.Samples.Accessibility
+namespace Unity.Samples.ScreenReader
 {
     /// <summary>
     /// Component attached to the UI game objects that should be considered input fields by the screen reader.

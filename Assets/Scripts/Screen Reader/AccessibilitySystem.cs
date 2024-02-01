@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Unity.Samples.Accessibility
+namespace Unity.Samples.ScreenReader
 {
     /// <summary>
     /// This class loads on initialization and creates the AccessibilityManager instance in the scene.

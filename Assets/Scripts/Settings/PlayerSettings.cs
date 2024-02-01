@@ -1,5 +1,5 @@
 using System;
-using Unity.Samples.Accessibility;
+using Unity.Samples.ScreenReader;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;

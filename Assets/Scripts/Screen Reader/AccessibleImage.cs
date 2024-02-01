@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Accessibility;
 
-namespace Unity.Samples.Accessibility
+namespace Unity.Samples.ScreenReader
 {
     /// <summary>
     /// Component attached to the UI game objects that should be considered images by the screen reader.

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.UI;
 
-namespace Unity.Samples.Accessibility
+namespace Unity.Samples.ScreenReader
 {
     /// <summary>
     /// Component attached to the UI game objects that should be considered buttons by the screen reader.

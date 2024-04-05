@@ -60,6 +60,7 @@ namespace Unity.Samples.LetterSpell
                 }
             }
         }
+
         Gameplay m_Gameplay;
 
         void OnCurrentWordIndexChanged(int wordIndex)

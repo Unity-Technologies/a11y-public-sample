@@ -2,25 +2,26 @@
 using UnityEngine.Events;
 using System.Collections;
 
-
-namespace Sample.Controls
+namespace Unity.Samples.Controls
 {
-    // Base interface for tweeners,
-    // using an interface instead of
-    // an abstract class as we want the
-    // tweens to be structs.
-    internal interface ITweenValue
+    /// <summary>
+    /// Base interface for tweeners.
+    /// We use an interface instead of an abstract class as we want the tweens to be structs.
+    /// </summary>
+    interface ITweenValue
     {
         void TweenValue(float floatPercentage);
+
         bool ignoreTimeScale { get; }
         float duration { get; }
+
         bool ValidTarget();
     }
 
-    // Color tween class, receives the
-    // TweenValue callback and then sets
-    // the value on the target.
-    internal struct ColorTween : ITweenValue
+    /// <summary>
+    /// Color tween class that receives the TweenValue callback and then sets the value on the target.
+    /// </summary>
+    struct ColorTween : ITweenValue
     {
         public enum ColorTweenMode
         {
@@ -31,80 +32,58 @@ namespace Sample.Controls
 
         public class ColorTweenCallback : UnityEvent<Color> { }
 
-        private ColorTweenCallback m_Target;
-        private Color m_StartColor;
-        private Color m_TargetColor;
-        private ColorTweenMode m_TweenMode;
+        ColorTweenCallback m_Target;
 
-        private float m_Duration;
-        private bool m_IgnoreTimeScale;
+        public Color startColor { get; set; }
+        public Color targetColor { get; set; }
+        public ColorTweenMode tweenMode { get; set; }
 
-        public Color startColor
-        {
-            get { return m_StartColor; }
-            set { m_StartColor = value; }
-        }
-
-        public Color targetColor
-        {
-            get { return m_TargetColor; }
-            set { m_TargetColor = value; }
-        }
-
-        public ColorTweenMode tweenMode
-        {
-            get { return m_TweenMode; }
-            set { m_TweenMode = value; }
-        }
-
-        public float duration
-        {
-            get { return m_Duration; }
-            set { m_Duration = value; }
-        }
-
-        public bool ignoreTimeScale
-        {
-            get { return m_IgnoreTimeScale; }
-            set { m_IgnoreTimeScale = value; }
-        }
+        public float duration { get; set; }
+        public bool ignoreTimeScale { get; set; }
 
         public void TweenValue(float floatPercentage)
         {
             if (!ValidTarget())
+            {
                 return;
-
-            var newColor = Color.Lerp(m_StartColor, m_TargetColor, floatPercentage);
-
-            if (m_TweenMode == ColorTweenMode.Alpha)
-            {
-                newColor.r = m_StartColor.r;
-                newColor.g = m_StartColor.g;
-                newColor.b = m_StartColor.b;
             }
-            else if (m_TweenMode == ColorTweenMode.RGB)
+
+            var newColor = Color.Lerp(startColor, targetColor, floatPercentage);
+
+            switch (tweenMode)
             {
-                newColor.a = m_StartColor.a;
+                case ColorTweenMode.Alpha:
+                {
+                    newColor.r = startColor.r;
+                    newColor.g = startColor.g;
+                    newColor.b = startColor.b;
+                    break;
+                }
+                case ColorTweenMode.RGB:
+                {
+                    newColor.a = startColor.a;
+                    break;
+                }
             }
+
             m_Target.Invoke(newColor);
         }
 
         public void AddOnChangedCallback(UnityAction<Color> callback)
         {
-            if (m_Target == null)
-                m_Target = new ColorTweenCallback();
+            m_Target ??= new ColorTweenCallback();
 
             m_Target.AddListener(callback);
         }
 
         public bool GetIgnoreTimescale()
         {
-            return m_IgnoreTimeScale;
+            return ignoreTimeScale;
         }
 
         public float GetDuration()
         {
-            return m_Duration;
+            return duration;
         }
 
         public bool ValidTarget()
@@ -113,69 +92,47 @@ namespace Sample.Controls
         }
     }
 
-    // Float tween class, receives the
-    // TweenValue callback and then sets
-    // the value on the target.
-    internal struct FloatTween : ITweenValue
+    /// <summary>
+    /// Float tween class that receives the TweenValue callback and then sets the value on the target.
+    /// </summary>
+    struct FloatTween : ITweenValue
     {
         public class FloatTweenCallback : UnityEvent<float> { }
 
-        private FloatTweenCallback m_Target;
-        private float m_StartValue;
-        private float m_TargetValue;
+        FloatTweenCallback m_Target;
 
-        private float m_Duration;
-        private bool m_IgnoreTimeScale;
+        public float startValue { get; set; }
+        public float targetValue { get; set; }
 
-        public float startValue
-        {
-            get { return m_StartValue; }
-            set { m_StartValue = value; }
-        }
-
-        public float targetValue
-        {
-            get { return m_TargetValue; }
-            set { m_TargetValue = value; }
-        }
-
-        public float duration
-        {
-            get { return m_Duration; }
-            set { m_Duration = value; }
-        }
-
-        public bool ignoreTimeScale
-        {
-            get { return m_IgnoreTimeScale; }
-            set { m_IgnoreTimeScale = value; }
-        }
+        public float duration { get; set; }
+        public bool ignoreTimeScale { get; set; }
 
         public void TweenValue(float floatPercentage)
         {
             if (!ValidTarget())
+            {
                 return;
+            }
 
-            var newValue = Mathf.Lerp(m_StartValue, m_TargetValue, floatPercentage);
+            var newValue = Mathf.Lerp(startValue, targetValue, floatPercentage);
             m_Target.Invoke(newValue);
         }
 
         public void AddOnChangedCallback(UnityAction<float> callback)
         {
-            if (m_Target == null)
-                m_Target = new FloatTweenCallback();
+            m_Target ??= new FloatTweenCallback();
 
             m_Target.AddListener(callback);
         }
 
         public bool GetIgnoreTimescale()
         {
-            return m_IgnoreTimeScale;
+            return ignoreTimeScale;
         }
 
         public float GetDuration()
         {
-            return m_Duration;
+            return duration;
         }
 
         public bool ValidTarget()
@@ -184,21 +141,26 @@ namespace Sample.Controls
         }
     }
 
-    // Tween runner, executes the given tween.
-    // The coroutine will live within the given
-    // behaviour container.
-    internal class TweenRunner<T> where T : struct, ITweenValue
+    /// <summary>
+    /// Tween runner that executes the given tween.
+    /// The coroutine will live within the given behaviour container.
+    /// </summary>
+    class TweenRunner<T> where T : struct, ITweenValue
     {
-        protected MonoBehaviour m_CoroutineContainer;
-        protected IEnumerator m_Tween;
+        MonoBehaviour m_CoroutineContainer;
+        IEnumerator m_Tween;
 
-        // utility function for starting the tween
-        private static IEnumerator Start(T tweenInfo)
+        /// <summary>
+        /// Utility function for starting the tween.
+        /// </summary>
+        static IEnumerator Start(T tweenInfo)
         {
             if (!tweenInfo.ValidTarget())
+            {
                 yield break;
+            }
 
-            var elapsedTime = 0.0f;
+            var elapsedTime = 0f;
             while (elapsedTime < tweenInfo.duration)
             {
                 elapsedTime += tweenInfo.ignoreTimeScale ? Time.unscaledDeltaTime : Time.deltaTime;
@@ -206,7 +168,8 @@ namespace Sample.Controls
                 tweenInfo.TweenValue(percentage);
                 yield return null;
             }
-            tweenInfo.TweenValue(1.0f);
+
+            tweenInfo.TweenValue(1f);
         }
 
         public void Init(MonoBehaviour coroutineContainer)

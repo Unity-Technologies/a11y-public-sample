@@ -1,5 +1,5 @@
 using System;
-using Unity.Samples.Accessibility;
+using Unity.Samples.ScreenReader;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;
@@ -45,6 +45,7 @@ namespace Unity.Samples.LetterSpell
 
         void Update()
         {
+            // Close this screen when the device's Back button is pressed. (This only applies to Android.)
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 OnDismissed();
@@ -58,6 +59,7 @@ namespace Unity.Samples.LetterSpell
                 Gameplay.instance.PauseGame();
             }
 
+            // Close this screen when the screen reader user performs the dismiss gesture.
             backButton.GetComponent<AccessibleButton>().dismissed += OnDismissed;
             
             // Load and apply the saved player preferences.
@@ -190,8 +192,7 @@ namespace Unity.Samples.LetterSpell
 
         static void SaveToggleGroupState(ToggleGroup toggleGroup, string prefName)
         {
-            // Find the selected toggle in the ToggleGroup and save its index in
-            // the player preferences.
+            // Find the selected toggle in the ToggleGroup and save its index in the player preferences.
             var toggles = toggleGroup.GetComponentsInChildren<Toggle>();
 
             for (var i = 0; i < toggles.Length; i++)
@@ -218,9 +219,9 @@ namespace Unity.Samples.LetterSpell
         {
             PlayerPrefs.SetFloat(musicPreference, value);
 
-            if (MusicManager.instance != null)
+            if (AudioManager.instance != null)
             {
-                MusicManager.instance.SetMusicVolume(value);
+                AudioManager.instance.SetMusicVolume(value);
             }
         }
 
@@ -246,6 +247,7 @@ namespace Unity.Samples.LetterSpell
                 boldTextAccessibleElement.value = k_SettingOff;
                 boldTextValue.text = k_SettingOff;
             }
+
             boldTextAccessibleElement.SetNodeProperties();
         }
         
@@ -261,15 +263,17 @@ namespace Unity.Samples.LetterSpell
                 closedCaptionAccessibleElement.value = k_SettingOff;
                 closedCaptionValue.text = k_SettingOff;
             }
+
             closedCaptionAccessibleElement.SetNodeProperties();
-            
         }
 
         void OnFontScaleValueChanged(float fontScale)
         {
-            string fontScaleText = fontScale.ToString("0.00");
+            var fontScaleText = fontScale.ToString("0.00");
+
             fontScaleAccessibleElement.value = fontScaleText;
             fontScaleValue.text = fontScaleText;
+
             fontScaleAccessibleElement.SetNodeProperties();
         }
     }

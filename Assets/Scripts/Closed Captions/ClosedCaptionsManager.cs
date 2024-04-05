@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Samples.LetterSpell;
 using UnityEngine;
@@ -43,19 +44,25 @@ namespace Unity.Samples.ClosedCaptions
         
         void Start()
         {
-            AudioManager.audioPlayingStatusChanged += OnAudioPlayingStatusChanged;
-
             // Create a map of audio clip names to subtitles.
             m_SubtitleMap.Add(AudioManager.instance.welcomeEffect.name, subtitles[0]);
             m_SubtitleMap.Add(AudioManager.instance.successEffect.name, subtitles[1]);
             m_SubtitleMap.Add(AudioManager.instance.failureEffect.name, subtitles[2]);
         }
 
+        void OnEnable()
+        {
+            AudioManager.audioPlayingStatusChanged += OnAudioPlayingStatusChanged;
+        }
+
+        void OnDisable()
+        {
+            AudioManager.audioPlayingStatusChanged -= OnAudioPlayingStatusChanged;
+        }
+
         void OnDestroy()
         {
             s_Instance = null;
-
-            AudioManager.audioPlayingStatusChanged -= OnAudioPlayingStatusChanged;
         }
 
         // Displays the corresponding subtitle when an audio clip plays.

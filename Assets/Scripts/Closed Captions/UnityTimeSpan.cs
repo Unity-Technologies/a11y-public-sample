@@ -12,31 +12,28 @@ namespace Unity.Samples.ClosedCaptions
     public struct UnityTimeSpan : IEquatable<UnityTimeSpan>
     {
         [SerializeField]
-        int milliseconds;
+        int m_Milliseconds;
         
-        public int Milliseconds
-        {
-            get => milliseconds;
-        }
+        public int milliseconds => m_Milliseconds;
 
         public static UnityTimeSpan FromMilliseconds(int ms)
         {
-            return new UnityTimeSpan { milliseconds = ms };
+            return new UnityTimeSpan { m_Milliseconds = ms };
         }
 
         public override string ToString()
         {
-            return TimeSpan.FromMilliseconds(milliseconds).ToString("c");
+            return TimeSpan.FromMilliseconds(m_Milliseconds).ToString("c");
         }
 
         public bool Equals(UnityTimeSpan other)
         {
-            return milliseconds == other.milliseconds;
+            return m_Milliseconds == other.m_Milliseconds;
         }
 
         public override int GetHashCode()
         {
-            return milliseconds;
+            return m_Milliseconds;
         }
     }
 }

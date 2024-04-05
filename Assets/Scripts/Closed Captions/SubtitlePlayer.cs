@@ -41,7 +41,7 @@ namespace Unity.Samples.ClosedCaptions
                 {
                     var item = subtitle.items[i];
 
-                    if (item.endTime.Milliseconds >= m_PlaybackTime)
+                    if (item.endTime.milliseconds >= m_PlaybackTime)
                     {
                         nextIndex = i;
                         break;
@@ -155,7 +155,7 @@ namespace Unity.Samples.ClosedCaptions
 
         bool IsInPlaybackRange(SubtitleItem item)
         {
-            return item.startTime.Milliseconds <= m_PlaybackTime && item.endTime.Milliseconds >= m_PlaybackTime;
+            return item.startTime.milliseconds <= m_PlaybackTime && item.endTime.milliseconds >= m_PlaybackTime;
         }
 
         IEnumerator PlaySubtitle()

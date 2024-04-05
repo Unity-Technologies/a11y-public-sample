@@ -86,8 +86,8 @@ namespace Unity.Samples.ClosedCaptions
 
                     subtitleItem.text = text;
 
-                    if ((subtitleItem.startTime.Milliseconds != 0
-                            || subtitleItem.endTime.Milliseconds != 0)
+                    if ((subtitleItem.startTime.milliseconds != 0
+                            || subtitleItem.endTime.milliseconds != 0)
                         && !string.IsNullOrEmpty(subtitleItem.text))
                     {
                         // Parsing succeeded.

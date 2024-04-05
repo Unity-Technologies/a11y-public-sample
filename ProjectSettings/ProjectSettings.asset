@@ -161,14 +161,16 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   androidMinAspectRatio: 1
   applicationIdentifier:
-    Standalone: com.DefaultCompany.2DProject
+    Android: com.Unity.LetterSpell
+    Standalone: com.Unity.LetterSpell
+    iPhone: com.Unity.LetterSpell
   buildNumber:
     Bratwurst: 0
     Standalone: 0
     VisionOS: 0
     iPhone: 0
     tvOS: 0
-  overrideDefaultApplicationIdentifier: 1
+  overrideDefaultApplicationIdentifier: 0
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 23
   AndroidTargetSdkVersion: 0

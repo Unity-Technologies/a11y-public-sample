@@ -1,8 +1,8 @@
-# Accessibility (A11Y) Public Sample: LetterSpell
+# LetterSpell: Example of an Accessible Unity Application
 
-This sample Unity project implements the game LetterSpell, which is compatible with screen readers on mobile platforms. It demonstrates how to convert UI made with Unity, using uGUI (i.e. with a Canvas component), into data compatible with screen readers. Additionally, this sample shows how to read some system accessibility settings and apply them to the game.
+LetterSpell is a sample mobile application made with Unity that supports screen readers and responds to system accessibility settings. It is intended to provide an example of using Unity's Accessibility APIs to convert UI made with Unity (using uGUI) into data compatible with screen readers. Additionally, the application reads some system accessibility settings and adapts its UI accordingly.
 
-Thanks for checking out this sample!
+Thank you for checking out this sample!
 
 ## System Requirements
 
@@ -10,7 +10,7 @@ You can run this sample project in the Unity Editor:
 * Requires Unity 2023.3.0a17 and above.
 
 You can build this sample project for the following platforms:
-* Android 8 and above.
+* Android 8.0 and above.
 * iOS 13 and above.
 
 ## Controls
@@ -28,15 +28,15 @@ On mobile devices, with the screen reader:
 
 ## Features Not Implemented
 
-Some UI elements in the Options screen are there just to demonstrate how they can be converted into data compatible with screen readers and are not actually functional. These are:
+Some UI elements in the Options screen are there only to demonstrate how they can be converted into data compatible with screen readers and are not actually functional. These are:
 * The option search field
 * The color theme dropdown
 * The display size slider
 
 ## Known Issues
 
-* On iOS, when in landscape, the accessibility focus indicator may be displayed with a smaller width than the actual width. This seems to appear for elements with a long width. This is an iOS bug, which we have already reported to Apple.
-* The letter cards' text style doesn't always update according to the system accessibility settings.
+* On iOS, in landscape orientation, the accessibility focus indicator may be displayed with a smaller width than the actual width. This seems to appear for elements with a long width. This is an iOS bug, which we have already reported to Apple.
+* The text style of the letter cards does not always update according to the system accessibility settings.
 
 ## Additional Resources
 
@@ -44,7 +44,7 @@ Check out the documentation of the [Accessibility module APIs](https://docs.unit
 
 ## Questions or Issues?
 
-Come talk to us on the [Unity Accessibility Forum](https://forum.unity.com/forums/accessibility.922/)!
+Come talk to us on [Unity Discussions](https://discussions.unity.com/tag/Accessibility-Features)!
 
 # Acknowledgement
 
@@ -52,4 +52,4 @@ LetterSpell is inspired by the iOS game [Letter Rooms](https://apps.apple.com/us
 
 # License
 
-Our intention is that you can use everything in this project as a starting point or as bits and pieces in your own Unity games. For the legal words, see [LICENSE.md](LICENSE.md).
+Our intention is for you to be able to use everything in this project as a starting point or as bits and pieces in your own Unity games. For the legal words, see [LICENSE.md](LICENSE.md).

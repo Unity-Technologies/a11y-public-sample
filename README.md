@@ -1,4 +1,4 @@
-<img width="1920" height="1080" alt="Splash-Screen" src="https://github.com/user-attachments/assets/d5065152-7129-4521-afbd-59a9ca0e958a" />
+<img width="1920" height="1080" alt="LetterSpell application splash screen showing the game logo and the text &quot;A fun spelling game&quot;" src="https://github.com/user-attachments/assets/d5065152-7129-4521-afbd-59a9ca0e958a" />
 
 # LetterSpell: Example of an Accessible Unity Application
 

@@ -1,3 +1,5 @@
+<img width="1920" height="1080" alt="Splash-Screen" src="https://github.com/user-attachments/assets/d5065152-7129-4521-afbd-59a9ca0e958a" />
+
 # LetterSpell: Example of an Accessible Unity Application
 
 LetterSpell is a sample mobile application made with Unity that supports screen readers and responds to system accessibility settings. It is intended to provide an example of using Unity's Accessibility APIs to convert UI made with Unity (using uGUI) into data compatible with screen readers. Additionally, the application reads some system accessibility settings and adapts its UI accordingly.

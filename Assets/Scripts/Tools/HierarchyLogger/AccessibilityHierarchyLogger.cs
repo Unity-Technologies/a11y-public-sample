@@ -36,6 +36,7 @@ namespace Unity.Samples.LetterSpell
 
         private Visitor m_Visitor;
         private StringBuilder m_StringBuilder;
+        private List<Rect> m_NodeFrames = new List<Rect>();
         private int m_Level;
         private const int k_IndentWidth = 4;
 
@@ -55,7 +56,11 @@ namespace Unity.Samples.LetterSpell
             m_StringBuilder.AppendLine("Accessibility Hierarchy:");
             try
             {
+                m_NodeFrames.Clear();
+                OnScreenDebug.ClearShapes();
                 m_Visitor.Visit(hierarchy);
+                foreach (var frame in m_NodeFrames)
+                    OnScreenDebug.DrawScreenRect(frame);
                 OnScreenDebug.Log(m_StringBuilder.ToString());
                // WriteLog(m_StringBuilder.ToString());
             }
@@ -73,7 +78,8 @@ namespace Unity.Samples.LetterSpell
         void Log(AccessibilityNode node)
         {
             m_StringBuilder.Append(' ', m_Level * k_IndentWidth);
-            m_StringBuilder.AppendLine($"{node.id} \"{node.label}\" Role:{node.role} State:{node.state}");
+            m_StringBuilder.AppendLine($"{node.id} \"{node.label}\" Role:{node.role} State:{node.state} Frame:{node.frame}");
+            m_NodeFrames.Add(node.frame);
         }
         
         void EndLogging(AccessibilityNode node)

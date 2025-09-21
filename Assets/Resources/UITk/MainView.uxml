@@ -68,8 +68,7 @@
                             </Bindings>
                         </ui:Toggle>
                         <ui:Label text="Audio" class="settings-header-label"/>
-                        <ui:Slider label="Sound Effects
-Volume" high-value="1" name="settingsSoundEffectVolumne">
+                        <ui:Slider label="Sound Effects Volume" high-value="1" name="settingsSoundEffectVolumne">
                             <Bindings>
                                 <ui:DataBinding property="value" data-source-path="soundEffectVolume" binding-mode="TwoWay"/>
                             </Bindings>
@@ -111,6 +110,6 @@ Volume" high-value="1" name="settingsSoundEffectVolumne">
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="logo" style="flex-grow: 1; position: absolute; width: 100px; height: 24px; top: 22px; left: 19px; display: none; background-image: url(&quot;project://database/Assets/UI/LetterSpell_smallLogo.png?fileID=2800000&amp;guid=75dc9c01c37ed4403948da36191f22df&amp;type=3#LetterSpell_smallLogo&quot;);"/>
+        <ui:VisualElement name="logo" style="flex-grow: 1; position: absolute; width: 100px; height: 24px; top: 22px; left: 19px; display: none; background-image: url(&quot;project://database/Assets/UI/Images/LetterSpell_smallLogo.png?fileID=2800000&amp;guid=75dc9c01c37ed4403948da36191f22df&amp;type=3#LetterSpell_smallLogo&quot;);"/>
     </ui:VisualElement>
 </ui:UXML>

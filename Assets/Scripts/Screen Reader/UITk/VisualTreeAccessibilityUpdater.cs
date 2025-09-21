@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Unity.Samples.LetterSpell;
 using UnityEngine;
 using UnityEngine.Accessibility;
@@ -208,8 +209,129 @@ namespace Unity.Samples.ScreenReader
                 return Rect.zero;
 
             var worldRect = ve.worldBound;
-            var scale = 1; //FIX - ve.panel.scale;
+            var panel = ve.panel as IRuntimePanel; 
+            var panelSettings = panel.panelSettings;
+
+            float scale = panel.scaledPixelsPerPoint;
             return new Rect(worldRect.position * scale, worldRect.size * scale);
+            /*
+            float panelScale =  1.0f; // Default to 1 if no scaling is applied or calculated
+
+            if (panelSettings != null && panelSettings.scaleMode == PanelScaleMode.ScaleWithScreenSize)
+            {
+                Vector2 referenceResolution = panelSettings.referenceResolution;
+                float currentScreenRatio = (float)Screen.width / Screen.height;
+                float referenceScreenRatio = referenceResolution.x / referenceResolution.y;
+
+                if (panelSettings.match == 0) // Match Width
+                {
+                    panelScale = (float)Screen.width / referenceResolution.x;
+                }
+                else if (panelSettings.match == 1) // Match Height
+                {
+                    panelScale = (float)Screen.height / referenceResolution.y;
+                }
+                else // Match Width or Height (0.5)
+                {
+                    float widthScale = (float)Screen.width / referenceResolution.x;
+                    float heightScale = (float)Screen.height / referenceResolution.y;
+                    panelScale = Mathf.Lerp(widthScale, heightScale, panelSettings.match);
+                }
+            }
+
+            // Convert the worldBound's top-left and bottom-right corners to screen space
+            Vector2 screenMin = RuntimePanelUtils.PanelToScreen(ve.panel, worldRect.min);
+            Vector2 screenMax = RuntimePanelUtils.PanelToScreen(ve.panel, worldRect.max);
+
+            // Apply the scale factor to the screen coordinates
+            // Note: Screen coordinates have Y increasing downwards, so adjust for Rect
+            float screenX = screenMin.x * scaleFactor;
+            float screenY = (Screen.height - screenMax.y) * scaleFactor; // Adjust for Y-axis
+            float screenWidth = (screenMax.x - screenMin.x) * scaleFactor;
+            float screenHeight = (screenMax.y - screenMin.y) * scaleFactor;
+
+            Rect screenRect = new Rect(screenX, screenY, screenWidth, screenHeight);
+            */
+            /* Vector2 corner1 = new Vector2(
+                 worldRect.x * panelScale,
+                 (Screen.height - (worldRect.y + worldRect.height)) * panelScale // Invert Y and adjust for height
+             );*/
+
+            //RectTransformUtility.ScreenPointToLocalPointInRectangle()
+            // Get scale of panel from reflection
+            //var property = ve.GetType().GetProperty("scale", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            //var scale = (float)property.GetValue(ve.panel);//ve.panel.scale);// 1; //FIX - ve.panel.scale;
+
+            // Convert worldRect to screen space
+            //var screenRect = vepanel.context.visualTree.WorldToScreen(worldRect);
+
+            //return new Rect(worldRect.position * scale, worldRect.size * scale);
+            //return WorldToScreen(worldRect, Camera.main);//.WWorldToScreenRect(worldRect.center);
+        }
+        
+        public static Rect WorldToScreen(Rect worldRect, Camera camera)
+        {
+            var elementCorners = new Vector3[4]
+            {
+                new(worldRect.xMin, worldRect.yMin, 0),
+                new(worldRect.xMax, worldRect.yMin, 0),
+                new(worldRect.xMax, worldRect.yMax, 0),
+                new(worldRect.xMin, worldRect.yMax, 0) 
+            };
+            var screenCorners = new Vector3[4];
+
+            for (var i = 0; i < elementCorners.Length; i++)
+            {
+                screenCorners[i] = camera.WorldToScreenPoint(elementCorners[i]);
+            }
+
+            GetMinMaxX(screenCorners, out var minX, out var maxX);
+            GetMinMaxY(screenCorners, out var minY, out var maxY);
+
+            return new Rect(minX, Screen.height - maxY, maxX - minX, maxY - minY);
+
+            void GetMinMaxX(Vector3[] vector, out float min, out float max)
+            {
+                min = float.MaxValue;
+                max = float.MinValue;
+
+                for (var i = 0; i < vector.Length; ++i)
+                {
+                    var value = vector[i].x;
+
+                    if (value < min)
+                    {
+                        min = value;
+                    }
+
+                    if (value > max)
+                    {
+                        max = value;
+                    }
+                }
+            }
+
+            void GetMinMaxY(Vector3[] vector, out float min, out float max)
+            {
+                min = float.MaxValue;
+                max = float.MinValue;
+
+                for (var i = 0; i < vector.Length; ++i)
+                {
+                    var value = vector[i].y;
+
+                    if (value < min)
+                    {
+                        min = value;
+                    }
+
+                    if (value > max)
+                    {
+                        max = value;
+                    }
+                }
+            }
         }
 
         

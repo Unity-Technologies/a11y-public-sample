@@ -70,7 +70,7 @@ namespace Unity.Samples.ScreenReader
             if (node == null)
                 return false;
             if (!m_MainHierarchy.ContainsNode(node))
-                return true;
+                return false;
             // We know the node is in the main hierarchy, now we need to check if it's part of this sub hierarchy.
             var parentNode = node.parent;
             while (parentNode != null)

@@ -1,0 +1,6 @@
+:root {
+}
+
+.unity-label {
+    font-size: 10px;
+}

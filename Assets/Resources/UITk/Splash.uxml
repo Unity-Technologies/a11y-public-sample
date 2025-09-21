@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/UITk/Themes/GreenStyle/GreenStyle.Colors.uss?fileID=7433441132597879392&amp;guid=a91a3cd95022b4feda8886719867bb42&amp;type=3#GreenStyle.Colors" />
+    <ui:VisualElement class="lsp-splash" style="flex-grow: 1;" />
+</ui:UXML>

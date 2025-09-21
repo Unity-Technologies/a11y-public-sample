@@ -10,15 +10,18 @@ namespace Unity.Samples.ScreenReader
         /// Recreates the accessibility hierarchy (i.e. if there was a previous one, it is destroyed and a new one is
         /// created).
         /// </summary>
-        public static void DelayRefreshHierarchy(this MonoBehaviour behaviour)
+        public static void DelayRefreshHierarchy(this MonoBehaviour behaviour, AccessibilityService service)
         {
+            if (service == null)
+                return;
+                
             behaviour.StartCoroutine(RefreshHierarchy());
             return;
 
             IEnumerator RefreshHierarchy()
             {
                 yield return new WaitForEndOfFrame();
-                AccessibilityManager.RefreshHierarchy();
+                service.RebuildHierarchy();
             }
         }
 

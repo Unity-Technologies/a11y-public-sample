@@ -1,0 +1,7 @@
+.lsp-splash {
+    background-image: url('project://database/Assets/UI/Splash-Screen.png?fileID=4602334432413793429&guid=364b68ded9ed04f07848b6c7de25fdad&type=3#Intro Screen_0');
+}
+
+.lsp-intro-view {
+    background-image: url('project://database/Assets/UI/Background-Intro.png?fileID=7601968805574212021&guid=718087ba784b64abd9675b1452fc0095&type=3#Main Menu-1-Name Input_0');
+}

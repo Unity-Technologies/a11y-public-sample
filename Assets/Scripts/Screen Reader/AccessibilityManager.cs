@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Accessibility;
+using UnityEngine.Pool;
 
 namespace Unity.Samples.ScreenReader
 {
@@ -16,15 +17,6 @@ namespace Unity.Samples.ScreenReader
     public class AccessibilityManager : MonoBehaviour
     {
         /// <summary>
-        /// Utility struct to help translate the game object hierarchy into the accessibility hierarchy.
-        /// </summary>
-        struct HierarchyItem
-        {
-            public Transform transform;
-            public AccessibilityNode node;
-        }
-
-        /// <summary>
         /// The static instance of this class that allows other scripts to update the accessibility hierarchy as
         /// necessary.
         /// </summary>
@@ -36,17 +28,20 @@ namespace Unity.Samples.ScreenReader
         AccessibilityHierarchy m_Hierarchy;
 
         /// <summary>
-        /// Mapping from the AccessibilityNode from the accessibility hierarchy to the MonoBehavior instance it was
-        /// created from. This is often necessary to access information about the node, like its transform to calculate
-        /// positions, for example.
+        /// The instance of the AccessibilityManager in the scene.
         /// </summary>
-        Dictionary<AccessibilityNode, AccessibleElement> m_ElementForNodeMap = new();
+        public static AccessibilityManager instance => s_Instance;
 
         /// <summary>
         /// Tracks the previous screen orientation (portrait/landscape) to allow the layout to be recalculated on
         /// orientation changes. This is necessary for the calculated accessibility frames to be correct.
         /// </summary>
         ScreenOrientation m_PreviousOrientation;
+
+        /// <summary>
+        /// The list of registered accessibility services that can contribute to the accessibility hierarchy.
+        /// </summary>
+        List<AccessibilityService> m_RegisteredServices = new();
 
         public static AccessibilityHierarchy hierarchy
         {
@@ -56,6 +51,11 @@ namespace Unity.Samples.ScreenReader
                 return s_Instance.m_Hierarchy;
             }
         }
+        
+        /// <summary>
+        /// Returns the list of registered accessibility services.
+        /// </summary>
+        public static IReadOnlyList<AccessibilityService> services => s_Instance?.m_RegisteredServices.AsReadOnly();
 
         /// <summary>
         /// Event triggered when the hierarchy is refreshed to allow components to be able to execute actions when that
@@ -63,107 +63,87 @@ namespace Unity.Samples.ScreenReader
         /// </summary>
         public static event Action hierarchyRefreshed;
 
-        public static AccessibleElement GetAccessibleElementForNode(AccessibilityNode node)
-        {
-            return s_Instance.m_ElementForNodeMap.TryGetValue(node, out var element) ? element : null;
-        }
-
         /// <summary>
         /// Recreates the whole accessibility hierarchy.
         /// </summary>
-        public static void RefreshHierarchy()
+        static void RefreshHierarchy()
         {
             s_Instance.RebuildHierarchy();
         }
-
+        
         /// <summary>
-        /// Default method for calculating the Rect representing the frame for the given RectTransform, which comes from
-        /// a GUI element (e.g. a Button instance). The screen reader uses this frame to highlight the area on the
-        /// screen when the corresponding accessibility node is focused.
+        /// Recreates the whole accessibility sub hierarchy associated to the specified service.
         /// </summary>
-        /// <param name="rectTransform">The RectTransform of the GUI element.</param>
-        /// <returns>The Rect representing the position of the GUI element on the screen.</returns>
-        public static Rect GetFrame(RectTransform rectTransform)
+        public static void RefreshHierarchy(AccessibilityService service)
         {
-            var canvas = rectTransform.GetComponentInParent<Canvas>();
-            var camera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
-            var elementCorners = new Vector3[4];
-            var screenCorners = new Vector3[4];
-
-            rectTransform.GetWorldCorners(elementCorners);
-
-            for (var i = 0; i < elementCorners.Length; i++)
+            s_Instance.RebuildHierarchy(service);
+            /*
+            AssistiveSupport.activeHierarchy = hierarchy;
+            service.CleanUp();
+            RegenerateNodes(service);*/
+        }
+        
+        /// <summary>
+        /// Returns the registered accessibility service of the specified type or null if no such service was registered.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T GetService<T>() where T : AccessibilityService
+        {
+            if (s_Instance == null)
+                return null;
+            
+            foreach (var system in s_Instance.m_RegisteredServices)
             {
-                screenCorners[i] = RectTransformUtility.WorldToScreenPoint(camera, elementCorners[i]);
+                if (system is T foundSystem)
+                    return foundSystem;
             }
-
-            GetMinMaxX(screenCorners, out var minX, out var maxX);
-            GetMinMaxY(screenCorners, out var minY, out var maxY);
-
-            return new Rect(minX, Screen.height - maxY, maxX - minX, maxY - minY);
-
-            void GetMinMaxX(Vector3[] vector, out float min, out float max)
-            {
-                min = float.MaxValue;
-                max = float.MinValue;
-
-                for (var i = 0; i < vector.Length; ++i)
-                {
-                    var value = vector[i].x;
-
-                    if (value < min)
-                    {
-                        min = value;
-                    }
-
-                    if (value > max)
-                    {
-                        max = value;
-                    }
-                }
-            }
-
-            void GetMinMaxY(Vector3[] vector, out float min, out float max)
-            {
-                min = float.MaxValue;
-                max = float.MinValue;
-
-                for (var i = 0; i < vector.Length; ++i)
-                {
-                    var value = vector[i].y;
-
-                    if (value < min)
-                    {
-                        min = value;
-                    }
-
-                    if (value > max)
-                    {
-                        max = value;
-                    }
-                }
-            }
+            return null;
         }
 
         /// <summary>
-        /// Deactivates or restores the active state of all accessibility nodes that are not children of the given
-        /// transform.
+        /// Adds a new accessibility service to the list of registered services.
         /// </summary>
-        public static void ActivateOtherAccessibilityNodes(bool activate, Transform transform)
+        /// <param name="service"></param>
+        public static void AddService(AccessibilityService service)
         {
-            var elements = FindObjectsByType<AccessibleElement>(FindObjectsSortMode.None);
-
-            foreach (var element in elements)
-            {
-                if (element.transform.IsChildOf(transform))
-                {
-                    continue;
-                }
-
-                element.node.isActive = activate && element.isActive;
-            }
+            if (s_Instance == null)
+                throw new InvalidOperationException("The AccessibilityManager instance is not available. Make sure there is an AccessibilityManager component in the scene.");
+            
+            if (service == null)
+                throw new ArgumentNullException(nameof(service));
+            
+            if (s_Instance.m_RegisteredServices.Contains(service))
+                throw new ArgumentException("The specified service is already registered.", nameof(service));
+            
+            s_Instance.m_RegisteredServices.Add(service);
         }
 
+        /// <summary>
+        /// Removes an accessibility service from the list of registered services.
+        /// </summary>
+        /// <param name="service"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        public static void RemoveService(AccessibilityService service)
+        {
+            if (s_Instance == null)
+                throw new InvalidOperationException("The AccessibilityManager instance is not available. Make sure there is an AccessibilityManager component in the scene.");
+            
+            if (service == null)
+                throw new ArgumentNullException(nameof(service));
+
+            if (!s_Instance.m_RegisteredServices.Contains(service))
+                throw new ArgumentException("The specified service is not registered.", nameof(service));
+            
+            service.CleanUp();
+            service.hierarchy.Dispose();
+            s_Instance.m_RegisteredServices.Remove(service);
+        }
+        
+        /// <summary>
+        /// Called every frame to check for orientation changes.
+        /// </summary>
         void Update()
         {
             // Rebuild the hierarchy on orientation change.
@@ -218,7 +198,7 @@ namespace Unity.Samples.ScreenReader
             AssistiveSupport.activeHierarchy = null;
 
             var lastLoadedScene = GetLastLoadedScene();
-            
+
             if (lastLoadedScene.IsValid())
             {
                 StartCoroutine(DelayRebuildHierarchy(lastLoadedScene));
@@ -293,132 +273,83 @@ namespace Unity.Samples.ScreenReader
 
             hierarchyRefreshed?.Invoke();
         }
-
-        static void SetNodeProperties(AccessibilityNode node, AccessibleElement element)
+        
+        void RebuildHierarchy(AccessibilityService service)
         {
-            element.node = node;
-            element.SetNodeProperties();
+            AssistiveSupport.activeHierarchy = null;
 
-            node.frameGetter = element.GetFrame;
+            var lastLoadedScene = GetLastLoadedScene();
 
-            node.focusChanged += element.InvokeFocusChanged;
-            node.incremented += element.InvokeIncremented;
-            node.decremented += element.InvokeDecremented;
+            if (lastLoadedScene.IsValid())
+            {
+                StartCoroutine(DelayRebuildHierarchy(service, lastLoadedScene));
+            }
+        }
+        
+        IEnumerator DelayRebuildHierarchy( AccessibilityService service, Scene scene)
+        {
+            // Always wait for the end of the frame to guarantee that all the GUI positions have been set.
+            yield return new WaitForEndOfFrame();
+
+            service.CleanUp();
+            RegenerateNodes(service, scene);
+            AssistiveSupport.activeHierarchy = hierarchy;
+
+            hierarchyRefreshed?.Invoke();
         }
 
         void GenerateHierarchy(Scene scene)
         {
+            LoadServices();
+            
+            // Clears all nodes
             hierarchy.Clear();
-            m_ElementForNodeMap.Clear();
 
-            var components = FindObjectsByType<AccessibleElement>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            using var _ = ListPool<AccessibilityService>.Get(out var sortedServices);
+            
+            sortedServices.AddRange(m_RegisteredServices);
+            sortedServices.Sort((a, b) => b.servicePriority.CompareTo(a.servicePriority));
 
-            if (components == null || components.Length == 0)
+            // Release all root nodes created by registered services in the previous hierarchy generation.
+            foreach (var service in sortedServices)
             {
+                service.CleanUp();
+                service.hierarchy.Dispose();
+            }
+         
+            foreach (var service in sortedServices)
+            {
+                CreateSubHierarchyForService(service, hierarchy);
+            }
+            
+            foreach (var system in sortedServices)
+            {
+                RegenerateNodes(system, scene);
+            }
+        }
+
+        void CreateSubHierarchyForService(AccessibilityService service, AccessibilityHierarchy hierarchy)
+        {
+            var rootNode = hierarchy.AddNode(service.serviceName);
+            rootNode.role = AccessibilityRole.Container;
+            rootNode.isActive = false;
+            
+            service.hierarchy = new AccessibilitySubHierarchy(hierarchy, rootNode);
+        }
+
+        void LoadServices()
+        {
+            if (m_RegisteredServices.Count > 0)
                 return;
-            }
 
-            var elements = new List<AccessibleElement>();
-            HashSet<Transform> visitedObjects = new();
+            AddService(new UGuiAccessibilityService());
+            AddService(new UITkAccessibilityService());
+        }
 
-            // The order of the hierarchy of game objects in the scene is what determines the order of the accessibility
-            // hierarchy. The order in the accessibility hierarchy is important to guarantee the navigation order when
-            // using the screen reader.
-            foreach (var component in components)
-            {
-                if (component.gameObject.scene != scene)
-                {
-                    continue;
-                }
-
-                // Start the recursion on each root in the scene.
-                Traverse(component.transform.root);
-            }
-
-            Stack<HierarchyItem> hierarchyStack = new();
-
-            foreach (var element in elements)
-            {
-                if (!element.enabled)
-                {
-                    continue;
-                }
-
-                var elementObject = element.transform;
-                AccessibilityNode node = null;
-
-                // If this is a root element or it is the first of its ancestors to be an AccessibleElement, add it as a
-                // root node of the hierarchy.
-                if (elementObject.parent == null || elementObject.parent.GetComponentInParent<AccessibleElement>() == null)
-                {
-                    node = hierarchy.AddNode(element.label);
-                }
-                else if (hierarchyStack.Count > 0)
-                {
-                    var item = hierarchyStack.Pop();
-
-                    // Pop until we empty the hierarchy stack or we find a pair with one of the element's ancestors.
-                    while (hierarchyStack.Count > 0 && elementObject.IsChildOf(item.transform) == false)
-                    {
-                        item = hierarchyStack.Pop();
-                    }
-
-                    if (elementObject.IsChildOf(item.transform))
-                    {
-                        // The AccessibleElement might have other descendants, so push it back to the stack.
-                        hierarchyStack.Push(item);
-                        node = hierarchy.AddNode(element.label, item.node);
-                    }
-                    else
-                    {
-                        node = hierarchy.AddNode(element.label);
-                    }
-                }
-
-                // If we added a node to the hierarchy, push it to the hierarchy and set its properties.
-                if (node != null)
-                {
-                    var item = new HierarchyItem
-                    {
-                        transform = elementObject,
-                        node = node
-                    };
-
-                    hierarchyStack.Push(item);
-
-                    SetNodeProperties(node, element);
-                    m_ElementForNodeMap[node] = element;
-                }
-            }
-
-            return;
-
-            void Traverse(Transform currentObject)
-            {
-                // If we already traversed this node, break the recursion.
-                if (visitedObjects.Contains(currentObject))
-                {
-                    return;
-                }
-
-                // Mark the node as visited.
-                visitedObjects.Add(currentObject);
-
-                // If the node is an AccessibleElement, add it to the list.
-                var component = currentObject.GetComponent<AccessibleElement>();
-                if (component != null)
-                {
-                    elements.Add(component);
-                }
-
-                var children = currentObject.GetComponentsInChildren<Transform>(true);
-
-                // Recurse over all the children of the node.
-                foreach (var child in children)
-                {
-                    Traverse(child);
-                }
-            }
+        static void RegenerateNodes(AccessibilityService service, Scene scene)
+        {
+            service.hierarchy.Clear();
+            service.SetUp(scene);
         }
     }
 }

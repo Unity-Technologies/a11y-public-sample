@@ -1,0 +1,6 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/UITk/OnScreenDebug/OnScreenDebugStyle.uss?fileID=7433441132597879392&amp;guid=c1b34c4d844514c6985f28e0755bc13a&amp;type=3#OnScreenDebugStyle"/>
+    <ui:ScrollView name="LogScrollView" picking-mode="Ignore" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" style="flex-grow: 1;">
+        <ui:Label text="Label" picking-mode="Ignore" name="LogText"/>
+    </ui:ScrollView>
+</ui:UXML>

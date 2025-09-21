@@ -1,0 +1,259 @@
+.unity-button {
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-width: 4px;
+    border-right-width: 4px;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    margin-top: 15px;
+    background-color: rgb(255, 255, 255);
+}
+
+:root {
+    font-size: 18px;
+    -unity-font-style: bold;
+}
+
+.unity-label {
+}
+
+.unity-base-text-field__input {
+    border-top-width: 4px;
+    border-right-width: 4px;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    background-color: rgb(255, 255, 255);
+}
+
+.unity-base-text-field {
+    margin-top: 4px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    margin-left: 4px;
+}
+
+#easyButton {
+    background-color: rgb(243, 183, 33);
+    border-left-color: rgb(255, 236, 179);
+    border-right-color: rgb(255, 236, 179);
+    border-top-color: rgb(255, 236, 179);
+    border-bottom-color: rgb(255, 236, 179);
+}
+
+#hardButton {
+    background-color: rgb(5, 168, 255);
+}
+
+.choice-button {
+    font-size: 24px;
+    padding-top: 40px;
+    padding-right: 40px;
+    padding-bottom: 40px;
+    padding-left: 40px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+#nextWordButton {
+}
+
+.lsp-letter-card {
+    transform-origin: left top;
+    transition-property: rotate;
+    transition-duration: 1s;
+    background-color: rgb(255, 251, 232);
+    border-top-width: 4px;
+    border-right-width: 4px;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+}
+
+.lsp-letter-card.selected {
+    color: rgb(62, 108, 91);
+    margin-top: -20px;
+    background-color: rgb(209, 253, 236);
+}
+
+.lsp-card-view-item.animated {
+    transition-property: left, top, margin-top;
+    transition-duration: 0.4s, 0.4s, 0.4s;
+}
+
+.lsp-insertion-placeholder {
+}
+
+.lsp-letter-card.dragged {
+    rotate: 15deg;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    background-color: rgb(214, 167, 49);
+}
+
+.settings-header-label {
+    margin-top: 10px;
+}
+
+#settingsView {
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+}
+
+#settingsView .unity-base-field__label {
+    -unity-font-style: normal;
+}
+
+.unity-radio-button-group__container {
+    flex-grow: 1;
+}
+
+.unity-radio-button .unity-base-field__label {
+    min-width: 0;
+}
+
+.unity-base-field__label {
+    -unity-text-align: middle-left;
+}
+
+.settings-header-label {
+    margin-top: 10px;
+}
+
+.unity-radio-button__checkmark-background {
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+    padding-top: 2px;
+}
+
+.unity-radio-button__checkmark {
+    width: 16px;
+    height: 16px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    background-color: rgb(140, 36, 176);
+}
+
+.unity-toggle__checkmark {
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    -unity-background-image-tint-color: rgb(145, 52, 166);
+}
+
+.unity-base-slider__tracker {
+    background-color: rgb(0, 0, 0);
+    height: 4px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.unity-base-slider__dragger {
+    background-color: rgb(144, 64, 197);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    width: 16px;
+}
+
+.unity-base-popup-field__input {
+    background-color: rgb(255, 255, 255);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-width: 4px;
+    border-right-width: 4px;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.unity-base-text-field__input--placeholder {
+    color: rgb(164, 164, 164);
+    -unity-font-style: bold-and-italic;
+}
+
+.purple {
+    background-color: rgb(161, 116, 244);
+    color: rgb(255, 255, 255);
+}
+
+.lsp-popup {
+    background-color: rgb(255, 255, 255);
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-width: 4px;
+    border-right-width: 4px;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+.lsp-popup .unity-button {
+    min-width: 137px;
+}

@@ -98,7 +98,7 @@ namespace Unity.Samples.ScreenReader
                 // While the dropdown is open, the user should only be able to navigate within the dropdown itself.
                 // Therefore, we deactivate any other accessibility nodes on screen. After the dropdown is closed,
                 // we bring the other accessibility nodes back to their original active state.
-                AccessibilityManager.ActivateOtherAccessibilityNodes(!isDropdownOpen, transform);
+                AccessibilityManager.GetService<UGuiAccessibilityService>().ActivateOtherAccessibilityNodes(!isDropdownOpen, transform);
 
                 // Move the accessibility focus to the dropdown.
                 AssistiveSupport.notificationDispatcher.SendLayoutChanged(node);
@@ -112,7 +112,7 @@ namespace Unity.Samples.ScreenReader
             yield return new WaitUntil(IsDropdownOpen);
             yield return new WaitForEndOfFrame();
 
-            AccessibilityManager.RefreshHierarchy();
+            AccessibilityManager.GetService<UGuiAccessibilityService>().RebuildHierarchy();
             hint = k_DropdownOpenHint;
 
             m_WasDropdownOpenedOrClosed = true;
@@ -122,8 +122,8 @@ namespace Unity.Samples.ScreenReader
         IEnumerator WaitForDropdownClose()
         {
             yield return new WaitUntil(() => !IsDropdownOpen());
-
-            AccessibilityManager.RefreshHierarchy();
+            
+            AccessibilityManager.GetService<UGuiAccessibilityService>().RebuildHierarchy();
             hint = k_DropdownClosedHint;
 
             m_WasDropdownOpenedOrClosed = true;

@@ -65,7 +65,7 @@ namespace Unity.Samples.ScreenReader
 
         bool IsInsideScrollView(AccessibilityNode accessibilityNode)
         {
-            var element = AccessibilityManager.GetAccessibleElementForNode(accessibilityNode);
+            var element = AccessibilityManager.GetService<UGuiAccessibilityService>().GetAccessibleElementForNode(accessibilityNode);
             var currentTransform = element.transform.parent;
 
             // Traverse up the parent hierarchy.
@@ -100,7 +100,7 @@ namespace Unity.Samples.ScreenReader
         {
             Canvas.ForceUpdateCanvases();
 
-            var element = AccessibilityManager.GetAccessibleElementForNode(accessibilityNode);
+            var element = AccessibilityManager.GetService<UGuiAccessibilityService>().GetAccessibleElementForNode(accessibilityNode);
 
             var viewportRect = m_ScrollRect.viewport.rect;
             var contentRect = m_ScrollRect.content.rect;

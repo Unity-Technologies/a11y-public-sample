@@ -1045,7 +1045,7 @@ namespace Unity.Samples.Controls
             m_Template.gameObject.SetActive(false);
             itemTemplate.gameObject.SetActive(false);
 
-            AccessibilityManager.RefreshHierarchy();
+            AccessibilityManager.GetService<UGuiAccessibilityService>().RebuildHierarchy();
 
             m_Blocker = CreateBlocker(rootCanvas);
         }

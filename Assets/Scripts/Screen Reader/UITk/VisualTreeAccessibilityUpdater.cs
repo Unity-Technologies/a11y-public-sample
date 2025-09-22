@@ -498,11 +498,14 @@ namespace Unity.Samples.ScreenReader
             }
 
             bool shouldBeIgnored = !visible;
+            bool modal = false;
 
             // Use the last valid parent
             if (accElement != null)
             {
                 shouldBeIgnored |= accElement.isIgnored;
+                modal = accElement.isModal;
+                
                 // If the branch is visible but the AccessibleElement does not have a node yet then create it.
                 if (!shouldBeIgnored)
                 {
@@ -536,7 +539,7 @@ namespace Unity.Samples.ScreenReader
             }
 
             // Update the model element
-            if (!shouldBeIgnored && IsModal(element))
+            if (!shouldBeIgnored && modal)
             {
                 currentModalElement = element;
             }

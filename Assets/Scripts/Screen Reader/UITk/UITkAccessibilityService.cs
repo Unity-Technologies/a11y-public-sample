@@ -68,7 +68,7 @@ namespace Unity.Samples.ScreenReader
                     continue;
                 
                 var panel = uiDocument.runtimePanel;
-                var rootAcc = uiDocument.rootVisualElement.GetOrCreateAccessible();
+                var rootAcc = uiDocument.rootVisualElement.GetOrCreateAccessibleProperties();
                 
                 rootAcc.label = uiDocument.rootVisualElement.name;
                 rootAcc.active = false;

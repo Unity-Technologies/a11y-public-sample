@@ -1,4 +1,4 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:sr="Unity.Samples.ScreenReader" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Resources/UITk/Themes/LetterSpellTheme.uss?fileID=7433441132597879392&amp;guid=7acba8f342ac14076bfc143ce31d7bcc&amp;type=3#LetterSpellTheme"/>
     <ui:VisualElement name="root" style="flex-grow: 1;">
         <ui:VisualElement name="background" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background-color: rgb(11, 163, 109);"/>
@@ -102,13 +102,16 @@
                     <ui:Button text="Resume" name="resumeGameButton" class="purple"/>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="resultScreen" class="lsp-popup" style="display: none;">
+            <sr:AccessibleVisualElement name="resultScreen" class="lsp-popup" style="display: none;">
                 <ui:Label text="1 of 3 correct" name="resultLabel" style="-unity-text-align: middle-center;"/>
                 <ui:VisualElement name="resultButtonContainer" style="flex-grow: 1; flex-direction: row; margin-top: 10px; align-items: center;">
                     <ui:Button text="Main Menu" name="resultMainMenuButton"/>
                     <ui:Button text="Play Again" name="resultPlayAgainButton" class="purple"/>
                 </ui:VisualElement>
-            </ui:VisualElement>
+                <accessible>
+                    <sr:AccessibleProperties modal="true"/>
+                </accessible>
+            </sr:AccessibleVisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="logo" style="flex-grow: 1; position: absolute; width: 100px; height: 24px; top: 22px; left: 19px; display: none; background-image: url(&quot;project://database/Assets/UI/Images/LetterSpell_smallLogo.png?fileID=2800000&amp;guid=75dc9c01c37ed4403948da36191f22df&amp;type=3#LetterSpell_smallLogo&quot;);"/>
     </ui:VisualElement>

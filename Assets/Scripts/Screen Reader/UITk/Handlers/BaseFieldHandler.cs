@@ -42,7 +42,7 @@ namespace Unity.Samples.ScreenReader
             var field = ownerElement as BaseField<TValueType>;
 
             if (field.labelElement != null)
-                field.labelElement.GetOrCreateAccessible().ignored = true;
+                field.labelElement.GetOrCreateAccessibleProperties().ignored = true;
         }
     }
 }

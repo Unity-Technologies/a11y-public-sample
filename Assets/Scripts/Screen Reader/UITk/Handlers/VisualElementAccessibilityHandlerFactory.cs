@@ -143,7 +143,7 @@ namespace Unity.Samples.ScreenReader
             var f = FindFactory(element);
             VisualElementAccessibilityHandler acc = null;
 
-            if (f == null && element.GetAccessible() != null)
+            if (f == null && element.GetAccessibleProperties() != null)
             {
                 acc = new VisualElementAccessibilityHandler();
             }

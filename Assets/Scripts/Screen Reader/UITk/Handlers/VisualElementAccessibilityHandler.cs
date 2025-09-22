@@ -72,7 +72,7 @@ namespace Unity.Samples.ScreenReader
                     // AccessibilityProperties.isActive
                     if (IsElementVisible(m_OwnerElement))
                     {
-                        var acc = m_OwnerElement.GetAccessible();
+                        var acc = m_OwnerElement.GetAccessibleProperties();
 
                         if (acc != null && acc.m_IsActive.defined)
                         {
@@ -93,7 +93,7 @@ namespace Unity.Samples.ScreenReader
                 if (m_OwnerElement == null)
                     return true;
 
-                var acc = m_OwnerElement.GetAccessible();
+                var acc = m_OwnerElement.GetAccessibleProperties();
 
                 if (acc != null)
                 {
@@ -101,6 +101,32 @@ namespace Unity.Samples.ScreenReader
                 }
                 return false;
             }
+        }
+        
+        public bool isModal
+        {
+            get
+            {
+                if (m_OwnerElement == null)
+                    return false;
+
+                var acc = m_OwnerElement.GetAccessibleProperties();
+
+                if (acc != null && acc.m_Modal.defined)
+                {
+                    return acc.modal;
+                }
+
+                return IsModal();
+            }
+        }
+
+        public virtual bool IsModal()
+        {
+            if (ownerElement == null)
+                return false;
+            
+            return ownerElement.ClassListContains(GenericDropdownMenu.ussClassName);
         }
 
         public string label
@@ -110,7 +136,7 @@ namespace Unity.Samples.ScreenReader
                 if (m_OwnerElement == null)
                     return null;
 
-                var acc = m_OwnerElement.GetAccessible();
+                var acc = m_OwnerElement.GetAccessibleProperties();
 
                 if (acc != null && acc.m_Label.defined)
                 {
@@ -130,7 +156,7 @@ namespace Unity.Samples.ScreenReader
                 if (m_OwnerElement == null)
                     return null;
 
-                var acc = m_OwnerElement.GetAccessible();
+                var acc = m_OwnerElement.GetAccessibleProperties();
 
                 if (acc != null && acc.m_Value.defined)
                 {
@@ -150,7 +176,7 @@ namespace Unity.Samples.ScreenReader
                 if (m_OwnerElement == null)
                     return null;
 
-                var acc = m_OwnerElement.GetAccessible();
+                var acc = m_OwnerElement.GetAccessibleProperties();
 
                 if (acc != null && acc.m_Hint.defined)
                 {
@@ -170,7 +196,7 @@ namespace Unity.Samples.ScreenReader
                 if (m_OwnerElement == null)
                     return AccessibilityRole.None;
 
-                var acc = m_OwnerElement.GetAccessible();
+                var acc = m_OwnerElement.GetAccessibleProperties();
 
                 if (acc != null && acc.m_Role.defined)
                 {
@@ -272,9 +298,9 @@ namespace Unity.Samples.ScreenReader
         {
             bool selected = false;
 
-            if (m_OwnerElement.GetAccessible() != null)
+            if (m_OwnerElement.GetAccessibleProperties() != null)
             {
-                selected = m_OwnerElement.GetAccessible().InvokeSelected();
+                selected = m_OwnerElement.GetAccessibleProperties().InvokeSelected();
             }
 
             return (m_OnSelect != null && m_OnSelect.Invoke()) || selected;
@@ -339,7 +365,7 @@ namespace Unity.Samples.ScreenReader
 
         internal void InvokeOnIncrement()
         {
-            m_OwnerElement?.GetAccessible()?.InvokeIncremented();
+            m_OwnerElement?.GetAccessibleProperties()?.InvokeIncremented();
             m_OnIncrement?.Invoke();
         }
 
@@ -392,7 +418,7 @@ namespace Unity.Samples.ScreenReader
 
         internal void InvokeOnDecrement()
         {
-            m_OwnerElement?.GetAccessible()?.InvokeDecremented();
+            m_OwnerElement?.GetAccessibleProperties()?.InvokeDecremented();
             m_OnDecrement?.Invoke();
         }
 

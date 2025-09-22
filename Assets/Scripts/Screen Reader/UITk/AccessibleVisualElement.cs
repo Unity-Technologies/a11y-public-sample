@@ -8,10 +8,10 @@ namespace Unity.Samples.ScreenReader
     {
         public static readonly string ussClassName = "unity-accessible-overrides-element";
 
-        Accessible m_Accessible;
-
-        [UxmlAttribute, CreateProperty]
-        public Accessible accessible
+        AccessibleProperties m_Accessible;
+        
+        [UxmlObjectReference("accessible"), CreateProperty]
+        public AccessibleProperties accessible
         {
             get => m_Accessible;
             set
@@ -32,7 +32,7 @@ namespace Unity.Samples.ScreenReader
         public AccessibleVisualElement()
         {
             AddToClassList(ussClassName);
-            accessible = new Accessible();
+            accessible = new AccessibleProperties();
         }
     }
 }

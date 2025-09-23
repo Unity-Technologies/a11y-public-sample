@@ -46,7 +46,8 @@ namespace Unity.Samples.LetterSpell
                 {
                     m_LogText.text = OnScreenDebug.GetLogMessages();
                     // scroll to the bottom
-                    m_ScrollView.ScrollTo(m_LogText);
+                   // m_ScrollView.ScrollTo(m_LogText);
+                    m_ScrollView.scrollOffset = new Vector2(0, m_ScrollView.verticalScroller.highValue);
                     //Debug.Log(m_LogText);
                 }
                 m_ShapeView.rects = OnScreenDebug.GetRects();
@@ -141,6 +142,13 @@ namespace Unity.Samples.LetterSpell
         public static void Log(string message)
         {
             s_LogMessageBuilder.AppendLine($"{DateTime.Now}: " + message);
+            s_Version++;
+        }
+
+        public static void Clear()
+        {
+            ClearShapes();
+            s_LogMessageBuilder.Clear();
             s_Version++;
         }
         

@@ -15,7 +15,7 @@ namespace Unity.Samples.ScreenReader
             //field.RegisterValueChangedCallback(OnValueChanged);
         }
 
-        protected override void UnbindToElement(VisualElement ve)
+        protected override void UnbindFromElement(VisualElement ve)
         {
             m_TabView = null;
             m_Tab = null;

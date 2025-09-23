@@ -51,25 +51,25 @@ namespace Unity.Samples.LetterSpell
         public bool isThreeWords
         {
             get => wordsCount == 0;
-            set { wordsCount = 0; }
+            set { wordsCount = value ? 0 : 1; }
         }
 
         [CreateProperty]
         public bool isSixWords
         {
             get => wordsCount == 1;
-            set { wordsCount = 1; }
+            set { wordsCount = value ? 1 : 0; }
         }
 
         [CreateProperty]
         public int wordsCount
         {
-            get => 0; //PlayerPrefs.GetInt(k_WordsPref, 0);
+            get => PlayerPrefs.GetInt(k_WordsPref, 0);
             set
             {
                 if (wordsCount == value)
                     return;
-                PlayerPrefs.SetInt(k_UsernamePref, value);
+                PlayerPrefs.SetInt(k_WordsPref, value);
                 Notify(nameof(isSixWords));
                 Notify(nameof(isThreeWords));
             }
@@ -164,7 +164,7 @@ namespace Unity.Samples.LetterSpell
         private VisualElement m_GameView;
         private Label m_ClueLabel;
         private VisualElement m_SuccessImage;
-        private VisualElement m_LetterCardContainer;
+        private CardListView m_LetterCardContainer;
         private Button m_PauseGameButton;
         private Button m_NextWordButtton;
         private Button m_ExitGameButton;
@@ -183,8 +183,13 @@ namespace Unity.Samples.LetterSpell
         /// <summary>
         /// The focused card.
         /// </summary>
-        UITkLetterCard m_FocusedCard;
-
+        UITkLetterCard m_AccessibilityFocusedCard;
+   
+        /// <summary>
+        /// Keeps track of whether the hierarchy was refreshed using AccessibilityManager.RefreshHierarchy();
+        /// </summary>
+        bool m_WasHierarchyRefreshed;
+        
         public int splashScreenDuration = 2000;
 
         /// <summary>
@@ -203,6 +208,9 @@ namespace Unity.Samples.LetterSpell
             var uiDoc = GetComponent<UIDocument>();
             var root = uiDoc.rootVisualElement;
 
+            var clearLogButton = new Button(() => OnScreenDebug.Clear());
+            clearLogButton.text = "Clear Log";
+            root.Add(clearLogButton);
             m_MainView = root.Q("root");
             m_Logo = root.Q("logo");
             m_Logo.style.display = DisplayStyle.None;
@@ -221,7 +229,7 @@ namespace Unity.Samples.LetterSpell
             m_ClueLabel = m_GameView.Q<Label>("clueLabel");
             m_SuccessImage = m_GameView.Q("successImage");
             m_SuccessImage.style.display = DisplayStyle.None;
-            m_LetterCardContainer = m_GameView.Q("letterCardContainer");
+            m_LetterCardContainer = m_GameView.Q<LetterSpell.CardListView>("letterCardContainer");
             m_PauseGameButton = m_GameView.Q<Button>("pauseGameButton");
             m_PauseGameButton.clicked += ShowExitGamePopup;
 
@@ -269,7 +277,7 @@ namespace Unity.Samples.LetterSpell
         {
             m_Model.letterCardsChanged -= OnLetterCardsChanged;
             m_Model.gameplay = null;
-            m_FocusedCard = null;
+            m_AccessibilityFocusedCard = null;
 
             AssistiveSupport.nodeFocusChanged -= OnNodeFocusChanged;
         }
@@ -356,7 +364,7 @@ namespace Unity.Samples.LetterSpell
         /// </summary>
         void OnLetterCardsChanged()
         {
-            m_FocusedCard = null;
+            m_AccessibilityFocusedCard = null;
 
             // Remove all cards.
             m_LetterCardContainer.Clear();
@@ -368,7 +376,7 @@ namespace Unity.Samples.LetterSpell
                 m_LetterCardContainer.Add(card);
                 card.text = letterCard.letter.ToString();
                 card.name = letterCard.letter.ToString();
-                card.GetOrCreateAccessible().label = card.text;
+                card.GetOrCreateAccessibleProperties().label = card.text;
                 card.dropped += (oldIndex, newIndex) => { gameplay.ReorderLetter(oldIndex, newIndex); };
             }
 
@@ -406,17 +414,51 @@ namespace Unity.Samples.LetterSpell
 
         void OnNodeFocusChanged(AccessibilityNode node)
         {
-            /*if (node != null)
+            if (node != null)
             {
-                var element = AccessibilityManager.GetAccessibleElementForNode(node);
-                m_FocusedCard = element != null ? element.GetComponent<LetterCard>() : null;
+                var service = AccessibilityManager.GetService<UITkAccessibilityService>();
+                var element = service.GetVisualElementForNode(m_MainView.panel, node);
+
+                m_AccessibilityFocusedCard = element as UITkLetterCard;
+                MoveSelectedCardOnAssistedFocus();
             }
             else
             {
-                m_FocusedCard = null;
-            }*/
+                m_AccessibilityFocusedCard = null;
+            }
         }
 
+        void MoveSelectedCardOnAssistedFocus()
+        {
+            if (!AssistiveSupport.isScreenReaderEnabled
+                || m_LetterCardContainer.selectedCard == null
+                || m_AccessibilityFocusedCard == null)
+            {
+                return;
+            }
+            
+            // Don't move the card if the focus change occurred because of a hierarchy rebuild.
+            if (m_WasHierarchyRefreshed)
+            {
+                m_WasHierarchyRefreshed = false;
+                return;
+            }
+
+            // If we reach this code, it means we're dragging the card.
+            var selectedCardIndex = m_LetterCardContainer.IndexOf(m_LetterCardContainer.selectedCard);
+            var focusedCardIndex = m_LetterCardContainer.IndexOf(m_AccessibilityFocusedCard);
+
+            // Move the card to the new position.
+            if (selectedCardIndex > focusedCardIndex)
+            {
+                MoveCard(true, selectedCardIndex - focusedCardIndex);
+            }
+            else if (selectedCardIndex < focusedCardIndex)
+            {
+                MoveCard(false, focusedCardIndex - selectedCardIndex);
+            }
+        }
+        
         public void OnSwipeLeft()
         {
             MoveCard(true);
@@ -427,14 +469,25 @@ namespace Unity.Samples.LetterSpell
             MoveCard(false);
         }
 
-        void MoveCard(bool shouldMoveLeft)
+        void MoveCard(bool shouldMoveLeft, int count = 1)
         {
-            var draggable = m_FocusedCard;
-            if (draggable == null)
+            var draggable = m_AccessibilityFocusedCard;
+            if (draggable == null || count == 0)
             {
                 return;
             }
 
+            //OnScreenDebug.Log("MoveCard " + (shouldMoveLeft ? "left" : "right" + " count " + count));
+            if (shouldMoveLeft)
+                m_LetterCardContainer.selectedCard.MoveLeft();
+            else
+            {
+                m_LetterCardContainer.selectedCard.MoveRight();
+            }
+
+            var updater = m_LetterCardContainer.selectedCard.panel.GetAccessibilityUpdater();
+            var node = updater.GetNodeForVisualElement(m_LetterCardContainer.selectedCard);
+            AssistiveSupport.notificationDispatcher.SendLayoutChanged(node);
             /*var accElement = draggable.transform.GetComponent<AccessibleElement>();
             if (shouldMoveLeft ? draggable.MoveLeft() : draggable.MoveRight())
             {
@@ -509,12 +562,12 @@ namespace Unity.Samples.LetterSpell
 
         void ShowSettings()
         {
-            AssistiveSupport.activeHierarchy?.Log();
-            /*m_LastView = m_StackView.activeView;
+            //AssistiveSupport.activeHierarchy?.Log();
+            m_LastView = m_StackView.activeView;
             m_StackView.activeView = m_SettingsView;
             m_Logo.style.display = DisplayStyle.None;
             m_SettingsButton.style.display = DisplayStyle.None;
-            m_Overlay.style.display = DisplayStyle.None;*/
+            m_Overlay.style.display = DisplayStyle.None;
         }
 
         void CloseSettings()

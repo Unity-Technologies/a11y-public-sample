@@ -25,7 +25,7 @@ namespace Unity.Samples.ScreenReader
             EnsureLabelIsNotAccessible();
         }
 
-        protected override void UnbindToElement(VisualElement ve)
+        protected override void UnbindFromElement(VisualElement ve)
         {
             var field = ownerElement as BaseField<TValueType>;
             field.UnregisterValueChangedCallback(OnValueChanged);

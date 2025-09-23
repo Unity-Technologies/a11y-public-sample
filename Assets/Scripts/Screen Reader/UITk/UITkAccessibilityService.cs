@@ -25,9 +25,56 @@ namespace Unity.Samples.ScreenReader
         /// </summary>
         public UITkAccessibilityService() : base("UITk", 100)
         {
+            AssistiveSupport.nodeFocusChanged += OnNodeFocusChanged;
+        }
+
+        void OnNodeFocusChanged(AccessibilityNode node)
+        {
+            // Scroll to the focused node if it is inside scroll views.
+            // Scroll recursively to support nested scroll views.
+            var element = GetVisualElementForNode(node);
+            if (element != null)
+            { 
+                // Scroll recursively to support nested scroll views.
+                VisualElement ancestor = element.hierarchy.parent;
+             
+                while (ancestor != null)
+                {
+                    if (ancestor is ScrollView scrollView)
+                    {
+                        scrollView.ScrollTo(element);
+                    }
+                    ancestor = ancestor.hierarchy.parent;
+                }
+            }
         }
         
-        VisualTreeAccessibilityUpdater GetVisualTreeUpdater(IPanel panel)
+        public VisualElement GetVisualElementForNode(AccessibilityNode node)
+        {
+            foreach (var updater in m_AccessibilityUpdaters)
+            {
+                if (updater != null)
+                {
+                    var element = updater.GetVisualElementForNode(node);
+                    if (element != null)
+                        return element;
+                }
+            }
+
+            return null;
+        }
+        
+        public VisualElement GetVisualElementForNode(IPanel panel, AccessibilityNode node)
+        {
+            var updater = GetVisualTreeUpdater(panel);
+            if (updater != null)
+            {
+                return updater.GetVisualElementForNode(node);
+            }
+            return null;
+        }
+        
+        public VisualTreeAccessibilityUpdater GetVisualTreeUpdater(IPanel panel)
         {
             foreach (var pd in m_AccessibilityUpdaters)
             {
@@ -71,7 +118,7 @@ namespace Unity.Samples.ScreenReader
                 var rootAcc = uiDocument.rootVisualElement.GetOrCreateAccessibleProperties();
                 
                 rootAcc.label = uiDocument.rootVisualElement.name;
-                rootAcc.active = false;
+                rootAcc.active = (Application.platform == RuntimePlatform.OSXPlayer); //false;
                 rootAcc.role = AccessibilityRole.Container;
 
                 if (!panels.Contains(panel))

@@ -332,7 +332,7 @@ namespace Unity.Samples.ScreenReader
         {
             var rootNode = hierarchy.AddNode(service.serviceName);
             rootNode.role = AccessibilityRole.Container;
-            rootNode.isActive = false;
+            rootNode.isActive = (Application.platform == RuntimePlatform.OSXPlayer);//false;
             
             service.hierarchy = new AccessibilitySubHierarchy(hierarchy, rootNode);
         }

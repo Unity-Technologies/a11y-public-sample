@@ -36,7 +36,7 @@ namespace Unity.Samples.ScreenReader
 
                 if (m_OwnerElement != null)
                 {
-                    UnbindToElement(m_OwnerElement);
+                    UnbindFromElement(m_OwnerElement);
                     m_OwnerElement.UnregisterCallback<GeometryChangedEvent>(OnGeometryChanged);
                    // m_OwnerElement.UnregisterCallback<PropertyChangedEvent>(OnPropertyChanged);
                 }
@@ -228,17 +228,13 @@ namespace Unity.Samples.ScreenReader
         public void NotifyChange(VersionChangeType changeType = k_AccessibilityChange)
         {
             onVersionChanged?.Invoke(ownerElement, changeType);
-            //change |= k_AccessibilityChange;
-            //ownerElement.MarkDirtyRepaint();
-            // if (ownerElement != null && ownerElemednt.panel != null)
-           // ownerElement.IncrementVersion(VersionChangeType.Accessibility);
         }
 
         protected virtual void BindToElement(VisualElement ve)
         {
         }
 
-        protected virtual void UnbindToElement(VisualElement ve)
+        protected virtual void UnbindFromElement(VisualElement ve)
         {
         }
 

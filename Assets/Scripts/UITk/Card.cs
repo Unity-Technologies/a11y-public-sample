@@ -7,6 +7,7 @@ using UnityEngine.Scripting;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Unity.Samples.ScreenReader;
+using Button = UnityEngine.UIElements.Button;
 
 namespace Unity.Samples.LetterSpell
 {
@@ -16,6 +17,11 @@ namespace Unity.Samples.LetterSpell
         private Vector2 m_Start;
         protected bool m_Active;
         private bool clampToParentEdges = true;
+        private VisualElement m_Element;
+        Button m_MoveLeftButton;
+        Button m_MoveRightButton;
+        Button m_UnselectCardButton;
+        AccessibleVisualElement m_ButtonsContainer;
         
         CardListView cardListView => parent as CardListView;
         
@@ -25,6 +31,8 @@ namespace Unity.Samples.LetterSpell
        //     public override string GetLabel() => (owner as UITkLetterCard).text;
        // }
 
+       public bool selected => cardListView?.selectedCard == this;
+       
         public string text
         {
             get => m_TextElement.text;
@@ -42,14 +50,19 @@ namespace Unity.Samples.LetterSpell
             public override string GetLabel() => card.text;
             protected override void BindToElement(VisualElement ve)
             {
-                card.m_TextElement.GetOrCreateAccessible().ignored = true;
+                card.m_TextElement.GetOrCreateAccessibleProperties().ignored = true;
             }
 
             public AccessibleLetterCardHandler()
             {
                 OnSelect += () =>
                 {
-                    (ownerElement as UITkLetterCard).Select();
+                    var letter = ownerElement as UITkLetterCard;
+                    
+                    if (!letter.selected)
+                        letter.Select();
+                    else
+                        letter.Unselect();
                     return true;
                 };
             }
@@ -58,6 +71,7 @@ namespace Unity.Samples.LetterSpell
         public void Select()
         {
             cardListView.selectedCard = this;
+            OnScreenDebug.Log("Selected card: " + text);
         }
         
         public void Unselect()
@@ -78,7 +92,7 @@ namespace Unity.Samples.LetterSpell
             style.marginRight = 4;
             style.marginBottom = 4;
             */
-           style.fontSize = 40;
+            style.fontSize = 40;
             style.alignItems = Align.Center;
             style.justifyContent = Justify.Center;
 
@@ -90,6 +104,35 @@ namespace Unity.Samples.LetterSpell
             //style.backgroundColor = Color.white;
 
             style.position = Position.Absolute;
+
+            m_ButtonsContainer = new AccessibleVisualElement()
+            {
+                pickingMode = PickingMode.Ignore
+            };
+            m_ButtonsContainer.AddToClassList("lsp-letter-card__button-container");
+            m_ButtonsContainer.accessible.modal = true;
+            m_ButtonsContainer.style.display = DisplayStyle.None;
+            m_MoveLeftButton = new Button { text = "<" };
+            m_MoveLeftButton.AddToClassList("lsp-letter-card__button");
+            m_MoveLeftButton.AddToClassList("lsp-letter-card__button--first");
+            m_MoveLeftButton.clicked += ()=> MoveLeft();
+            
+            m_MoveRightButton = new Button { text = ">" };
+            m_MoveRightButton.AddToClassList("lsp-letter-card__button");
+            m_MoveRightButton.AddToClassList("lsp-letter-card__button--last");
+            m_MoveRightButton.clicked += ()=> MoveRight();
+            
+            m_UnselectCardButton = new Button { name="cancelMoveButton", text = "X" };
+            m_UnselectCardButton.AddToClassList("lsp-letter-card__button");
+            //m_UnselectCardButton.AddToClassList("lsp-letter-card__button--flat");
+            m_UnselectCardButton.clicked += Unselect;
+            
+            m_ButtonsContainer.Add(m_MoveLeftButton);
+            m_ButtonsContainer.Add(m_MoveRightButton);
+            m_ButtonsContainer.Add(m_UnselectCardButton);
+            
+            Add(m_ButtonsContainer);
+            
             RegisterCallbacksOnTarget();
             RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
         }
@@ -179,7 +222,18 @@ namespace Unity.Samples.LetterSpell
         
         protected void OnMouseDown(MouseDownEvent e)
         {
-            cardListView.selectedCard = this;
+            if (e.ctrlKey)
+            {
+                if (cardListView.selectedCard == this)
+                    cardListView.selectedCard = null;
+                else
+                    cardListView.selectedCard = this;
+            }
+            else
+            {
+                cardListView.selectedCard = this;
+            }
+
             if (m_Active)
             {
                 e.StopImmediatePropagation();
@@ -298,7 +352,14 @@ namespace Unity.Samples.LetterSpell
                     this.PlaceInFront(parent[index]);
             }
             cardListView.DoLayout();
+            UpdateButtonEnableState();
             dropped?.Invoke(oldIndex, index);
+        }
+
+        public void UpdateButtonEnableState()
+        {
+            m_MoveLeftButton.SetEnabled(parent.IndexOf(this) != 0);
+            m_MoveRightButton.SetEnabled(parent.IndexOf(this) != parent.childCount - 1);
         }
     }
 
@@ -494,6 +555,8 @@ namespace Unity.Samples.LetterSpell
                 m_SelectedCard?.RemoveFromClassList("selected");
                 m_SelectedCard = value;
                 m_SelectedCard?.AddToClassList("selected");
+                if (m_SelectedCard != null)
+                    m_SelectedCard.UpdateButtonEnableState();
             }
         }
         

@@ -19,6 +19,10 @@
     background-color: rgb(255, 255, 255);
 }
 
+.unity-button:hover {
+    background-color: rgb(220, 180, 0);
+}
+
 :root {
     font-size: 18px;
     -unity-font-style: bold;
@@ -92,6 +96,58 @@
     color: rgb(62, 108, 91);
     margin-top: -20px;
     background-color: rgb(209, 253, 236);
+}
+
+.lsp-letter-card__button-container {
+    font-size: 12px;
+    position: absolute;
+    top: 100%;
+    /*margin-top: 5px;*/
+    padding: 5px;
+    display: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(209, 253, 236);
+   /* background-color: rgba(0, 0, 0, 0.4);*/
+    border-radius: 12px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.lsp-letter-card.selected .lsp-letter-card__button-container {
+    display: flex;
+}
+
+
+.lsp-letter-card__button {
+    margin: 0;
+    padding: 6px;
+    -unity-font-style: bold;
+}
+
+.lsp-letter-card__button--first {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right-width: 2px;
+}
+
+.lsp-letter-card__button--mid {
+    border-radius: 0;
+    border-left-width: 2px;
+    border-right-width: 2px;
+}
+
+.lsp-letter-card__button--last {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left-width: 2px;
+}
+
+#cancelMoveButton {
+    margin-left: 4px;
+    background-color: rgb(243, 33, 33);
+    color: white;
 }
 
 .lsp-card-view-item.animated {

@@ -167,6 +167,7 @@ namespace Unity.Samples.ScreenReader
             RegisterFactory<TextField, TextFieldFieldHandler>();
             RegisterFactory<DropdownField, DropdownFieldHandler>();
             RegisterFactory<ListView, ListViewHandler>();
+            RegisterFactory<ScrollView, ScrollViewHandler>();
             RegisterFactory(new ListViewItemHandlerCreator());
             RegisterFactory(new TabHandlerCreator());
             RegisterFactoriesFromUserAssemblies();

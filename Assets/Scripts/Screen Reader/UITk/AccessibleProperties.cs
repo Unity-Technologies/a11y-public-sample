@@ -31,8 +31,21 @@ namespace Unity.Samples.ScreenReader
                 if (EqualityComparer<T>.Default.Equals(m_Value, value))
                     return;
                 m_Value = value;
-                acc?.owner?.MarkDirtyRepaint();
+                //acc?.owner?.MarkDirtyRepaint();
                 //acc?.owner.IncrementVersion(VersionChangeType.Accessibility);
+                IncrementVersion(acc?.owner);
+            }
+
+            void IncrementVersion(VisualElement element)
+            {
+                var panel = element?.panel;
+
+                if (panel != null)
+                {
+                    var updater = panel.GetAccessibilityUpdater();
+                    
+                    updater?.OnVersionChanged(element, VisualElementAccessibilityHandler.k_AccessibilityChange);
+                }
             }
         }
 

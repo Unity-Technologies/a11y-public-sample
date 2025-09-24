@@ -309,29 +309,29 @@ namespace Unity.Samples.LetterSpell
             }
         }
         
-        public bool MoveLeft()
+        public bool MoveLeft(int count = 1)
         {
             if (parent == null)
                 return false;
-            if (parent.IndexOf(this) == 0)
+            if (parent.IndexOf(this) - count < 0)
             {
                 return false;
             }
 
-            MoveToIndex(parent.IndexOf(this) - 1);
+            MoveToIndex(parent.IndexOf(this) - count);
             return true;
         }
 
-        public bool MoveRight()
+        public bool MoveRight(int count = 1)
         {
             if (parent == null)
                 return false;
-            if (parent.IndexOf(this) == parent.childCount - 1)
+            if (parent.IndexOf(this) + count >= parent.childCount)
             {
                 return false;
             }
 
-            MoveToIndex(parent.IndexOf(this) + 1);
+            MoveToIndex(parent.IndexOf(this) + count);
             return true;
         }
 

@@ -479,10 +479,10 @@ namespace Unity.Samples.LetterSpell
 
             //OnScreenDebug.Log("MoveCard " + (shouldMoveLeft ? "left" : "right" + " count " + count));
             if (shouldMoveLeft)
-                m_LetterCardContainer.selectedCard.MoveLeft();
+                m_LetterCardContainer.selectedCard.MoveLeft(count);
             else
             {
-                m_LetterCardContainer.selectedCard.MoveRight();
+                m_LetterCardContainer.selectedCard.MoveRight(count);
             }
 
             var updater = m_LetterCardContainer.selectedCard.panel.GetAccessibilityUpdater();

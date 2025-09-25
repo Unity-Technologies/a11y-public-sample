@@ -69,12 +69,28 @@
     border-bottom-color: rgb(255, 251, 232);
 }
 
+#easyButton:hover {
+    background-color: rgb(250, 201, 55);
+}
+
+#easyButton:active {
+    background-color: rgb(195, 147, 8);
+}
+
 #hardButton {
     background-color: rgb(1, 168, 255);
     border-left-color: rgb(114, 207, 255);
     border-right-color: rgb(114, 207, 255);
     border-top-color: rgb(114, 207, 255);
     border-bottom-color: rgb(114, 207, 255);
+}
+
+#hardButton:hover {
+    background-color: rgb(46, 180, 250);
+}
+
+#hardButton:active {
+    background-color: rgb(5, 131, 197);
 }
 
 .choice-button {
@@ -185,12 +201,20 @@
 }
 
 .lsp-letter-card.dragged {
-    rotate: 15deg;
+    rotate: -20deg;
     border-left-color: rgb(0, 0, 0);
     border-right-color: rgb(0, 0, 0);
     border-top-color: rgb(0, 0, 0);
     border-bottom-color: rgb(0, 0, 0);
     background-color: rgb(214, 167, 49);
+}
+
+.lsp-letter-card.dragged.dragging--left {
+    rotate: 20deg;
+}
+
+.lsp-letter-card.dragged.dragging--right{
+    rotate: -20deg;
 }
 
 .settings-header-label {
@@ -492,13 +516,9 @@
     margin-left: 0;
 }
 
-
-
 :root.bold-text {
     -unity-font-style: bold;
 }
-
-
 
 .unity-base-dropdown__item {
 }

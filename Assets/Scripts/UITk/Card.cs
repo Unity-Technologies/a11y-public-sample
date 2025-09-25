@@ -155,7 +155,8 @@ namespace Unity.Samples.LetterSpell
         {
             cardListView.DoLayout();
             // Make them animated
-            schedule.Execute(() => animated = true).ExecuteLater(500);
+            // TODO - FIXED ANIMATION WHEN STARTING A GAME
+            //schedule.Execute(() => animated = true).ExecuteLater(500);
         }
         protected Rect CalculatePosition(float x, float y, float width, float height)
         {
@@ -191,6 +192,21 @@ namespace Unity.Samples.LetterSpell
 
         private bool m_Dragging;
 
+        int m_DraggingDirection = 0;
+        
+        int draggingDirection
+        {
+            get => m_DraggingDirection;
+            set
+            {
+                if (m_DraggingDirection == value)
+                    return;
+                m_DraggingDirection = value;
+                EnableInClassList("dragging--left", m_DraggingDirection < 0);
+                EnableInClassList("dragging--right", m_DraggingDirection > 0);
+            }
+        }
+        
         public bool dragging
         {
             get => m_Dragging;
@@ -222,6 +238,12 @@ namespace Unity.Samples.LetterSpell
         
         protected void OnMouseDown(MouseDownEvent e)
         {
+            if (!cardListView.canPlayCards)
+            {
+                e.StopImmediatePropagation();
+                return;
+            }
+            
             if (e.ctrlKey)
             {
                 if (cardListView.selectedCard == this)
@@ -284,7 +306,9 @@ namespace Unity.Samples.LetterSpell
                 }
                 else if (target.resolvedStyle.position == Position.Absolute)
                 {*/
-                    this.style.left = rect.x;
+                var oldLeft = this.style.left.value.value;
+                this.style.left = rect.x;
+                draggingDirection = oldLeft < this.style.left.value.value ? -1 : 1;
                     //this.style.top = rect.y;
                 //}
 
@@ -369,6 +393,8 @@ namespace Unity.Samples.LetterSpell
         static public int cardSize = 208;
         public int spacing = 30;
         private VisualElement m_InsertionPlaceholder;
+        
+        public bool canPlayCards { get; set; }
         
         public CardListView()
         {

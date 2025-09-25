@@ -258,6 +258,8 @@ namespace Unity.Samples.LetterSpell
             var uiDoc = GetComponent<UIDocument>();
             var root = uiDoc.rootVisualElement;
             
+            // Uncomment to enable the on-screen debug log
+            /*
             var debugPanel = new VisualElement() { name = "debugPanel" };
             debugPanel.style.position = Position.Absolute;
             debugPanel.style.bottom = 0;
@@ -281,6 +283,7 @@ namespace Unity.Samples.LetterSpell
             debugPanel.Add(logHierarchyButton);
             
             root.Add(debugPanel);
+            */
             m_MainView = root.Q("root");
             m_Logo = root.Q("logo");
             m_Logo.style.display = DisplayStyle.None;
@@ -409,6 +412,7 @@ namespace Unity.Samples.LetterSpell
             //if (gameplay.IsGameComplete())
             if (gameplay.IsShowingLastWord())
             {
+                m_LetterCardContainer.canPlayCards = false;
                 AudioManager.instance.PlayResult(gameplay.reorderedWordCount == gameplay.words.Count);
 
                 m_MainView.schedule.Execute(() =>
@@ -422,6 +426,7 @@ namespace Unity.Samples.LetterSpell
             }
             else
             {
+                m_LetterCardContainer.canPlayCards = true;
                 gameplay.ShowNextWord();
             }
 
@@ -473,6 +478,7 @@ namespace Unity.Samples.LetterSpell
         public void StartGame()
         {
             m_ScreenResult.Close();
+            m_LetterCardContainer.canPlayCards = true;
             Gameplay.instance.StartGame();
             DelayRefreshHierarchy();
         }
@@ -515,6 +521,7 @@ namespace Unity.Samples.LetterSpell
 
         public void OnWordReorderingCompleted()
         {
+            m_LetterCardContainer.canPlayCards = false;
             AssistiveSupport.notificationDispatcher.SendAnnouncement(
                 $"You found the correct word! It was {gameplay.currentWord.word}.");
 
@@ -662,6 +669,7 @@ namespace Unity.Samples.LetterSpell
 
             m_StackView.activeView = m_GameView;
             m_SettingsButton.style.display = DisplayStyle.None;
+            m_LetterCardContainer.canPlayCards = true;
            // CardListView.cardSize = level == Gameplay.DifficultyLevel.Easy ? 208 : 100;
             gameplay.StartGame();
         }

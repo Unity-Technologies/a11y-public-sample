@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Game Text Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Game Text
+  m_TableCollectionNameGuidString: cc1d194facb1d9d4380a9ea2032c10ca
+  m_Entries:
+  - m_Id: 76489584640
+    m_Key: EXIT_GAME_QUESTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 405763420160
+    m_Key: LOGIN_NAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 602912485376
+    m_Key: BUTTON_NEXT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 775025750016
+    m_Key: ENTER_NAME_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1101841723392
+    m_Key: BUTTON_EASY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1118581190656
+    m_Key: BUTTON_HARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1976530268160
+    m_Key: BUTTON_PAUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2162409238528
+    m_Key: BUTTON_NEXT_WORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696889397248
+    m_Key: BUTTON_BACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2876929896448
+    m_Key: SEARCH_OPTIONS_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3051354222592
+    m_Key: GAMEPLAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3183403495424
+    m_Key: USERNAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3577265418240
+    m_Key: BUTTON_DIFFICULTY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3801748762624
+    m_Key: DIFFICULTY_CHOICES_LIST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17127719464960
+    m_Key: NUMBER_OF_WORDS_LABEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17263564582912
+    m_Key: NUMBER_THREE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17369965686784
+    m_Key: NUMBER_SIX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17491977990144
+    m_Key: SHOW_SPELLING_CLUES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17616599150592
+    m_Key: AUDIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17717329555456
+    m_Key: SOUND_VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17842659553280
+    m_Key: MUSIC_VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18100730884096
+    m_Key: APPEARANCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18290820935680
+    m_Key: COLOR_THEME_LIST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18441962680320
+    m_Key: COLOR_THEME_LABEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19534851502080
+    m_Key: DISPLAY_SIZE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19656456957952
+    m_Key: BUTTON_OPTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20147798700032
+    m_Key: BUTTON_EXIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20374383390720
+    m_Key: BUTTON_RESUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21672893771776
+    m_Key: BUTTON_MAIN_MENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21754405875712
+    m_Key: BUTTON_PLAY_AGAIN
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 2216566541435797569
+  references:
+    version: 2
+    RefIds:
+    - rid: 2216566541435797569
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1758802856647

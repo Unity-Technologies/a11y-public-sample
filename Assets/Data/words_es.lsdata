@@ -1,0 +1,148 @@
+{
+    "words": {
+        "easy": [
+            {
+                "clue": "¡Muy peludo y lindo!",
+                "word": "gato"
+            },
+            {
+                "clue": "Dinero en mi alcancía.",
+                "word": "moneda"
+            },
+            {
+                "clue": "Para golpear la pelota de béisbol.",
+                "word": "bate"
+            },
+            {
+                "clue": "¡Úsalo en un día soleado!",
+                "word": "sombrero"
+            },
+            {
+                "clue": "¡Casi puedes volar!",
+                "word": "saltar"
+            },
+            {
+                "clue": "Igual que saltar.",
+                "word": "brincar"
+            },
+            {
+                "clue": "Es lindo y ladra.",
+                "word": "perro"
+            },
+            {
+                "clue": "Muy brillante afuera.",
+                "word": "sol"
+            },
+            {
+                "clue": "¡Para patear!",
+                "word": "pelota"
+            },
+            {
+                "clue": "¡Para pisar!",
+                "word": "tapete"
+            },
+            {
+                "clue": "Oinc, Oinc.",
+                "word": "cerdo"
+            },
+            {
+                "clue": "¡Jugando con amigos!",
+                "word": "diversión"
+            },
+            {
+                "clue": "Para escribir cosas.",
+                "word": "pluma"
+            },
+            {
+                "clue": "¡Jala la cuerda!",
+                "word": "tirar"
+            },
+            {
+                "clue": "Cuando escuchas el timbre.",
+                "word": "sonar"
+            },
+            {
+                "clue": "Desayuno, almuerzo y cena.",
+                "word": "comida"
+            },
+            {
+                "clue": "La soda va aquí.",
+                "word": "lata"
+            },
+            {
+                "clue": "Lo opuesto de pararse.",
+                "word": "sentarse"
+            },
+            {
+                "clue": "Lo que haces en el teléfono.",
+                "word": "hablar"
+            },
+            {
+                "clue": "Lo que haces en las aceras.",
+                "word": "caminar"
+            },
+            {
+                "clue": "Un gato o un perro.",
+                "word": "mascota"
+            },
+            {
+                "clue": "Tierra mojada después de que llueve.",
+                "word": "lodo"
+            },
+            {
+                "clue": "Agua cayendo del cielo.",
+                "word": "lluvia"
+            },
+            {
+                "clue": "El rey de la selva.",
+                "word": "león"
+            }
+        ],
+        "hard": [
+            {
+                "clue": "El bocadillo favorito de un panda.",
+                "word": "bambú"
+            },
+            {
+                "clue": "Un plato servido en triángulos.",
+                "word": "pizza"
+            },
+            {
+                "clue": "Ciudad capital de Alemania.",
+                "word": "berlín"
+            },
+            {
+                "clue": "Léelo hacia adelante y hacia atrás.",
+                "word": "anagrama"
+            },
+            {
+                "clue": "No es de día.",
+                "word": "noche"
+            },
+            {
+                "clue": "No es una tarjeta de débito.",
+                "word": "crédito"
+            },
+            {
+                "clue": "Una roca del espacio.",
+                "word": "meteoro"
+            },
+            {
+                "clue": "Comida después de la comida.",
+                "word": "postre"
+            },
+            {
+                "clue": "Lo que haces en el béisbol.",
+                "word": "atrapar"
+            },
+            {
+                "clue": "No fruncir el ceño.",
+                "word": "sonreír"
+            },
+            {
+                "clue": "Pisar algo.",
+                "word": "aplastar"
+            }
+        ]
+    }
+}

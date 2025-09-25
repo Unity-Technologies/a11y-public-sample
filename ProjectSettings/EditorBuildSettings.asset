@@ -23,5 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UITk/UITkMainScene.unity
     guid: 9048ee70b5b64440dadce897dc5a88ad
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 6b8e6a1d3b036e145b6ef92ea1abdc18, type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: 2aefa78047dcc7844adf6f4852cfea1e, type: 2}
   m_UseUCBPForAssetBundles: 0

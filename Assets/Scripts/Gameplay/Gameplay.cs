@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Localization;
 using UnityEngine.Pool;
 
 namespace Unity.Samples.LetterSpell
@@ -37,7 +38,9 @@ namespace Unity.Samples.LetterSpell
         /// <summary>
         /// The database of words.
         /// </summary>
-        public WordDatabase wordDatabase;
+        public WordDatabase wordDatabase => localizedWordDatabase.LoadAsset();
+
+        LocalizedAsset<WordDatabase> localizedWordDatabase = new LocalizedAsset<WordDatabase> { TableReference = "Game Assets", TableEntryReference = "words" };
 
         /// <summary>
         /// The list of words to complete.
@@ -136,6 +139,8 @@ namespace Unity.Samples.LetterSpell
 
             reorderedWordCount = 0;
             state = State.Playing;
+
+            localizedWordDatabase.AssetChanged += _ => RebuildWords();
 
             RebuildWords();
             ShowNextWord();

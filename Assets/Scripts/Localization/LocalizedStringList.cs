@@ -1,0 +1,40 @@
+using System.Collections.Generic;
+using UnityEngine.Localization.Settings;
+using UnityEngine.UIElements;
+
+namespace UnityEngine.Localization
+{
+    [UxmlObject]
+    public partial class LocalizedStringList : LocalizedString
+    {
+        readonly List<string> m_Strings = new List<string>();
+
+        [UxmlAttribute] public char seperator = ',';
+
+        protected override BindingResult Update(in BindingContext context)
+        {
+            if (IsEmpty)
+                return new BindingResult(BindingStatus.Success);
+
+            #if UNITY_EDITOR
+            // When not in playmode and not previewing a language we want to show something, so we revert to the project locale.
+            if (!Application.isPlaying && LocaleOverride == null && LocalizationSettings.SelectedLocale == null)
+            {
+                LocaleOverride = LocalizationSettings.ProjectLocale;
+            }
+            #endif
+
+            if (!CurrentLoadingOperationHandle.IsDone)
+                return new BindingResult(BindingStatus.Pending);
+
+            var element = context.targetElement;
+            var result = GetLocalizedString();
+            var resultArray = result.Split(seperator, System.StringSplitOptions.RemoveEmptyEntries);
+
+            if (ConverterGroups.TrySetValueGlobal(ref element, context.bindingId, resultArray, out var errorCode))
+                return new BindingResult(BindingStatus.Success);
+            return CreateErrorResult(context, errorCode, typeof(string));
+        }
+
+    }
+}

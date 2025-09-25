@@ -6,27 +6,52 @@
             <Unity.Samples.LetterSpell.StackView name="stackView" index="1" style="flex-grow: 1;">
                 <ui:VisualElement name="splashView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Splash-Screen.png?fileID=4602334432413793429&amp;guid=364b68ded9ed04f07848b6c7de25fdad&amp;type=3#Intro Screen_0&quot;);"/>
                 <ui:VisualElement name="loginView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Background-Intro.png?fileID=2800000&amp;guid=718087ba784b64abd9675b1452fc0095&amp;type=3#Background-Intro&quot;); align-items: center; justify-content: center;">
-                    <ui:Label text="What is your name UITK?" style="color: rgb(255, 255, 255); margin-bottom: 20px;"/>
-                    <ui:TextField placeholder-text="Enter your name" name="TextField" style="flex-direction: column; min-width: 252px; margin-bottom: 22px;">
+                    <ui:Label style="color: rgb(255, 255, 255); margin-bottom: 20px;">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(405763420160)"/>
+                        </Bindings>
+                    </ui:Label>
+                    <ui:TextField name="TextField" style="flex-direction: column; min-width: 252px; margin-bottom: 22px;">
                         <Bindings>
                             <ui:DataBinding property="value" data-source-path="userName" binding-mode="TwoWay"/>
+                            <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(775025750016)"/>
                         </Bindings>
                     </ui:TextField>
-                    <ui:Button text="Next" name="loginButton" class="purple"/>
+                    <ui:Button name="loginButton" class="purple">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(602912485376)"/>
+                        </Bindings>
+                    </ui:Button>
                 </ui:VisualElement>
                 <ui:VisualElement name="levelChoiceView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Background-Intro.png?fileID=2800000&amp;guid=718087ba784b64abd9675b1452fc0095&amp;type=3#Background-Intro&quot;);">
                     <ui:VisualElement style="flex-grow: 1; flex-direction: row; justify-content: center; align-items: center;">
-                        <ui:Button text="Play Easy" name="easyButton" class="choice-button"/>
-                        <ui:Button text="Play Hard" name="hardButton" class="choice-button" style="border-left-color: rgb(182, 241, 255); border-right-color: rgb(182, 241, 255); border-top-color: rgb(182, 241, 255); border-bottom-color: rgb(182, 241, 255);"/>
+                        <ui:Button name="easyButton" class="choice-button">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(1101841723392)"/>
+                            </Bindings>
+                        </ui:Button>
+                        <ui:Button name="hardButton" class="choice-button" style="border-left-color: rgb(182, 241, 255); border-right-color: rgb(182, 241, 255); border-top-color: rgb(182, 241, 255); border-bottom-color: rgb(182, 241, 255);">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(1118581190656)"/>
+                            </Bindings>
+                        </ui:Button>
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="gameView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Background-Intro.png?fileID=2800000&amp;guid=718087ba784b64abd9675b1452fc0095&amp;type=3#Background-Intro&quot;);">
                     <ui:Label text="#clue" name="clueLabel" style="-unity-text-align: middle-center; margin-top: 27px;"/>
                     <Unity.Samples.LetterSpell.CardListView name="letterCardContainer" style="flex-grow: 1;"/>
                     <ui:VisualElement name="gameViewButtonContainer" style="flex-direction: row; padding-top: 4px; padding-right: 18px; padding-bottom: 18px; padding-left: 18px;">
-                        <ui:Button text="Pause" name="pauseGameButton"/>
+                        <ui:Button name="pauseGameButton">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(1976530268160)"/>
+                            </Bindings>
+                        </ui:Button>
                         <ui:VisualElement name="VisualElement" style="flex-grow: 1;"/>
-                        <ui:Button text="Next Word" name="nextWordButton" class="purple"/>
+                        <ui:Button name="nextWordButton" class="purple">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(2162409238528)"/>
+                            </Bindings>
+                        </ui:Button>
                     </ui:VisualElement>
                     <ui:VisualElement name="successImage" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; align-items: center; justify-content: center;">
                         <ui:VisualElement style="background-image: url(&quot;project://database/Assets/UI/Images/Image-Correct.png?fileID=-3206192116628772432&amp;guid=7480bb21c642e4319b9a422353096177&amp;type=3#Correct-Badge_0&quot;); width: 100px; height: 22px; margin-top: -247px;"/>
@@ -34,79 +59,139 @@
                 </ui:VisualElement>
                 <ui:VisualElement name="settingsView" style="flex-grow: 1; background-color: rgb(255, 251, 233);">
                     <ui:VisualElement name="settingsHeader" style="flex-direction: row; flex-shrink: 0;">
-                        <ui:Button text="Back" name="closeSettingsButton"/>
+                        <ui:Button name="closeSettingsButton">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(2696889397248)"/>
+                            </Bindings>
+                        </ui:Button>
                     </ui:VisualElement>
                     <ui:ScrollView name="ScrollView" vertical-scroller-visibility="Hidden">
-                        <ui:TextField placeholder-text="Search Options" name="settingsSearchField"/>
-                        <ui:Label text="Gameplay" class="settings-header-label"/>
-                        <ui:TextField label="Username" placeholder-text="Enter your name" name="settingsUserNameField">
+                        <ui:TextField name="settingsSearchField">
                             <Bindings>
-                                <ui:DataBinding property="value" data-source-path="userName" binding-mode="TwoWay"/>
+                                <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(2876929896448)"/>
                             </Bindings>
                         </ui:TextField>
-                        <ui:DropdownField label="Difficulty Level" name="settingsGameDifficultyDropdown" choices="Easy,Hard">
+                        <ui:Label class="settings-header-label">
                             <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3051354222592)"/>
+                            </Bindings>
+                        </ui:Label>
+                        <ui:TextField name="settingsUserNameField">
+                            <Bindings>
+                                <ui:DataBinding property="value" data-source-path="userName" binding-mode="TwoWay"/>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3183403495424)"/>
+                                <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(775025750016)"/>
+                            </Bindings>
+                        </ui:TextField>
+                        <ui:DropdownField name="settingsGameDifficultyDropdown" choices="Easy,Hard">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3577265418240)"/>
+                                <UnityEngine.Localization.LocalizedStringList property="choices" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3801748762624)"/>
                                 <ui:DataBinding property="index" data-source-path="difficultyLevel" binding-mode="TwoWay"/>
                             </Bindings>
                         </ui:DropdownField>
                         <ui:VisualElement name="settingsNumberOfWords" style="flex-direction: row;">
-                            <ui:Label text="Number Of Words" name="Label" class="unity-base-field__label"/>
-                            <ui:RadioButton label="Three" name="settingsThreeWordsButton" value="true">
+                            <ui:Label name="Label" class="unity-base-field__label">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17127719464960)"/>
+                                </Bindings>
+                            </ui:Label>
+                            <ui:RadioButton name="settingsThreeWordsButton" value="true">
                                 <Bindings>
                                     <ui:DataBinding property="value" data-source-path="isThreeWords" binding-mode="TwoWay"/>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17263564582912)"/>
                                 </Bindings>
                             </ui:RadioButton>
-                            <ui:RadioButton label="Six" name="settingsSixWordsButton">
+                            <ui:RadioButton name="settingsSixWordsButton">
                                 <Bindings>
                                     <ui:DataBinding property="value" data-source-path="isSixWords" binding-mode="TwoWay"/>
+                                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17369965686784)"/>
                                 </Bindings>
                             </ui:RadioButton>
                         </ui:VisualElement>
-                        <ui:Toggle label="Show Spelling Clues" name="settingsShowSpellingClues">
+                        <ui:Toggle name="settingsShowSpellingClues">
                             <Bindings>
                                 <ui:DataBinding property="value" data-source-path="showsSpellingClues" binding-mode="TwoWay"/>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17491977990144)"/>
                             </Bindings>
                         </ui:Toggle>
-                        <ui:Label text="Audio" class="settings-header-label"/>
-                        <ui:Slider label="Sound Effects Volume" high-value="1" name="settingsSoundEffectVolumne">
+                        <ui:Label class="settings-header-label">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17616599150592)"/>
+                            </Bindings>
+                        </ui:Label>
+                        <ui:Slider high-value="1" name="settingsSoundEffectVolumne">
                             <Bindings>
                                 <ui:DataBinding property="value" data-source-path="soundEffectVolume" binding-mode="TwoWay"/>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17717329555456)"/>
                             </Bindings>
                         </ui:Slider>
-                        <ui:Slider label="Music Volume" high-value="1" name="settingsMusicVolume">
+                        <ui:Slider high-value="1" name="settingsMusicVolume">
                             <Bindings>
                                 <ui:DataBinding property="value" data-source-path="musicVolume" binding-mode="TwoWay"/>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17842659553280)"/>
                             </Bindings>
                         </ui:Slider>
-                        <ui:Label text="Appearance" class="settings-header-label"/>
-                        <ui:DropdownField label="Color Theme" name="settingsColorThemeField" choices="Option A,Option B,Option C">
+                        <ui:Label class="settings-header-label">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(18100730884096)"/>
+                            </Bindings>
+                        </ui:Label>
+                        <ui:DropdownField name="settingsColorThemeField" choices="Option A,Option B,Option C">
                             <Bindings>
                                 <ui:DataBinding property="index" data-source-path="colorTheme" binding-mode="TwoWay"/>
+                                <UnityEngine.Localization.LocalizedStringList property="choices" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(18290820935680)"/>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(18441962680320)"/>
                             </Bindings>
                         </ui:DropdownField>
-                        <ui:Slider label="Display Size" high-value="1" name="settingsDisplaySizeField">
+                        <ui:Slider high-value="1" name="settingsDisplaySizeField">
                             <Bindings>
                                 <ui:DataBinding property="value" data-source-path="displaySize" binding-mode="TwoWay"/>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(19534851502080)"/>
                             </Bindings>
                         </ui:Slider>
                     </ui:ScrollView>
                 </ui:VisualElement>
             </Unity.Samples.LetterSpell.StackView>
-            <ui:Button text="Options" name="settingsButton" style="position: absolute; right: 22px; top: 5px; display: none;"/>
+            <ui:Button name="settingsButton" style="position: absolute; right: 22px; top: 5px; display: none;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(19656456957952)"/>
+                </Bindings>
+            </ui:Button>
         </ui:VisualElement>
-        <ui:VisualElement name="overlay" picking-mode="Ignore" style="flex-grow: 1; position: absolute; top: 3px; left: 12px; bottom: -2px; right: -11px; align-items: center; justify-content: center;">
+        <ui:VisualElement name="overlay" picking-mode="Ignore" style="flex-grow: 1; position: absolute; top: 1px; left: 10px; bottom: 1px; right: -8px; align-items: center; justify-content: center;">
             <ui:VisualElement name="exitGamePopup" class="lsp-popup" style="flex-grow: 0; align-self: center; display: none;">
-                <ui:Label text="Do you want to exit the game"/>
+                <ui:Label>
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(76489584640)"/>
+                    </Bindings>
+                </ui:Label>
                 <ui:VisualElement name="exitPopupButtonBox" style="flex-grow: 1; flex-direction: row; align-items: center; justify-content: center;">
-                    <ui:Button text="Exit" name="exitGameButton"/>
-                    <ui:Button text="Resume" name="resumeGameButton" class="purple"/>
+                    <ui:Button name="exitGameButton">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(20147798700032)"/>
+                        </Bindings>
+                    </ui:Button>
+                    <ui:Button name="resumeGameButton" class="purple">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(20374383390720)"/>
+                        </Bindings>
+                    </ui:Button>
                 </ui:VisualElement>
             </ui:VisualElement>
             <sr:AccessibleVisualElement name="resultScreen" class="lsp-popup" style="display: none;">
-                <ui:Label text="1 of 3 correct" name="resultLabel" style="-unity-text-align: middle-center;"/>
+                <ui:Label name="resultLabel" style="-unity-text-align: middle-center;"/>
                 <ui:VisualElement name="resultButtonContainer" style="flex-grow: 1; flex-direction: row; margin-top: 10px; align-items: center;">
-                    <ui:Button text="Main Menu" name="resultMainMenuButton"/>
-                    <ui:Button text="Play Again" name="resultPlayAgainButton" class="purple"/>
+                    <ui:Button name="resultMainMenuButton">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(21672893771776)"/>
+                        </Bindings>
+                    </ui:Button>
+                    <ui:Button name="resultPlayAgainButton" class="purple">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(21754405875712)"/>
+                        </Bindings>
+                    </ui:Button>
                 </ui:VisualElement>
                 <accessible>
                     <sr:AccessibleProperties modal="true"/>

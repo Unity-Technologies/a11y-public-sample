@@ -1,0 +1,143 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Game Text_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: cc1d194facb1d9d4380a9ea2032c10ca, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 76489584640
+    m_Localized: Do you want to exit the game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 405763420160
+    m_Localized: What is your name UITK?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 602912485376
+    m_Localized: Next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 775025750016
+    m_Localized: Enter your name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1101841723392
+    m_Localized: Play Easy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1118581190656
+    m_Localized: Play Hard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1976530268160
+    m_Localized: Pause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2162409238528
+    m_Localized: Next Word
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696889397248
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2876929896448
+    m_Localized: Search Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3183403495424
+    m_Localized: Username
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3577265418240
+    m_Localized: Difficulty Level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3801748762624
+    m_Localized: Easy,Hard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17127719464960
+    m_Localized: Number Of Words
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17263564582912
+    m_Localized: Three
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17369965686784
+    m_Localized: Six
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17491977990144
+    m_Localized: Show Spelling Clues
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17616599150592
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17717329555456
+    m_Localized: Sound Effects Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17842659553280
+    m_Localized: Music Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18100730884096
+    m_Localized: Appearance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18290820935680
+    m_Localized: Option A,Option B,Option C
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18441962680320
+    m_Localized: Color Theme
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19534851502080
+    m_Localized: Display Size
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19656456957952
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20147798700032
+    m_Localized: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20374383390720
+    m_Localized: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21672893771776
+    m_Localized: Main Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21754405875712
+    m_Localized: Play Again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3051354222592
+    m_Localized: Gameplay
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

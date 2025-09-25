@@ -34,11 +34,18 @@ namespace Unity.Samples.ScreenReader
         private VisualElement m_VisualTree;
         private IVisualElementScheduledItem m_UpdateJob;
         private UITkAccessibilityService m_AccessibilityService;
+        private AccessibilitySubHierarchy m_SubHierarchy;
         
         /// <summary>
         /// The sub hierarchy this updater is managing.
         /// </summary>
-        public AccessibilitySubHierarchy hierarchy { get; set; }
+        public AccessibilitySubHierarchy hierarchy { get => m_SubHierarchy;
+            set { 
+                m_SubHierarchy = value;
+                if (m_SubHierarchy.isValid && visualTree != null)
+                    DirtyRootFrame(); 
+            }
+        }
         
         /// <summary>
         /// The panel of the visual tree being managed.
@@ -90,6 +97,7 @@ namespace Unity.Samples.ScreenReader
             m_AccessibilityService = service;
             visualTree.RegisterCallback<AttachToPanelEvent>(OnAttachmentToPanel);
             visualTree.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
+            DirtyRootFrame();
         }
 
         int m_LastVisualElementTotalCount = 0;
@@ -504,6 +512,7 @@ namespace Unity.Samples.ScreenReader
                     rootNode.role = AccessibilityRole.Container;
                     rootNode.isActive = (Application.platform == RuntimePlatform.OSXPlayer);
                     hierarchy = new AccessibilitySubHierarchy(m_AccessibilityService.hierarchy.mainHierarchy, rootNode);
+                    DirtyRootFrame();
                     shouldSendNotification = true;
                 }
 

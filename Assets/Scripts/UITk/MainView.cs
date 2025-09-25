@@ -161,6 +161,15 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
+        [CreateProperty]
+        public float fontScale
+        {
+            get
+            {
+                return AccessibilitySettings.fontScale;
+            }
+        }
+
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
         void Notify([CallerMemberName] string property = "")
@@ -231,7 +240,7 @@ namespace Unity.Samples.LetterSpell
         /// </summary>
         bool m_WasHierarchyRefreshed;
         
-        public int splashScreenDuration = 2000;
+        public readonly float splashScreenDuration = 8;// 4000;
 
         /// <summary>
         /// The Gameplay manager.
@@ -294,7 +303,8 @@ namespace Unity.Samples.LetterSpell
             m_GameView = m_StackView.Q("gameView");
             m_ClueLabel = m_GameView.Q<Label>("clueLabel");
             m_SuccessImage = m_GameView.Q("successImage");
-            m_SuccessImage.style.display = DisplayStyle.None;
+            //m_SuccessImage.style.display = DisplayStyle.None;
+            m_SuccessImage.style.opacity = 0;
             m_LetterCardContainer = m_GameView.Q<LetterSpell.CardListView>("letterCardContainer");
             m_PauseGameButton = m_GameView.Q<Button>("pauseGameButton");
             m_PauseGameButton.clicked += ShowExitGamePopup;
@@ -394,8 +404,8 @@ namespace Unity.Samples.LetterSpell
         
         public void ShowNextWord()
         {
-            m_SuccessImage.style.display = DisplayStyle.None;
-
+            //m_SuccessImage.style.display = DisplayStyle.None;
+            m_SuccessImage.style.opacity = 0;
             //if (gameplay.IsGameComplete())
             if (gameplay.IsShowingLastWord())
             {
@@ -430,7 +440,8 @@ namespace Unity.Samples.LetterSpell
 
         void ShowResults(int orderedWordCount, int totalWordCount)
         {
-            m_ResultLabel.text = $"{orderedWordCount} of {totalWordCount} correct";
+            m_ResultLabel.text = $"The game is over!\nyou found {orderedWordCount} words out of {totalWordCount}";
+           // m_ResultLabel.text = $"{orderedWordCount} of {totalWordCount} correct";
             m_ScreenResult.Show();
             //m_ClueLabel.style.display = DisplayStyle.None;
             // Ensure the clue label always the same space in the view
@@ -515,7 +526,8 @@ namespace Unity.Samples.LetterSpell
 
         void FadeSuccessImageIn()
         {
-            m_SuccessImage.style.display = DisplayStyle.Flex;
+            m_SuccessImage.style.opacity = 1;
+           // m_SuccessImage.style.display = DisplayStyle.Flex;
             m_MainView.schedule.Execute((t) => FadeSuccessImageOut()).ExecuteLater(3000);
         }
 
@@ -624,14 +636,20 @@ namespace Unity.Samples.LetterSpell
         void ShowSplash()
         {
             m_StackView.index = 0;
-            m_StackView.schedule.Execute(() =>
-            {
+            OnScreenDebug.Log("Showing splash screen " + DateTime.Now);
+
+            Invoke(nameof(DelayShowLogin), splashScreenDuration);
+        }
+
+        void DelayShowLogin()
+        {
+            OnScreenDebug.Log("DelayShowLogin " + DateTime.Now);
                 m_SettingsButton.style.display = DisplayStyle.None;
                 m_Logo.style.display = DisplayStyle.Flex;
                 m_StackView.activeView = m_LoginView;
-            }).ExecuteLater(splashScreenDuration);
+                
+                OnScreenDebug.Log("Showing Login " + DateTime.Now);
         }
-
         void ShowLevelChoiceView()
         {
             m_StackView.activeView = m_LevelChoiceView;

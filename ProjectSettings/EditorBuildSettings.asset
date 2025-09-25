@@ -5,23 +5,23 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/Splash Scene.unity
-    guid: 1bbc8ade85929435f8a0e6438d5b06f6
-  - enabled: 0
-    path: Assets/Scenes/Intro 1 Scene.unity
-    guid: 133511799104c4b88b061744b4f11f3b
-  - enabled: 0
-    path: Assets/Scenes/Intro 2 Scene.unity
-    guid: 4770f347305254648a52327703cf6945
-  - enabled: 0
-    path: Assets/Scenes/Gameplay Scene.unity
-    guid: efb2e7f6443ba4aeb99d3265237296f7
-  - enabled: 0
-    path: Assets/Scenes/Settings Scene.unity
-    guid: 3aed318b337ef4f7fb78e1abd46dabc1
   - enabled: 1
     path: Assets/Scenes/UITk/UITkMainScene.unity
     guid: 9048ee70b5b64440dadce897dc5a88ad
+  - enabled: 1
+    path: Assets/Scenes/Splash Scene.unity
+    guid: 1bbc8ade85929435f8a0e6438d5b06f6
+  - enabled: 1
+    path: Assets/Scenes/Intro 1 Scene.unity
+    guid: 133511799104c4b88b061744b4f11f3b
+  - enabled: 1
+    path: Assets/Scenes/Intro 2 Scene.unity
+    guid: 4770f347305254648a52327703cf6945
+  - enabled: 1
+    path: Assets/Scenes/Gameplay Scene.unity
+    guid: efb2e7f6443ba4aeb99d3265237296f7
+  - enabled: 1
+    path: Assets/Scenes/Settings Scene.unity
+    guid: 3aed318b337ef4f7fb78e1abd46dabc1
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

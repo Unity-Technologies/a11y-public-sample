@@ -36,7 +36,7 @@
                         <ui:VisualElement name="VisualElement" style="flex-grow: 1;"/>
                         <ui:Button text="Next Word" name="nextWordButton" class="purple"/>
                     </ui:VisualElement>
-                    <ui:VisualElement name="successImage" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; align-items: center; justify-content: center;">
+                    <ui:VisualElement name="successImage" picking-mode="Ignore" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; align-items: center; justify-content: center; transition-property: opacity; transition-duration: 200ms; transition-timing-function: ease-in-out;">
                         <ui:VisualElement style="background-image: url(&quot;project://database/Assets/UI/Images/Image-Correct.png?fileID=-3206192116628772432&amp;guid=7480bb21c642e4319b9a422353096177&amp;type=3#Correct-Badge_0&quot;); width: 382px; height: 85px; margin-top: -277px;"/>
                     </ui:VisualElement>
                 </ui:VisualElement>
@@ -111,6 +111,14 @@
                             <ui:Label text="On" name="boldTextLabel">
                                 <Bindings>
                                     <ui:DataBinding property="text" data-source-path="boldTextEnabledText" binding-mode="ToTarget"/>
+                                </Bindings>
+                            </ui:Label>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="row unity-base-field" style="flex-grow: 1;">
+                            <ui:Label text="Font Scale" class="unity-base-field__label"/>
+                            <ui:Label text="1.0" name="fontScaleLabel">
+                                <Bindings>
+                                    <ui:DataBinding property="text" data-source-path="fontScale" binding-mode="ToTarget"/>
                                 </Bindings>
                             </ui:Label>
                         </ui:VisualElement>

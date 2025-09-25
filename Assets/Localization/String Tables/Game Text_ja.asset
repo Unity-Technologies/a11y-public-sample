@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: ja
   m_SharedData: {fileID: 11400000, guid: cc1d194facb1d9d4380a9ea2032c10ca, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 2216566543976235778
   m_TableData:
   - m_Id: 76489584640
     m_Localized: "\u30B2\u30FC\u30E0\u3092\u7D42\u4E86\u3057\u307E\u3059\u304B\uFF1F"
@@ -139,15 +140,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36438190223360
-    m_Localized: "\u82F1\u8A9E"
+    m_Localized: "\u82F1\u8A9E (English)"
     m_Metadata:
       m_Items: []
   - m_Id: 36495383752704
-    m_Localized: "\u30A2\u30E9\u30D3\u30A2\u8A9E"
+    m_Localized: "\u30A2\u30E9\u30D3\u30A2\u8A9E (\u0627\u0644\u0625\u0633\u0628\u0627\u0646\u064A\u0629)"
     m_Metadata:
       m_Items: []
   - m_Id: 36529051430912
-    m_Localized: "\u30B9\u30DA\u30A4\u30F3\u8A9E"
+    m_Localized: "\u30B9\u30DA\u30A4\u30F3\u8A9E (Espa\xF1ol)"
     m_Metadata:
       m_Items: []
   - m_Id: 36559753736192
@@ -158,6 +159,17 @@ MonoBehaviour:
     m_Localized: "\u8A00\u8A9E"
     m_Metadata:
       m_Items: []
+  - m_Id: 45343066714112
+    m_Localized: "{totalWordCount}\u554F\u4E2D{orderedWordCount}\u554F\u6B63\u89E3"
+    m_Metadata:
+      m_Items:
+      - rid: 2216566543976235778
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 2216566543976235778
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 45343066714112

@@ -140,7 +140,12 @@ namespace Unity.Samples.LetterSpell
             reorderedWordCount = 0;
             state = State.Playing;
 
-            localizedWordDatabase.AssetChanged += _ => RebuildWords();
+            localizedWordDatabase.AssetChanged += _ =>
+            {
+                RebuildWords();
+                m_CurrentWordIndex--;
+                SetCurrentWordIndex(m_CurrentWordIndex + 1);
+            };
 
             RebuildWords();
             ShowNextWord();

@@ -135,6 +135,26 @@ MonoBehaviour:
     m_Key: BUTTON_PLAY_AGAIN
     m_Metadata:
       m_Items: []
+  - m_Id: 36438190223360
+    m_Key: LANGUAGE_ENGLISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36495383752704
+    m_Key: LANGUAGE_ARABIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36529051430912
+    m_Key: LANGUAGE_SPANISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36559753736192
+    m_Key: LANGUAGE_JAPANESE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36785994493952
+    m_Key: SETTINGS_LANGUAGE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

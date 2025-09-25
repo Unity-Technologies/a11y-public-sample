@@ -115,6 +115,11 @@
                                 <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17491977990144)"/>
                             </Bindings>
                         </ui:Toggle>
+                        <UnityEngine.Localization.LanguageSelection table-name="Game Text">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(36785994493952)"/>
+                            </Bindings>
+                        </UnityEngine.Localization.LanguageSelection>
                         <ui:Label class="settings-header-label">
                             <Bindings>
                                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17616599150592)"/>
@@ -180,7 +185,20 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <sr:AccessibleVisualElement name="resultScreen" class="lsp-popup" style="display: none;">
-                <ui:Label name="resultLabel" style="-unity-text-align: middle-center;"/>
+                <ui:Label name="resultLabel" style="-unity-text-align: middle-center;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(45343066714112)">
+                            <variables>
+                                <UnityEngine.Localization.LocalVariable name="orderedWordCount">
+                                    <UnityEngine.Localization.SmartFormat.PersistentVariables.IntVariable/>
+                                </UnityEngine.Localization.LocalVariable>
+                                <UnityEngine.Localization.LocalVariable name="totalWordCount">
+                                    <UnityEngine.Localization.SmartFormat.PersistentVariables.IntVariable/>
+                                </UnityEngine.Localization.LocalVariable>
+                            </variables>
+                        </UnityEngine.Localization.LocalizedString>
+                    </Bindings>
+                </ui:Label>
                 <ui:VisualElement name="resultButtonContainer" style="flex-grow: 1; flex-direction: row; margin-top: 10px; align-items: center;">
                     <ui:Button name="resultMainMenuButton">
                         <Bindings>

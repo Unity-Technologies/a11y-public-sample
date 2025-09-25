@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
@@ -29,10 +30,23 @@ namespace UnityEngine.Localization
 
             var element = context.targetElement;
             var result = GetLocalizedString();
-            var resultArray = result.Split(seperator, System.StringSplitOptions.RemoveEmptyEntries);
+            var resultArray = result.Split(seperator, System.StringSplitOptions.RemoveEmptyEntries).ToList();
+
+            int index = -1;
+            if (element is DropdownField)
+                index = ((DropdownField)element).index;
 
             if (ConverterGroups.TrySetValueGlobal(ref element, context.bindingId, resultArray, out var errorCode))
+            {
+                if (element is DropdownField field && index != -1)
+                {
+                    // Workaround as the dropdown field value does not update when choices changes. (UUM-120183)
+                    field.value = "";
+                    field.index = index;
+                }
+
                 return new BindingResult(BindingStatus.Success);
+            }
             return CreateErrorResult(context, errorCode, typeof(string));
         }
 

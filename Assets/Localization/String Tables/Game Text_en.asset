@@ -138,6 +138,26 @@ MonoBehaviour:
     m_Localized: Gameplay
     m_Metadata:
       m_Items: []
+  - m_Id: 36438190223360
+    m_Localized: English
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36495383752704
+    m_Localized: Arabic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36529051430912
+    m_Localized: Spanish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36559753736192
+    m_Localized: Japanese
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36785994493952
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

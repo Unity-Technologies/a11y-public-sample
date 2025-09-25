@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.UIElements;
 using Unity.Samples.ScreenReader;
+using UnityEngine.Localization;
+using UnityEngine.Localization.SmartFormat.Extensions;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
 namespace Unity.Samples.LetterSpell
 {
@@ -322,7 +325,14 @@ namespace Unity.Samples.LetterSpell
         {
             var label = m_ScreenResult.Q<Label>("resultLabel");
 
-            label.text = $"{orderedWordCount} of {totalWordCount} correct";
+            var localizedString = label.GetBinding("text") as LocalizedString;
+            var orderedWordCountValue = localizedString["orderedWordCount"] as IntVariable;
+            var totalWordCountValue = localizedString["totalWordCount"] as IntVariable;
+
+            PersistentVariablesSource.BeginUpdating();
+            orderedWordCountValue.Value = orderedWordCount;
+            totalWordCountValue.Value = totalWordCount;
+            PersistentVariablesSource.EndUpdating();
             m_ScreenResult.style.display = DisplayStyle.Flex;
             m_ClueLabel.style.display = DisplayStyle.None;
         }

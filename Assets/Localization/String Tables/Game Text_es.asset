@@ -138,6 +138,26 @@ MonoBehaviour:
     m_Localized: Jugar de Nuevo
     m_Metadata:
       m_Items: []
+  - m_Id: 36438190223360
+    m_Localized: "Ingl\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36495383752704
+    m_Localized: "\xC1rabe"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36529051430912
+    m_Localized: "Espa\xF1ol"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36559753736192
+    m_Localized: "Japon\xE9s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36785994493952
+    m_Localized: Idioma
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

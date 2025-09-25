@@ -218,6 +218,7 @@
 
 .unity-base-field__label {
     -unity-text-align: middle-left;
+    margin-right: 30px;
 }
 
 .settings-header-label {
@@ -330,7 +331,6 @@
 
 .unity-base-text-field__input--placeholder {
     color: rgb(164, 164, 164);
-    -unity-font-style: italic;
 }
 
 .purple {
@@ -490,4 +490,31 @@
 
 #closeSettingsButton {
     margin-left: 0;
+}
+
+
+
+:root.bold-text {
+    -unity-font-style: bold;
+}
+
+
+
+.unity-base-dropdown__item {
+}
+
+.unity-base-dropdown__checkmark {
+    margin-top: 30px;
+    margin-right: 30px;
+    margin-bottom: 30px;
+    margin-left: 30px;
+    width: 50px;
+    height: 50px;
+}
+
+.unity-base-dropdown__item:checked > .unity-base-dropdown__item-content > .unity-base-dropdown__label {
+}
+
+.unity-base-dropdown__item > .unity-base-dropdown__item-content > .unity-base-dropdown__label {
+    margin-left: 80px;
 }

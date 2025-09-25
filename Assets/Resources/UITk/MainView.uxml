@@ -54,7 +54,7 @@
                         </ui:TextField>
                         <lsp:ButtonStripField name="settingsGameDifficultyButtonStrip" label="Difficulty Level" choices="Easy,Hard">
                             <Bindings>
-                                <ui:DataBinding property="index" data-source-path="difficultyLevel" binding-mode="TwoWay"/>
+                                <ui:DataBinding property="value" data-source-path="difficultyLevel" binding-mode="TwoWay"/>
                             </Bindings>
                         </lsp:ButtonStripField>
                         <ui:VisualElement name="settingsNumberOfWords" class="unity-base-field" style="flex-direction: row;">

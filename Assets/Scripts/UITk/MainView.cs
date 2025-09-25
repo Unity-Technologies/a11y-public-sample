@@ -237,7 +237,7 @@ namespace Unity.Samples.LetterSpell
         /// The Gameplay manager.
         /// </summary>
         public Gameplay gameplay;
-
+        
         // Start is called before the first frame update
         void Start()
         {
@@ -331,6 +331,13 @@ namespace Unity.Samples.LetterSpell
             m_InGameSettingsButton.clicked += ShowSettings;
             
             m_StackView.activeViewChanged += DelayRefreshHierarchy;
+            
+            
+            // Initialize the values for the read-only settings.
+            OnBoldTextStatusChanged(AccessibilitySettings.isBoldTextEnabled);
+            OnClosedCaptioningStatusChanged(AccessibilitySettings.isClosedCaptioningEnabled);
+            OnFontScaleValueChanged(AccessibilitySettings.fontScale);
+            
             ShowSplash();
         }
 
@@ -344,6 +351,10 @@ namespace Unity.Samples.LetterSpell
 
             AssistiveSupport.nodeFocusChanged += OnNodeFocusChanged;
             OnScreenDebug.Log("MainWindow.OnEnable");
+            
+            AccessibilitySettings.boldTextStatusChanged += OnBoldTextStatusChanged;
+            AccessibilitySettings.closedCaptioningStatusChanged += OnClosedCaptioningStatusChanged;
+            AccessibilitySettings.fontScaleChanged += OnFontScaleValueChanged;
         }
 
         void OnDisable()
@@ -353,7 +364,27 @@ namespace Unity.Samples.LetterSpell
             m_Model.gameplay = null;
             m_AccessibilityFocusedCard = null;
 
+            AccessibilitySettings.boldTextStatusChanged -= OnBoldTextStatusChanged;
+            AccessibilitySettings.closedCaptioningStatusChanged -= OnClosedCaptioningStatusChanged;
+            AccessibilitySettings.fontScaleChanged -= OnFontScaleValueChanged;
+            
             AssistiveSupport.nodeFocusChanged -= OnNodeFocusChanged;
+        }
+
+        void OnBoldTextStatusChanged(bool boldTextStatus)
+        {
+            // Do it inline because using a USS class does not work (like :root.bold-text).
+            //m_MainView.panel.visualTree.style.unityFontStyleAndWeight = boldTextStatus ? FontStyle.Bold : FontStyle.Normal;
+            
+            m_MainView.panel.visualTree.EnableInClassList("bold-text", true);
+        }
+
+        void OnClosedCaptioningStatusChanged(bool closedCaptioningStatus)
+        {
+        }
+
+        void OnFontScaleValueChanged(float fontScale)
+        {
         }
 
         void OnGameStateChanged(Gameplay.State state)

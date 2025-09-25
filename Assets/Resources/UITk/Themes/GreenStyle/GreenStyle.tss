@@ -1,2 +1,37 @@
-@import url("/Assets/Resources/UITk/Themes/Common/CommonStyle.tss");
-@import url("GreenStyle.Colors.uss");
+/*@import url("/Assets/Resources/UITk/Themes/Common/CommonStyle.tss");
+@import url("GreenStyle.Colors.uss");*/
+@import url("unity-theme://default");
+
+:root {
+    font-size: 64px;
+}
+
+
+:root.bold-text {
+    -unity-font-style: bold
+}
+
+/* Dropdown */
+.unity-base-dropdown__container-outer {
+    border-width: 10px;
+    border-color: black;
+    border-radius: 30px;
+}
+
+.unity-base-dropdown__container-outer > .unity-scroll-view {
+    border-radius: 20px;
+    background-color: #63DD7F;
+}
+
+.unity-base-dropdown__item {
+}
+
+.unity-base-dropdown__item:hover:enabled {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.unity-base-dropdown__checkmark {
+    margin: 30px;
+    width: 50px;
+    height: 50px;
+}

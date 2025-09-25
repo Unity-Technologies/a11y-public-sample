@@ -573,7 +573,7 @@ namespace Unity.Samples.ScreenReader
             }
 
             if (element.ClassListContains(GenericDropdownMenu.ussClassName))
-                OnScreenDebug.Log("Menu " + element.name + " visible:" + visible + " acc:" +  (accElement != null) + " model " + accElement.isModal);
+                OnScreenDebug.Log("Menu " + element.name + " visible:" + visible + " acc:" +  (accElement != null) + " model " + accElement?.isModal);
             bool shouldBeIgnored = !visible;
             bool modal = false;
 

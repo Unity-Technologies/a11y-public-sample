@@ -90,7 +90,6 @@ namespace Unity.Samples.ScreenReader
             m_AccessibilityService = service;
             visualTree.RegisterCallback<AttachToPanelEvent>(OnAttachmentToPanel);
             visualTree.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
-            
         }
 
         int m_LastVisualElementTotalCount = 0;
@@ -101,6 +100,7 @@ namespace Unity.Samples.ScreenReader
         }
         void OnGeometryChanged(GeometryChangedEvent evt)
         {
+            DirtyRootFrame();
            // OnScreenDebug.Log("OnGeometryChanged " + evt.target);
             OnVersionChanged(evt.target as VisualElement, VersionChangeType.Size | VersionChangeType.Transform);
         }
@@ -392,6 +392,18 @@ namespace Unity.Samples.ScreenReader
             }
         }
 
+        void DirtyRootFrame()
+        {
+            m_AccessibilityService.DirtyRootFrames();
+        }
+
+        public void UpdateRootFrame()
+        {
+            if (hierarchy.isValid)
+            {
+                hierarchy.rootNode.frame = GetScreenPosition(visualTree);
+            }
+        }
         
         void UpdateNode(VisualElementAccessibilityHandler accElement)
         {
@@ -410,7 +422,7 @@ namespace Unity.Samples.ScreenReader
         public void OnVersionChanged(VisualElement ve, VersionChangeType versionChangeType)
         {
            // OnScreenDebug.Log("OnVersionChanged " + ve + " " + versionChangeType);
-            if (!OnVersionChangedInternal(ve, versionChangeType))
+            if (ve != null && !OnVersionChangedInternal(ve, versionChangeType))
             {
                 
                 OnScreenDebug.Log("Event ignore version changed");

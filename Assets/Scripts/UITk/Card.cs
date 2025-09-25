@@ -92,14 +92,14 @@ namespace Unity.Samples.LetterSpell
             style.marginRight = 4;
             style.marginBottom = 4;
             */
-            style.fontSize = 40;
+            /*style.fontSize = 40;
             style.alignItems = Align.Center;
             style.justifyContent = Justify.Center;
 
             style.borderBottomLeftRadius = 6;
             style.borderTopLeftRadius = 6;
             style.borderBottomRightRadius = 6;
-            style.borderTopRightRadius = 6;
+            style.borderTopRightRadius = 6;*/
             
             //style.backgroundColor = Color.white;
 
@@ -366,8 +366,8 @@ namespace Unity.Samples.LetterSpell
     [UxmlElement]
     partial class CardListView : VisualElement
     {
-        static public int cardSize = 150;
-        public int spacing = 10;
+        static public int cardSize = 208;
+        public int spacing = 30;
         private VisualElement m_InsertionPlaceholder;
         
         public CardListView()

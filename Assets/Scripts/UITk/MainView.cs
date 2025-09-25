@@ -20,6 +20,8 @@ namespace Unity.Samples.LetterSpell
         public const string k_MusicPref = "MusicVolume";
         const string k_ColorThemePref = "ColorTheme";
         const string k_DisplaySizePref = "DisplaySize";
+        const string k_SettingOn = "On";
+        const string k_SettingOff = "Off";
 
         [CreateProperty]
         public string userName
@@ -140,6 +142,25 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
+        [CreateProperty]
+        public string closedCaptionsEnabledText
+        {
+            get
+            {
+                return AccessibilitySettings.isClosedCaptioningEnabled ? k_SettingOn : k_SettingOff;
+            }
+        }
+        
+        
+        [CreateProperty]
+        public string boldTextEnabledText
+        {
+            get
+            {
+                return AccessibilitySettings.isBoldTextEnabled ? k_SettingOn : k_SettingOff;;
+            }
+        }
+
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
         void Notify([CallerMemberName] string property = "")
@@ -159,6 +180,7 @@ namespace Unity.Samples.LetterSpell
         private Button m_LoginButton;
         private Button m_EasyButton;
         private Button m_HardButton;
+        private Button m_StartGameButton;
         private VisualElement m_LevelChoiceView;
 
         private VisualElement m_GameView;
@@ -169,16 +191,35 @@ namespace Unity.Samples.LetterSpell
         private Button m_NextWordButtton;
         private Button m_ExitGameButton;
         private Button m_ResumeGameButton;
-        private VisualElement m_Overlay;
-        private VisualElement m_ExitGamePopup;
-        private VisualElement m_ScreenResult;
+        private Popup m_ExitGamePopup;
+        private Popup m_ScreenResult;
+        private Label m_ResultLabel;
         private Button m_ScreenResultMainMenuButton;
         private Button m_ScreenResultPlayAgainButton;
         private VisualElement m_SettingsView;
         private Button m_CloseSettingsButton;
         private Button m_SettingsButton;
+        private Button m_InGameSettingsButton;
         private VisualElement m_LastView;
         LetterCardListModel m_Model = new();
+
+        private Gameplay.DifficultyLevel m_SelectedDifficultyLevel = Gameplay.DifficultyLevel.Hard;
+
+        Gameplay.DifficultyLevel selectedDifficultyLevel
+        {
+            get => m_SelectedDifficultyLevel;
+            set
+            {
+                m_SelectedDifficultyLevel = value;
+                UpdateChoiceButtons();
+            }
+        }
+        
+        void UpdateChoiceButtons()
+        { 
+            m_HardButton.EnableInClassList("selected", m_SelectedDifficultyLevel == Gameplay.DifficultyLevel.Hard);
+            m_EasyButton.EnableInClassList("selected", m_SelectedDifficultyLevel == Gameplay.DifficultyLevel.Easy);
+        }
 
         /// <summary>
         /// The focused card.
@@ -207,10 +248,30 @@ namespace Unity.Samples.LetterSpell
         {
             var uiDoc = GetComponent<UIDocument>();
             var root = uiDoc.rootVisualElement;
-
+            
+            var debugPanel = new VisualElement() { name = "debugPanel" };
+            debugPanel.style.position = Position.Absolute;
+            debugPanel.style.bottom = 0;
+            debugPanel.style.right = 0;
+            debugPanel.style.paddingLeft = 5;
+            debugPanel.style.paddingRight = 5;
+            debugPanel.style.paddingTop = 2;
+            debugPanel.style.paddingBottom = 2;
+            debugPanel.style.backgroundColor = new Color(0, 0, 0, 0.5f);
+            debugPanel.style.alignItems = Align.Center;
+            debugPanel.style.flexDirection = FlexDirection.Row;
+            debugPanel.style.justifyContent = Justify.SpaceBetween;
+            debugPanel.AddToClassList("lsp-debug-view");
             var clearLogButton = new Button(() => OnScreenDebug.Clear());
             clearLogButton.text = "Clear Log";
-            root.Add(clearLogButton);
+            
+            var logHierarchyButton = new Button(() => AssistiveSupport.activeHierarchy.Log());
+            logHierarchyButton.text = "Dump Hierarchy";
+            
+            debugPanel.Add(clearLogButton);
+            debugPanel.Add(logHierarchyButton);
+            
+            root.Add(debugPanel);
             m_MainView = root.Q("root");
             m_Logo = root.Q("logo");
             m_Logo.style.display = DisplayStyle.None;
@@ -222,9 +283,14 @@ namespace Unity.Samples.LetterSpell
             m_LoginButton.clicked += ShowLevelChoiceView;
             m_LevelChoiceView = m_StackView.Q("levelChoiceView");
             m_EasyButton = m_LevelChoiceView.Q<Button>("easyButton");
-            m_EasyButton.clicked += () => ShowGameView(Gameplay.DifficultyLevel.Easy);
+            m_EasyButton.clicked += () => ShowGameView(Gameplay.DifficultyLevel.Easy);//selectedDifficultyLevel = Gameplay.DifficultyLevel.Easy;
             m_HardButton = m_LevelChoiceView.Q<Button>("hardButton");
-            m_HardButton.clicked += () => ShowGameView(Gameplay.DifficultyLevel.Hard);
+            m_HardButton.clicked += () => ShowGameView(Gameplay.DifficultyLevel.Hard);//selectedDifficultyLevel = Gameplay.DifficultyLevel.Hard;
+            m_StartGameButton = m_LevelChoiceView.Q<Button>("startGameButton");
+            m_StartGameButton.clicked += () => ShowGameView(selectedDifficultyLevel);
+            m_StartGameButton.style.display = DisplayStyle.None;
+            UpdateChoiceButtons();
+            
             m_GameView = m_StackView.Q("gameView");
             m_ClueLabel = m_GameView.Q<Label>("clueLabel");
             m_SuccessImage = m_GameView.Q("successImage");
@@ -236,27 +302,34 @@ namespace Unity.Samples.LetterSpell
             m_NextWordButtton = m_GameView.Q<Button>("nextWordButton");
             m_NextWordButtton.clicked += ShowNextWord;
 
-            m_Overlay = root.Q("overlay");
-
-            m_ScreenResult = m_Overlay.Q("resultScreen");
+            m_ScreenResult = root.Q<Popup>("resultScreen");
             m_ScreenResult.AddToClassList("unity-modal");
+            m_ResultLabel = m_ScreenResult.Q<Label>("resultLabel");
             m_ScreenResultMainMenuButton = m_ScreenResult.Q<Button>("resultMainMenuButton");
             m_ScreenResultMainMenuButton.clicked += ExitGame;
             m_ScreenResultPlayAgainButton = m_ScreenResult.Q<Button>("resultPlayAgainButton");
             m_ScreenResultPlayAgainButton.clicked += StartGame;
-            m_ExitGamePopup = m_Overlay.Q("exitGamePopup");
+            m_ExitGamePopup = root.Q<Popup>("exitGamePopup");
+
             m_ExitGameButton = m_ExitGamePopup.Q<Button>("exitGameButton");
             m_ExitGameButton.clicked += ExitGame;
             m_ResumeGameButton = m_ExitGamePopup.Q<Button>("resumeGameButton");
             m_ResumeGameButton.clicked += ResumeGame;
             m_SettingsView = m_StackView.Q("settingsView");
             m_SettingsView.dataSource = m_PlayerSettings;
+
+            //m_SettingsPopup = new PopupWindow();
+            //m_SettingsPopup.content = m_SettingsView;
+            
             m_CloseSettingsButton = m_SettingsView.Q<Button>("closeSettingsButton");
             m_CloseSettingsButton.clicked += CloseSettings;
             m_SettingsButton = root.Q<Button>("settingsButton");
             m_SettingsButton.style.display = DisplayStyle.None;
             m_SettingsButton.clicked += ShowSettings;
 
+            m_InGameSettingsButton = root.Q<Button>("inGameSettingsButton");
+            m_InGameSettingsButton.clicked += ShowSettings;
+            
             m_StackView.activeViewChanged += DelayRefreshHierarchy;
             ShowSplash();
         }
@@ -267,7 +340,7 @@ namespace Unity.Samples.LetterSpell
             m_Model.gameplay = gameplay;
 
             // Update clue text is the clue setting changes.
-            gameplay.stateChanged.AddListener(ShowOrHideClue);
+            gameplay.stateChanged.AddListener(OnGameStateChanged);
 
             AssistiveSupport.nodeFocusChanged += OnNodeFocusChanged;
             OnScreenDebug.Log("MainWindow.OnEnable");
@@ -275,6 +348,7 @@ namespace Unity.Samples.LetterSpell
 
         void OnDisable()
         {
+            gameplay?.stateChanged.RemoveListener(OnGameStateChanged);
             m_Model.letterCardsChanged -= OnLetterCardsChanged;
             m_Model.gameplay = null;
             m_AccessibilityFocusedCard = null;
@@ -282,6 +356,11 @@ namespace Unity.Samples.LetterSpell
             AssistiveSupport.nodeFocusChanged -= OnNodeFocusChanged;
         }
 
+        void OnGameStateChanged(Gameplay.State state)
+        {
+            ShowOrHideClue();
+        }
+        
         public void ShowNextWord()
         {
             m_SuccessImage.style.display = DisplayStyle.None;
@@ -320,11 +399,13 @@ namespace Unity.Samples.LetterSpell
 
         void ShowResults(int orderedWordCount, int totalWordCount)
         {
-            var label = m_ScreenResult.Q<Label>("resultLabel");
-
-            label.text = $"{orderedWordCount} of {totalWordCount} correct";
-            m_ScreenResult.style.display = DisplayStyle.Flex;
-            m_ClueLabel.style.display = DisplayStyle.None;
+            m_ResultLabel.text = $"{orderedWordCount} of {totalWordCount} correct";
+            m_ScreenResult.Show();
+            //m_ClueLabel.style.display = DisplayStyle.None;
+            // Ensure the clue label always the same space in the view
+            // so do not hide it
+            m_ClueLabel.text = " ";
+            m_ClueLabel.style.visibility = Visibility.Hidden;
         }
 
         public void OnCurrentWordIndexChanged(int index)
@@ -332,24 +413,24 @@ namespace Unity.Samples.LetterSpell
             var clue = gameplay.currentWord.clue;
 
             m_ClueLabel.text = clue;
-            ShowOrHideClue(Gameplay.State.Playing);
+            ShowOrHideClue();
         }
 
-        void ShowOrHideClue(Gameplay.State newState)
+        void ShowOrHideClue()
         {
             if (m_PlayerSettings.showsSpellingClues)
             {
-                m_ClueLabel.style.display = DisplayStyle.Flex;
+                m_ClueLabel.style.visibility = Visibility.Visible;
             }
             else
             {
-                m_ClueLabel.style.display = DisplayStyle.None;
+                m_ClueLabel.style.visibility = Visibility.Hidden;
             }
         }
 
         public void StartGame()
         {
-            m_ScreenResult.style.display = DisplayStyle.None;
+            m_ScreenResult.Close();
             Gameplay.instance.StartGame();
             DelayRefreshHierarchy();
         }
@@ -514,7 +595,7 @@ namespace Unity.Samples.LetterSpell
             m_StackView.index = 0;
             m_StackView.schedule.Execute(() =>
             {
-                m_SettingsButton.style.display = DisplayStyle.Flex;
+                m_SettingsButton.style.display = DisplayStyle.None;
                 m_Logo.style.display = DisplayStyle.Flex;
                 m_StackView.activeView = m_LoginView;
             }).ExecuteLater(splashScreenDuration);
@@ -523,6 +604,7 @@ namespace Unity.Samples.LetterSpell
         void ShowLevelChoiceView()
         {
             m_StackView.activeView = m_LevelChoiceView;
+            m_SettingsButton.style.display = DisplayStyle.Flex;
         }
 
         void ShowGameView(Gameplay.DifficultyLevel level)
@@ -530,18 +612,19 @@ namespace Unity.Samples.LetterSpell
             PlayerPrefs.SetInt("GameDifficulty", (int)level);
 
             m_StackView.activeView = m_GameView;
-            CardListView.cardSize = level == Gameplay.DifficultyLevel.Easy ? 150 : 100;
+            m_SettingsButton.style.display = DisplayStyle.None;
+           // CardListView.cardSize = level == Gameplay.DifficultyLevel.Easy ? 208 : 100;
             gameplay.StartGame();
         }
 
         void ShowExitGamePopup()
         {
-            m_ExitGamePopup.style.display = DisplayStyle.Flex;
+            m_ExitGamePopup.Show();
         }
 
         void CloseExitGamePopup()
         {
-            m_ExitGamePopup.style.display = DisplayStyle.None;
+            m_ExitGamePopup.Close();
         }
 
         void ResumeGame()
@@ -555,7 +638,7 @@ namespace Unity.Samples.LetterSpell
         void ExitGame()
         {
             Gameplay.instance.StopGame();
-            m_ScreenResult.style.display = DisplayStyle.None;
+            m_ScreenResult.Close();
             CloseExitGamePopup();
             ShowLevelChoiceView();
         }
@@ -567,16 +650,15 @@ namespace Unity.Samples.LetterSpell
             m_StackView.activeView = m_SettingsView;
             m_Logo.style.display = DisplayStyle.None;
             m_SettingsButton.style.display = DisplayStyle.None;
-            m_Overlay.style.display = DisplayStyle.None;
         }
 
         void CloseSettings()
         {
             m_StackView.activeView = m_LastView;
             m_Logo.style.display = DisplayStyle.Flex;
-            m_SettingsButton.style.display = DisplayStyle.Flex;
-            m_Overlay.style.display = DisplayStyle.Flex;
-
+            m_SettingsButton.style.display = (m_LastView == m_LevelChoiceView) ? DisplayStyle.Flex : DisplayStyle.None;
+            if (m_LastView == m_GameView)
+                ShowOrHideClue();
         }
 
         // Update is called once per frame

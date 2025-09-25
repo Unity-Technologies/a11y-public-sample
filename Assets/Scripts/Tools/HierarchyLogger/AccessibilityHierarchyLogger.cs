@@ -78,7 +78,7 @@ namespace Unity.Samples.LetterSpell
         void Log(AccessibilityNode node)
         {
             m_StringBuilder.Append(' ', m_Level * k_IndentWidth);
-            m_StringBuilder.AppendLine($"{node.id} \"{node.label}\" Role:{node.role} State:{node.state} Frame:{node.frame}");
+            m_StringBuilder.AppendLine($"{node.id} \"{node.label}\" Role:{node.role} Active: {node.isActive} State:{node.state} Frame:{node.frame}");
             m_NodeFrames.Add(node.frame);
         }
         

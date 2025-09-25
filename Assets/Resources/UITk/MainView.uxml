@@ -1,13 +1,13 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:sr="Unity.Samples.ScreenReader" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:lsp="Unity.Samples.LetterSpell" xmlns:sr="Unity.Samples.ScreenReader" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Resources/UITk/Themes/LetterSpellTheme.uss?fileID=7433441132597879392&amp;guid=7acba8f342ac14076bfc143ce31d7bcc&amp;type=3#LetterSpellTheme"/>
     <ui:VisualElement name="root" style="flex-grow: 1;">
         <ui:VisualElement name="background" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background-color: rgb(11, 163, 109);"/>
         <ui:VisualElement name="viewContainer" style="flex-grow: 1;">
-            <Unity.Samples.LetterSpell.StackView name="stackView" index="1" style="flex-grow: 1;">
+            <Unity.Samples.LetterSpell.StackView name="stackView" index="3" style="flex-grow: 1;">
                 <ui:VisualElement name="splashView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Splash-Screen.png?fileID=4602334432413793429&amp;guid=364b68ded9ed04f07848b6c7de25fdad&amp;type=3#Intro Screen_0&quot;);"/>
                 <ui:VisualElement name="loginView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Background-Intro.png?fileID=2800000&amp;guid=718087ba784b64abd9675b1452fc0095&amp;type=3#Background-Intro&quot;); align-items: center; justify-content: center;">
-                    <ui:Label text="What is your name UITK?" style="color: rgb(255, 255, 255); margin-bottom: 20px;"/>
-                    <ui:TextField placeholder-text="Enter your name" name="TextField" style="flex-direction: column; min-width: 252px; margin-bottom: 22px;">
+                    <ui:Label text="What is your name?" class="title-text"/>
+                    <ui:TextField placeholder-text="Enter your name" name="TextField" style="flex-direction: column; min-width: 252px; width: 949px;">
                         <Bindings>
                             <ui:DataBinding property="value" data-source-path="userName" binding-mode="TwoWay"/>
                         </Bindings>
@@ -15,21 +15,29 @@
                     <ui:Button text="Next" name="loginButton" class="purple"/>
                 </ui:VisualElement>
                 <ui:VisualElement name="levelChoiceView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Background-Intro.png?fileID=2800000&amp;guid=718087ba784b64abd9675b1452fc0095&amp;type=3#Background-Intro&quot;);">
-                    <ui:VisualElement style="flex-grow: 1; flex-direction: row; justify-content: center; align-items: center;">
-                        <ui:Button text="Play Easy" name="easyButton" class="choice-button"/>
-                        <ui:Button text="Play Hard" name="hardButton" class="choice-button" style="border-left-color: rgb(182, 241, 255); border-right-color: rgb(182, 241, 255); border-top-color: rgb(182, 241, 255); border-bottom-color: rgb(182, 241, 255);"/>
+                    <ui:VisualElement style="flex-grow: 1; justify-content: center; align-items: center;">
+                        <ui:VisualElement name="choiceButtonContainer" class="choice-button-container">
+                            <ui:Button text="Play Easy" name="easyButton" class="choice-button"/>
+                            <ui:Button text="Play Hard" name="hardButton" class="choice-button"/>
+                            <ui:VisualElement style="position: absolute; top: 100%; left: 0; right: 0; align-items: center;">
+                                <ui:Button text="Start Game" name="startGameButton" class="purple start-game-button"/>
+                            </ui:VisualElement>
+                        </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="gameView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Background-Intro.png?fileID=2800000&amp;guid=718087ba784b64abd9675b1452fc0095&amp;type=3#Background-Intro&quot;);">
-                    <ui:Label text="#clue" name="clueLabel" style="-unity-text-align: middle-center; margin-top: 27px;"/>
+                    <ui:Label text="#clue" name="clueLabel" class="title-text" style="-unity-text-align: middle-center; margin-top: 190px;"/>
                     <Unity.Samples.LetterSpell.CardListView name="letterCardContainer" style="flex-grow: 1;"/>
                     <ui:VisualElement name="gameViewButtonContainer" style="flex-direction: row; padding-top: 4px; padding-right: 18px; padding-bottom: 18px; padding-left: 18px;">
-                        <ui:Button text="Pause" name="pauseGameButton"/>
+                        <ui:Button text="" name="pauseGameButton">
+                            <ui:VisualElement name="pauseButtonIcon" style="flex-grow: 1;"/>
+                        </ui:Button>
+                        <ui:Button text="Options" name="inGameSettingsButton"/>
                         <ui:VisualElement name="VisualElement" style="flex-grow: 1;"/>
                         <ui:Button text="Next Word" name="nextWordButton" class="purple"/>
                     </ui:VisualElement>
                     <ui:VisualElement name="successImage" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; align-items: center; justify-content: center;">
-                        <ui:VisualElement style="background-image: url(&quot;project://database/Assets/UI/Images/Image-Correct.png?fileID=-3206192116628772432&amp;guid=7480bb21c642e4319b9a422353096177&amp;type=3#Correct-Badge_0&quot;); width: 100px; height: 22px; margin-top: -247px;"/>
+                        <ui:VisualElement style="background-image: url(&quot;project://database/Assets/UI/Images/Image-Correct.png?fileID=-3206192116628772432&amp;guid=7480bb21c642e4319b9a422353096177&amp;type=3#Correct-Badge_0&quot;); width: 382px; height: 85px; margin-top: -277px;"/>
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="settingsView" style="flex-grow: 1; background-color: rgb(255, 251, 233);">
@@ -44,25 +52,25 @@
                                 <ui:DataBinding property="value" data-source-path="userName" binding-mode="TwoWay"/>
                             </Bindings>
                         </ui:TextField>
-                        <ui:DropdownField label="Difficulty Level" name="settingsGameDifficultyDropdown" choices="Easy,Hard">
+                        <lsp:ButtonStripField name="settingsGameDifficultyButtonStrip" label="Difficulty Level" choices="Easy,Hard">
                             <Bindings>
                                 <ui:DataBinding property="index" data-source-path="difficultyLevel" binding-mode="TwoWay"/>
                             </Bindings>
-                        </ui:DropdownField>
-                        <ui:VisualElement name="settingsNumberOfWords" style="flex-direction: row;">
+                        </lsp:ButtonStripField>
+                        <ui:VisualElement name="settingsNumberOfWords" class="unity-base-field" style="flex-direction: row;">
                             <ui:Label text="Number Of Words" name="Label" class="unity-base-field__label"/>
-                            <ui:RadioButton label="Three" name="settingsThreeWordsButton" value="true">
+                            <ui:RadioButton label="3" name="settingsThreeWordsButton" value="true">
                                 <Bindings>
                                     <ui:DataBinding property="value" data-source-path="isThreeWords" binding-mode="TwoWay"/>
                                 </Bindings>
                             </ui:RadioButton>
-                            <ui:RadioButton label="Six" name="settingsSixWordsButton">
+                            <ui:RadioButton label="6" name="settingsSixWordsButton">
                                 <Bindings>
                                     <ui:DataBinding property="value" data-source-path="isSixWords" binding-mode="TwoWay"/>
                                 </Bindings>
                             </ui:RadioButton>
                         </ui:VisualElement>
-                        <ui:Toggle label="Show Spelling Clues" name="settingsShowSpellingClues">
+                        <ui:Toggle label="Show Spelling Clues" name="settingsShowSpellingClues" text="On">
                             <Bindings>
                                 <ui:DataBinding property="value" data-source-path="showsSpellingClues" binding-mode="TwoWay"/>
                             </Bindings>
@@ -89,30 +97,42 @@
                                 <ui:DataBinding property="value" data-source-path="displaySize" binding-mode="TwoWay"/>
                             </Bindings>
                         </ui:Slider>
+                        <ui:Label text="OS Settings (read-only)" class="settings-header-label"/>
+                        <ui:VisualElement class="row unity-base-field" style="flex-grow: 1;">
+                            <ui:Label text="Closed Captions" class="unity-base-field__label"/>
+                            <ui:Label text="On" name="closedCaptionsLabel">
+                                <Bindings>
+                                    <ui:DataBinding property="text" data-source-path="closedCaptionsEnabledText" binding-mode="ToTarget"/>
+                                </Bindings>
+                            </ui:Label>
+                        </ui:VisualElement>
+                        <ui:VisualElement class="row unity-base-field" style="flex-grow: 1;">
+                            <ui:Label text="Bold Text" class="unity-base-field__label"/>
+                            <ui:Label text="On" name="boldTextLabel">
+                                <Bindings>
+                                    <ui:DataBinding property="text" data-source-path="boldTextEnabledText" binding-mode="ToTarget"/>
+                                </Bindings>
+                            </ui:Label>
+                        </ui:VisualElement>
                     </ui:ScrollView>
                 </ui:VisualElement>
             </Unity.Samples.LetterSpell.StackView>
             <ui:Button text="Options" name="settingsButton" style="position: absolute; right: 22px; top: 5px; display: none;"/>
         </ui:VisualElement>
-        <ui:VisualElement name="overlay" picking-mode="Ignore" style="flex-grow: 1; position: absolute; top: 3px; left: 12px; bottom: -2px; right: -11px; align-items: center; justify-content: center;">
-            <ui:VisualElement name="exitGamePopup" class="lsp-popup" style="flex-grow: 0; align-self: center; display: none;">
-                <ui:Label text="Do you want to exit the game"/>
-                <ui:VisualElement name="exitPopupButtonBox" style="flex-grow: 1; flex-direction: row; align-items: center; justify-content: center;">
-                    <ui:Button text="Exit" name="exitGameButton"/>
-                    <ui:Button text="Resume" name="resumeGameButton" class="purple"/>
-                </ui:VisualElement>
+        <lsp:Popup name="exitGamePopup">
+            <ui:Label text="Game Paused"/>
+            <ui:VisualElement name="exitPopupButtonBox" style="flex-grow: 1; flex-direction: row; align-items: center; justify-content: center;">
+                <ui:Button text="End Game" name="exitGameButton"/>
+                <ui:Button text="Continue" name="resumeGameButton" class="purple"/>
             </ui:VisualElement>
-            <sr:AccessibleVisualElement name="resultScreen" class="lsp-popup" style="display: none;">
-                <ui:Label text="1 of 3 correct" name="resultLabel" style="-unity-text-align: middle-center;"/>
-                <ui:VisualElement name="resultButtonContainer" style="flex-grow: 1; flex-direction: row; margin-top: 10px; align-items: center;">
-                    <ui:Button text="Main Menu" name="resultMainMenuButton"/>
-                    <ui:Button text="Play Again" name="resultPlayAgainButton" class="purple"/>
-                </ui:VisualElement>
-                <accessible>
-                    <sr:AccessibleProperties modal="true"/>
-                </accessible>
-            </sr:AccessibleVisualElement>
-        </ui:VisualElement>
-        <ui:VisualElement name="logo" style="flex-grow: 1; position: absolute; width: 100px; height: 24px; top: 22px; left: 19px; display: none; background-image: url(&quot;project://database/Assets/UI/Images/LetterSpell_smallLogo.png?fileID=2800000&amp;guid=75dc9c01c37ed4403948da36191f22df&amp;type=3#LetterSpell_smallLogo&quot;);"/>
+        </lsp:Popup>
+        <lsp:Popup name="resultScreen" close-policy="NoAutoClose">
+            <ui:Label text="1 of 3 correct" name="resultLabel"/>
+            <ui:VisualElement name="resultButtonContainer" style="flex-grow: 1; flex-direction: row; margin-top: 10px; align-items: center;">
+                <ui:Button text="Main Menu" name="resultMainMenuButton"/>
+                <ui:Button text="Play Again" name="resultPlayAgainButton" class="purple"/>
+            </ui:VisualElement>
+        </lsp:Popup>
+        <ui:VisualElement name="logo" class="lsp-logo" style="flex-grow: 1; display: none;"/>
     </ui:VisualElement>
 </ui:UXML>

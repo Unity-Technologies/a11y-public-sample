@@ -48,6 +48,10 @@ namespace Unity.Samples.ScreenReader
         /// </summary>
         public abstract void CleanUp();
 
+        public virtual void Update()
+        {
+        }
+        
         /// <summary>
         /// Refreshes the accessibility hierarchy by calling the AccessibilityManager to rebuild it.
         /// </summary>

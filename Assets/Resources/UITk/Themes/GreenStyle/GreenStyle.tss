@@ -16,18 +16,19 @@
     border-width: 10px;
     border-color: black;
     border-radius: 30px;
+    margin-top: -10px;
 }
 
 .unity-base-dropdown__container-outer > .unity-scroll-view {
     border-radius: 20px;
-    background-color: #63DD7F;
+    background-color: white;
 }
 
 .unity-base-dropdown__item {
 }
 
 .unity-base-dropdown__item:hover:enabled {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: #01C684;
 }
 
 .unity-base-dropdown__checkmark {

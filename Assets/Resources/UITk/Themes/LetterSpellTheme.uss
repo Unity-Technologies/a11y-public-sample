@@ -17,19 +17,19 @@
     border-bottom-color: rgb(0, 0, 0);
     margin-top: 30px;
     background-color: rgb(255, 255, 255);
-    -unity-font-style: bold;
     margin-bottom: 30px;
     margin-right: 30px;
     margin-left: 30px;
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
 }
 
 .unity-button:hover {
     background-color: rgb(220, 180, 0);
 }
-
+/*
 :root {
     font-size: 64px;
-}
+}*/
 
 .unity-label {
 }
@@ -94,7 +94,7 @@
 }
 
 .choice-button {
-    font-size: 75px;
+    /*font-size: 75px;*/
     padding-top: 140px;
     padding-right: 100px;
     padding-bottom: 140px;
@@ -120,8 +120,7 @@
     border-right-width: 10px;
     border-bottom-width: 10px;
     border-left-width: 10px;
-    font-size: 130px;
-    -unity-font-style: bold;
+    /*font-size: 130px;*/
     width: 208px;
     height: 208px;
     border-top-left-radius: 30px;
@@ -130,6 +129,7 @@
     border-bottom-left-radius: 30px;
     align-items: center;
     justify-content: center;
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
 }
 
 .lsp-letter-card.selected {
@@ -143,7 +143,6 @@
 }
 
 .lsp-letter-card__button-container {
-    font-size: 12px;
     position: absolute;
     top: 100%;
     padding: 5px;
@@ -164,7 +163,7 @@
 .lsp-letter-card__button {
     margin: 0;
     padding: 6px;
-    -unity-font-style: bold;
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
 }
 
 .lsp-letter-card__button--first {
@@ -213,12 +212,8 @@
     rotate: 20deg;
 }
 
-.lsp-letter-card.dragged.dragging--right{
+.lsp-letter-card.dragged.dragging--right {
     rotate: -20deg;
-}
-
-.settings-header-label {
-    margin-top: 10px;
 }
 
 #settingsView {
@@ -247,7 +242,7 @@
 
 .settings-header-label {
     margin-top: 70px;
-    -unity-font-style: bold;
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
     margin-bottom: 30px;
 }
 
@@ -274,8 +269,8 @@
 }
 
 .unity-radio-button__checkmark {
-    width: 38px;
-    height: 38px;
+    width: 39px;
+    height: 39.5px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
@@ -387,7 +382,7 @@
 }
 
 .title-text {
-    -unity-font-style: bold;
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
     margin-top: 30px;
     margin-bottom: 30px;
     color: rgb(255, 255, 255);
@@ -429,7 +424,7 @@
 
 .lsp-popup .unity-label {
     -unity-text-align: middle-center;
-    -unity-font-style: bold;
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
     margin-top: 30px;
     margin-bottom: 65px;
 }
@@ -437,10 +432,6 @@
 .purple:active {
     background-color: rgb(130, 68, 243);
     color: rgb(255, 255, 255);
-}
-
-.settings-section__title {
-    -unity-font-style: bold;
 }
 
 .unity-base-field {
@@ -537,4 +528,14 @@
 
 .unity-base-dropdown__item > .unity-base-dropdown__item-content > .unity-base-dropdown__label {
     margin-left: 80px;
+}
+
+
+.lsp-stack-view-Transition {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #02C584;
 }

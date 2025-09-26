@@ -390,7 +390,21 @@ namespace Unity.Samples.LetterSpell
     [UxmlElement]
     partial class CardListView : VisualElement
     {
+        static public int defaultCardSize = 208;
+        static public float s_FontScale = 1.0f;
         static public int cardSize = 208;
+
+        public float fontScale
+        {
+            get => s_FontScale;
+            set
+            {
+                s_FontScale = value;
+                style.fontSize = value * 130;
+                cardSize = (int)(defaultCardSize * value);
+            }
+        }
+        
         public int spacing = 30;
         private VisualElement m_InsertionPlaceholder;
         

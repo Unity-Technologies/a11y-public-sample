@@ -6,6 +6,7 @@
             <Unity.Samples.LetterSpell.StackView name="stackView" index="2" style="flex-grow: 1;">
                 <ui:VisualElement name="splashView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Splash-Screen.png?fileID=4602334432413793429&amp;guid=364b68ded9ed04f07848b6c7de25fdad&amp;type=3#Intro Screen_0&quot;);"/>
                 <ui:VisualElement name="loginView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Background-Intro.png?fileID=2800000&amp;guid=718087ba784b64abd9675b1452fc0095&amp;type=3#Background-Intro&quot;); align-items: center; justify-content: center;">
+                    <ui:VisualElement name="logo" class="lsp-logo"/>
                     <ui:Label text="What is your name?" class="title-text"/>
                     <ui:TextField placeholder-text="Enter your name" name="TextField" style="flex-direction: column; min-width: 252px; width: 949px;">
                         <Bindings>
@@ -15,7 +16,7 @@
                     <ui:Button text="Next" name="loginButton" class="purple"/>
                 </ui:VisualElement>
                 <ui:VisualElement name="levelChoiceView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Background-Intro.png?fileID=2800000&amp;guid=718087ba784b64abd9675b1452fc0095&amp;type=3#Background-Intro&quot;);">
-                    <ui:VisualElement style="flex-grow: 1; justify-content: center; align-items: center;">
+                    <ui:VisualElement name="logo" class="lsp-logo"/>                    <ui:VisualElement style="flex-grow: 1; justify-content: center; align-items: center;">
                         <ui:VisualElement name="choiceButtonContainer" class="choice-button-container">
                             <ui:Button text="Play Easy" name="easyButton" class="choice-button"/>
                             <ui:Button text="Play Hard" name="hardButton" class="choice-button"/>
@@ -23,10 +24,12 @@
                                 <ui:Button text="Start Game" name="startGameButton" class="purple start-game-button"/>
                             </ui:VisualElement>
                         </ui:VisualElement>
+                        <ui:Button text="Options" name="settingsButton" style="position: absolute; right: 22px; top: 5px;"/>
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="gameView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Background-Intro.png?fileID=2800000&amp;guid=718087ba784b64abd9675b1452fc0095&amp;type=3#Background-Intro&quot;);">
-                    <ui:Label text="#clue" name="clueLabel" class="title-text" style="-unity-text-align: middle-center; margin-top: 180px; margin-bottom: 40px;"/>
+                    <ui:VisualElement name="logo" class="lsp-logo"/>
+                    <ui:Label text="#clue" name="clueLabel" class="title-text" style="-unity-text-align: middle-center; margin-top: 170px; margin-bottom: 50px;"/>
                     <Unity.Samples.LetterSpell.CardListView name="letterCardContainer" style="flex-grow: 1;"/>
                     <ui:VisualElement name="gameViewButtonContainer" style="flex-direction: row; padding-top: 4px; padding-right: 18px; padding-bottom: 18px; padding-left: 18px;">
                         <ui:Button text="" name="pauseGameButton">
@@ -125,7 +128,6 @@
                     </ui:ScrollView>
                 </ui:VisualElement>
             </Unity.Samples.LetterSpell.StackView>
-            <ui:Button text="Options" name="settingsButton" style="position: absolute; right: 22px; top: 5px; display: none;"/>
         </ui:VisualElement>
         <lsp:Popup name="exitGamePopup">
             <ui:Label text="Game Paused"/>
@@ -141,6 +143,5 @@
                 <ui:Button text="Play Again" name="resultPlayAgainButton" class="purple"/>
             </ui:VisualElement>
         </lsp:Popup>
-        <ui:VisualElement name="logo" class="lsp-logo" style="flex-grow: 1; display: none;"/>
     </ui:VisualElement>
 </ui:UXML>

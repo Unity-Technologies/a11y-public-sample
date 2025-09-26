@@ -183,7 +183,7 @@ namespace Unity.Samples.LetterSpell
         private PlayerSettingsData m_PlayerSettings = new PlayerSettingsData();
         private StackView m_StackView;
         private VisualElement m_MainView;
-        private VisualElement m_Logo;
+       // private VisualElement m_Logo;
         private VisualElement m_SplashView;
         private VisualElement m_LoginView;
         private Button m_LoginButton;
@@ -285,8 +285,8 @@ namespace Unity.Samples.LetterSpell
             root.Add(debugPanel);
             */
             m_MainView = root.Q("root");
-            m_Logo = root.Q("logo");
-            m_Logo.style.display = DisplayStyle.None;
+            //m_Logo = root.Q("logo");
+            //m_Logo.style.display = DisplayStyle.None;
             m_StackView = root.Q<StackView>();
             m_SplashView = m_StackView.Q("splashView");
             m_LoginView = m_StackView.Q("loginView");
@@ -337,7 +337,7 @@ namespace Unity.Samples.LetterSpell
             m_CloseSettingsButton = m_SettingsView.Q<Button>("closeSettingsButton");
             m_CloseSettingsButton.clicked += CloseSettings;
             m_SettingsButton = root.Q<Button>("settingsButton");
-            m_SettingsButton.style.display = DisplayStyle.None;
+            //m_SettingsButton.style.display = DisplayStyle.None;
             m_SettingsButton.clicked += ShowSettings;
 
             m_InGameSettingsButton = root.Q<Button>("inGameSettingsButton");
@@ -389,7 +389,7 @@ namespace Unity.Samples.LetterSpell
             // Do it inline because using a USS class does not work (like :root.bold-text).
             //m_MainView.panel.visualTree.style.unityFontStyleAndWeight = boldTextStatus ? FontStyle.Bold : FontStyle.Normal;
             
-            m_MainView.panel.visualTree.EnableInClassList("bold-text", true);
+            m_MainView.panel.visualTree.EnableInClassList("bold-text", boldTextStatus);
         }
 
         void OnClosedCaptioningStatusChanged(bool closedCaptioningStatus)
@@ -398,6 +398,8 @@ namespace Unity.Samples.LetterSpell
 
         void OnFontScaleValueChanged(float fontScale)
         {
+            m_MainView.panel.visualTree.style.fontSize = 64 * fontScale;
+            m_LetterCardContainer.fontScale = fontScale;
         }
 
         void OnGameStateChanged(Gameplay.State state)
@@ -651,8 +653,8 @@ namespace Unity.Samples.LetterSpell
         void DelayShowLogin()
         {
             OnScreenDebug.Log("DelayShowLogin " + DateTime.Now);
-                m_SettingsButton.style.display = DisplayStyle.None;
-                m_Logo.style.display = DisplayStyle.Flex;
+               // m_SettingsButton.style.display = DisplayStyle.None;
+               // m_Logo.style.display = DisplayStyle.Flex;
                 m_StackView.activeView = m_LoginView;
                 
                 OnScreenDebug.Log("Showing Login " + DateTime.Now);
@@ -660,7 +662,7 @@ namespace Unity.Samples.LetterSpell
         void ShowLevelChoiceView()
         {
             m_StackView.activeView = m_LevelChoiceView;
-            m_SettingsButton.style.display = DisplayStyle.Flex;
+           // m_SettingsButton.style.display = DisplayStyle.Flex;
         }
 
         void ShowGameView(Gameplay.DifficultyLevel level)
@@ -668,7 +670,7 @@ namespace Unity.Samples.LetterSpell
             PlayerPrefs.SetInt("GameDifficulty", (int)level);
 
             m_StackView.activeView = m_GameView;
-            m_SettingsButton.style.display = DisplayStyle.None;
+            //m_SettingsButton.style.display = DisplayStyle.None;
             m_LetterCardContainer.canPlayCards = true;
            // CardListView.cardSize = level == Gameplay.DifficultyLevel.Easy ? 208 : 100;
             gameplay.StartGame();
@@ -705,15 +707,15 @@ namespace Unity.Samples.LetterSpell
             //AssistiveSupport.activeHierarchy?.Log();
             m_LastView = m_StackView.activeView;
             m_StackView.activeView = m_SettingsView;
-            m_Logo.style.display = DisplayStyle.None;
-            m_SettingsButton.style.display = DisplayStyle.None;
+            //m_Logo.style.display = DisplayStyle.None;
+            //m_SettingsButton.style.display = DisplayStyle.None;
         }
 
         void CloseSettings()
         {
             m_StackView.activeView = m_LastView;
-            m_Logo.style.display = DisplayStyle.Flex;
-            m_SettingsButton.style.display = (m_LastView == m_LevelChoiceView) ? DisplayStyle.Flex : DisplayStyle.None;
+            //m_Logo.style.display = DisplayStyle.Flex;
+            //m_SettingsButton.style.display = (m_LastView == m_LevelChoiceView) ? DisplayStyle.Flex : DisplayStyle.None;
             if (m_LastView == m_GameView)
                 ShowOrHideClue();
         }

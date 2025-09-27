@@ -5,6 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/UITk/UITkMainScene.unity
+    guid: 9048ee70b5b64440dadce897dc5a88ad
   - enabled: 0
     path: Assets/Scenes/Splash Scene.unity
     guid: 1bbc8ade85929435f8a0e6438d5b06f6

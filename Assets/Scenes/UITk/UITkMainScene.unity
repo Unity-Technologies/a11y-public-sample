@@ -399,6 +399,78 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1606389c57f314195b5b9b0a37a5e755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Unity.Samples.LetterSpell.UITkAccessibilityHierarchyLogger
+--- !u!1 &1949310383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1949310386}
+  - component: {fileID: 1949310385}
+  - component: {fileID: 1949310384}
+  m_Layer: 5
+  m_Name: ClosedCaptions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1949310384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949310383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66e77882ff2b4485196a777f951c414f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subtitles:
+  - {fileID: 5022602860645237092, guid: da1b37021779a4875bbd704243405369, type: 3}
+  - {fileID: 5022602860645237092, guid: 1683585ee3915484cb79b20f6bc167e7, type: 3}
+  - {fileID: 5022602860645237092, guid: bcff8536868ac4154b8a73b047c6afcc, type: 3}
+--- !u!114 &1949310385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949310383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: a8a32b664268140a3be195e53a65f230, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 0}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!4 &1949310386
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949310383}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -406,3 +478,4 @@ SceneRoots:
   - {fileID: 56421506}
   - {fileID: 1705503796}
   - {fileID: 138414156}
+  - {fileID: 1949310386}

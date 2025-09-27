@@ -92,14 +92,14 @@ namespace Unity.Samples.LetterSpell
             style.marginRight = 4;
             style.marginBottom = 4;
             */
-            style.fontSize = 40;
+            /*style.fontSize = 40;
             style.alignItems = Align.Center;
             style.justifyContent = Justify.Center;
 
             style.borderBottomLeftRadius = 6;
             style.borderTopLeftRadius = 6;
             style.borderBottomRightRadius = 6;
-            style.borderTopRightRadius = 6;
+            style.borderTopRightRadius = 6;*/
             
             //style.backgroundColor = Color.white;
 
@@ -155,7 +155,8 @@ namespace Unity.Samples.LetterSpell
         {
             cardListView.DoLayout();
             // Make them animated
-            schedule.Execute(() => animated = true).ExecuteLater(500);
+            // TODO - FIXED ANIMATION WHEN STARTING A GAME
+            //schedule.Execute(() => animated = true).ExecuteLater(500);
         }
         protected Rect CalculatePosition(float x, float y, float width, float height)
         {
@@ -191,6 +192,21 @@ namespace Unity.Samples.LetterSpell
 
         private bool m_Dragging;
 
+        int m_DraggingDirection = 0;
+        
+        int draggingDirection
+        {
+            get => m_DraggingDirection;
+            set
+            {
+                if (m_DraggingDirection == value)
+                    return;
+                m_DraggingDirection = value;
+                EnableInClassList("dragging--left", m_DraggingDirection < 0);
+                EnableInClassList("dragging--right", m_DraggingDirection > 0);
+            }
+        }
+        
         public bool dragging
         {
             get => m_Dragging;
@@ -222,6 +238,12 @@ namespace Unity.Samples.LetterSpell
         
         protected void OnMouseDown(MouseDownEvent e)
         {
+            if (!cardListView.canPlayCards)
+            {
+                e.StopImmediatePropagation();
+                return;
+            }
+            
             if (e.ctrlKey)
             {
                 if (cardListView.selectedCard == this)
@@ -284,7 +306,9 @@ namespace Unity.Samples.LetterSpell
                 }
                 else if (target.resolvedStyle.position == Position.Absolute)
                 {*/
-                    this.style.left = rect.x;
+                var oldLeft = this.style.left.value.value;
+                this.style.left = rect.x;
+                draggingDirection = oldLeft < this.style.left.value.value ? -1 : 1;
                     //this.style.top = rect.y;
                 //}
 
@@ -366,9 +390,25 @@ namespace Unity.Samples.LetterSpell
     [UxmlElement]
     partial class CardListView : VisualElement
     {
-        static public int cardSize = 150;
-        public int spacing = 10;
+        static public int defaultCardSize = 208;
+        static public float s_FontScale = 1.0f;
+        static public int cardSize = 208;
+
+        public float fontScale
+        {
+            get => s_FontScale;
+            set
+            {
+                s_FontScale = value;
+                style.fontSize = value * 130;
+                cardSize = (int)(defaultCardSize * value);
+            }
+        }
+        
+        public int spacing = 30;
         private VisualElement m_InsertionPlaceholder;
+        
+        public bool canPlayCards { get; set; }
         
         public CardListView()
         {
@@ -521,7 +561,7 @@ namespace Unity.Samples.LetterSpell
                 child.style.left = startX + i * cardSize + (i + 1) *spacing;
                 child.style.width = cardSize;
                 child.style.height = cardSize;
-                child.style.top = (layout.height - cardSize)/2;
+                child.style.top = 0;//DONT CENTER ANYMORE, (layout.height - cardSize)/2;
                 i++;
                 
             }

@@ -108,13 +108,15 @@ namespace Unity.Samples.LetterSpell
         [RuntimeInitializeOnLoadMethod]
         static void Initialize()
         {
+            // Uncomment if you want to enable the on-screen debug by default
+            /*
             var gameObject = new GameObject("On Screen Debug");
             var onScreenDebugUI = Resources.Load<VisualTreeAsset>("UITk/OnScreenDebug/OnScreenDebugUI");
             var uiDocument = gameObject.AddComponent<UIDocument>();
             var panelSettings = Resources.Load<PanelSettings>("UITk/OnScreenDebug/OnScreenDebugPanelSettings");
             uiDocument.panelSettings = panelSettings;
             uiDocument.visualTreeAsset = onScreenDebugUI;
-            gameObject.AddComponent<OnScreenDebugBehavior>();
+            gameObject.AddComponent<OnScreenDebugBehavior>();*/
         }
         
         private static int s_Version = -1;

@@ -33,6 +33,23 @@ namespace Unity.Samples.ScreenReader
         {
             AddToClassList(ussClassName);
             accessible = new AccessibleProperties();
+            
+            //RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
+            //RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
+        }
+
+        void OnAttachToPanel(AttachToPanelEvent evt)
+        {
+            var updater = evt.destinationPanel.GetAccessibilityUpdater();
+                    
+            updater?.OnVersionChanged(parent ?? this, VersionChangeType.Hierarchy);
+        }
+        
+        void OnDetachFromPanel(DetachFromPanelEvent evt)
+        {
+            var updater = evt.originPanel?.GetAccessibilityUpdater();
+                    
+            updater?.OnVersionChanged(null, VersionChangeType.Hierarchy);
         }
     }
 }

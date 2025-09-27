@@ -34,11 +34,18 @@ namespace Unity.Samples.ScreenReader
         private VisualElement m_VisualTree;
         private IVisualElementScheduledItem m_UpdateJob;
         private UITkAccessibilityService m_AccessibilityService;
+        private AccessibilitySubHierarchy m_SubHierarchy;
         
         /// <summary>
         /// The sub hierarchy this updater is managing.
         /// </summary>
-        public AccessibilitySubHierarchy hierarchy { get; set; }
+        public AccessibilitySubHierarchy hierarchy { get => m_SubHierarchy;
+            set { 
+                m_SubHierarchy = value;
+                if (m_SubHierarchy.isValid && visualTree != null)
+                    DirtyRootFrame(); 
+            }
+        }
         
         /// <summary>
         /// The panel of the visual tree being managed.
@@ -90,7 +97,7 @@ namespace Unity.Samples.ScreenReader
             m_AccessibilityService = service;
             visualTree.RegisterCallback<AttachToPanelEvent>(OnAttachmentToPanel);
             visualTree.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
-            
+            DirtyRootFrame();
         }
 
         int m_LastVisualElementTotalCount = 0;
@@ -101,6 +108,7 @@ namespace Unity.Samples.ScreenReader
         }
         void OnGeometryChanged(GeometryChangedEvent evt)
         {
+            DirtyRootFrame();
            // OnScreenDebug.Log("OnGeometryChanged " + evt.target);
             OnVersionChanged(evt.target as VisualElement, VersionChangeType.Size | VersionChangeType.Transform);
         }
@@ -392,6 +400,18 @@ namespace Unity.Samples.ScreenReader
             }
         }
 
+        void DirtyRootFrame()
+        {
+            m_AccessibilityService.DirtyRootFrames();
+        }
+
+        public void UpdateRootFrame()
+        {
+            if (hierarchy.isValid)
+            {
+                hierarchy.rootNode.frame = GetScreenPosition(visualTree);
+            }
+        }
         
         void UpdateNode(VisualElementAccessibilityHandler accElement)
         {
@@ -410,7 +430,7 @@ namespace Unity.Samples.ScreenReader
         public void OnVersionChanged(VisualElement ve, VersionChangeType versionChangeType)
         {
            // OnScreenDebug.Log("OnVersionChanged " + ve + " " + versionChangeType);
-            if (!OnVersionChangedInternal(ve, versionChangeType))
+            if (ve != null && !OnVersionChangedInternal(ve, versionChangeType))
             {
                 
                 OnScreenDebug.Log("Event ignore version changed");
@@ -492,6 +512,7 @@ namespace Unity.Samples.ScreenReader
                     rootNode.role = AccessibilityRole.Container;
                     rootNode.isActive = (Application.platform == RuntimePlatform.OSXPlayer);
                     hierarchy = new AccessibilitySubHierarchy(m_AccessibilityService.hierarchy.mainHierarchy, rootNode);
+                    DirtyRootFrame();
                     shouldSendNotification = true;
                 }
 
@@ -559,9 +580,7 @@ namespace Unity.Samples.ScreenReader
             {
                 accElement = CreateHandler(element, parentAccessible);
             }
-
-            if (element.ClassListContains(GenericDropdownMenu.ussClassName))
-                OnScreenDebug.Log("Menu " + element.name + " visible:" + visible + " acc:" +  (accElement != null) + " model " + accElement.isModal);
+            
             bool shouldBeIgnored = !visible;
             bool modal = false;
 
@@ -614,9 +633,11 @@ namespace Unity.Samples.ScreenReader
                 currentModalElement = null;
             }
 
+            // Note that we still travers the children even if the parent is ignored.
+            // It is possible that nodes for children were created and has to be destroyed and the handlers cleaned up.
             foreach (var child in element.hierarchy.Children())
             {
-                UpdateAccessibilityHierarchyRecursively(child, parentAccessible, forced, visible);
+                UpdateAccessibilityHierarchyRecursively(child, parentAccessible, forced, visible && !shouldBeIgnored);
             }
         }
 

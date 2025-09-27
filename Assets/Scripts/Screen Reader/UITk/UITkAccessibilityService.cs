@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Unity.Samples.LetterSpell;
-using Unity.Samples.ScreenReader;
 using UnityEngine;
 using UnityEngine.Accessibility;
-using UnityEngine.Pool;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
@@ -26,6 +24,57 @@ namespace Unity.Samples.ScreenReader
         public UITkAccessibilityService() : base("UITk", 100)
         {
             AssistiveSupport.nodeFocusChanged += OnNodeFocusChanged;
+        }
+
+        bool m_NeedsToRecomputeRootFrames = false;
+        
+        public void DirtyRootFrames()
+        {
+            m_NeedsToRecomputeRootFrames = true;
+        }
+        
+        public void UpdateRootAndPanelFrames()
+        {
+            m_NeedsToRecomputeRootFrames = true;
+            
+            foreach (var accessibilityUpdater in m_AccessibilityUpdaters)
+            {
+                accessibilityUpdater.UpdateRootFrame();
+            }
+            
+            Rect serviceRootFrame = Rect.zero;
+            
+            foreach (var panelNode in hierarchy.rootNode.children)
+            {
+                // Calculate the union of all root nodes frames.
+                if (panelNode.frame.size != Vector2.zero)
+                {
+                    Encompass(ref serviceRootFrame, panelNode.frame);
+                }
+            }
+            
+            hierarchy.rootNode.frame = serviceRootFrame;
+            void Encompass(ref Rect a, Rect b)
+            {
+                a.xMin = Math.Min(a.xMin, b.xMin);
+                a.yMin = Math.Min(a.yMin, b.yMin);
+                a.xMax = Math.Max(a.xMax, b.xMax);
+                a.yMax = Math.Max(a.yMax, b.yMax);
+            }
+        }
+
+        public override void Update()
+        {
+            if (m_NeedsToRecomputeRootFrames)
+            {
+                UpdateRootAndPanelFrames();
+                m_NeedsToRecomputeRootFrames = false;
+            }
+            
+            foreach (var accessibilityUpdater in m_AccessibilityUpdaters)
+            {
+                accessibilityUpdater.Update();
+            }
         }
 
         void OnNodeFocusChanged(AccessibilityNode node)

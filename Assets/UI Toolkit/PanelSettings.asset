@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 19101, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: PanelSettings
   m_EditorClassIdentifier: 
-  themeUss: {fileID: -4733365628477956816, guid: 0b069b67234d14a69aa6eac518f072ce, type: 3}
+  themeUss: {fileID: -4733365628477956816, guid: dbe9ef9eec5e742a7b22a1718098953e, type: 3}
   m_DisableNoThemeWarning: 0
   m_TargetTexture: {fileID: 0}
   m_RenderMode: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
   m_Scale: 1
   m_ReferenceDpi: 96
   m_FallbackDpi: 96
-  m_ReferenceResolution: {x: 1200, y: 800}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_Match: 0
   m_SortingOrder: 0

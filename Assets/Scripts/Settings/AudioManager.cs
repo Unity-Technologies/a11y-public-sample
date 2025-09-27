@@ -41,11 +41,18 @@ namespace Unity.Samples.LetterSpell
 
         void Start()
         {
+            Invoke(nameof(PlayWelcomeMusic), 1f);
+        }
+        
+        /// <summary>
+        /// Play the welcome music after some delay.
+        /// </summary>
+        void PlayWelcomeMusic()
+        {
             m_MusicSource.clip = welcomeEffect;
             m_MusicSource.Play();
 
             audioPlayingStatusChanged?.Invoke(m_MusicSource);
-
             Invoke(nameof(PlayBackgroundMusic), 3f);
         }
 

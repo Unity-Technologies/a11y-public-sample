@@ -153,12 +153,19 @@ namespace Unity.Samples.ScreenReader
 
                 StartCoroutine(OnOrientationChanged());
             }
+            
+            // Update the services
+            foreach (var service in m_RegisteredServices)
+            {
+                service.Update();
+            }
         }
 
         void OnEnable()
         {
             s_Instance = this;
 
+            AssistiveSupport.screenReaderStatusOverride = AssistiveSupport.ScreenReaderStatusOverride.ForceEnabled;
             DontDestroyOnLoad(gameObject);
             StartCoroutine(DelayInitialize());
         }

@@ -41,7 +41,7 @@ namespace Unity.Samples.LetterSpell
 
         void OnDisable()
         {
-            AccessibilityManager.GetService<UGuiAccessibilityService>().ActivateOtherAccessibilityNodes(true, transform);
+            AccessibilityManager.GetService<UGuiAccessibilityService>()?.ActivateOtherAccessibilityNodes(true, transform);
 
             dismissButton.GetComponent<AccessibleButton>().dismissed -= OnDismissed;
         }

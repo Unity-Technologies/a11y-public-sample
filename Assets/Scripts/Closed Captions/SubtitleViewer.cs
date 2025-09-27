@@ -1,3 +1,4 @@
+using Unity.Samples.ScreenReader;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -148,7 +149,7 @@ namespace Unity.Samples.ClosedCaptions
                 {
                     CreateSubtitleView();
                 }
-
+                m_CachedRootVisualElement.GetOrCreateAccessibleProperties().ignored = true;
                 m_CachedRootVisualElement.Add(m_SubtitleView);
             }
         }

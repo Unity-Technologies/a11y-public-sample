@@ -14,7 +14,7 @@ namespace Unity.Samples.ClosedCaptions
         [Range(0, 1)]
         public float opacity = 0.8f;
         public FontAsset font;
-        public int fontSize = 12;
+        public int fontSize = 64;
         public FontStyle fontStyle = FontStyle.Normal;
         public bool useDropShadow;
         public Color dropShadowColor = Color.black;

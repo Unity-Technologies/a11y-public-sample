@@ -194,7 +194,7 @@ namespace Unity.Samples.LetterSpell
 
         private VisualElement m_GameView;
         private Label m_ClueLabel;
-        private VisualElement m_SuccessImage;
+        private VisualElement m_SuccessPill;
         private CardListView m_LetterCardContainer;
         private Button m_PauseGameButton;
         private Button m_NextWordButtton;
@@ -289,6 +289,8 @@ namespace Unity.Samples.LetterSpell
             //m_Logo.style.display = DisplayStyle.None;
             m_StackView = root.Q<StackView>();
             m_SplashView = m_StackView.Q("splashView");
+            // Disable screen reader for the label in the spash screen.
+            m_SplashView.Q<Label>().GetOrCreateAccessibleProperties().ignored = true;
             m_LoginView = m_StackView.Q("loginView");
             m_LoginView.dataSource = m_PlayerSettings;
             m_LoginButton = m_LoginView.Q<Button>("loginButton");
@@ -305,9 +307,10 @@ namespace Unity.Samples.LetterSpell
             
             m_GameView = m_StackView.Q("gameView");
             m_ClueLabel = m_GameView.Q<Label>("clueLabel");
-            m_SuccessImage = m_GameView.Q("successImage");
+            m_SuccessPill = m_GameView.Q("successPill");
+            m_SuccessPill.GetOrCreateAccessibleProperties().ignored = true;
             //m_SuccessImage.style.display = DisplayStyle.None;
-            m_SuccessImage.style.opacity = 0;
+            m_SuccessPill.style.opacity = 0;
             m_LetterCardContainer = m_GameView.Q<LetterSpell.CardListView>("letterCardContainer");
             m_PauseGameButton = m_GameView.Q<Button>("pauseGameButton");
             m_PauseGameButton.clicked += ShowExitGamePopup;
@@ -410,7 +413,7 @@ namespace Unity.Samples.LetterSpell
         public void ShowNextWord()
         {
             //m_SuccessImage.style.display = DisplayStyle.None;
-            m_SuccessImage.style.opacity = 0;
+            m_SuccessPill.style.opacity = 0;
             //if (gameplay.IsGameComplete())
             if (gameplay.IsShowingLastWord())
             {
@@ -535,7 +538,7 @@ namespace Unity.Samples.LetterSpell
 
         void FadeSuccessImageIn()
         {
-            m_SuccessImage.style.opacity = 1;
+            m_SuccessPill.style.opacity = 1;
            // m_SuccessImage.style.display = DisplayStyle.Flex;
             m_MainView.schedule.Execute((t) => FadeSuccessImageOut()).ExecuteLater(3000);
         }

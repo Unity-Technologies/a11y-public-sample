@@ -16,21 +16,49 @@ namespace Unity.Samples.LetterSpell
 
         public override VisualElement contentContainer => m_ContentContainer;
         
+        int m_Index = -1;
+        
         [UxmlAttribute]
         public int index
         {
-            get => m_ActiveView != null ? IndexOf(m_ActiveView) : -1;
+            get => m_Index;
             set
             {
-                if (value > this.childCount - 1)
+                if (m_Index == value)
                     return;
-                activeView = value >= 0 ? this[value] : null;
+                
+                m_Index = value;
+                UpdateActiveViewFromIndex();
+                indexChanged?.Invoke(m_Index);
             }
+        }
+        
+        void UpdateActiveViewFromIndex()
+        {
+            if (m_Index < 0 || m_Index >= childCount)
+            {
+                activeView = null;
+                return;
+            }
+            activeView = this[m_Index];
         }
 
         public VisualElement activeView
         {
-            get => m_ActiveView;
+            get
+            {
+                // Ensure the active view is valid. This is because children can be added/removed without being notified.
+                bool needToEnsureValid = false;
+                
+                if (m_ActiveView == null && m_Index != -1 && childCount > 0)
+                    needToEnsureValid = true;
+                else if (m_ActiveView != null && (!Contains(m_ActiveView) || IndexOf(m_ActiveView) != m_Index))
+                    needToEnsureValid = true;
+                
+                if (needToEnsureValid)
+                    UpdateActiveViewFromIndex();
+                return m_ActiveView;
+            }
             set
             {
                 var oldView = m_ActiveView;
@@ -44,10 +72,12 @@ namespace Unity.Samples.LetterSpell
                 else
                     UpdateViews();
 
+                index = IndexOf(m_ActiveView);
                 activeViewChanged?.Invoke();
             }
         }
 
+        public event Action<int> indexChanged;
         public event Action activeViewChanged;
 
         public StackView()
@@ -58,7 +88,7 @@ namespace Unity.Samples.LetterSpell
             m_ContentContainer.AddToClassList("lsp-stack-view__content-container");
             m_ContentContainer.style.flexGrow = 1;
             hierarchy.Add(m_ContentContainer);
-            RegisterCallback<GeometryChangedEvent>((e)=>UpdateViews());
+            RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
         }
         
         void StartTransition(VisualElement from, VisualElement to)
@@ -100,8 +130,21 @@ namespace Unity.Samples.LetterSpell
             };
         }
         
+        bool firstGeometryChange = true;
+        
+        void OnGeometryChanged(GeometryChangedEvent evt)
+        {
+            if (firstGeometryChange )
+            {
+                firstGeometryChange = false;
+                UpdateViews();
+                UnregisterCallback<GeometryChangedEvent>(OnGeometryChanged);
+            }
+        }
+        
         public void UpdateViews()
         {
+            UpdateActiveViewFromIndex();
             foreach (var view in Children())
             {
                 if (m_ActiveView != view)

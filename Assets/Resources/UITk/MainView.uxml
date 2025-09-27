@@ -3,8 +3,10 @@
     <ui:VisualElement name="root" style="flex-grow: 1;">
         <ui:VisualElement name="background" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background-color: rgb(11, 163, 109);"/>
         <ui:VisualElement name="viewContainer" style="flex-grow: 1;">
-            <Unity.Samples.LetterSpell.StackView name="stackView" index="2" style="flex-grow: 1;">
-                <ui:VisualElement name="splashView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Splash-Screen.png?fileID=4602334432413793429&amp;guid=364b68ded9ed04f07848b6c7de25fdad&amp;type=3#Intro Screen_0&quot;);"/>
+            <Unity.Samples.LetterSpell.StackView name="stackView" index="0" style="flex-grow: 1;">
+                <ui:VisualElement name="splashView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Splash-Screen.png?fileID=4602334432413793429&amp;guid=364b68ded9ed04f07848b6c7de25fdad&amp;type=3#Intro Screen_0&quot;);">
+                    <ui:Label text="A fun spelling game" name="splashSubTitle"/>
+                </ui:VisualElement>
                 <ui:VisualElement name="loginView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Background-Intro.png?fileID=2800000&amp;guid=718087ba784b64abd9675b1452fc0095&amp;type=3#Background-Intro&quot;); align-items: center; justify-content: center;">
                     <ui:VisualElement name="logo" class="lsp-logo"/>
                     <ui:Label text="What is your name?" class="title-text"/>
@@ -16,7 +18,8 @@
                     <ui:Button text="Next" name="loginButton" class="purple"/>
                 </ui:VisualElement>
                 <ui:VisualElement name="levelChoiceView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Background-Intro.png?fileID=2800000&amp;guid=718087ba784b64abd9675b1452fc0095&amp;type=3#Background-Intro&quot;);">
-                    <ui:VisualElement name="logo" class="lsp-logo"/>                    <ui:VisualElement style="flex-grow: 1; justify-content: center; align-items: center;">
+                    <ui:VisualElement name="logo" class="lsp-logo"/>
+                    <ui:VisualElement style="flex-grow: 1; justify-content: center; align-items: center;">
                         <ui:VisualElement name="choiceButtonContainer" class="choice-button-container">
                             <ui:Button text="Play Easy" name="easyButton" class="choice-button"/>
                             <ui:Button text="Play Hard" name="hardButton" class="choice-button"/>
@@ -29,7 +32,13 @@
                 </ui:VisualElement>
                 <ui:VisualElement name="gameView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Background-Intro.png?fileID=2800000&amp;guid=718087ba784b64abd9675b1452fc0095&amp;type=3#Background-Intro&quot;);">
                     <ui:VisualElement name="logo" class="lsp-logo"/>
-                    <ui:Label text="#clue" name="clueLabel" class="title-text" style="-unity-text-align: middle-center; margin-top: 170px; margin-bottom: 50px;"/>
+                    <ui:VisualElement name="clueContainer">
+                        <ui:Label text="#clue" name="clueLabel" class="title-text" style="-unity-text-align: middle-center;"/>
+                        <ui:VisualElement name="successPill">
+                            <ui:VisualElement name="successPillCheckmark"/>
+                            <ui:Label text="Correct" class="success-pill__label"/>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
                     <Unity.Samples.LetterSpell.CardListView name="letterCardContainer" style="flex-grow: 1;"/>
                     <ui:VisualElement name="gameViewButtonContainer" style="flex-direction: row; padding-top: 4px; padding-right: 18px; padding-bottom: 18px; padding-left: 18px;">
                         <ui:Button text="" name="pauseGameButton">
@@ -38,9 +47,6 @@
                         <ui:Button text="Options" name="inGameSettingsButton"/>
                         <ui:VisualElement name="VisualElement" style="flex-grow: 1;"/>
                         <ui:Button text="Next Word" name="nextWordButton" class="purple"/>
-                    </ui:VisualElement>
-                    <ui:VisualElement name="successImage" picking-mode="Ignore" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; align-items: center; justify-content: center; transition-property: opacity; transition-duration: 400ms; transition-timing-function: ease-in-out;">
-                        <ui:VisualElement style="background-image: url(&quot;project://database/Assets/UI/Images/Image-Correct.png?fileID=-3206192116628772432&amp;guid=7480bb21c642e4319b9a422353096177&amp;type=3#Correct-Badge_0&quot;); width: 382px; height: 85px; margin-top: -277px;"/>
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="settingsView" style="flex-grow: 1; background-color: rgb(255, 251, 233);">

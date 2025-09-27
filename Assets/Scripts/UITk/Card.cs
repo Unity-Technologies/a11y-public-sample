@@ -561,7 +561,7 @@ namespace Unity.Samples.LetterSpell
                 child.style.left = startX + i * cardSize + (i + 1) *spacing;
                 child.style.width = cardSize;
                 child.style.height = cardSize;
-                child.style.top = (layout.height - cardSize)/2;
+                child.style.top = 0;//DONT CENTER ANYMORE, (layout.height - cardSize)/2;
                 i++;
                 
             }

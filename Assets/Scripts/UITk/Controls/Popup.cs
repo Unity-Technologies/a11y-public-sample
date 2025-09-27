@@ -45,6 +45,7 @@ namespace Unity.Samples.LetterSpell
                 style.backgroundColor = new Color(0, 0, 0, 0.7f);
 
                 m_ContentContainer = new PopupContent();
+                m_ContentContainer.GetOrCreateAccessibleProperties().modal = true;
                 hierarchy.Add(m_ContentContainer);
                 
                 var styleSheet = Resources.Load<StyleSheet>("UITk/Themes/LetterSpellTheme");
@@ -62,12 +63,11 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
-        class PopupContent : AccessibleVisualElement
+        class PopupContent : VisualElement
         {
             public PopupContent()
             {
                 AddToClassList("lsp-popup");
-                accessible.modal = true;
             }
         }
         

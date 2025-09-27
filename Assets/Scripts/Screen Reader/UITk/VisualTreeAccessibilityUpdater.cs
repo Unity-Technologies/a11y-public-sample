@@ -580,9 +580,7 @@ namespace Unity.Samples.ScreenReader
             {
                 accElement = CreateHandler(element, parentAccessible);
             }
-
-            if (element.ClassListContains(GenericDropdownMenu.ussClassName))
-                OnScreenDebug.Log("Menu " + element.name + " visible:" + visible + " acc:" +  (accElement != null) + " model " + accElement?.isModal);
+            
             bool shouldBeIgnored = !visible;
             bool modal = false;
 
@@ -635,9 +633,11 @@ namespace Unity.Samples.ScreenReader
                 currentModalElement = null;
             }
 
+            // Note that we still travers the children even if the parent is ignored.
+            // It is possible that nodes for children were created and has to be destroyed and the handlers cleaned up.
             foreach (var child in element.hierarchy.Children())
             {
-                UpdateAccessibilityHierarchyRecursively(child, parentAccessible, forced, visible);
+                UpdateAccessibilityHierarchyRecursively(child, parentAccessible, forced, visible && !shouldBeIgnored);
             }
         }
 

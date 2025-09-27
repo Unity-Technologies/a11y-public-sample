@@ -20,11 +20,11 @@ MonoBehaviour:
     - rid: 2216566543976235777
   m_TableData:
   - m_Id: 76489584640
-    m_Localized: Do you want to exit the game
+    m_Localized: Game Paused
     m_Metadata:
       m_Items: []
   - m_Id: 405763420160
-    m_Localized: What is your name UITK?
+    m_Localized: What is your name?
     m_Metadata:
       m_Items: []
   - m_Id: 602912485376
@@ -76,11 +76,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 17263564582912
-    m_Localized: Three
+    m_Localized: 3
     m_Metadata:
       m_Items: []
   - m_Id: 17369965686784
-    m_Localized: Six
+    m_Localized: 6
     m_Metadata:
       m_Items: []
   - m_Id: 17491977990144
@@ -120,11 +120,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20147798700032
-    m_Localized: Exit
+    m_Localized: End Game
     m_Metadata:
       m_Items: []
   - m_Id: 20374383390720
-    m_Localized: Resume
+    m_Localized: Continue
     m_Metadata:
       m_Items: []
   - m_Id: 21672893771776
@@ -160,7 +160,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 45343066714112
-    m_Localized: '{orderedWordCount} of {totalWordCount} correct'
+    m_Localized: 'The game is over!
+
+      You found {orderedWordCount} words out
+      of {totalWordCount}'
     m_Metadata:
       m_Items:
       - rid: 2216566543976235777

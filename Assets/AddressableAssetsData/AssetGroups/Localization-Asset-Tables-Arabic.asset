@@ -10,14 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Localization-Asset-Tables-Arabic (ar)
+  m_Name: Localization-Asset-Tables-Arabic
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
-  m_GroupName: Localization-Asset-Tables-Arabic (ar)
-  m_GUID: 99c8733c33be0b24db47cc05db1c7ea8
-  m_SerializeEntries: []
+  m_GroupName: Localization-Asset-Tables-Arabic
+  m_GUID: d5e7d28d845754693ad8982f66370ace
+  m_SerializeEntries:
+  - m_GUID: 66c8fb0d032fd5441a18e333eaaab5e6
+    m_Address: Game Assets_ar
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ar
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 8853dd082fc37f44b87accc772e73c21, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 3ebef17d8c4a9de4e94e5bf49f993465, type: 2}
-    - {fileID: 11400000, guid: b78f19fa5235a9b49b3ee40e45871354, type: 2}
+    - {fileID: 11400000, guid: 7c2eaa1ee3a22424faaae27b10c6da97, type: 2}
+    - {fileID: 11400000, guid: 63697a242aaaf42e48bb55cba64b09de, type: 2}

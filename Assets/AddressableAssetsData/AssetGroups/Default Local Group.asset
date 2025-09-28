@@ -14,7 +14,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Default Local Group
   m_GUID: e44b9e080d5ce064aa2fa777858a4f4d
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 05c0641c398ac404f84f095c76126bbe
+    m_Address: Assets/UI/Images/Background-Intro-Es@2x.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 27ec5b3bcd56e46fa8f0c071844e577e
+    m_Address: Assets/UI/Images/Background-Intro-Eng.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3697ae0c4beca4d7381ec20cca6e3557
+    m_Address: Assets/UI/Images/Background-Intro-Ar.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5c84e66ad6d194d619b566ca01c3d01c
+    m_Address: Assets/UI/Images/Background-Intro-Ar@2x.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72dcdfe6ffd374b9e8fbe9eae2e99d88
+    m_Address: Assets/UI/Images/Background-Intro-Es.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 764d8fa759fec4a4fa33b7b2dced6a10
+    m_Address: Assets/UI/Images/Background-Intro-Ja@2x.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: afea9e2cbe6a34e92bb592436d89a029
+    m_Address: Assets/UI/Images/Background-Intro-Ja.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f01952071f470476081f2a3fab0dd4d5
+    m_Address: Assets/UI/Images/Background-Intro-Eng@2x.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8853dd082fc37f44b87accc772e73c21, type: 2}
   m_SchemaSet:

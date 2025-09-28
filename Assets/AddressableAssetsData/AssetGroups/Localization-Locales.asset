@@ -16,25 +16,25 @@ MonoBehaviour:
   m_GUID: 956e04d9811eb734aab939c1bff9a610
   m_SerializeEntries:
   - m_GUID: 275b77c246fc920439575b63ed23ef0f
-    m_Address: Arabic (ar)
+    m_Address: Arabic
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 636e6f8b7968d2e4e91f31aadcc8f672
-    m_Address: English (en)
+    m_Address: English
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 73edea6435744994486466dfcc5a9da9
-    m_Address: Japanese (ja)
+    m_Address: Japanese
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d63469410b1f038418053049749943e9
-    m_Address: Spanish (es)
+    m_Address: Spanish
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale

@@ -12,7 +12,6 @@ namespace Unity.Samples.LetterSpell
     {
         private VisualElement m_ContentContainer;
         private VisualElement m_ActiveView;
-        private VisualElement m_TransitionElement;
 
         public override VisualElement contentContainer => m_ContentContainer;
         
@@ -93,43 +92,42 @@ namespace Unity.Samples.LetterSpell
         
         void StartTransition(VisualElement from, VisualElement to)
         {
-            if (m_TransitionElement == null)
+            if (from != null)
             {
-                m_TransitionElement ??= new VisualElement();
-                m_TransitionElement.AddToClassList("lsp-stack-view-Transition"); 
-            }
-            m_TransitionElement.style.opacity = 0;
-            hierarchy.Add(m_TransitionElement);
+                var fadeIn = from.experimental.animation.Start(
+                    (element) => element.style.opacity.value,
+                    0, 400, (element, value) =>
+                    {
+                        element.style.opacity = value;
+                    });
 
-            var fadeIn = m_TransitionElement.experimental.animation.Start(
-                (element) => element.style.opacity.value,
-                1f, 400, (element, value) =>
+                fadeIn.onAnimationCompleted += () =>
                 {
-                    element.style.opacity = value;
-                    Debug.Log("op = " + value);
-                });
-            fadeIn.onAnimationCompleted += () =>
-            {
-                // Hide the old view
-                if (from != null)
+                    // Hide the old view
                     from.style.display = DisplayStyle.None;
 
-                // Show the new view
-                if (to != null)
-                {
-                    to.style.display = DisplayStyle.Flex;
-                }
-
-                var fadeOut = m_TransitionElement.experimental.animation.Start(
-                    (element) => element.style.opacity.value,
-                    0, 400, (element, value) => element.style.opacity = value);
-                fadeOut.onAnimationCompleted += () =>
-                {
-                   m_TransitionElement.RemoveFromHierarchy();
+                    // Show the new view
+                    if (to != null)
+                    {
+                        to.style.display = DisplayStyle.Flex;
+                        to.style.opacity = 0.0f;
+                        var fadeOut = to.experimental.animation.Start(
+                            (element) => element.style.opacity.value,
+                            1, 400, (element, value) => element.style.opacity = value);
+                        fadeOut.onAnimationCompleted += () =>
+                        {
+                        };
+                    }
                 };
-            };
+            }
+            else if (to != null)
+            {
+                // If there is no from, just show the
+                to.style.display = DisplayStyle.Flex;
+                to.style.opacity = 1;
+            }
         }
-        
+     
         bool firstGeometryChange = true;
         
         void OnGeometryChanged(GeometryChangedEvent evt)

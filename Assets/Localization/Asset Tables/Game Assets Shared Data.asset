@@ -19,9 +19,14 @@ MonoBehaviour:
     m_Key: words
     m_Metadata:
       m_Items: []
+  - m_Id: 1290280815812608
+    m_Key: BACKGROUND-IMAGE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items:
     - rid: 2216566521478512918
+    - rid: 4577796410279985478
   m_KeyGenerator:
     rid: 2216566521478512917
   references:
@@ -42,4 +47,16 @@ MonoBehaviour:
           - ja
           - ar
         m_TypeString: Unity.Samples.LetterSpell.WordDatabase, Assembly-CSharp, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+    - rid: 4577796410279985478
+      type: {class: AssetTypeMetadata, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries:
+        - m_KeyId: 1290280815812608
+          m_TableCodes:
+          - ar
+          - en
+          - ja
+          - es
+        m_TypeString: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null

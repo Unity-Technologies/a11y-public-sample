@@ -3,11 +3,11 @@
     <ui:VisualElement name="root" style="flex-grow: 1;">
         <ui:VisualElement name="background" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background-color: rgb(11, 163, 109);"/>
         <ui:VisualElement name="viewContainer" style="flex-grow: 1;">
-            <Unity.Samples.LetterSpell.StackView name="stackView" index="0" style="flex-grow: 1;">
+            <Unity.Samples.LetterSpell.StackView name="stackView" index="1" style="flex-grow: 1;">
                 <ui:VisualElement name="splashView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Splash-Screen.png?fileID=4602334432413793429&amp;guid=364b68ded9ed04f07848b6c7de25fdad&amp;type=3#Intro Screen_0&quot;);">
                     <ui:Label text="A fun spelling game" name="splashSubTitle"/>
                 </ui:VisualElement>
-                <ui:VisualElement name="loginView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Background-Intro.png?fileID=2800000&amp;guid=718087ba784b64abd9675b1452fc0095&amp;type=3#Background-Intro&quot;); align-items: center; justify-content: center;">
+                <ui:VisualElement name="loginView" style="flex-grow: 1; align-items: center; justify-content: center;">
                     <ui:VisualElement name="logo" class="lsp-logo"/>
                     <ui:Label class="title-text">
                         <Bindings>
@@ -26,7 +26,7 @@
                         </Bindings>
                     </ui:Button>
                 </ui:VisualElement>
-                <ui:VisualElement name="levelChoiceView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Background-Intro.png?fileID=2800000&amp;guid=718087ba784b64abd9675b1452fc0095&amp;type=3#Background-Intro&quot;);">
+                <ui:VisualElement name="levelChoiceView" style="flex-grow: 1;">
                     <ui:VisualElement name="logo" class="lsp-logo"/>
                     <ui:VisualElement style="flex-grow: 1; justify-content: center; align-items: center;">
                         <ui:VisualElement name="choiceButtonContainer" class="choice-button-container">
@@ -45,13 +45,13 @@
                             </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:Button name="settingsButton" style="position: absolute; right: 22px; top: 5px;">
-                        <Bindings>
-                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(19656456957952)"/>
-                        </Bindings>
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(19656456957952)"/>
+                            </Bindings>
                         </ui:Button>
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="gameView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Background-Intro.png?fileID=2800000&amp;guid=718087ba784b64abd9675b1452fc0095&amp;type=3#Background-Intro&quot;);">
+                <ui:VisualElement name="gameView" style="flex-grow: 1;">
                     <ui:VisualElement name="logo" class="lsp-logo"/>
                     <ui:VisualElement name="clueContainer">
                         <ui:Label text="#clue" name="clueLabel" class="title-text" style="-unity-text-align: middle-center;"/>
@@ -204,6 +204,9 @@
                     </ui:ScrollView>
                 </ui:VisualElement>
             </Unity.Samples.LetterSpell.StackView>
+            <Bindings>
+                <UnityEngine.Localization.LocalizedTexture property="style.backgroundImage" table="GUID:7a3c0612d6a067448bdc5058f2111932" entry="Id(1290280815812608)"/>
+            </Bindings>
         </ui:VisualElement>
         <lsp:Popup name="exitGamePopup">
             <ui:Label text="Game Paused">
@@ -239,7 +242,6 @@
                     </UnityEngine.Localization.LocalizedString>
                 </Bindings>
             </ui:Label>
-            
             <ui:VisualElement name="resultButtonContainer" style="flex-grow: 1; flex-direction: row; margin-top: 10px; align-items: center;">
                 <ui:Button name="resultMainMenuButton">
                     <Bindings>

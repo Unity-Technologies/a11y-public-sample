@@ -308,30 +308,20 @@ namespace Unity.Samples.LetterSpell
                 // Announce that the card was moved.
                 AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);
 
-                // On iOS, the accessibility hierarchy is flattened. This means that nodes don't have parents or
-                // children, so functions that require them (like AccessibilityHierarchy.MoveNode) won't work. Hence,
-                // we need to recreate the whole hierarchy instead.
-                if (Application.platform == RuntimePlatform.IPhonePlayer)
+                AssistiveSupport.activeHierarchy.MoveNode(element.node, element.node.parent,
+                    element.transform.GetSiblingIndex());
+
+                // Only refresh the frames for now to leave the announcement request to be handled.
+                StartCoroutine(RefreshNodeFrames());
+
+                AssistiveSupport.notificationDispatcher.SendLayoutChanged(element.node);
+                return;
+
+                IEnumerator RefreshNodeFrames()
                 {
-                    AccessibilityManager.GetService<UGuiAccessibilityService>()?.RebuildHierarchy();
-                    m_WasHierarchyRefreshed = true;
+                    yield return new WaitForEndOfFrame();
 
-                    // Add the node count to the element ID to match the ID of the node in the refreshed hierarchy,
-                    // ensuring consistent focus even after rebuilding.
-                    var nodeToFocusId = element.node.id + AccessibilityManager.hierarchy.rootNodes.Count;
-                    nodeToFocusId += shouldMoveLeft ? -count : count;
-
-                    StartCoroutine(this.FocusOnNode(nodeToFocusId));
-                }
-                else
-                {
-                    AccessibilityManager.hierarchy.MoveNode(element.node, element.node.parent,
-                        element.transform.GetSiblingIndex());
-
-                    // Only refresh the frames for now to leave the announcement request to be handled.
-                    StartCoroutine(this.RefreshNodeFrames());
-
-                    AssistiveSupport.notificationDispatcher.SendLayoutChanged(element.node);
+                    AssistiveSupport.activeHierarchy?.RefreshNodeFrames();
                 }
             }
         }

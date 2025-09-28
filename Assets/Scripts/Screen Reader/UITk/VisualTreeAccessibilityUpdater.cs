@@ -37,7 +37,7 @@ namespace Unity.Samples.ScreenReader
         AccessibilitySubHierarchy m_SubHierarchy;
 
         /// <summary>
-        /// The sub hierarchy this updater is managing.
+        /// The sub-hierarchy this updater is managing.
         /// </summary>
         public AccessibilitySubHierarchy hierarchy
         {
@@ -569,7 +569,7 @@ namespace Unity.Samples.ScreenReader
                     var rootNode = m_AccessibilityService.hierarchy.AddNode(string.IsNullOrEmpty(panelName) ?
                         visualTree.name : panelName);
                     rootNode.role = AccessibilityRole.Container;
-                    rootNode.isActive = (Application.platform == RuntimePlatform.OSXPlayer);
+                    rootNode.isActive = Application.platform == RuntimePlatform.OSXPlayer;
                     hierarchy = new AccessibilitySubHierarchy(m_AccessibilityService.hierarchy.mainHierarchy, rootNode);
                     DirtyRootFrame();
                     shouldSendNotification = true;
@@ -681,7 +681,7 @@ namespace Unity.Samples.ScreenReader
                 }
             }
 
-            // Update the model element.
+            // Update the modal element.
             if (!shouldBeIgnored && modal)
             {
                 currentModalElement = element;
@@ -691,8 +691,8 @@ namespace Unity.Samples.ScreenReader
                 currentModalElement = null;
             }
 
-            // Note that we still travers the children even if the parent is ignored.
-            // It is possible that nodes for children were created and has to be destroyed and the handlers cleaned up.
+            // Note that we still traverse the children even if the parent is ignored.
+            // It is possible that nodes for children were created and have to be destroyed and the handlers cleaned up.
             foreach (var child in element.hierarchy.Children())
             {
                 UpdateAccessibilityHierarchyRecursively(child, parentAccessible, forced, visible && !shouldBeIgnored);

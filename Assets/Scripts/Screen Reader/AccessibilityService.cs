@@ -8,7 +8,7 @@ namespace Unity.Samples.ScreenReader
     public abstract class AccessibilityService
     {
         /// <summary>
-        /// The accessibility sub hierarchy that this service operates on.
+        /// The accessibility sub-hierarchy that this service operates on.
         /// </summary>
         public AccessibilitySubHierarchy hierarchy { get; set; }
 

@@ -21,7 +21,7 @@ namespace Unity.Samples.ScreenReader
 
         void Start()
         {
-            role |= AccessibilityRole.Toggle;
+            role = AccessibilityRole.Toggle;
 
             m_Toggle = GetComponentInChildren<Toggle>();
             m_Text = GetComponentInChildren<Text>();

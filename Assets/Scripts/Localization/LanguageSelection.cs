@@ -25,16 +25,20 @@ namespace UnityEngine.Localization
             formatSelectedValueCallback = FormatLocaleName;
 
             if (LocalizationSettings.InitializationOperation.IsDone)
+            {
                 SetupLocalization();
+            }
             else
-                LocalizationSettings.InitializationOperation.Completed += (s) => SetupLocalization();
+            {
+                LocalizationSettings.InitializationOperation.Completed += _ => SetupLocalization();
+            }
 
             RegisterCallback<ChangeEvent<Locale>>(evt =>
             {
                 LocalizationSettings.SelectedLocale = evt.newValue;
             });
 
-            LocalizationSettings.SelectedLocaleChanged += (s) => SetValueWithoutNotify(LocalizationSettings.SelectedLocale);
+            LocalizationSettings.SelectedLocaleChanged += _ => SetValueWithoutNotify(LocalizationSettings.SelectedLocale);
         }
 
         void SetupLocalization()
@@ -57,16 +61,22 @@ namespace UnityEngine.Localization
 
             this.choices = choices;
 
-            // Schedule to avoid the rentering update method exception when called from addressables event.
+            // Schedule to avoid the rendering update method exception when called from addressables event.
             schedule.Execute(() => SetValueWithoutNotify(LocalizationSettings.SelectedLocale));
         }
 
         string FormatLocaleName(Locale locale)
         {
             if (locale == null)
+            {
                 return "None";
+            }
+
             if (string.IsNullOrEmpty(tableName))
+            {
                 return locale.LocaleName;
+            }
+
             return LocalizationSettings.StringDatabase.GetLocalizedString(tableName, "LANGUAGE_" + locale.LocaleName.ToUpper());
         }
     }

@@ -153,7 +153,7 @@ namespace Unity.Samples.LetterSpell
                 }
             }
         }
-        
+
         public void SetDraggingVisuals(bool isDragging)
         {
             backgroundImage.gameObject.SetActive(!isDragging);

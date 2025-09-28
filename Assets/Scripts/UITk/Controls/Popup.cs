@@ -2,7 +2,6 @@ using System;
 using Unity.Properties;
 using Unity.Samples.ScreenReader;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
 
 namespace Unity.Samples.LetterSpell
@@ -22,17 +21,17 @@ namespace Unity.Samples.LetterSpell
             CloseOnPressOutside = 1,
             CloseOnEscape = 2,
         }
-        
+
         class PopupOverlay : VisualElement
         {
-            private PopupContent m_ContentContainer;
-            
+            PopupContent m_ContentContainer;
+
             public PopupContent popupContent => m_ContentContainer;
-            
+
             public override VisualElement contentContainer => m_ContentContainer;
-            
+
             public Popup popup { get; set; }
-            
+
             public PopupOverlay()
             {
                 style.position = Position.Absolute;
@@ -47,17 +46,20 @@ namespace Unity.Samples.LetterSpell
                 m_ContentContainer = new PopupContent();
                 m_ContentContainer.GetOrCreateAccessibleProperties().modal = true;
                 hierarchy.Add(m_ContentContainer);
-                
+
                 var styleSheet = Resources.Load<StyleSheet>("UITk/Themes/LetterSpellTheme");
                 styleSheets.Add(styleSheet);
-                
+
                 RegisterCallback<PointerDownEvent>(OnPointerDown);
             }
 
             void OnPointerDown(PointerDownEvent evt)
             {
                 if (!popup.closePolicy.HasFlag(ClosePolicy.CloseOnPressOutside))
+                {
                     return;
+                }
+
                 evt.StopImmediatePropagation();
                 popup.Close();
             }
@@ -70,9 +72,9 @@ namespace Unity.Samples.LetterSpell
                 AddToClassList("lsp-popup");
             }
         }
-        
+
         PopupOverlay m_Overlay;
-        
+
         ClosePolicy m_ClosePolicy = ClosePolicy.CloseOnPressOutside | ClosePolicy.CloseOnEscape;
 
         [UxmlAttribute, CreateProperty]
@@ -81,7 +83,7 @@ namespace Unity.Samples.LetterSpell
             get => m_ClosePolicy;
             set => m_ClosePolicy = value;
         }
-        
+
         public Popup()
         {
             m_Overlay = new PopupOverlay();
@@ -90,12 +92,12 @@ namespace Unity.Samples.LetterSpell
             style.display = DisplayStyle.None;
             RegisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
         }
-        
+
         void OnDetachFromPanel(DetachFromPanelEvent evt)
         {
             Close();
         }
-        
+
         public void Show()
         {
             MoveChildrenToContentContainer();
@@ -110,7 +112,7 @@ namespace Unity.Samples.LetterSpell
             var updater = panel?.GetAccessibilityUpdater();
             updater?.OnVersionChanged(panel.visualTree, VersionChangeType.Hierarchy);
         }
-        
+
         void MoveChildrenToContentContainer()
         {
             while (hierarchy.childCount > 0)

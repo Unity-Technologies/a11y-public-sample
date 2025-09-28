@@ -10,12 +10,13 @@ namespace Unity.Samples.LetterSpell
     [UxmlElement]
     public partial class StackView : VisualElement
     {
-        private VisualElement m_ContentContainer;
-        private VisualElement m_ActiveView;
+        VisualElement m_ContentContainer;
+        VisualElement m_ActiveView;
+        bool m_FirstGeometryChange = true;
+        int m_Index = -1;
 
         public override VisualElement contentContainer => m_ContentContainer;
         
-        int m_Index = -1;
         
         [UxmlAttribute]
         public int index
@@ -127,14 +128,12 @@ namespace Unity.Samples.LetterSpell
                 to.style.opacity = 1;
             }
         }
-     
-        bool firstGeometryChange = true;
         
         void OnGeometryChanged(GeometryChangedEvent evt)
         {
-            if (firstGeometryChange )
+            if (m_FirstGeometryChange )
             {
-                firstGeometryChange = false;
+                m_FirstGeometryChange = false;
                 UpdateViews();
                 UnregisterCallback<GeometryChangedEvent>(OnGeometryChanged);
             }

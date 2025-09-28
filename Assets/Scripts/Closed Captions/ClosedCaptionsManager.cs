@@ -41,7 +41,7 @@ namespace Unity.Samples.ClosedCaptions
             m_SubtitleViewer.surface = GetComponent<UIDocument>();
             m_SubtitleViewer.displaySettings = m_DisplaySettings;
         }
-        
+
         void Start()
         {
             // Create a map of audio clip names to subtitles.

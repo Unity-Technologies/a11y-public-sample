@@ -9,7 +9,7 @@ namespace Unity.Samples.ScreenReader
         public override string GetLabel()
         {
             var field = ownerElement as BaseField<TValueType>;
-            return field.label;
+            return field?.label;
         }
 
         public override string GetValue()
@@ -41,8 +41,10 @@ namespace Unity.Samples.ScreenReader
         {
             var field = ownerElement as BaseField<TValueType>;
 
-            if (field.labelElement != null)
+            if (field?.labelElement != null)
+            {
                 field.labelElement.GetOrCreateAccessibleProperties().ignored = true;
+            }
         }
     }
 }

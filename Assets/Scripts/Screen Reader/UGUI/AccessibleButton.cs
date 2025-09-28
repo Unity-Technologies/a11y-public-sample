@@ -18,7 +18,7 @@ namespace Unity.Samples.ScreenReader
 
         void Start()
         {
-            role |= AccessibilityRole.Button;
+            role = AccessibilityRole.Button;
 
             m_Button = GetComponentInChildren<Button>();
             m_Text = GetComponentInChildren<Text>();

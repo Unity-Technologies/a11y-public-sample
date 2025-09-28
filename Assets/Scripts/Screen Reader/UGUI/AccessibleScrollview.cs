@@ -106,7 +106,8 @@ namespace Unity.Samples.ScreenReader
             var contentRect = m_ScrollRect.content.rect;
 
             // Calculate the bounds of the element and the viewport.
-            var itemBounds = RectTransformUtility.CalculateRelativeRectTransformBounds(m_ScrollRect.viewport, element.transform as RectTransform);
+            var itemBounds = RectTransformUtility.CalculateRelativeRectTransformBounds(m_ScrollRect.viewport,
+                element.transform as RectTransform);
             var viewportBounds = new Bounds(viewportRect.center, viewportRect.size);
 
             // Calculate the offset required to make the element visible.

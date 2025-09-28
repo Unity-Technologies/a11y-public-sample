@@ -9,27 +9,23 @@ namespace Unity.Samples.ScreenReader
     /// </summary>
     public struct AccessibilitySubHierarchy
     {
-        AccessibilityHierarchy m_MainHierarchy;
-        AccessibilityNode m_RootNode;
-        
         /// <summary>
         /// The main accessibility hierarchy that this sub hierarchy belongs to.
         /// </summary>
-        public AccessibilityHierarchy mainHierarchy => m_MainHierarchy;
-        
+        public AccessibilityHierarchy mainHierarchy { get; private set; }
+
         /// <summary>
         /// Returns the node used as root for this sub hierarchy.
         /// </summary>
-        public AccessibilityNode rootNode => m_RootNode;
-        
+        public AccessibilityNode rootNode { get; private set; }
+
         /// <summary>
         /// Returns true if this sub hierarchy is valid.
         /// </summary>
-        public bool isValid => m_MainHierarchy != null;
-        
+        public bool isValid => mainHierarchy != null;
+
         /// <summary>
-        /// Constructs a sub hierarchy from the specified hiera
-        /// rchy and root node.
+        /// Constructs a sub hierarchy from the specified hierarchy and root node.
         /// </summary>
         /// <param name="mainHierarchy"></param>
         /// <param name="rootNode"></param>
@@ -37,27 +33,33 @@ namespace Unity.Samples.ScreenReader
         {
             // Assert that the main hierarchy exists.
             if (mainHierarchy == null)
+            {
                 throw new System.ArgumentNullException(nameof(mainHierarchy), "The main hierarchy cannot be null.");
+            }
+
             // Assert that the root node belongs to the main hierarchy.
             if (rootNode != null && !mainHierarchy.ContainsNode(rootNode))
+            {
                 throw new System.ArgumentException("The root node must belong to the main hierarchy.", nameof(rootNode));
-            
+            }
+
             // Note: if the root element is null then the sub hierarchy represents the whole hierarchy.
-            m_MainHierarchy = mainHierarchy;
-            m_RootNode = rootNode;
+            this.mainHierarchy = mainHierarchy;
+            this.rootNode = rootNode;
         }
-        
+
         /// <summary>
         /// Disposes the sub hierarchy removing the root node from the main hierarchy.
         /// </summary>
         public void Dispose()
         {
-            if (m_MainHierarchy != null && m_RootNode != null && m_MainHierarchy.ContainsNode(m_RootNode))
+            if (mainHierarchy != null && rootNode != null && mainHierarchy.ContainsNode(rootNode))
             {
-                m_MainHierarchy.RemoveNode(m_RootNode);
+                mainHierarchy.RemoveNode(rootNode);
             }
-            m_MainHierarchy = null;
-            m_RootNode = null;
+
+            mainHierarchy = null;
+            rootNode = null;
         }
 
         /// <summary>
@@ -68,20 +70,31 @@ namespace Unity.Samples.ScreenReader
         public bool ContainsNode(AccessibilityNode node)
         {
             if (node == null)
+            {
                 return false;
-            if (!m_MainHierarchy.ContainsNode(node))
+            }
+
+            if (!mainHierarchy.ContainsNode(node))
+            {
                 return false;
+            }
+
             // We know the node is in the main hierarchy, now we need to check if it's part of this sub hierarchy.
             var parentNode = node.parent;
+
             while (parentNode != null)
             {
-                if (parentNode == m_RootNode)
+                if (parentNode == rootNode)
+                {
                     return true;
+                }
+
                 parentNode = parentNode.parent;
             }
+
             return false;
         }
-        
+
         /// <summary>
         /// Tries to get the node with the specified id if it belongs to this sub hierarchy.
         /// </summary>
@@ -90,11 +103,12 @@ namespace Unity.Samples.ScreenReader
         /// <returns>Returns true if a node with the specified id was found</returns>
         public bool TryGetNode(int id, out AccessibilityNode node)
         {
-            if (m_MainHierarchy.TryGetNode(id, out var foundNode) && ContainsNode(foundNode))
+            if (mainHierarchy.TryGetNode(id, out var foundNode) && ContainsNode(foundNode))
             {
                 node = foundNode;
                 return true;
             }
+
             node = null;
             return false;
         }
@@ -108,7 +122,7 @@ namespace Unity.Samples.ScreenReader
         /// <returns>Returns true if a node was found</returns>
         public bool TryGetNodeAt(float horizontalPosition, float verticalPosition, out AccessibilityNode node)
         {
-            if (m_MainHierarchy.TryGetNodeAt(horizontalPosition, verticalPosition, out var foundNode) &&
+            if (mainHierarchy.TryGetNodeAt(horizontalPosition, verticalPosition, out var foundNode) &&
                 ContainsNode(foundNode))
             {
                 node = foundNode;
@@ -144,8 +158,10 @@ namespace Unity.Samples.ScreenReader
                 Debug.LogError("The specified parent node does not belong to this sub hierarchy.");
                 return null;
             }
-            var actualParent = parent ?? m_RootNode;
-            return m_MainHierarchy.AddNode(label, actualParent);
+
+            var actualParent = parent ?? rootNode;
+
+            return mainHierarchy.AddNode(label, actualParent);
         }
 
         /// <summary>
@@ -158,9 +174,13 @@ namespace Unity.Samples.ScreenReader
         public bool MoveNode(AccessibilityNode node, AccessibilityNode newParent, int newChildIndex = -1)
         {
             if (newParent != null && !ContainsNode(newParent))
+            {
                 return false;
-            var actualParent = newParent ?? m_RootNode;
-            return m_MainHierarchy.MoveNode(node, actualParent, newChildIndex);
+            }
+
+            var actualParent = newParent ?? rootNode;
+
+            return mainHierarchy.MoveNode(node, actualParent, newChildIndex);
         }
 
         /// <summary>
@@ -170,8 +190,11 @@ namespace Unity.Samples.ScreenReader
         public void RemoveNode(AccessibilityNode node)
         {
             if (!ContainsNode(node))
+            {
                 return;
-            m_MainHierarchy.RemoveNode(node);
+            }
+
+            mainHierarchy.RemoveNode(node);
         }
 
         /// <summary>
@@ -179,18 +202,18 @@ namespace Unity.Samples.ScreenReader
         /// </summary>
         public void Clear()
         {
-            if (m_RootNode != null)
+            if (rootNode != null)
             {
                 // Removes from the last to the first to avoid messing up the indices.
-                for (var i = m_RootNode.children.Count - 1; i >= 0; i--)
+                for (var i = rootNode.children.Count - 1; i >= 0; i--)
                 {
-                    m_MainHierarchy.RemoveNode(m_RootNode.children[i]);
+                    mainHierarchy.RemoveNode(rootNode.children[i]);
                 }
             }
-            // If the sub hierarchy has no root node, we clear the whole hierarchy.
             else
             {
-                m_MainHierarchy.Clear();
+                // If the sub hierarchy has no root node, we clear the whole hierarchy.
+                mainHierarchy.Clear();
             }
         }
 
@@ -200,7 +223,7 @@ namespace Unity.Samples.ScreenReader
         public void RefreshNodeFrames()
         {
             // TODO: Optimize to only refresh nodes in this sub hierarchy.
-            m_MainHierarchy.RefreshNodeFrames();
+            mainHierarchy.RefreshNodeFrames();
         }
 
         /// <summary>
@@ -212,8 +235,11 @@ namespace Unity.Samples.ScreenReader
         public AccessibilityNode GetLowestCommonAncestor(AccessibilityNode firstNode, AccessibilityNode secondNode)
         {
             if (!ContainsNode(firstNode) || !ContainsNode(secondNode))
+            {
                 return null;
-            return m_MainHierarchy.GetLowestCommonAncestor(firstNode, secondNode);
+            }
+
+            return mainHierarchy.GetLowestCommonAncestor(firstNode, secondNode);
         }
     }
 }

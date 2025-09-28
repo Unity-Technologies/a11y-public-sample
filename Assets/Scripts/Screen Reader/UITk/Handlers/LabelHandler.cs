@@ -11,7 +11,7 @@ namespace Unity.Samples.ScreenReader
         public override string GetLabel()
         {
             var label = ownerElement as Label;
-            return label.text;
+            return label?.text;
         }
     }
 }

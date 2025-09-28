@@ -9,36 +9,39 @@ namespace Unity.Samples.LetterSpell
     public abstract class AccessibilityHierarchyLogger : MonoBehaviour
     {
         static AccessibilityHierarchyLogger s_Instance;
-        
+
         protected virtual void Awake()
         {
             if (s_Instance != null && s_Instance != this)
             {
-                Debug.LogWarning($"There should only be one {nameof(AccessibilityHierarchyLogger)} instance per scene. Destroying the new one.");
+                Debug.LogWarning($"There should only be one {nameof(AccessibilityHierarchyLogger)} instance per " +
+                    "scene. Destroying the new one.");
                 Destroy(this);
                 return;
             }
+
             s_Instance = this;
         }
-        
+
         class Visitor : AccessibilityHierarchyVisitor
         {
-            private AccessibilityHierarchyLogger m_Logger;
-            
+            AccessibilityHierarchyLogger m_Logger;
+
             public Visitor(AccessibilityHierarchyLogger logger)
             {
                 m_Logger = logger;
             }
-            protected override void BeginVisit(AccessibilityNode node) => m_Logger.BeginLogging(node);
+
+            protected override void BeginVisit(AccessibilityNode node) => m_Logger.BeginLogging();
             protected override void VisitNode(AccessibilityNode node) => m_Logger.Log(node);
-            protected override void EndVisit(AccessibilityNode node) => m_Logger.EndLogging(node);
+            protected override void EndVisit(AccessibilityNode node) => m_Logger.EndLogging();
         }
 
-        private Visitor m_Visitor;
-        private StringBuilder m_StringBuilder;
-        private List<Rect> m_NodeFrames = new List<Rect>();
-        private int m_Level;
-        private const int k_IndentWidth = 4;
+        Visitor m_Visitor;
+        StringBuilder m_StringBuilder;
+        List<Rect> m_NodeFrames = new();
+        int m_Level;
+        const int k_IndentWidth = 4;
 
         /// <summary>
         /// Logs the nodes of the specified hierarchy
@@ -47,7 +50,7 @@ namespace Unity.Samples.LetterSpell
         {
             s_Instance?.LogHierarchy(hierarchy);
         }
-        
+
         void LogHierarchy(AccessibilityHierarchy hierarchy)
         {
             m_Visitor ??= new Visitor(this);
@@ -59,10 +62,14 @@ namespace Unity.Samples.LetterSpell
                 m_NodeFrames.Clear();
                 OnScreenDebug.ClearShapes();
                 m_Visitor.Visit(hierarchy);
+
                 foreach (var frame in m_NodeFrames)
+                {
                     OnScreenDebug.DrawScreenRect(frame);
+                }
+
                 OnScreenDebug.Log(m_StringBuilder.ToString());
-               // WriteLog(m_StringBuilder.ToString());
+                // WriteLog(m_StringBuilder.ToString());
             }
             finally
             {
@@ -70,19 +77,20 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
-        void BeginLogging(AccessibilityNode node)
+        void BeginLogging()
         {
             m_Level++;
         }
-        
+
         void Log(AccessibilityNode node)
         {
             m_StringBuilder.Append(' ', m_Level * k_IndentWidth);
-            m_StringBuilder.AppendLine($"{node.id} \"{node.label}\" Role:{node.role} Active: {node.isActive} State:{node.state} Frame:{node.frame}");
+            m_StringBuilder.AppendLine($"{node.id} \"{node.label}\" Role:{node.role} Active: {node.isActive} " +
+                $"State:{node.state} Frame:{node.frame}");
             m_NodeFrames.Add(node.frame);
         }
-        
-        void EndLogging(AccessibilityNode node)
+
+        void EndLogging()
         {
             m_Level--;
         }

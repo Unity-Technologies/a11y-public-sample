@@ -5,14 +5,14 @@ namespace Unity.Samples.ScreenReader
     // TabView
     class TabHandler : VisualElementAccessibilityHandler
     {
-        private TabView m_TabView;
-        private Tab m_Tab;
+        TabView m_TabView;
+        Tab m_Tab;
 
         protected override void BindToElement(VisualElement ve)
         {
             m_TabView = ownerElement.GetFirstOfType<TabView>();
             m_Tab = m_TabView[ownerElement.parent.IndexOf(ownerElement)] as Tab;
-            //field.RegisterValueChangedCallback(OnValueChanged);
+            // field.RegisterValueChangedCallback(OnValueChanged);
         }
 
         protected override void UnbindFromElement(VisualElement ve)

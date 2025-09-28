@@ -156,6 +156,7 @@ namespace Unity.Samples.LetterSpell
         {
             var savedToggleState = PlayerPrefs.GetInt(prefName, defaultValue);
             var toggles = toggleGroup.GetComponentsInChildren<Toggle>();
+
             toggles[savedToggleState].isOn = true;
         }
 

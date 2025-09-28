@@ -38,7 +38,7 @@ namespace Unity.Samples.LetterSpell
         /// The focused card.
         /// </summary>
         LetterCard m_AccessibilityFocusedCard;
-        
+
         /// <summary>
         /// The card that is being dragged by the screen reader.
         /// </summary>
@@ -113,7 +113,7 @@ namespace Unity.Samples.LetterSpell
                 clueText.GetComponent<AccessibleElement>().enabled = false;
             }
         }
-        
+
         /// <summary>
         /// Regenerates all the letter cards.
         /// </summary>
@@ -158,7 +158,7 @@ namespace Unity.Samples.LetterSpell
         bool OnLetterCardSelected()
         {
             var letterCard = m_AccessibilityFocusedCard.GetComponent<LetterCard>();
-            
+
             if (m_AccessibilitySelectedCard == null)
             {
                 m_AccessibilitySelectedCard = letterCard;
@@ -193,7 +193,7 @@ namespace Unity.Samples.LetterSpell
         {
             StartCoroutine(DelayWordReorderingCompleted());
             return;
-            
+
             // This delay is needed to ensure that the screen reader has enough time to announce the word reordering.
             // It also ensures that the announcement is not ignored by the screen reader.
             IEnumerator DelayWordReorderingCompleted()
@@ -229,7 +229,7 @@ namespace Unity.Samples.LetterSpell
                 m_AccessibilitySelectedCard = null;
             }
         }
-        
+
         void OnNodeFocusChanged(AccessibilityNode node)
         {
             if (node != null)
@@ -246,13 +246,13 @@ namespace Unity.Samples.LetterSpell
 
         void MoveSelectedCard()
         {
-            if (!AssistiveSupport.isScreenReaderEnabled
-                || m_AccessibilitySelectedCard == null
-                || m_AccessibilityFocusedCard == null)
+            if (!AssistiveSupport.isScreenReaderEnabled ||
+                m_AccessibilitySelectedCard == null ||
+                m_AccessibilityFocusedCard == null)
             {
                 return;
             }
-            
+
             // Don't move the card if the focus change occurred because of a hierarchy rebuild.
             if (m_WasHierarchyRefreshed)
             {
@@ -274,7 +274,7 @@ namespace Unity.Samples.LetterSpell
                 MoveCard(false, focusedCardIndex - selectedCardIndex);
             }
         }
-        
+
         void SetLetterCardsAccessibilityLabel(bool hasLabel)
         {
             foreach (Transform letterCardTransform in letterCardContainer)
@@ -293,7 +293,7 @@ namespace Unity.Samples.LetterSpell
             {
                 return;
             }
-            
+
             var element = draggable.transform.GetComponent<AccessibleElement>();
 
             if (shouldMoveLeft ? draggable.MoveLeft(count) : draggable.MoveRight(count))
@@ -301,7 +301,7 @@ namespace Unity.Samples.LetterSpell
                 var index = draggable.transform.GetSiblingIndex();
                 var otherSiblingIndex = shouldMoveLeft ? index + 1 : index - 1;
                 var otherSibling = draggable.transform.parent.GetChild(otherSiblingIndex);
-                
+
                 // Make the letter uppercase to ensure correct phonetic pronunciation.
                 var announcement = $"Moved {draggable.name.ToUpper()} {(shouldMoveLeft ? "before" : "after")} {otherSibling.name.ToUpper()}";
 
@@ -315,13 +315,13 @@ namespace Unity.Samples.LetterSpell
                 {
                     AccessibilityManager.GetService<UGuiAccessibilityService>().RebuildHierarchy();
                     m_WasHierarchyRefreshed = true;
-                    
+
                     // Add the node count to the element ID to match the ID of the node in the refreshed hierarchy,
                     // ensuring consistent focus even after rebuilding.
                     var nodeToFocusId = element.node.id + AccessibilityManager.hierarchy.rootNodes.Count;
                     nodeToFocusId += shouldMoveLeft ? -count : count;
 
-                    this.DelayFocusOnNode(nodeToFocusId);   
+                    this.DelayFocusOnNode(nodeToFocusId);
                 }
                 else
                 {

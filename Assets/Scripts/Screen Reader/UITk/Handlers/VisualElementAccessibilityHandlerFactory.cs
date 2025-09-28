@@ -10,18 +10,20 @@ namespace Unity.Samples.ScreenReader
         internal interface ICreator
         {
             bool CanCreate(VisualElement element);
+
             VisualElementAccessibilityHandler Create(VisualElement element);
         }
 
         class Creator : ICreator
         {
-            private Type m_VisualElementType;
-            private Type m_AccessibleElementType;
+            Type m_VisualElementType;
+            Type m_AccessibleElementType;
+
             public bool CanCreate(VisualElement element) => m_VisualElementType.IsAssignableFrom(element.GetType());
 
             public VisualElementAccessibilityHandler Create(VisualElement element)
             {
-                return CreateInternal(element);
+                return CreateInternal();
             }
 
             public Creator(Type visualElementType, Type accessibleElementType)
@@ -30,7 +32,7 @@ namespace Unity.Samples.ScreenReader
                 m_AccessibleElementType = accessibleElementType;
             }
 
-            VisualElementAccessibilityHandler CreateInternal(VisualElement element)
+            VisualElementAccessibilityHandler CreateInternal()
             {
                 return Activator.CreateInstance(m_AccessibleElementType) as VisualElementAccessibilityHandler;
             }
@@ -39,6 +41,7 @@ namespace Unity.Samples.ScreenReader
         class Creator<T> : ICreator where T: VisualElement
         {
             public Func<VisualElement, VisualElementAccessibilityHandler> func;
+
             public bool CanCreate(VisualElement element) => element is T;
 
             public VisualElementAccessibilityHandler Create(VisualElement element)
@@ -54,8 +57,8 @@ namespace Unity.Samples.ScreenReader
 
         class GenericCreator : ICreator
         {
-            private Type m_VisualElementGenericTypeDefinition;
-            private Type m_AccessibleElementGenericTypeDefinition;
+            Type m_VisualElementGenericTypeDefinition;
+            Type m_AccessibleElementGenericTypeDefinition;
 
             public GenericCreator(Type visualElementTypeDef, Type accessibleElemTypeDef)
             {
@@ -67,16 +70,22 @@ namespace Unity.Samples.ScreenReader
             {
                 var type = element.GetType();
 
-                // Find the exact BaseField<> class type
+                // Find the exact BaseField<> class type.
                 while (true)
                 {
                     if (type == typeof(VisualElement))
+                    {
                         break;
-                    else if (type.IsGenericType && type.GetGenericTypeDefinition() == m_VisualElementGenericTypeDefinition)
+                    }
+
+                    if (type.IsGenericType && type.GetGenericTypeDefinition() == m_VisualElementGenericTypeDefinition)
+                    {
                         return true;
-                    else
-                        type = type.BaseType;
+                    }
+
+                    type = type.BaseType;
                 }
+
                 return false;
             }
 
@@ -91,16 +100,19 @@ namespace Unity.Samples.ScreenReader
                 }
 
                 var args = type.GetGenericArguments();
-                var accessibleElementType = m_AccessibleElementGenericTypeDefinition.MakeGenericType(args) ;
+                var accessibleElementType = m_AccessibleElementGenericTypeDefinition.MakeGenericType(args);
 
                 return Activator.CreateInstance(accessibleElementType) as VisualElementAccessibilityHandler;
             }
         }
 
-        private static List<ICreator> s_Factories = new ();
-        public static void RegisterFactory<TVISUELEMENT_TYPE, TELEMENT_TYPE>() where TVISUELEMENT_TYPE: VisualElement where TELEMENT_TYPE : VisualElementAccessibilityHandler, new()
+        static List<ICreator> s_Factories = new();
+        public static void RegisterFactory<TVISUELEMENT_TYPE, TELEMENT_TYPE>()
+            where TVISUELEMENT_TYPE: VisualElement
+            where TELEMENT_TYPE : VisualElementAccessibilityHandler,
+            new()
         {
-            RegisterFactory(new Creator<TVISUELEMENT_TYPE>((ve) => new TELEMENT_TYPE()));
+            RegisterFactory(new Creator<TVISUELEMENT_TYPE>(_ => new TELEMENT_TYPE()));
         }
 
         public static void RegisterFactory(Type visualElementType, Type accessibleElementType)
@@ -123,43 +135,53 @@ namespace Unity.Samples.ScreenReader
             return FindFactory(element) != null;
         }
 
-        private static ICreator FindFactory(VisualElement element)
+        static ICreator FindFactory(VisualElement element)
         {
             RegisterBuiltinAccessibleElementFactories();
 
-            // Look for factory in reverse order because factories registered the last have priority
+            // Look for factory in reverse order because factories registered the last have priority.
             for (var i = s_Factories.Count - 1; i >= 0; --i)
             {
                 var factory = s_Factories[i];
 
                 if (factory.CanCreate(element))
+                {
                     return factory;
+                }
             }
+
             return null;
         }
 
         public static VisualElementAccessibilityHandler Create(VisualElement element)
         {
-            var f = FindFactory(element);
-            VisualElementAccessibilityHandler acc = null;
+            var factory = FindFactory(element);
+            VisualElementAccessibilityHandler acc;
 
-            if (f == null && element.GetAccessibleProperties() != null)
+            if (factory == null && element.GetAccessibleProperties() != null)
             {
                 acc = new VisualElementAccessibilityHandler();
             }
             else
             {
-                acc = f?.Create(element) as VisualElementAccessibilityHandler;
+                acc = factory?.Create(element);
             }
 
             if (acc != null)
+            {
                 acc.ownerElement = element;
+            }
+
             return acc;
         }
 
         public static void RegisterBuiltinAccessibleElementFactories()
         {
-            if (s_Factories.Count > 0) return;
+            if (s_Factories.Count > 0)
+            {
+                return;
+            }
+
             RegisterFactory<Label, LabelHandler>();
             RegisterFactory<Button, ButtonHandler>();
             RegisterGenericFactory(typeof(BaseField<>), typeof(BaseFieldHandler<>));
@@ -177,12 +199,19 @@ namespace Unity.Samples.ScreenReader
         {
             // Get all user assemblies (ones that are not part of Unity by default)
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+
             foreach (var assembly in assemblies)
             {
                 // In the Player, we filter assemblies to only introspect types of user assemblies
                 // which will exclude Unity builtin assemblies (i.e. runtime modules).
-                if (assembly.FullName.StartsWith("Unity") || assembly.FullName.StartsWith("System") || assembly.FullName.StartsWith("mscorlib") || assembly.FullName.StartsWith("netstandard"))
+                if (assembly.FullName.StartsWith("Unity") ||
+                    assembly.FullName.StartsWith("System") ||
+                    assembly.FullName.StartsWith("mscorlib") ||
+                    assembly.FullName.StartsWith("netstandard"))
+                {
                     continue;
+                }
+
                 RegisterAllFactoriesInAssembly(assembly);
             }
         }
@@ -192,7 +221,10 @@ namespace Unity.Samples.ScreenReader
             foreach (var type in assembly.GetTypes())
             {
                 if (!typeof(VisualElementAccessibilityHandler).IsAssignableFrom(type))
+                {
                     continue;
+                }
+
                 var regAttributes = (RegisterAccessibilityHandlerAttribute[])type.GetCustomAttributes(typeof(RegisterAccessibilityHandlerAttribute), true);
 
                 foreach (var regAttr in regAttributes)

@@ -23,7 +23,7 @@ namespace Unity.Samples.LetterSpell
             this.letter = letter;
         }
     }
-    
+
     /// <summary>
     /// A model representation of a collection of cards.
     /// </summary>
@@ -67,17 +67,17 @@ namespace Unity.Samples.LetterSpell
         {
             SetCurrentWord(m_Gameplay.currentWordState);
         }
-        
+
         /// <summary>
         /// Called when the letter cards have been recreated.
         /// </summary>
         public event Action letterCardsChanged;
-        
+
         /// <summary>
         /// Called when the letter cards have been reordered.
         /// </summary>
         public event Action letterCardsReordered;
-        
+
         public void SetCurrentWord(char[] wordState)
         {
             m_LetterCards.Clear();
@@ -92,7 +92,7 @@ namespace Unity.Samples.LetterSpell
 
             letterCardsChanged?.Invoke();
         }
-        
+
         void OnWordReordered(int oldIndex, int newIndex)
         {
             var item = m_LetterCards[oldIndex];

@@ -12,7 +12,7 @@ namespace Unity.Samples.LetterSpell
         public AudioClip successEffect;
         public AudioClip failureEffect;
         public AudioClip welcomeEffect;
-        
+
         AudioSource m_MusicSource;
         AudioSource m_MoveTileSource;
         AudioSource m_ResultSource;
@@ -29,7 +29,7 @@ namespace Unity.Samples.LetterSpell
 
             instance = this;
             DontDestroyOnLoad(gameObject);
-            
+
             m_MusicSource = gameObject.AddComponent<AudioSource>();
             SetMusicVolume(PlayerPrefs.GetFloat(PlayerSettings.musicPreference, 0.5f));
 
@@ -43,7 +43,7 @@ namespace Unity.Samples.LetterSpell
         {
             Invoke(nameof(PlayWelcomeMusic), 1f);
         }
-        
+
         /// <summary>
         /// Play the welcome music after some delay.
         /// </summary>
@@ -73,32 +73,20 @@ namespace Unity.Samples.LetterSpell
         {
             m_MusicSource.volume = value;
         }
-        
+
         public void PlayMoveTile()
         {
             m_MoveTileSource.volume = PlayerPrefs.GetFloat(PlayerSettings.soundEffectsPreference, 0.5f);
             m_MoveTileSource.Play();
         }
-        
+
         public void PlayResult(bool success)
         {
-            if (success)
-            {
-                m_ResultSource.clip = successEffect;
-                m_ResultSource.volume = PlayerPrefs.GetFloat(PlayerSettings.soundEffectsPreference, 0.5f);
-                m_ResultSource.Play();
+            m_ResultSource.clip = success ? successEffect : failureEffect;
+            m_ResultSource.volume = PlayerPrefs.GetFloat(PlayerSettings.soundEffectsPreference, 0.5f);
+            m_ResultSource.Play();
 
-                audioPlayingStatusChanged?.Invoke(m_ResultSource);
-            }
-            else
-            {
-                m_ResultSource.clip = failureEffect;
-                m_ResultSource.volume = PlayerPrefs.GetFloat(PlayerSettings.soundEffectsPreference, 0.5f);
-                m_ResultSource.Play();
-
-                audioPlayingStatusChanged?.Invoke(m_ResultSource);
-            }
+            audioPlayingStatusChanged?.Invoke(m_ResultSource);
         }
-
     }
 }

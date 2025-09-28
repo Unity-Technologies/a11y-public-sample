@@ -122,7 +122,7 @@ namespace Unity.Samples.ScreenReader
         IEnumerator WaitForDropdownClose()
         {
             yield return new WaitUntil(() => !IsDropdownOpen());
-            
+
             AccessibilityManager.GetService<UGuiAccessibilityService>().RebuildHierarchy();
             hint = k_DropdownClosedHint;
 

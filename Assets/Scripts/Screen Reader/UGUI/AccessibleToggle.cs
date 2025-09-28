@@ -82,35 +82,10 @@ namespace Unity.Samples.ScreenReader
         {
             if (m_Toggle != null)
             {
-                selected -= OnSelected;
-
                 m_Toggle.onValueChanged.RemoveListener(UpdateValue);
-            }
-        }
 
-        bool OnSelected()
-        {
-            if (m_Toggle.IsActive() && m_Toggle.IsInteractable())
-            {
-                m_Toggle.isOn = !m_Toggle.isOn;
-                return true;
+                selected -= OnSelected;
             }
-
-            return false;
-        }
-
-        void UpdateValue(bool newValue)
-        {
-            if (newValue)
-            {
-                state |= AccessibilityState.Selected;
-            }
-            else
-            {
-                state &= ~AccessibilityState.Selected;
-            }
-
-            SetNodeProperties();
         }
 
         bool IsInsideDropdown()
@@ -133,6 +108,31 @@ namespace Unity.Samples.ScreenReader
             }
 
             return false; // No dropdown found.
+        }
+
+        void UpdateValue(bool newValue)
+        {
+            if (newValue)
+            {
+                state |= AccessibilityState.Selected;
+            }
+            else
+            {
+                state &= ~AccessibilityState.Selected;
+            }
+
+            SetNodeProperties();
+        }
+
+        bool OnSelected()
+        {
+            if (m_Toggle.IsActive() && m_Toggle.IsInteractable())
+            {
+                m_Toggle.isOn = !m_Toggle.isOn;
+                return true;
+            }
+
+            return false;
         }
     }
 }

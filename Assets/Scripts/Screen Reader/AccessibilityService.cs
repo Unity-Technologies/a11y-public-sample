@@ -16,12 +16,12 @@ namespace Unity.Samples.ScreenReader
         /// The priority of the service. Higher priority services will have their nodes added to the accessibility
         /// hierarchy first.
         /// </summary>
-        public int servicePriority { get; protected set; }
+        public int servicePriority { get; }
 
         /// <summary>
         /// The name of the system
         /// </summary>
-        public string serviceName { get; protected set; }
+        public string serviceName { get; }
 
         /// <summary>
         /// Constructor for the accessibility service.

@@ -28,11 +28,6 @@ namespace Unity.Samples.ScreenReader
         AccessibilityHierarchy m_Hierarchy;
 
         /// <summary>
-        /// The instance of the AccessibilityManager in the scene.
-        /// </summary>
-        public static AccessibilityManager instance => s_Instance;
-
-        /// <summary>
         /// Tracks the previous screen orientation (portrait/landscape) to allow the layout to be recalculated on
         /// orientation changes. This is necessary for the calculated accessibility frames to be correct.
         /// </summary>
@@ -51,11 +46,6 @@ namespace Unity.Samples.ScreenReader
                 return s_Instance.m_Hierarchy;
             }
         }
-
-        /// <summary>
-        /// Returns the list of registered accessibility services.
-        /// </summary>
-        public static IReadOnlyList<AccessibilityService> services => s_Instance?.m_RegisteredServices.AsReadOnly();
 
         /// <summary>
         /// Event triggered when the hierarchy is refreshed to allow components to be able to execute actions when that

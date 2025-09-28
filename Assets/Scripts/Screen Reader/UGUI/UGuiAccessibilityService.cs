@@ -32,10 +32,10 @@ namespace Unity.Samples.ScreenReader
         Dictionary<AccessibilityNode, AccessibleElement> m_ElementForNodeMap = new();
 
         /// <summary>
-        /// Tracks the previous screen orientation (portrait/landscape) to allow the layout to be recalculated on
-        /// orientation changes. This is necessary for the calculated accessibility frames to be correct.
+        /// Event triggered when the hierarchy is refreshed to allow components to be able to execute actions when that
+        /// happens (e.g. focusing the dropdown after it opens).
         /// </summary>
-        ScreenOrientation m_PreviousOrientation;
+        public static event Action hierarchyRefreshed;
 
         /// <summary>
         /// Constructor for the UGuiAccessibleSystem class.
@@ -246,8 +246,9 @@ namespace Unity.Samples.ScreenReader
                 // Mark the node as visited.
                 visitedObjects.Add(currentObject);
 
-                // If the node is an AccessibleElement, add it to the list.
                 var component = currentObject.GetComponent<AccessibleElement>();
+
+                // If the node is an AccessibleElement, add it to the list.
                 if (component != null)
                 {
                     elements.Add(component);

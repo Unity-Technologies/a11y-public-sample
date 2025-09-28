@@ -613,7 +613,7 @@ namespace Unity.Samples.Controls
             {
                 return;
             }
-#endif
+#endif // UNITY_EDITOR
 
             if (m_CaptionImage)
             {
@@ -645,7 +645,7 @@ namespace Unity.Samples.Controls
 
             RefreshShownValue();
         }
-#endif
+#endif // UNITY_EDITOR
 
         protected override void OnDisable()
         {
@@ -1335,7 +1335,12 @@ namespace Unity.Samples.Controls
                 return;
             }
 
-            var tween = new FloatTween {duration = duration, startValue = start, targetValue = end};
+            var tween = new FloatTween
+            {
+                duration = duration,
+                startValue = start,
+                targetValue = end
+            };
             tween.AddOnChangedCallback(SetAlpha);
             tween.ignoreTimeScale = true;
             GetOrCreateAlphaTweenRunner().StartTween(tween);

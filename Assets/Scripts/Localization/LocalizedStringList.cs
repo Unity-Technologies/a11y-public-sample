@@ -22,7 +22,7 @@ namespace UnityEngine.Localization
             {
                 LocaleOverride = LocalizationSettings.ProjectLocale;
             }
-#endif
+#endif // UNITY_EDITOR
 
             if (!CurrentLoadingOperationHandle.IsDone)
             {

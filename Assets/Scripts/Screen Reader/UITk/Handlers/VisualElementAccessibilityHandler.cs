@@ -1,6 +1,5 @@
 using System;
 using UnityEngine.Accessibility;
-using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
 namespace Unity.Samples.ScreenReader
@@ -8,18 +7,22 @@ namespace Unity.Samples.ScreenReader
     public class VisualElementAccessibilityHandler
     {
         public const VersionChangeType k_AccessibilityChange = (VersionChangeType)0x10000000;
-        private AccessibilityNode m_Node;
-        private VisualElement m_OwnerElement;
+        AccessibilityNode m_Node;
+        VisualElement m_OwnerElement;
 
         public int nextInsertionIndex;
         public VersionChangeType change { get; set; }
+
         public AccessibilityNode node
         {
             get => m_Node;
             set
             {
                 if (m_Node == value)
+                {
                     return;
+                }
+
                 DisconnectFromNode();
                 m_Node = value;
                 ConnectToNode();
@@ -32,7 +35,9 @@ namespace Unity.Samples.ScreenReader
             internal set
             {
                 if (m_OwnerElement == value)
+                {
                     return;
+                }
 
                 if (m_OwnerElement != null)
                 {
@@ -46,7 +51,7 @@ namespace Unity.Samples.ScreenReader
                 if (m_OwnerElement != null)
                 {
                     m_OwnerElement.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
-                    //m_OwnerElement.RegisterCallback<PropertyChangedEvent>(OnPropertyChanged);
+                    // m_OwnerElement.RegisterCallback<PropertyChangedEvent>(OnPropertyChanged);
                     BindToElement(m_OwnerElement);
                 }
             }
@@ -56,8 +61,8 @@ namespace Unity.Samples.ScreenReader
         {
             NotifyChange(VersionChangeType.Transform);
         }
-        
-       /* void OnPropertyChanged(PropertyChangedEvent e)
+
+        /*void OnPropertyChanged(PropertyChangedEvent e)
         {
             MarkAsDirty();
         }*/
@@ -68,20 +73,16 @@ namespace Unity.Samples.ScreenReader
             {
                 if (m_OwnerElement != null)
                 {
-                    // if the node is disable or hidden then it is set as inactive regardless of
-                    // AccessibilityProperties.isActive
+                    // If the node is disabled or hidden then it is set as inactive regardless of
+                    // AccessibilityProperties.isActive.
                     if (IsElementVisible(m_OwnerElement))
                     {
                         var acc = m_OwnerElement.GetAccessibleProperties();
 
-                        if (acc != null && acc.m_IsActive.defined)
-                        {
-                            return acc.active;
-                        }
-
-                        return true;
+                        return acc is not { m_IsActive: { defined: true } } || acc.active;
                     }
                 }
+
                 return false;
             }
         }
@@ -91,42 +92,34 @@ namespace Unity.Samples.ScreenReader
             get
             {
                 if (m_OwnerElement == null)
+                {
                     return true;
+                }
 
                 var acc = m_OwnerElement.GetAccessibleProperties();
 
-                if (acc != null)
-                {
-                    return acc.ignored;
-                }
-                return false;
+                return acc is { ignored: true };
             }
         }
-        
+
         public bool isModal
         {
             get
             {
                 if (m_OwnerElement == null)
+                {
                     return false;
+                }
 
                 var acc = m_OwnerElement.GetAccessibleProperties();
 
-                if (acc != null && acc.m_Modal.defined)
-                {
-                    return acc.modal;
-                }
-
-                return IsModal();
+                return acc is { m_Modal: { defined: true } } ? acc.modal : IsModal();
             }
         }
 
         public virtual bool IsModal()
         {
-            if (ownerElement == null)
-                return false;
-            
-            return ownerElement.ClassListContains(GenericDropdownMenu.ussClassName);
+            return ownerElement != null && ownerElement.ClassListContains(GenericDropdownMenu.ussClassName);
         }
 
         public string label
@@ -134,16 +127,13 @@ namespace Unity.Samples.ScreenReader
             get
             {
                 if (m_OwnerElement == null)
+                {
                     return null;
+                }
 
                 var acc = m_OwnerElement.GetAccessibleProperties();
 
-                if (acc != null && acc.m_Label.defined)
-                {
-                    return acc.label;
-                }
-
-                return GetLabel();
+                return acc is { m_Label: { defined: true } } ? acc.label : GetLabel();
             }
         }
 
@@ -154,16 +144,13 @@ namespace Unity.Samples.ScreenReader
             get
             {
                 if (m_OwnerElement == null)
+                {
                     return null;
+                }
 
                 var acc = m_OwnerElement.GetAccessibleProperties();
 
-                if (acc != null && acc.m_Value.defined)
-                {
-                    return acc.value;
-                }
-
-                return GetValue();
+                return acc is { m_Value: { defined: true } } ? acc.value : GetValue();
             }
         }
 
@@ -174,16 +161,13 @@ namespace Unity.Samples.ScreenReader
             get
             {
                 if (m_OwnerElement == null)
+                {
                     return null;
+                }
 
                 var acc = m_OwnerElement.GetAccessibleProperties();
 
-                if (acc != null && acc.m_Hint.defined)
-                {
-                    return acc.hint;
-                }
-
-                return GetHint();
+                return acc is { m_Hint: { defined: true } } ? acc.hint : GetHint();
             }
         }
 
@@ -194,37 +178,23 @@ namespace Unity.Samples.ScreenReader
             get
             {
                 if (m_OwnerElement == null)
+                {
                     return AccessibilityRole.None;
+                }
 
                 var acc = m_OwnerElement.GetAccessibleProperties();
 
-                if (acc != null && acc.m_Role.defined)
-                {
-                    return acc.role;
-                }
-
-                return GetRole();
+                return acc is { m_Role: { defined: true } } ? acc.role : GetRole();
             }
         }
 
         public virtual AccessibilityRole GetRole() => AccessibilityRole.None;
 
-        public virtual  AccessibilityState state
-        {
-            get
-            {
-                if (m_OwnerElement is {enabledSelf: false})
-                    return AccessibilityState.Disabled;
-                return AccessibilityState.None;
-            }
-        }
-
-        public VisualElementAccessibilityHandler()
-        {
-        }
+        public virtual AccessibilityState state => m_OwnerElement is {enabledSelf: false} ?
+            AccessibilityState.Disabled : AccessibilityState.None;
 
         public Action<VisualElement, VersionChangeType> onVersionChanged;
-        
+
         public void NotifyChange(VersionChangeType changeType = k_AccessibilityChange)
         {
             onVersionChanged?.Invoke(ownerElement, changeType);
@@ -251,11 +221,14 @@ namespace Unity.Samples.ScreenReader
             DisconnectFromNodeDecrement();
             DisconnectFromNodeSelected();
         }
+
         void ConnectToNodeSelected()
         {
             // Do not connect if the node does not exist or OnSelect is not yet implemented.
             if (node == null || m_OnSelect == null)
+            {
                 return;
+            }
 
             node.invoked -= OnNodeSelected;
             node.invoked += OnNodeSelected;
@@ -264,7 +237,9 @@ namespace Unity.Samples.ScreenReader
         void DisconnectFromNodeSelected()
         {
             if (node == null)
+            {
                 return;
+            }
 
             // Disconnect even if OnSelect is implemented when the node is unset.
             node.invoked -= OnNodeSelected;
@@ -292,7 +267,7 @@ namespace Unity.Samples.ScreenReader
 
         internal bool InvokeOnSelect()
         {
-            bool selected = false;
+            var selected = false;
 
             if (m_OwnerElement.GetAccessibleProperties() != null)
             {
@@ -302,7 +277,7 @@ namespace Unity.Samples.ScreenReader
             return (m_OnSelect != null && m_OnSelect.Invoke()) || selected;
         }
 
-        private event Func<bool> m_OnSelect;
+        event Func<bool> m_OnSelect;
 
         public event Func<bool> OnSelect
         {
@@ -314,6 +289,7 @@ namespace Unity.Samples.ScreenReader
             remove
             {
                 m_OnSelect -= value;
+
                 if (m_OnSelect == null)
                 {
                     DisconnectFromNodeSelected();
@@ -321,7 +297,7 @@ namespace Unity.Samples.ScreenReader
             }
         }
 
-        private event Action m_OnIncrement;
+        event Action m_OnIncrement;
 
         public event Action OnIncrement
         {
@@ -333,6 +309,7 @@ namespace Unity.Samples.ScreenReader
             remove
             {
                 m_OnIncrement -= value;
+
                 if (m_OnIncrement == null)
                 {
                     DisconnectFromNodeIncrement();
@@ -344,7 +321,9 @@ namespace Unity.Samples.ScreenReader
         {
             // Do not connect if the node does not exist or OnNodeIncremented is not yet implemented.
             if (node == null || m_OnIncrement == null)
+            {
                 return;
+            }
 
             node.incremented -= OnNodeIncremented;
             node.incremented += OnNodeIncremented;
@@ -353,7 +332,9 @@ namespace Unity.Samples.ScreenReader
         void DisconnectFromNodeIncrement()
         {
             if (node == null)
+            {
                 return;
+            }
 
             // Disconnect even if OnNodeIncremented is implemented when the node is unset.
             node.incremented -= OnNodeIncremented;
@@ -373,7 +354,7 @@ namespace Unity.Samples.ScreenReader
             node.state = state;
         }
 
-        private event Action m_OnDecrement;
+        event Action m_OnDecrement;
 
         public event Action OnDecrement
         {
@@ -385,6 +366,7 @@ namespace Unity.Samples.ScreenReader
             remove
             {
                 m_OnDecrement -= value;
+
                 if (m_OnDecrement == null)
                 {
                     DisconnectFromNodeDecrement();
@@ -396,7 +378,9 @@ namespace Unity.Samples.ScreenReader
         {
             // Do not connect if the node does not exist or OnNodeDecremented is not yet implemented.
             if (node == null || m_OnDecrement == null)
+            {
                 return;
+            }
 
             node.decremented -= OnNodeDecremented;
             node.decremented += OnNodeDecremented;
@@ -405,7 +389,9 @@ namespace Unity.Samples.ScreenReader
         void DisconnectFromNodeDecrement()
         {
             if (node == null)
+            {
                 return;
+            }
 
             // Disconnect even if OnNodeDecremented is implemented when the node is unset.
             node.decremented -= OnNodeDecremented;
@@ -429,18 +415,19 @@ namespace Unity.Samples.ScreenReader
         public static bool IsElementVisible(VisualElement element)
         {
             if (!element.enabledSelf || !element.visible)
+            {
                 return false;
+            }
 
             if (element.resolvedStyle.display == DisplayStyle.None || element.resolvedStyle.opacity == 0)
+            {
                 return false;
+            }
 
-            if (float.IsNaN(element.resolvedStyle.width) ||
-                element.resolvedStyle.width <= 0 ||
-                float.IsNaN(element.resolvedStyle.height) ||
-                element.resolvedStyle.height <= 0)
-                return false;
-
-            return true;
+            return !float.IsNaN(element.resolvedStyle.width) &&
+                !(element.resolvedStyle.width <= 0) &&
+                !float.IsNaN(element.resolvedStyle.height) &&
+                !(element.resolvedStyle.height <= 0);
         }
     }
 }

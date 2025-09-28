@@ -51,7 +51,7 @@ namespace Unity.Samples.ScreenReader
                 return s_Instance.m_Hierarchy;
             }
         }
-        
+
         /// <summary>
         /// Returns the list of registered accessibility services.
         /// </summary>
@@ -70,19 +70,21 @@ namespace Unity.Samples.ScreenReader
         {
             s_Instance.RebuildHierarchy();
         }
-        
+
         /// <summary>
         /// Recreates the whole accessibility sub hierarchy associated to the specified service.
         /// </summary>
         public static void RefreshHierarchy(AccessibilityService service)
         {
             s_Instance.RebuildHierarchy(service);
+
             /*
             AssistiveSupport.activeHierarchy = hierarchy;
             service.CleanUp();
-            RegenerateNodes(service);*/
+            RegenerateNodes(service);
+            */
         }
-        
+
         /// <summary>
         /// Returns the registered accessibility service of the specified type or null if no such service was registered.
         /// </summary>
@@ -91,13 +93,18 @@ namespace Unity.Samples.ScreenReader
         public static T GetService<T>() where T : AccessibilityService
         {
             if (s_Instance == null)
+            {
                 return null;
-            
+            }
+
             foreach (var system in s_Instance.m_RegisteredServices)
             {
                 if (system is T foundSystem)
+                {
                     return foundSystem;
+                }
             }
+
             return null;
         }
 
@@ -108,14 +115,21 @@ namespace Unity.Samples.ScreenReader
         public static void AddService(AccessibilityService service)
         {
             if (s_Instance == null)
-                throw new InvalidOperationException("The AccessibilityManager instance is not available. Make sure there is an AccessibilityManager component in the scene.");
-            
+            {
+                throw new InvalidOperationException("The AccessibilityManager instance is not available. Make sure " +
+                    "there is an AccessibilityManager component in the scene.");
+            }
+
             if (service == null)
+            {
                 throw new ArgumentNullException(nameof(service));
-            
+            }
+
             if (s_Instance.m_RegisteredServices.Contains(service))
+            {
                 throw new ArgumentException("The specified service is already registered.", nameof(service));
-            
+            }
+
             s_Instance.m_RegisteredServices.Add(service);
         }
 
@@ -128,19 +142,26 @@ namespace Unity.Samples.ScreenReader
         public static void RemoveService(AccessibilityService service)
         {
             if (s_Instance == null)
-                throw new InvalidOperationException("The AccessibilityManager instance is not available. Make sure there is an AccessibilityManager component in the scene.");
-            
+            {
+                throw new InvalidOperationException("The AccessibilityManager instance is not available. Make sure " +
+                    "there is an AccessibilityManager component in the scene.");
+            }
+
             if (service == null)
+            {
                 throw new ArgumentNullException(nameof(service));
+            }
 
             if (!s_Instance.m_RegisteredServices.Contains(service))
+            {
                 throw new ArgumentException("The specified service is not registered.", nameof(service));
-            
+            }
+
             service.CleanUp();
             service.hierarchy.Dispose();
             s_Instance.m_RegisteredServices.Remove(service);
         }
-        
+
         /// <summary>
         /// Called every frame to check for orientation changes.
         /// </summary>
@@ -153,8 +174,8 @@ namespace Unity.Samples.ScreenReader
 
                 StartCoroutine(OnOrientationChanged());
             }
-            
-            // Update the services
+
+            // Update the services.
             foreach (var service in m_RegisteredServices)
             {
                 service.Update();
@@ -214,7 +235,7 @@ namespace Unity.Samples.ScreenReader
 
         IEnumerator DelayInitialize()
         {
-            // Wait until the end of the frame to make sure all of the GUI positions have been calculated.
+            // Wait until the end of the frame to make sure all the GUI positions have been calculated.
             yield return new WaitForEndOfFrame();
 
             // As scenes get loaded/unloaded, the accessibility hierarchy must be updated.
@@ -228,6 +249,7 @@ namespace Unity.Samples.ScreenReader
             // Generate the accessibility hierarchy for the current scene and set it to AssistiveSupport.activeHierarchy
             // so that the screen reader can use it.
             var lastLoadedScene = GetLastLoadedScene();
+
             GenerateHierarchy(lastLoadedScene);
             AssistiveSupport.activeHierarchy = hierarchy;
         }
@@ -280,7 +302,7 @@ namespace Unity.Samples.ScreenReader
 
             hierarchyRefreshed?.Invoke();
         }
-        
+
         void RebuildHierarchy(AccessibilityService service)
         {
             AssistiveSupport.activeHierarchy = null;
@@ -292,7 +314,7 @@ namespace Unity.Samples.ScreenReader
                 StartCoroutine(DelayRebuildHierarchy(service, lastLoadedScene));
             }
         }
-        
+
         IEnumerator DelayRebuildHierarchy( AccessibilityService service, Scene scene)
         {
             // Always wait for the end of the frame to guarantee that all the GUI positions have been set.
@@ -308,12 +330,12 @@ namespace Unity.Samples.ScreenReader
         void GenerateHierarchy(Scene scene)
         {
             LoadServices();
-            
+
             // Clears all nodes
             hierarchy.Clear();
 
             using var _ = ListPool<AccessibilityService>.Get(out var sortedServices);
-            
+
             sortedServices.AddRange(m_RegisteredServices);
             sortedServices.Sort((a, b) => b.servicePriority.CompareTo(a.servicePriority));
 
@@ -323,12 +345,12 @@ namespace Unity.Samples.ScreenReader
                 service.CleanUp();
                 service.hierarchy.Dispose();
             }
-         
+
             foreach (var service in sortedServices)
             {
                 CreateSubHierarchyForService(service, hierarchy);
             }
-            
+
             foreach (var system in sortedServices)
             {
                 RegenerateNodes(system, scene);
@@ -340,14 +362,16 @@ namespace Unity.Samples.ScreenReader
             var rootNode = hierarchy.AddNode(service.serviceName);
             rootNode.role = AccessibilityRole.Container;
             rootNode.isActive = (Application.platform == RuntimePlatform.OSXPlayer);//false;
-            
+
             service.hierarchy = new AccessibilitySubHierarchy(hierarchy, rootNode);
         }
 
         void LoadServices()
         {
             if (m_RegisteredServices.Count > 0)
+            {
                 return;
+            }
 
             AddService(new UGuiAccessibilityService());
             AddService(new UITkAccessibilityService());

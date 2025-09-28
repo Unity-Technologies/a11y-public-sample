@@ -17,7 +17,8 @@ namespace Unity.Samples.ScreenReader
             OnSelect += () =>
             {
                 var textField = ownerElement as TextField;
-                textField.Focus();
+                textField?.Focus();
+
                 return true;
             };
         }

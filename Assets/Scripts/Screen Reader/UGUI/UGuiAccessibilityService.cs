@@ -1,9 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Accessibility;
+using Object = UnityEngine.Object;
 
 namespace Unity.Samples.ScreenReader
 {
@@ -38,21 +38,15 @@ namespace Unity.Samples.ScreenReader
         ScreenOrientation m_PreviousOrientation;
 
         /// <summary>
-        /// Event triggered when the hierarchy is refreshed to allow components to be able to execute actions when that
-        /// happens (e.g. focusing the dropdown after it opens).
-        /// </summary>
-        public static event Action hierarchyRefreshed;
-
-        /// <summary>
         /// Constructor for the UGuiAccessibleSystem class.
         /// </summary>
         public UGuiAccessibilityService() : base("UGui", 90)
         {
         }
-        
+
         public AccessibleElement GetAccessibleElementForNode(AccessibilityNode node)
         {
-            return m_ElementForNodeMap.TryGetValue(node, out var element) ? element : null;
+            return m_ElementForNodeMap.GetValueOrDefault(node);
         }
 
         /// <summary>
@@ -130,7 +124,7 @@ namespace Unity.Samples.ScreenReader
         /// </summary>
         public void ActivateOtherAccessibilityNodes(bool activate, Transform transform)
         {
-            var elements = MonoBehaviour.FindObjectsByType<AccessibleElement>(FindObjectsSortMode.None);
+            var elements = Object.FindObjectsByType<AccessibleElement>(FindObjectsSortMode.None);
 
             foreach (var element in elements)
             {
@@ -157,7 +151,8 @@ namespace Unity.Samples.ScreenReader
 
         public override void SetUp(Scene activeScene)
         {
-            var components = MonoBehaviour.FindObjectsByType<AccessibleElement>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            var components = Object.FindObjectsByType<AccessibleElement>(FindObjectsInactive.Include,
+                FindObjectsSortMode.None);
 
             if (components == null || components.Length == 0)
             {
@@ -193,9 +188,10 @@ namespace Unity.Samples.ScreenReader
                 var elementObject = element.transform;
                 AccessibilityNode node = null;
 
-                // If this is a root element or it is the first of its ancestors to be an AccessibleElement, add it as a
-                // root node of the hierarchy.
-                if (elementObject.parent == null || elementObject.parent.GetComponentInParent<AccessibleElement>() == null)
+                // If this is a root element or the first of its ancestors to be an AccessibleElement, add it as a root
+                // node of the hierarchy.
+                if (elementObject.parent == null ||
+                    elementObject.parent.GetComponentInParent<AccessibleElement>() == null)
                 {
                     node = hierarchy.AddNode(element.label);
                 }
@@ -203,8 +199,8 @@ namespace Unity.Samples.ScreenReader
                 {
                     var item = hierarchyStack.Pop();
 
-                    // Pop until we empty the hierarchy stack or we find a pair with one of the element's ancestors.
-                    while (hierarchyStack.Count > 0 && elementObject.IsChildOf(item.transform) == false)
+                    // Pop until we empty the hierarchy stack or find a pair with one of the element's ancestors.
+                    while (hierarchyStack.Count > 0 && !elementObject.IsChildOf(item.transform))
                     {
                         item = hierarchyStack.Pop();
                     }

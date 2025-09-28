@@ -11,28 +11,30 @@ namespace Unity.Samples.ScreenReader
     {
         internal struct Value<T>
         {
-            private T m_Value;
-            private bool m_Defined;
+            T m_Value;
 
-            public bool defined => m_Defined;
+            public bool defined { get; private set; }
 
             public Value(T value)
             {
                 m_Value = value;
-                m_Defined = false;
+                defined = false;
             }
 
             public T Get() => m_Value;
 
             public void Set(AccessibleProperties acc, T value)
             {
-                m_Defined = true;
+                defined = true;
 
                 if (EqualityComparer<T>.Default.Equals(m_Value, value))
+                {
                     return;
+                }
+
                 m_Value = value;
-                //acc?.owner?.MarkDirtyRepaint();
-                //acc?.owner.IncrementVersion(VersionChangeType.Accessibility);
+                // acc?.owner?.MarkDirtyRepaint();
+                // acc?.owner.IncrementVersion(VersionChangeType.Accessibility);
                 IncrementVersion(acc?.owner);
             }
 
@@ -43,13 +45,12 @@ namespace Unity.Samples.ScreenReader
                 if (panel != null)
                 {
                     var updater = panel.GetAccessibilityUpdater();
-                    
                     updater?.OnVersionChanged(element, VisualElementAccessibilityHandler.k_AccessibilityChange);
                 }
             }
         }
 
-        internal Value<bool> m_IsActive = new Value<bool>(true);
+        internal Value<bool> m_IsActive = new(true);
         internal Value<string> m_Label;
         internal Value<AccessibilityRole> m_Role;
         internal Value<bool> m_Ignored;
@@ -57,87 +58,63 @@ namespace Unity.Samples.ScreenReader
         internal Value<string> m_Value;
         internal Value<string> m_Hint;
         internal Value<bool> m_AllowsDirectInteraction;
-        
+
         public VisualElement owner { get; internal set; }
 
         [UxmlAttribute, CreateProperty]
         public bool ignored
         {
             get => m_Ignored.Get();
-            set
-            {
-                m_Ignored.Set(this, value);
-            }
+            set => m_Ignored.Set(this, value);
         }
-        
+
         [UxmlAttribute, CreateProperty]
         public bool modal
         {
             get => m_Modal.Get();
-            set
-            {
-                m_Modal.Set(this, value);
-            }
+            set => m_Modal.Set(this, value);
         }
 
         [UxmlAttribute, CreateProperty]
         public bool active
         {
             get => m_IsActive.Get();
-            set
-            {
-                m_IsActive.Set(this, value);
-            }
+            set => m_IsActive.Set(this, value);
         }
 
         [UxmlAttribute, CreateProperty]
         public string label
         {
             get => m_Label.Get();
-            set
-            {
-                m_Label.Set(this, value);
-            }
+            set => m_Label.Set(this, value);
         }
 
         [UxmlAttribute, CreateProperty]
         public AccessibilityRole role
         {
             get => m_Role.Get();
-            set
-            {
-                m_Role.Set(this, value);
-            }
+            set => m_Role.Set(this, value);
         }
 
         [UxmlAttribute, CreateProperty]
         public string value
         {
             get => m_Value.Get();
-            set
-            {
-                m_Value.Set(this, value);
-            }
+            set => m_Value.Set(this, value);
         }
 
         [UxmlAttribute, CreateProperty]
         public string hint
         {
             get => m_Hint.Get();
-            set
-            {
-                m_Hint.Set(this, value);
-            }
+            set => m_Hint.Set(this, value);
         }
 
         [UxmlAttribute, CreateProperty]
         public bool allowsDirectInteraction
         {
             get => m_AllowsDirectInteraction.Get();
-            set
-            {
-                m_AllowsDirectInteraction.Set(this, value);
-            }
+            set => m_AllowsDirectInteraction.Set(this, value);
         }
 
         public event Func<bool> selected;
@@ -166,19 +143,16 @@ namespace Unity.Samples.ScreenReader
 
         static AccessibleProperties GetAttachedAccessibleProperties(VisualElement ve)
         {
-            if (m_AttachedAccessibleProperties.TryGetValue(ve, out var acc))
-            {
-                return acc;
-            }
-
-            return null;
+            return m_AttachedAccessibleProperties.GetValueOrDefault(ve);
         }
 
         static AccessibleProperties AttachAccessibleProperties(VisualElement ve)
         {
             var accessible = new AccessibleProperties();
             accessible.owner = ve;
+
             m_AttachedAccessibleProperties[ve] = accessible;
+
             return accessible;
         }
 
@@ -187,9 +161,12 @@ namespace Unity.Samples.ScreenReader
             var acc = GetAttachedAccessibleProperties(ve);
 
             if (acc != null)
+            {
                 return acc;
+            }
 
             var accElement = ve as AccessibleVisualElement;
+
             return accElement?.accessible;
         }
 

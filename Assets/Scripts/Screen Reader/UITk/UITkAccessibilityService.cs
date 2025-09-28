@@ -5,9 +5,10 @@ using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
 
 namespace Unity.Samples.ScreenReader
-{   
+{
     /// <summary>
     /// Accessibility service for Unity UI Toolkit (UITk).
     /// This service integrates with the Unity UI Toolkit to provide accessibility features for UI elements.
@@ -16,7 +17,7 @@ namespace Unity.Samples.ScreenReader
     /// </summary>
     public class UITkAccessibilityService : AccessibilityService
     {
-        List<VisualTreeAccessibilityUpdater> m_AccessibilityUpdaters = new List<VisualTreeAccessibilityUpdater>();
+        List<VisualTreeAccessibilityUpdater> m_AccessibilityUpdaters = new();
 
         /// <summary>
         /// Constructor for the UITkAccessibilityService class.
@@ -26,24 +27,24 @@ namespace Unity.Samples.ScreenReader
             AssistiveSupport.nodeFocusChanged += OnNodeFocusChanged;
         }
 
-        bool m_NeedsToRecomputeRootFrames = false;
-        
+        bool m_NeedsToRecomputeRootFrames;
+
         public void DirtyRootFrames()
         {
             m_NeedsToRecomputeRootFrames = true;
         }
-        
+
         public void UpdateRootAndPanelFrames()
         {
             m_NeedsToRecomputeRootFrames = true;
-            
+
             foreach (var accessibilityUpdater in m_AccessibilityUpdaters)
             {
                 accessibilityUpdater.UpdateRootFrame();
             }
-            
-            Rect serviceRootFrame = Rect.zero;
-            
+
+            var serviceRootFrame = Rect.zero;
+
             foreach (var panelNode in hierarchy.rootNode.children)
             {
                 // Calculate the union of all root nodes frames.
@@ -52,7 +53,7 @@ namespace Unity.Samples.ScreenReader
                     Encompass(ref serviceRootFrame, panelNode.frame);
                 }
             }
-            
+
             hierarchy.rootNode.frame = serviceRootFrame;
             void Encompass(ref Rect a, Rect b)
             {
@@ -70,7 +71,7 @@ namespace Unity.Samples.ScreenReader
                 UpdateRootAndPanelFrames();
                 m_NeedsToRecomputeRootFrames = false;
             }
-            
+
             foreach (var accessibilityUpdater in m_AccessibilityUpdaters)
             {
                 accessibilityUpdater.Update();
@@ -82,57 +83,59 @@ namespace Unity.Samples.ScreenReader
             // Scroll to the focused node if it is inside scroll views.
             // Scroll recursively to support nested scroll views.
             var element = GetVisualElementForNode(node);
+
             if (element != null)
-            { 
+            {
                 // Scroll recursively to support nested scroll views.
-                VisualElement ancestor = element.hierarchy.parent;
-             
+                var ancestor = element.hierarchy.parent;
+
                 while (ancestor != null)
                 {
                     if (ancestor is ScrollView scrollView)
                     {
                         scrollView.ScrollTo(element);
                     }
+
                     ancestor = ancestor.hierarchy.parent;
                 }
             }
         }
-        
+
         public VisualElement GetVisualElementForNode(AccessibilityNode node)
         {
             foreach (var updater in m_AccessibilityUpdaters)
             {
-                if (updater != null)
+                var element = updater?.GetVisualElementForNode(node);
+
+                if (element != null)
                 {
-                    var element = updater.GetVisualElementForNode(node);
-                    if (element != null)
-                        return element;
+                    return element;
                 }
             }
 
             return null;
         }
-        
+
         public VisualElement GetVisualElementForNode(IPanel panel, AccessibilityNode node)
         {
             var updater = GetVisualTreeUpdater(panel);
-            if (updater != null)
-            {
-                return updater.GetVisualElementForNode(node);
-            }
-            return null;
+
+            return updater?.GetVisualElementForNode(node);
         }
-        
+
         public VisualTreeAccessibilityUpdater GetVisualTreeUpdater(IPanel panel)
         {
             foreach (var pd in m_AccessibilityUpdaters)
             {
                 if (pd.panel == panel)
+                {
                     return pd;
+                }
             }
+
             return null;
         }
-        
+
         void CreateVisualTreeUpdaterForPanel(IPanel panel, VisualElement visualTree, UITkAccessibilityService service)
         {
             var newPd = new VisualTreeAccessibilityUpdater
@@ -141,33 +144,38 @@ namespace Unity.Samples.ScreenReader
                 visualTree,
                 service
             );
+
             m_AccessibilityUpdaters.Add(newPd);
         }
 
         public override void SetUp(Scene scene)
         {
             // OnScreenDebug.Log("Start Setup UITkAccessibilityService for scene " + scene.name);
-            var uiDocuments = MonoBehaviour.FindObjectsByType<UIDocument>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+            var uiDocuments = Object.FindObjectsByType<UIDocument>(FindObjectsInactive.Include,
+                FindObjectsSortMode.None);
 
             if (uiDocuments == null || uiDocuments.Length == 0)
             {
                 return;
             }
-            
+
             var panels = new List<IPanel>();
             var visualTrees = new List<VisualElement>();
 
             foreach (var uiDocument in uiDocuments)
             {
-                // Ignore the On Screen Debug UI Document
+                // Ignore the OnScreenDebug UI Document.
                 if (uiDocument.GetComponent<OnScreenDebugBehavior>() != null)
+                {
                     continue;
-                
+                }
+
                 var panel = uiDocument.runtimePanel;
                 var rootAcc = uiDocument.rootVisualElement.GetOrCreateAccessibleProperties();
-                
+
                 rootAcc.label = uiDocument.rootVisualElement.name;
-                rootAcc.active = (Application.platform == RuntimePlatform.OSXPlayer); //false;
+                rootAcc.active = Application.platform == RuntimePlatform.OSXPlayer; // false;
                 rootAcc.role = AccessibilityRole.Container;
 
                 if (!panels.Contains(panel))
@@ -176,14 +184,18 @@ namespace Unity.Samples.ScreenReader
                     visualTrees.Add(uiDocument.rootVisualElement.parent);
                 }
             }
-            
-            //OnScreenDebug.Log("Generating UITk Nodes Panel " + panels.Count);
-            for (int i = 0; i < panels.Count; i++)
+
+            // OnScreenDebug.Log("Generating UITk Nodes Panel " + panels.Count);
+
+            for (var i = 0; i < panels.Count; i++)
             {
                 var panel = panels[i];
                 var visualTree = visualTrees[i];
+
                 if (panel == null || visualTree == null)
+                {
                     continue;
+                }
 
                 CreateVisualTreeUpdaterForPanel(panel, visualTree, this);
             }
@@ -195,6 +207,7 @@ namespace Unity.Samples.ScreenReader
             {
                 accessibilityUpdater.Dispose();
             }
+
             m_AccessibilityUpdaters.Clear();
         }
     }

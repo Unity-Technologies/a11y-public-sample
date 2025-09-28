@@ -10,7 +10,7 @@ namespace Unity.Samples.ScreenReader
         public override string GetLabel()
         {
             var button = ownerElement as Button;
-            return button.text;
+            return button?.text;
         }
 
         protected override void BindToElement(VisualElement ve)

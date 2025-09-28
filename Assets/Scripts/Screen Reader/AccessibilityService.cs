@@ -1,4 +1,3 @@
-using UnityEngine.Accessibility;
 using UnityEngine.SceneManagement;
 
 namespace Unity.Samples.ScreenReader
@@ -17,7 +16,7 @@ namespace Unity.Samples.ScreenReader
         /// The priority of the service. Higher priority services will have their nodes added to the accessibility
         /// hierarchy first.
         /// </summary>
-        public int servicePriority { get; protected set; } = 0;
+        public int servicePriority { get; protected set; }
 
         /// <summary>
         /// The name of the system
@@ -34,7 +33,7 @@ namespace Unity.Samples.ScreenReader
             this.serviceName = serviceName;
             this.servicePriority = servicePriority;
         }
-        
+
         /// <summary>
         /// Set up the services passing the specified scene.
         /// This is called when the accessibility hierarchy needs to be rebuilt (e.g. when the
@@ -42,7 +41,7 @@ namespace Unity.Samples.ScreenReader
         /// </summary>
         /// <param name="activeScene"></param>
         public abstract void SetUp(Scene activeScene);
-        
+
         /// <summary>
         /// Cleans up any internal resources of the service.
         /// </summary>
@@ -51,7 +50,7 @@ namespace Unity.Samples.ScreenReader
         public virtual void Update()
         {
         }
-        
+
         /// <summary>
         /// Refreshes the accessibility hierarchy by calling the AccessibilityManager to rebuild it.
         /// </summary>

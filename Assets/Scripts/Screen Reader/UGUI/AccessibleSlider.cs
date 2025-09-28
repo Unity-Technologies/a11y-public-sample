@@ -18,7 +18,7 @@ namespace Unity.Samples.ScreenReader
 
         void Start()
         {
-            role |= AccessibilityRole.Slider;
+            role = AccessibilityRole.Slider;
 
             m_Slider = GetComponentInChildren<Slider>();
             m_Text = GetComponentInChildren<Text>();
@@ -38,7 +38,7 @@ namespace Unity.Samples.ScreenReader
                 UpdateValue(m_Slider.value);
             }
         }
-        
+
         protected override void BindToControl()
         {
             if (m_Slider != null)
@@ -49,7 +49,7 @@ namespace Unity.Samples.ScreenReader
                 decremented += OnDecremented;
             }
         }
-        
+
         protected override void UnbindFromControl()
         {
             if (m_Slider != null)

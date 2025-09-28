@@ -19,7 +19,10 @@ namespace Unity.Samples.ScreenReader
             var step = (slider.highValue - slider.lowValue) / 10f;
 
             if (!incr)
+            {
                 step = -step;
+            }
+
             slider.value += step;
         }
 

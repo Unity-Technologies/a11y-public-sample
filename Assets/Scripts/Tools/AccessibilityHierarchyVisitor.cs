@@ -9,7 +9,10 @@ namespace Unity.Samples.LetterSpell
         public void Visit(AccessibilityHierarchy hierarchy)
         {
             if (hierarchy == null)
+            {
                 return;
+            }
+
             VisitNodes(hierarchy.rootNodes);
         }
 

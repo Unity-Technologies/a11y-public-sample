@@ -29,7 +29,7 @@ namespace Unity.Samples.LetterSpell
             }
 
             var dragVector = (eventData.position - eventData.pressPosition).normalized;
-        
+
             var positiveX = Mathf.Abs(dragVector.x);
             var positiveY = Mathf.Abs(dragVector.y);
 
@@ -43,7 +43,7 @@ namespace Unity.Samples.LetterSpell
                 {
                     swipedLeft.Invoke();
                 }
-            }  
+            }
             else if (dragVector.y > 0)
             {
                 swipedUp.Invoke();

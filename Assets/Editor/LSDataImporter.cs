@@ -12,9 +12,9 @@ namespace Unity.Samples.LetterSpellEditor
         {
             var wordDatabase = ScriptableObject.CreateInstance<WordDatabase>();
             JsonUtility.FromJsonOverwrite(File.ReadAllText(context.assetPath), wordDatabase);
-            
+
             context.AddObjectToAsset("main obj", wordDatabase);
             context.SetMainObject(wordDatabase);
         }
-    } 
+    }
 }

@@ -86,9 +86,9 @@ namespace Unity.Samples.ClosedCaptions
 
                     subtitleItem.text = text;
 
-                    if ((subtitleItem.startTime.milliseconds != 0
-                            || subtitleItem.endTime.milliseconds != 0)
-                        && !string.IsNullOrEmpty(subtitleItem.text))
+                    if ((subtitleItem.startTime.milliseconds != 0 ||
+                            subtitleItem.endTime.milliseconds != 0) &&
+                        !string.IsNullOrEmpty(subtitleItem.text))
                     {
                         // Parsing succeeded.
                         subtitleItems.Add(subtitleItem);
@@ -109,7 +109,7 @@ namespace Unity.Samples.ClosedCaptions
         bool TryParseTimecodeLine(string line, out int startTime, out int endTime)
         {
             var parts = line.Split(k_Delimiters, StringSplitOptions.None);
-            
+
             if (parts.Length != 2)
             {
                 startTime = -1;
@@ -153,7 +153,7 @@ namespace Unity.Samples.ClosedCaptions
         }
 
         /// <summary>
-        /// Takes an srt timecode as a string and parses it into a double (in seconds). A srt timecode reads as follows:
+        /// Takes an SRT timecode as a string and parses it into a double (in seconds). A srt timecode reads as follows:
         /// 00:00:20,000
         /// </summary>
         /// <param name="timecode">The timecode to parse</param>
@@ -167,9 +167,9 @@ namespace Unity.Samples.ClosedCaptions
             {
                 return -1;
             }
-            
+
             timecode = match.Value;
-                
+
             if (TimeSpan.TryParse(timecode.Replace(',', '.'), out var result))
             {
                 return (int)result.TotalMilliseconds;
@@ -182,7 +182,7 @@ namespace Unity.Samples.ClosedCaptions
         {
             var subtitle = ScriptableObject.CreateInstance<Subtitle>();
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(content ?? ""));
-            
+
             subtitle.items = ParseStream(stream, Encoding.UTF8);
             return subtitle;
         }

@@ -8,8 +8,8 @@ namespace Unity.Samples.ScreenReader
     [Preserve]
     class DropdownFieldHandler : BaseFieldHandler<string>
     {
-        bool m_HasPendingCheck = false;
-        
+        bool m_HasPendingCheck;
+
         protected override void BindToElement(VisualElement element)
         {
             base.BindToElement(element);
@@ -29,18 +29,21 @@ namespace Unity.Samples.ScreenReader
             OnScreenDebug.Log("Submit event received by " + ownerElement.name);
             ScheduledCheckForOpenedPopupMenu();
         }
-        
+
         void OnPointerDown(PointerDownEvent evt)
         {
             OnScreenDebug.Log("Pointer Down event " + ownerElement.name);
 
             ScheduledCheckForOpenedPopupMenu();
         }
-        
+
         void ScheduledCheckForOpenedPopupMenu()
         {
             if (m_HasPendingCheck)
+            {
                 return;
+            }
+
             m_HasPendingCheck = true;
             ownerElement.schedule.Execute(() =>
             {
@@ -48,26 +51,29 @@ namespace Unity.Samples.ScreenReader
                 CheckForOpenedPopupMenu();
             }).ExecuteLater(300);
         }
-        
+
         void CheckForOpenedPopupMenu()
         {
             var panel = ownerElement.panel;
 
             if (panel == null)
+            {
                 return;
+            }
 
             var panelRootVisualElement = panel.visualTree;
             var popupMenu = panelRootVisualElement.Q(classes: GenericDropdownMenu.ussClassName);
 
             OnScreenDebug.Log("Showing popup menu: " + (popupMenu != null));
+
             if (popupMenu != null)
             {
                 var popupAcc = popupMenu.GetOrCreateAccessibleProperties();
-                
+
                 popupAcc.role = AccessibilityRole.Dropdown;
                 popupAcc.active = false;
                 popupAcc.modal = true;
-                
+
                 // Setup items in the popup menu
                 var items = popupMenu.Query(classes: GenericDropdownMenu.itemUssClassName).ToList();
                 var i = 0;
@@ -76,17 +82,20 @@ namespace Unity.Samples.ScreenReader
                 foreach (var item in items)
                 {
                    // if (item.GetAccessibleProperties() != null)
-                     //   continue;
+                   //     continue;
+
                     var itemAcc = item.GetOrCreateAccessibleProperties();
                     var itemLabel = item.Q<Label>();
-                    
+
                     itemAcc.label = itemLabel != null ? itemLabel.text : $"Item {i}";
                     itemAcc.role = AccessibilityRole.Button;
                     itemLabel.GetOrCreateAccessibleProperties().ignored = true;
                     i++;
                 }
+
                 // NotifyChange();
             }
+
             /*var popup = ve.Q("unity-popup");
             if (popup != null && popup.style.display == DisplayStyle.Flex)
             {
@@ -97,8 +106,7 @@ namespace Unity.Samples.ScreenReader
                 SetState(AccessibilityState.Collapsed);
             }*/
         }
-      
-        
+
         public DropdownFieldHandler()
         {
             /*OnSelect += () =>
@@ -108,7 +116,7 @@ namespace Unity.Samples.ScreenReader
                using var evt = NavigationSubmitEvent.GetPooled();
                 ownerElement.SendEvent(evt);
                 OnScreenDebug.Log("Submit event sent to " + ownerElement.name);
-               
+
                 return false;//true;
             };*/
         }

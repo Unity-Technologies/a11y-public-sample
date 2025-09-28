@@ -18,11 +18,12 @@ namespace Unity.Samples.ClosedCaptions
         VisualElement m_CachedRootVisualElement;
         SubtitlePlayer m_CachedPlayer;
 
-        public SubtitleDisplaySettings currentDisplaySettings => displaySettings == null ? SubtitleDisplaySettings.GetDefault() : displaySettings;
+        public SubtitleDisplaySettings currentDisplaySettings => displaySettings == null ?
+            SubtitleDisplaySettings.GetDefault() : displaySettings;
 
         void CreateSubtitleView()
         {
-            m_SubtitleView = new ListView()
+            m_SubtitleView = new ListView
             {
                 style =
                 {
@@ -160,11 +161,11 @@ namespace Unity.Samples.ClosedCaptions
             {
                 return;
             }
-            
+
             foreach (var child in rootElement.hierarchy.Children())
             {
                 child.pickingMode = PickingMode.Ignore;
-                    
+
                 // Prevent the input interaction with the subtitles UI.
                 SetPickingModeToIgnore(child);
             }

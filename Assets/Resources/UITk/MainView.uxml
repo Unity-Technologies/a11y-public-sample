@@ -239,7 +239,7 @@
                     </UnityEngine.Localization.LocalizedString>
                 </Bindings>
             </ui:Label>
-            
+
             <ui:VisualElement name="resultButtonContainer" style="flex-grow: 1; flex-direction: row; margin-top: 10px; align-items: center;">
                 <ui:Button name="resultMainMenuButton">
                     <Bindings>

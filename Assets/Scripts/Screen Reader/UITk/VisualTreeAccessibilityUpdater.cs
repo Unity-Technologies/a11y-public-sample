@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Unity.Samples.LetterSpell;
 using UnityEngine;
 using UnityEngine.Accessibility;
@@ -22,36 +21,43 @@ namespace Unity.Samples.ScreenReader
             LayoutChanged = 1,
             ScreenChanged = 2
         }
-        private static int s_UpdaterId = 0;
-        private int m_UpdaterInstanceId = s_UpdaterId++;
-        private uint m_Version = 0;
-        private uint m_LastVersion = 0;
-        private Dictionary<VisualElement, VisualElementAccessibilityHandler> m_HandlersForElements = new();
-        private Dictionary<AccessibilityNode, VisualElementAccessibilityHandler> m_HandlersForNodes = new();
-        
-        private int m_RootNextInsertionIndex;
-        
-        private VisualElement m_VisualTree;
-        private IVisualElementScheduledItem m_UpdateJob;
-        private UITkAccessibilityService m_AccessibilityService;
-        private AccessibilitySubHierarchy m_SubHierarchy;
-        
+
+        static int s_UpdaterId;
+        int m_UpdaterInstanceId = s_UpdaterId++;
+        uint m_Version;
+        uint m_LastVersion;
+        Dictionary<VisualElement, VisualElementAccessibilityHandler> m_HandlersForElements = new();
+        Dictionary<AccessibilityNode, VisualElementAccessibilityHandler> m_HandlersForNodes = new();
+
+        int m_RootNextInsertionIndex;
+
+        VisualElement m_VisualTree;
+        IVisualElementScheduledItem m_UpdateJob;
+        UITkAccessibilityService m_AccessibilityService;
+        AccessibilitySubHierarchy m_SubHierarchy;
+
         /// <summary>
         /// The sub hierarchy this updater is managing.
         /// </summary>
-        public AccessibilitySubHierarchy hierarchy { get => m_SubHierarchy;
-            set { 
+        public AccessibilitySubHierarchy hierarchy
+        {
+            get => m_SubHierarchy;
+            set
+            {
                 m_SubHierarchy = value;
+
                 if (m_SubHierarchy.isValid && visualTree != null)
-                    DirtyRootFrame(); 
+                {
+                    DirtyRootFrame();
+                }
             }
         }
-        
+
         /// <summary>
         /// The panel of the visual tree being managed.
         /// </summary>
         public IPanel panel { get; set; }
-        
+
         /// <summary>
         /// The visual tree being managed.
         /// </summary>
@@ -61,34 +67,42 @@ namespace Unity.Samples.ScreenReader
             set
             {
                 if (m_VisualTree == value)
+                {
                     return;
-                
+                }
+
                 m_VisualTree = value;
-                
+
                 if (m_UpdateJob != null)
                 {
                     m_UpdateJob.Pause();
                     m_UpdateJob = null;
                 }
-                
+
                 if (m_VisualTree != null)
                 {
-                    //OnScreenDebug.Log("m_VisualTree.visualTree");
+                    // OnScreenDebug.Log("m_VisualTree.visualTree");
+
                     m_UpdateJob = m_VisualTree.schedule.Execute(Update).Every(100);
                 }
             }
         }
-        
+
         /// <summary>
         /// Constructor for VisualTreeAccessibilityUpdater.
         /// </summary>
         /// <param name="panel"></param>
         /// <param name="visualTree"></param>
+        /// <param name="service"></param>
         public VisualTreeAccessibilityUpdater(IPanel panel, VisualElement visualTree, UITkAccessibilityService service)
         {
             OnScreenDebug.Log("Create Updater for panel " + m_UpdaterInstanceId);
+
             if (m_UpdaterInstanceId == 4)
+            {
                 Debug.Log("Break here " + panel);
+            }
+
             this.panel = panel;
             this.visualTree = visualTree;
             hierarchy = default;
@@ -97,25 +111,23 @@ namespace Unity.Samples.ScreenReader
             m_AccessibilityService = service;
             visualTree.RegisterCallback<AttachToPanelEvent>(OnAttachmentToPanel);
             visualTree.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
+
             DirtyRootFrame();
         }
 
-        int m_LastVisualElementTotalCount = 0;
-        
-        void ChangeHierarchyChanges(VisualElement visualElement)
-        {
-            // Check if the child count of 
-        }
         void OnGeometryChanged(GeometryChangedEvent evt)
         {
             DirtyRootFrame();
-           // OnScreenDebug.Log("OnGeometryChanged " + evt.target);
+
+            // OnScreenDebug.Log("OnGeometryChanged " + evt.target);
+
             OnVersionChanged(evt.target as VisualElement, VersionChangeType.Size | VersionChangeType.Transform);
         }
-        
+
         void OnAttachmentToPanel(AttachToPanelEvent evt)
         {
-           // OnScreenDebug.Log("OnAttachmentToPanel " + evt.target);
+            // OnScreenDebug.Log("OnAttachmentToPanel " + evt.target);
+
             m_Version++;
         }
 
@@ -123,30 +135,27 @@ namespace Unity.Samples.ScreenReader
         {
             return m_HandlersForElements[element];
         }
-        
+
         public VisualElement GetVisualElementForNode(AccessibilityNode node)
         {
-            if (m_HandlersForNodes.TryGetValue(node, out var accHandler))
-            {
-                return accHandler?.ownerElement;
-            }
-            return null;
+            return m_HandlersForNodes.TryGetValue(node, out var accHandler) ? accHandler?.ownerElement : null;
         }
 
         public AccessibilityNode GetNodeForVisualElement(VisualElement element)
         {
-            if (m_HandlersForElements.TryGetValue(element, out var accHandler))
-                return accHandler.node;
-            return null;
+            return m_HandlersForElements.TryGetValue(element, out var accHandler) ? accHandler.node : null;
         }
 
         void ResetAllInsertionIndex()
         {
             m_RootNextInsertionIndex = 0;
+
             foreach (var accessibleElement in m_HandlersForElements.Values)
             {
                 if (accessibleElement != null)
+                {
                     accessibleElement.nextInsertionIndex = 0;
+                }
             }
         }
 
@@ -160,11 +169,12 @@ namespace Unity.Samples.ScreenReader
             return VisualElementAccessibilityHandlerFactory.HasFactory(element);
         }
 
-        VisualElementAccessibilityHandler CreateHandler(VisualElement element, VisualElementAccessibilityHandler parentElement)
+        VisualElementAccessibilityHandler CreateHandler(VisualElement element)
         {
             var accElement = VisualElementAccessibilityHandlerFactory.Create(element);
 
             m_HandlersForElements[element] = accElement;
+
             if (accElement != null)
             {
                 accElement.change = VisualElementAccessibilityHandler.k_AccessibilityChange;
@@ -179,44 +189,61 @@ namespace Unity.Samples.ScreenReader
         {
             var p = parentHandler;
             var parentNode = p?.node;
-            // Keep track of insertion index for each parent node
-            var index = p != null ? p.nextInsertionIndex : m_RootNextInsertionIndex;
+
+            // Keep track of insertion index for each parent node.
+            var index = p?.nextInsertionIndex ?? m_RootNextInsertionIndex;
             var node = hierarchy.InsertNode(index, accHandler.ownerElement.name, parentNode);
 
             accHandler.node = node;
             accHandler.change = VisualElementAccessibilityHandler.k_AccessibilityChange;
+
             node.label = accHandler.label;
             node.role = accHandler.role;
+
             m_HandlersForNodes[node] = accHandler;
+
             if (p != null)
+            {
                 p.nextInsertionIndex++;
+            }
             else
+            {
                 m_RootNextInsertionIndex++;
-            //OnScreenDebug.Log("InsertNode: " + node.id + " \"" + node.label + "\" Role:" + node.role + " State:" + node.state);
+            }
+
+            // OnScreenDebug.Log("InsertNode: " + node.id + " \"" + node.label + "\" Role:" + node.role + " State:" + node.state);
         }
 
         bool MoveNode(VisualElementAccessibilityHandler parentElement, VisualElementAccessibilityHandler accHandler)
         {
             var p = parentElement;
             var parentNode = p?.node;
-            var index = p != null ? p.nextInsertionIndex : m_RootNextInsertionIndex;
-            bool moved = hierarchy.MoveNode(accHandler.node, parentNode, index);
+            var index = p?.nextInsertionIndex ?? m_RootNextInsertionIndex;
+            var moved = hierarchy.MoveNode(accHandler.node, parentNode, index);
 
             if (p != null)
+            {
                 p.nextInsertionIndex++;
+            }
             else
+            {
                 m_RootNextInsertionIndex++;
-            //OnScreenDebug.Log("MoveNode: " + accHandler.node.id + " \"" + accHandler.node.label + "\" At:" + index);
+            }
+
+            // OnScreenDebug.Log("MoveNode: " + accHandler.node.id + " \"" + accHandler.node.label + "\" At:" + index);
+
             return moved;
         }
 
         bool DestroyNode(VisualElementAccessibilityHandler acc)
         {
-            bool ret = false;
-            
+            var ret = false;
+
             if (acc.node == null)
+            {
                 return false;
-            
+            }
+
             if (hierarchy.ContainsNode(acc.node))
             {
                 hierarchy.RemoveNode(acc.node);
@@ -225,9 +252,10 @@ namespace Unity.Samples.ScreenReader
 
             m_HandlersForNodes.Remove(acc.node);
             acc.node = null;
+
             return ret;
 
-            //TODO - DestroyNode recursively for child VisualElements
+            // TODO: DestroyNode recursively for child VisualElements.
         }
 
         public void Dispose()
@@ -238,10 +266,11 @@ namespace Unity.Samples.ScreenReader
                 {
                     handler.Value.ownerElement = null;
                     handler.Value.onVersionChanged -= OnVersionChanged;
-                    //DestroyNode(handler.Value);
+
+                    // DestroyNode(handler.Value);
                 }
             }
-            
+
             m_HandlersForElements.Clear();
             m_HandlersForNodes.Clear();
             m_UpdateJob?.Pause();
@@ -249,7 +278,8 @@ namespace Unity.Samples.ScreenReader
             visualTree.UnregisterCallback<GeometryChangedEvent>(OnGeometryChanged);
             visualTree.UnregisterCallback<AttachToPanelEvent>(OnAttachmentToPanel);
             m_VisualTree = null;
-            //OnScreenDebug.Log("Dispose VisualTreeAccessibilityUpdater " + m_UpdaterInstanceId);
+
+            // OnScreenDebug.Log("Dispose VisualTreeAccessibilityUpdater " + m_UpdaterInstanceId);
         }
 
         void OnDetachFromPanel(DetachFromPanelEvent evt)
@@ -260,9 +290,8 @@ namespace Unity.Samples.ScreenReader
 
         void DestroyAccessibleElement(VisualElement ve)
         {
-            if (m_HandlersForElements.TryGetValue(ve, out var acc))
+            if (m_HandlersForElements.Remove(ve, out var acc))
             {
-                m_HandlersForElements.Remove(ve);
                 DestroyNode(acc);
 
                 ve.UnregisterCallback<DetachFromPanelEvent>(OnDetachFromPanel);
@@ -272,14 +301,17 @@ namespace Unity.Samples.ScreenReader
         static Rect GetScreenPosition(VisualElement ve)
         {
             if (ve == null)
+            {
                 return Rect.zero;
+            }
 
             var worldRect = ve.worldBound;
-            var panel = ve.panel as IRuntimePanel; 
-            var panelSettings = panel.panelSettings;
+            var panel = ve.panel as IRuntimePanel;
 
-            float scale = panel.scaledPixelsPerPoint;
+            var scale = panel.scaledPixelsPerPoint;
+
             return new Rect(worldRect.position * scale, worldRect.size * scale);
+
             /*
             float panelScale =  1.0f; // Default to 1 if no scaling is applied or calculated
 
@@ -323,28 +355,29 @@ namespace Unity.Samples.ScreenReader
                  (Screen.height - (worldRect.y + worldRect.height)) * panelScale // Invert Y and adjust for height
              );*/
 
-            //RectTransformUtility.ScreenPointToLocalPointInRectangle()
-            // Get scale of panel from reflection
-            //var property = ve.GetType().GetProperty("scale", BindingFlags.NonPublic | BindingFlags.Instance);
+            // RectTransformUtility.ScreenPointToLocalPointInRectangle()
+            // // Get scale of panel from reflection
+            // var property = ve.GetType().GetProperty("scale", BindingFlags.NonPublic | BindingFlags.Instance);
 
-            //var scale = (float)property.GetValue(ve.panel);//ve.panel.scale);// 1; //FIX - ve.panel.scale;
+            // var scale = (float)property.GetValue(ve.panel);//ve.panel.scale);// 1; //FIX - ve.panel.scale;
 
-            // Convert worldRect to screen space
-            //var screenRect = vepanel.context.visualTree.WorldToScreen(worldRect);
+            // // Convert worldRect to screen space
+            // var screenRect = vepanel.context.visualTree.WorldToScreen(worldRect);
 
-            //return new Rect(worldRect.position * scale, worldRect.size * scale);
-            //return WorldToScreen(worldRect, Camera.main);//.WWorldToScreenRect(worldRect.center);
+            // return new Rect(worldRect.position * scale, worldRect.size * scale);
+            // return WorldToScreen(worldRect, Camera.main);//.WWorldToScreenRect(worldRect.center);
         }
-        
+
         public static Rect WorldToScreen(Rect worldRect, Camera camera)
         {
-            var elementCorners = new Vector3[4]
+            var elementCorners = new Vector3[]
             {
                 new(worldRect.xMin, worldRect.yMin, 0),
                 new(worldRect.xMax, worldRect.yMin, 0),
                 new(worldRect.xMax, worldRect.yMax, 0),
-                new(worldRect.xMin, worldRect.yMax, 0) 
+                new(worldRect.xMin, worldRect.yMax, 0)
             };
+
             var screenCorners = new Vector3[4];
 
             for (var i = 0; i < elementCorners.Length; i++)
@@ -412,11 +445,14 @@ namespace Unity.Samples.ScreenReader
                 hierarchy.rootNode.frame = GetScreenPosition(visualTree);
             }
         }
-        
+
         void UpdateNode(VisualElementAccessibilityHandler accElement)
         {
             if (!IsNodeValid(accElement.node))
+            {
                 return;
+            }
+
             accElement.node.isActive = accElement.isActive;
             accElement.node.label = accElement.label;
             accElement.node.role = accElement.role;
@@ -429,30 +465,42 @@ namespace Unity.Samples.ScreenReader
 
         public void OnVersionChanged(VisualElement ve, VersionChangeType versionChangeType)
         {
-           // OnScreenDebug.Log("OnVersionChanged " + ve + " " + versionChangeType);
+            // OnScreenDebug.Log("OnVersionChanged " + ve + " " + versionChangeType);
+
             if (ve != null && !OnVersionChangedInternal(ve, versionChangeType))
             {
-                
                 OnScreenDebug.Log("Event ignore version changed");
                 return;
             }
 
-           // OnScreenDebug.Log("Finished version changed " + m_Version + " - " + m_UpdaterInstanceId);
+            // OnScreenDebug.Log("Finished version changed " + m_Version + " - " + m_UpdaterInstanceId);
+
             ++m_Version;
         }
-        
+
         public bool OnVersionChangedInternal(VisualElement ve, VersionChangeType versionChangeType)
         {
-            if ((versionChangeType & (VersionChangeType.Transform | VersionChangeType.Size | VersionChangeType.Overflow | VersionChangeType.Hierarchy | VersionChangeType.BorderWidth | VisualElementAccessibilityHandler.k_AccessibilityChange | VersionChangeType.DisableRendering)) == 0)
+            if ((versionChangeType & (
+                    VersionChangeType.Transform |
+                    VersionChangeType.Size |
+                    VersionChangeType.Overflow |
+                    VersionChangeType.Hierarchy |
+                    VersionChangeType.BorderWidth |
+                    VisualElementAccessibilityHandler.k_AccessibilityChange |
+                    VersionChangeType.DisableRendering)) == 0)
+            {
                 return false;
+            }
 
             if (ve != null && m_HandlersForElements.TryGetValue(ve, out var acc))
             {
                 if (acc != null)
-                   acc.change |= versionChangeType;
+                {
+                    acc.change |= versionChangeType;
+                }
             }
-            
-           /* if ((versionChangeType & (VersionChangeType.DisableRendering | VersionChangeType.Layout | VersionChangeType.Transform)) != 0)
+
+            /*if ((versionChangeType & (VersionChangeType.DisableRendering | VersionChangeType.Layout | VersionChangeType.Transform)) != 0)
             {
                 //call acc.change on all children recursively
                 foreach (var child in ve.hierarchy.Children())
@@ -464,7 +512,6 @@ namespace Unity.Samples.ScreenReader
             return true;
         }
 
-        
         public void Update()
         {
             if (visualTree == null)
@@ -472,30 +519,43 @@ namespace Unity.Samples.ScreenReader
                 m_UpdateJob.Pause();
                 return;
             }
+
             if (m_Version == m_LastVersion)
+            {
                 return;
+            }
 
             m_LastVersion = m_Version;
+
             Update(visualTree);
         }
-        
+
         string GetPanelName(VisualElement ve)
         {
-            // Try to get the name of the panel using reflection
+            // Try to get the name of the panel using reflection.
             var panel = ve.panel;
+
             if (panel == null)
+            {
                 return null;
+            }
+
             var panelType = panel.GetType();
             var nameProperty = panelType.GetProperty("name");
+
             if (nameProperty != null)
+            {
                 return nameProperty.GetValue(panel, null) as string;
+            }
+
             return null;
         }
 
-        private NotificationType notification = NotificationType.None;
+        NotificationType m_Notification = NotificationType.None;
+
         void Update(VisualElement visualTree)
         {
-            bool shouldSendNotification = false;
+            var shouldSendNotification = false;
 
             if (!Application.isPlaying)
             {
@@ -506,9 +566,8 @@ namespace Unity.Samples.ScreenReader
                 if (!hierarchy.isValid)
                 {
                     var panelName = GetPanelName(visualTree);
-                    var rootNode = m_AccessibilityService.hierarchy.AddNode(string.IsNullOrEmpty(panelName)
-                        ? visualTree.name
-                        : panelName);
+                    var rootNode = m_AccessibilityService.hierarchy.AddNode(string.IsNullOrEmpty(panelName) ?
+                        visualTree.name : panelName);
                     rootNode.role = AccessibilityRole.Container;
                     rootNode.isActive = (Application.platform == RuntimePlatform.OSXPlayer);
                     hierarchy = new AccessibilitySubHierarchy(m_AccessibilityService.hierarchy.mainHierarchy, rootNode);
@@ -516,29 +575,29 @@ namespace Unity.Samples.ScreenReader
                     shouldSendNotification = true;
                 }
 
-                if (AssistiveSupport.activeHierarchy == null)
-                    AssistiveSupport.activeHierarchy = m_AccessibilityService.hierarchy.mainHierarchy;
+                AssistiveSupport.activeHierarchy ??= m_AccessibilityService.hierarchy.mainHierarchy;
 
-                notification = NotificationType.None;
+                m_Notification = NotificationType.None;
                 ResetAllInsertionIndex();
-                
+
                 var modalElement = currentModalElement;
-                
+
                 UpdateAccessibilityHierarchyRecursively(visualTree, null, false, true);
-                
-                // If there is a current modal element or if the current model element has changed then update the active state of all nodes
-                if (currentModalElement != null || (currentModalElement != modalElement))
-                { 
+
+                // If there is a current modal element or if the current model element has changed then update the
+                // active state of all nodes.
+                if (currentModalElement != null || currentModalElement != modalElement)
+                {
                     OnScreenDebug.Log("Updating active state from modality " + currentModalElement?.name);
                     UpdateActiveStateFromModalityRecursively(visualTree);
                 }
             }
 
-            if (shouldSendNotification || notification.HasFlag(NotificationType.ScreenChanged))
+            if (shouldSendNotification || m_Notification.HasFlag(NotificationType.ScreenChanged))
             {
                 visualTree.schedule.Execute(() => AssistiveSupport.notificationDispatcher.SendScreenChanged());
             }
-            else if (notification.HasFlag(NotificationType.LayoutChanged))
+            else if (m_Notification.HasFlag(NotificationType.LayoutChanged))
             {
                 visualTree.schedule.Execute(() => AssistiveSupport.notificationDispatcher.SendLayoutChanged());
             }
@@ -553,13 +612,10 @@ namespace Unity.Samples.ScreenReader
         {
             m_HandlersForElements.TryGetValue(element, out var accElement);
 
-            // Use the last valid parent
-            if (accElement != null)
+            // Use the last valid parent.
+            if (accElement is { node: not null })
             {
-                if (accElement.node != null)
-                {
-                    accElement.node.isActive = !IsBlocked(element) && accElement.isActive;
-                }
+                accElement.node.isActive = !IsBlocked(element) && accElement.isActive;
             }
 
             foreach (var child in element.hierarchy.Children())
@@ -567,63 +623,65 @@ namespace Unity.Samples.ScreenReader
                 UpdateActiveStateFromModalityRecursively(child);
             }
         }
-            
+
         void UpdateAccessibilityHierarchyRecursively(VisualElement element,
             VisualElementAccessibilityHandler parentAccessible,
             bool forced,
             bool visible)
         {
-            // Remove all the created nodes if this branch is not visible
+            // Remove all the created nodes if this branch is not visible.
             visible &= VisualElementAccessibilityHandler.IsElementVisible(element);
 
             if (!m_HandlersForElements.TryGetValue(element, out var accElement) && visible)
             {
-                accElement = CreateHandler(element, parentAccessible);
+                accElement = CreateHandler(element);
             }
-            
-            bool shouldBeIgnored = !visible;
-            bool modal = false;
 
-            // Use the last valid parent
+            var shouldBeIgnored = !visible;
+            var modal = false;
+
+            // Use the last valid parent.
             if (accElement != null)
             {
                 shouldBeIgnored |= accElement.isIgnored;
                 modal = accElement.isModal;
-                
+
                 // If the branch is visible but the AccessibleElement does not have a node yet then create it.
                 if (!shouldBeIgnored)
                 {
                     if (!IsNodeValid(accElement.node))
                     {
-                        notification |= NotificationType.ScreenChanged;
+                        m_Notification |= NotificationType.ScreenChanged;
                         InsertNode(parentAccessible, accElement);
                     }
-                    else
+                    else if (MoveNode(parentAccessible, accElement))
                     {
-                        if (MoveNode(parentAccessible, accElement))
-                            notification |= NotificationType.LayoutChanged;
+                        m_Notification |= NotificationType.LayoutChanged;
                     }
                 }
-                else
+                else if (accElement.node != null)
                 {
-                    if (accElement.node != null)
-                    {
-                        DestroyNode(accElement);
-                    }
+                    DestroyNode(accElement);
                 }
-                
+
                 if (accElement.change != 0 || forced)
                 {
-                    forced |= (accElement.change.HasFlag(VersionChangeType.Transform)
-                              || accElement.change.HasFlag(VersionChangeType.Size)); // force update if it affect the geometry to recompute the screen positioning
+                    // Force update if it affects the geometry to recompute the screen positioning.
+                    forced |= accElement.change.HasFlag(VersionChangeType.Transform) ||
+                        accElement.change.HasFlag(VersionChangeType.Size);
+
                     UpdateNode(accElement);
-                    notification |= NotificationType.LayoutChanged;
+
+                    m_Notification |= NotificationType.LayoutChanged;
                 }
+
                 if (IsNodeValid(accElement.node))
+                {
                     parentAccessible = accElement;
+                }
             }
 
-            // Update the model element
+            // Update the model element.
             if (!shouldBeIgnored && modal)
             {
                 currentModalElement = element;
@@ -641,20 +699,22 @@ namespace Unity.Samples.ScreenReader
             }
         }
 
-        private VisualElement m_CurrentModalElement;
+        VisualElement m_CurrentModalElement;
 
         bool IsBlocked(VisualElement element)
         {
             return currentModalElement != null && element != currentModalElement && !currentModalElement.Contains(element);
         }
-        
-        private VisualElement currentModalElement
+
+        VisualElement currentModalElement
         {
             get => m_CurrentModalElement;
             set
             {
                 if (m_CurrentModalElement == value)
+                {
                     return;
+                }
 
                 m_CurrentModalElement?.UnregisterCallback<DetachFromPanelEvent>(OnCurrentModalElementDetachedFromPanel);
                 m_CurrentModalElement = value;
@@ -662,32 +722,32 @@ namespace Unity.Samples.ScreenReader
             }
         }
 
-        //need to trigger a repaint
+        // Need to trigger a repaint.
         void OnCurrentModalElementDetachedFromPanel(DetachFromPanelEvent ev)
         {
             currentModalElement = null;
 
-            //loop through all element and mark them as dirty
-            foreach (VisualElementAccessibilityHandler accHandler in m_HandlersForElements.Values)
+            // Loop through all element and mark them as dirty.
+            foreach (var accHandler in m_HandlersForElements.Values)
             {
-                //mark as dirty
+                // Mark as dirty.
                 accHandler?.NotifyChange();
             }
         }
     }
-    
+
     static class VisualTreeAccessibilityUpdaterPanelExtensions
     {
         public static VisualTreeAccessibilityUpdater GetAccessibilityUpdater(this IPanel panel)
         {
             if (panel == null)
+            {
                 return null;
+            }
 
             var uitkService = AccessibilityManager.GetService<UITkAccessibilityService>();
-            if (uitkService == null)
-                return null;
 
-            return uitkService.GetVisualTreeUpdater(panel);
+            return uitkService?.GetVisualTreeUpdater(panel);
         }
     }
 }

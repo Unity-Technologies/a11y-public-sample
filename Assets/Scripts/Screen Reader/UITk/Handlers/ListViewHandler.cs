@@ -7,7 +7,7 @@ namespace Unity.Samples.ScreenReader
     class ListViewHandler : VisualElementAccessibilityHandler
     {
     }
-    
+
     [Preserve]
     class ListViewItemHandler : VisualElementAccessibilityHandler
     {
@@ -16,12 +16,7 @@ namespace Unity.Samples.ScreenReader
             var listViewItem = ownerElement;
             var label = listViewItem.Q<Label>();
 
-            if (label != null)
-            {
-                return label.text;
-            }
-
-            return null;
+            return label?.text;
         }
     }
 
@@ -29,7 +24,7 @@ namespace Unity.Samples.ScreenReader
     {
         public bool CanCreate(VisualElement element)
         {
-            return element.ClassListContains(ListView.itemUssClassName);
+            return element.ClassListContains(BaseListView.itemUssClassName);
         }
 
         public VisualElementAccessibilityHandler Create(VisualElement element)

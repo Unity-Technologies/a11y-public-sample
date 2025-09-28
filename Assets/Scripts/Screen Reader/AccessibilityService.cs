@@ -56,7 +56,7 @@ namespace Unity.Samples.ScreenReader
         /// </summary>
         public void RebuildHierarchy()
         {
-            AccessibilityManager.RefreshHierarchy(this);
+            AccessibilityManager.RebuildHierarchy(this);
         }
     }
 }

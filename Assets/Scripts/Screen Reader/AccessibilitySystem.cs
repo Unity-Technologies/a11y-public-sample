@@ -10,8 +10,11 @@ namespace Unity.Samples.ScreenReader
         [RuntimeInitializeOnLoadMethod]
         static void Initialize()
         {
-            var gameObject = new GameObject("Accessibility Manager");
-            gameObject.AddComponent<AccessibilityManager>();
+            if (!GameObject.Find(nameof(AccessibilityManager)))
+            {
+                var gameObject = new GameObject(nameof(AccessibilityManager));
+                gameObject.AddComponent<AccessibilityManager>();
+            }
         }
     }
 }

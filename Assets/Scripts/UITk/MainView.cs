@@ -376,7 +376,8 @@ namespace Unity.Samples.LetterSpell
             m_InGameSettingsButton = root.Q<Button>("inGameSettingsButton");
             m_InGameSettingsButton.clicked += ShowSettings;
 
-            m_StackView.activeViewChanged += DelayRefreshHierarchy;
+            m_StackView.activeViewChanged += () =>
+                AccessibilityManager.GetService<UITkAccessibilityService>()?.RebuildHierarchy();
 
             // Initialize the values for the read-only settings.
             OnBoldTextStatusChanged(AccessibilitySettings.isBoldTextEnabled);
@@ -465,17 +466,7 @@ namespace Unity.Samples.LetterSpell
                 gameplay.ShowNextWord();
             }
 
-            DelayRefreshHierarchy();
-        }
-
-        void DelayRefreshHierarchy()
-        {
-            var service = AccessibilityManager.GetService<UITkAccessibilityService>();
-
-            if (service != null)
-            {
-                this.DelayRefreshHierarchy(service);
-            }
+            AccessibilityManager.GetService<UITkAccessibilityService>()?.RebuildHierarchy();
         }
 
         void ShowResults(int orderedWordCount, int totalWordCount)
@@ -528,7 +519,8 @@ namespace Unity.Samples.LetterSpell
             m_ScreenResult.Close();
             m_LetterCardContainer.canPlayCards = true;
             Gameplay.instance.StartGame();
-            DelayRefreshHierarchy();
+
+            AccessibilityManager.GetService<UITkAccessibilityService>()?.RebuildHierarchy();
         }
 
         public void PauseGame()

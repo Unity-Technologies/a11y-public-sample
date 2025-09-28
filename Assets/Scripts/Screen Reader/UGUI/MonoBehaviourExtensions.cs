@@ -7,58 +7,28 @@ namespace Unity.Samples.ScreenReader
     static class MonoBehaviourExtensions
     {
         /// <summary>
-        /// Recreates the accessibility hierarchy (i.e. if there was a previous one, it is destroyed and a new one is
-        /// created).
-        /// </summary>
-        public static void DelayRefreshHierarchy(this MonoBehaviour behaviour, AccessibilityService service)
-        {
-            if (service == null)
-                return;
-                
-            behaviour.StartCoroutine(RefreshHierarchy());
-            return;
-
-            IEnumerator RefreshHierarchy()
-            {
-                yield return new WaitForEndOfFrame();
-                service.RebuildHierarchy();
-            }
-        }
-
-        /// <summary>
         /// Recalculates all the accessibility node frames (i.e. screen positions) in the accessibility hierarchy.
         /// </summary>
-        public static void DelayRefreshNodeFrames(this MonoBehaviour behaviour)
+        public static IEnumerator RefreshNodeFrames(this MonoBehaviour behaviour)
         {
-            behaviour.StartCoroutine(RefreshNodeFrames());
-            return;
+            yield return new WaitForEndOfFrame();
 
-            IEnumerator RefreshNodeFrames()
-            {
-                yield return new WaitForEndOfFrame();
-                AccessibilityManager.hierarchy?.RefreshNodeFrames();
-            }
+            AccessibilityManager.hierarchy?.RefreshNodeFrames();
         }
 
         /// <summary>
         /// Sends the layout changed notification with the new node to focus on.
         /// </summary>
-        public static void DelayFocusOnNode(this MonoBehaviour behaviour, int nodeId)
+        public static IEnumerator FocusOnNode(this MonoBehaviour behaviour, int nodeId)
         {
-            behaviour.StartCoroutine(FocusOnNode());
-            return;
+            // Wait for the next frame to ensure that nodes exist in the hierarchy.
+            yield return new WaitForEndOfFrame();
 
-            IEnumerator FocusOnNode()
-            {
-                // Wait for the next frame to ensure that nodes exist in the hierarchy.
-                yield return new WaitForEndOfFrame();
-                
-                // Find the new node to focus on.
-                AccessibilityManager.hierarchy.TryGetNode(nodeId, out var node);
+            // Find the new node to focus on.
+            AccessibilityManager.hierarchy.TryGetNode(nodeId, out var node);
 
-                // Move the accessibility focus to the node.
-                AssistiveSupport.notificationDispatcher.SendLayoutChanged(node);
-            }
+            // Move the accessibility focus to the node.
+            AssistiveSupport.notificationDispatcher.SendLayoutChanged(node);
         }
     }
 }

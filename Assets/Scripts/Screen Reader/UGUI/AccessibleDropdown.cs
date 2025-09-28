@@ -18,17 +18,25 @@ namespace Unity.Samples.ScreenReader
         TMP_Dropdown m_TMPDropdown;
         Dropdown m_Dropdown;
 
+        bool m_DropdownExists;
+
         Coroutine m_ActiveCoroutine;
-        bool m_WasDropdownOpenedOrClosed;
+        AccessibleElement[] m_Options;
 
         const string k_DropdownClosedHint = "Double tap to expand options.";
         const string k_DropdownOpenHint = "Swipe left to navigate options. Double tap to close options.";
 
         void Start()
         {
+#if UNITY_6000_3_OR_NEWER
+            role = AccessibilityRole.Dropdown;
+#endif // UNITY_6000_3_OR_NEWER
+
             m_MultiSelectDropdown = GetComponentInChildren<MultiSelectDropdown>();
             m_TMPDropdown = GetComponentInChildren<TMP_Dropdown>();
             m_Dropdown = GetComponentInChildren<Dropdown>();
+
+            m_DropdownExists = m_MultiSelectDropdown != null || m_TMPDropdown != null || m_Dropdown != null;
 
             if (m_MultiSelectDropdown != null)
             {
@@ -48,7 +56,7 @@ namespace Unity.Samples.ScreenReader
 
         protected override void BindToControl()
         {
-            AccessibilityManager.hierarchyRefreshed += OnHierarchyRefreshed;
+            base.BindToControl();
 
             m_ActiveCoroutine = StartCoroutine(WaitForDropdownOpen());
 
@@ -64,11 +72,16 @@ namespace Unity.Samples.ScreenReader
             {
                 m_Dropdown.onValueChanged.AddListener(UpdateValue);
             }
+
+            if (m_DropdownExists)
+            {
+                selected += OnSelected;
+            }
         }
 
         protected override void UnbindFromControl()
         {
-            AccessibilityManager.hierarchyRefreshed -= OnHierarchyRefreshed;
+            base.UnbindFromControl();
 
             if (m_ActiveCoroutine != null)
             {
@@ -87,23 +100,10 @@ namespace Unity.Samples.ScreenReader
             {
                 m_Dropdown.onValueChanged.RemoveListener(UpdateValue);
             }
-        }
 
-        void OnHierarchyRefreshed()
-        {
-            if (m_WasDropdownOpenedOrClosed)
+            if (m_DropdownExists)
             {
-                var isDropdownOpen = IsDropdownOpen();
-
-                // While the dropdown is open, the user should only be able to navigate within the dropdown itself.
-                // Therefore, we deactivate any other accessibility nodes on screen. After the dropdown is closed,
-                // we bring the other accessibility nodes back to their original active state.
-                AccessibilityManager.GetService<UGuiAccessibilityService>().ActivateOtherAccessibilityNodes(!isDropdownOpen, transform);
-
-                // Move the accessibility focus to the dropdown.
-                AssistiveSupport.notificationDispatcher.SendLayoutChanged(node);
-
-                m_WasDropdownOpenedOrClosed = false;
+                selected -= OnSelected;
             }
         }
 
@@ -112,21 +112,39 @@ namespace Unity.Samples.ScreenReader
             yield return new WaitUntil(IsDropdownOpen);
             yield return new WaitForEndOfFrame();
 
-            AccessibilityManager.GetService<UGuiAccessibilityService>().RebuildHierarchy();
             hint = k_DropdownOpenHint;
 
-            m_WasDropdownOpenedOrClosed = true;
-            m_ActiveCoroutine = StartCoroutine(WaitForDropdownClose());
+#if UNITY_6000_3_OR_NEWER
+            state |= AccessibilityState.Expanded;
+            SetNodeProperties();
+#endif // UNITY_6000_3_OR_NEWER
+
+            m_Options = gameObject.GetComponentsInChildren<AccessibleElement>();
+
+            // Add the dropdown options to the accessibility hierarchy and notify the screen reader to focus on the
+            // first option of the dropdown.
+            AddOptionsToHierarchy(node);
+            AssistiveSupport.notificationDispatcher.SendLayoutChanged(m_Options[0].node);
+
+            m_ActiveCoroutine = StartCoroutine(WaitForDropdownClose(node));
         }
 
-        IEnumerator WaitForDropdownClose()
+        IEnumerator WaitForDropdownClose(AccessibilityNode parentNode)
         {
             yield return new WaitUntil(() => !IsDropdownOpen());
 
-            AccessibilityManager.GetService<UGuiAccessibilityService>().RebuildHierarchy();
             hint = k_DropdownClosedHint;
 
-            m_WasDropdownOpenedOrClosed = true;
+#if UNITY_6000_3_OR_NEWER
+            state &= ~AccessibilityState.Expanded;
+            SetNodeProperties();
+#endif // UNITY_6000_3_OR_NEWER
+
+            // Remove the dropdown options from the accessibility hierarchy and notify the screen reader to focus on the
+            // dropdown.
+            RemoveOptionsFromHierarchy();
+            AssistiveSupport.notificationDispatcher.SendLayoutChanged(parentNode);
+
             m_ActiveCoroutine = StartCoroutine(WaitForDropdownOpen());
         }
 
@@ -148,6 +166,22 @@ namespace Unity.Samples.ScreenReader
             }
 
             return false;
+        }
+
+        void AddOptionsToHierarchy(AccessibilityNode parent)
+        {
+            foreach (var option in m_Options)
+            {
+                AccessibilityManager.GetService<UGuiAccessibilityService>()?.AddToHierarchy(option, parent);
+            }
+        }
+
+        void RemoveOptionsFromHierarchy()
+        {
+            foreach (var option in m_Options)
+            {
+                AccessibilityManager.GetService<UGuiAccessibilityService>()?.RemoveFromHierarchy(option);
+            }
         }
 
         void UpdateValue(int index)
@@ -172,6 +206,53 @@ namespace Unity.Samples.ScreenReader
 
             value = valueAsText;
             SetNodeProperties();
+        }
+
+        bool OnSelected()
+        {
+            if (m_MultiSelectDropdown != null && m_MultiSelectDropdown.IsActive() && m_MultiSelectDropdown.IsInteractable())
+            {
+                if (m_MultiSelectDropdown.IsExpanded)
+                {
+                    m_MultiSelectDropdown.Hide();
+                }
+                else
+                {
+                    m_MultiSelectDropdown.Show();
+                }
+
+                return true;
+            }
+
+            if (m_TMPDropdown != null && m_TMPDropdown.IsActive() && m_TMPDropdown.IsInteractable())
+            {
+                if (m_TMPDropdown.IsExpanded)
+                {
+                    m_TMPDropdown.Hide();
+                }
+                else
+                {
+                    m_TMPDropdown.Show();
+                }
+
+                return true;
+            }
+
+            if (m_Dropdown != null && m_Dropdown.IsActive() && m_Dropdown.IsInteractable())
+            {
+                if (m_Dropdown.transform.childCount != 3)
+                {
+                    m_Dropdown.Hide();
+                }
+                else
+                {
+                    m_Dropdown.Show();
+                }
+
+                return true;
+            }
+
+            return false;
         }
     }
 }

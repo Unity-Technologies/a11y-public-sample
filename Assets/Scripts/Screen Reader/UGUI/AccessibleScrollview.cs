@@ -14,27 +14,32 @@ namespace Unity.Samples.ScreenReader
     {
         ScrollRect m_ScrollRect;
 
-        const float k_ExtraOffset = 50f;
+        AccessibilityNode m_NodeToBeFocused;
+
         const float k_ScrollDuration = 0.2f;
 
         void Start()
         {
-            // The scroll view should not be accessible (i.e. focusable with the screen reader). The purpose of this
-            // component is to automatically scroll to the focused node inside the scroll view if it is not fully
-            // visible.
-            isActive = false;
+            // On macOS, container nodes should be active and have a label set in order to function properly.
+            // If a container node is not active, the screen reader will not see neither the node nor its children.
+            // If a container node has no label, the screen reader will skip the node and treat its children as
+            // containers.
+            label ??= "Scroll View";
+
+#if UNITY_6000_3_OR_NEWER
+            role = AccessibilityRole.Container;
+#else // UNITY_6000_3_OR_NEWER
+            // The scroll view should not be accessible (i.e. focusable with the screen reader) on mobile platforms.
+            // The purpose of this component is to automatically scroll to the focused node inside the scroll view if
+            // it is not fully visible.
+            if (Application.platform == RuntimePlatform.Android ||
+                Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                isActive = false;
+            }
+#endif // UNITY_6000_3_OR_NEWER
 
             m_ScrollRect = GetComponentInChildren<ScrollRect>();
-        }
-
-        void Update()
-        {
-            // Update the node frames when scrolling.
-            if (m_ScrollRect && m_ScrollRect.content.hasChanged)
-            {
-                m_ScrollRect.content.hasChanged = false;
-                AssistiveSupport.activeHierarchy?.RefreshNodeFrames();
-            }
         }
 
         protected override void BindToControl()
@@ -55,95 +60,69 @@ namespace Unity.Samples.ScreenReader
 
         void OnNodeFocusChanged(AccessibilityNode accessibilityNode)
         {
-            // If the focused node in inside this scroll view and is not fully visible, then automatically scroll the
-            // scroll view to make it fully visible.
-            if (IsInsideScrollView(accessibilityNode) && !IsFullyVisibleInScrollView(accessibilityNode))
+            // If there is a node we requested to be focused (for example, after the user manually scrolled), pause the
+            // automatic scrolling until the node receives focus.
+            // Note: On Android, when we request a node to be focused, we don't get a focus changed event when that node
+            // receives focus, so the automatic scrolling will not be triggered.
+            if (Application.platform != RuntimePlatform.Android)
             {
-                ScrollIntoView(accessibilityNode);
-            }
-        }
-
-        bool IsInsideScrollView(AccessibilityNode accessibilityNode)
-        {
-            var element = AccessibilityManager.GetService<UGuiAccessibilityService>().GetAccessibleElementForNode(accessibilityNode);
-            var currentTransform = element.transform.parent;
-
-            // Traverse up the parent hierarchy.
-            while (currentTransform != null)
-            {
-                // Check if the current parent has the ScrollRect component.
-                if (currentTransform.GetComponent<ScrollRect>() == m_ScrollRect)
+                if (m_NodeToBeFocused != null && accessibilityNode != m_NodeToBeFocused)
                 {
-                    return true; // Found the scroll view.
+                    return;
                 }
 
-                // Move to the next parent.
-                currentTransform = currentTransform.parent;
+                if (accessibilityNode == m_NodeToBeFocused)
+                {
+                    m_NodeToBeFocused = null;
+                    return;
+                }
             }
 
-            return false; // No scroll view found.
+            var element = AccessibilityManager.GetService<UGuiAccessibilityService>()?.GetAccessibleElementForNode(accessibilityNode);
+
+            if (element == null)
+            {
+                return;
+            }
+
+            // If the focused node in inside this scroll view and is not fully visible, then automatically scroll the
+            // scroll view to make it fully visible.
+            if (element.IsInsideScrollView(m_ScrollRect) && !element.IsFullyVisibleInScrollView(m_ScrollRect, out var offset))
+            {
+                ScrollIntoView(element, offset);
+            }
         }
 
-        bool IsFullyVisibleInScrollView(AccessibilityNode accessibilityNode)
+        void ScrollIntoView(AccessibleElement element, Vector2 offset)
         {
-            var scrollViewFrame = node.frame;
-            var nodeFrame = accessibilityNode.frame;
+            if (element == null || offset == Vector2.zero)
+            {
+                return;
+            }
 
-            return
-                scrollViewFrame.Contains(new Vector2(nodeFrame.xMin, nodeFrame.yMin)) && // Bottom left corner
-                scrollViewFrame.Contains(new Vector2(nodeFrame.xMax, nodeFrame.yMin)) && // Bottom right corner
-                scrollViewFrame.Contains(new Vector2(nodeFrame.xMin, nodeFrame.yMax)) && // Top left corner
-                scrollViewFrame.Contains(new Vector2(nodeFrame.xMax, nodeFrame.yMax));   // Top right corner
-        }
-
-        void ScrollIntoView(AccessibilityNode accessibilityNode)
-        {
             Canvas.ForceUpdateCanvases();
-
-            var element = AccessibilityManager.GetService<UGuiAccessibilityService>().GetAccessibleElementForNode(accessibilityNode);
 
             var viewportRect = m_ScrollRect.viewport.rect;
             var contentRect = m_ScrollRect.content.rect;
 
-            // Calculate the bounds of the element and the viewport.
-            var itemBounds = RectTransformUtility.CalculateRelativeRectTransformBounds(m_ScrollRect.viewport,
-                element.transform as RectTransform);
-            var viewportBounds = new Bounds(viewportRect.center, viewportRect.size);
-
-            // Calculate the offset required to make the element visible.
-            var offset = Vector2.zero;
-
-            // Check and calculate the vertical offset.
-            if (itemBounds.max.y > viewportBounds.max.y)
-            {
-                offset.y = itemBounds.max.y - viewportBounds.max.y + k_ExtraOffset;
-            }
-            else if (itemBounds.min.y < viewportBounds.min.y)
-            {
-                offset.y = itemBounds.min.y - viewportBounds.min.y - k_ExtraOffset;
-            }
-
-            // Check and calculate the horizontal offset.
-            if (itemBounds.max.x > viewportBounds.max.x)
-            {
-                offset.x = itemBounds.max.x - viewportBounds.max.x + k_ExtraOffset;
-            }
-            else if (itemBounds.min.x < viewportBounds.min.x)
-            {
-                offset.x = itemBounds.min.x - viewportBounds.min.x - k_ExtraOffset;
-            }
+            var widthDifference = contentRect.width - viewportRect.width;
+            var heightDifference = contentRect.height - viewportRect.height;
 
             // Convert the offset to a normalized position.
             var normalizedOffset = new Vector2(
-                offset.x / (contentRect.width - viewportRect.width),
-                offset.y / (contentRect.height - viewportRect.height));
+                widthDifference == 0 ? 0 : offset.x / widthDifference,
+                heightDifference == 0 ? 0 : offset.y / heightDifference);
 
             // Adjust the scroll view's normalized position.
             var targetPosition = new Vector2(
                 Mathf.Clamp01(m_ScrollRect.horizontalNormalizedPosition + normalizedOffset.x),
                 Mathf.Clamp01(m_ScrollRect.verticalNormalizedPosition + normalizedOffset.y));
 
-            StartCoroutine(SmoothScroll(targetPosition));
+            const float floatTolerance = 0.01f;
+            if (Mathf.Abs(normalizedOffset.x) >= floatTolerance || Mathf.Abs(normalizedOffset.y) >= floatTolerance)
+            {
+                StartCoroutine(SmoothScroll(targetPosition));
+            }
         }
 
         IEnumerator SmoothScroll(Vector2 targetPosition)
@@ -163,6 +142,18 @@ namespace Unity.Samples.ScreenReader
             }
 
             m_ScrollRect.normalizedPosition = targetPosition;
+
+            AssistiveSupport.activeHierarchy?.RefreshNodeFrames();
+        }
+
+        /// <summary>
+        /// Pauses the automatic scrolling of the scroll view until the specified node receives accessibility focus.
+        /// </summary>
+        /// <param name="nodeToBeFocused">The node that should receive focus before the automatic scrolling resumes.
+        /// </param>
+        public void PauseAutomaticScrolling(AccessibilityNode nodeToBeFocused)
+        {
+            m_NodeToBeFocused = nodeToBeFocused;
         }
     }
 }

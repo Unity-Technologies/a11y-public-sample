@@ -22,6 +22,10 @@ namespace Unity.Samples.ScreenReader
         /// </summary>
         static AccessibilityManager s_Instance;
 
+        // bool m_IsNarratorEnabled;
+        // float m_NarratorStatusCheckInterval = 1.0f;
+        // float m_TimeSinceLastNarratorStatusCheck = 0.0f;
+
         /// <summary>
         /// The current accessibility hierarchy.
         /// </summary>
@@ -38,42 +42,15 @@ namespace Unity.Samples.ScreenReader
         /// </summary>
         List<AccessibilityService> m_RegisteredServices = new();
 
-        public static AccessibilityHierarchy hierarchy
-        {
-            get
-            {
-                s_Instance.m_Hierarchy ??= new AccessibilityHierarchy();
-                return s_Instance.m_Hierarchy;
-            }
-        }
+        public static AccessibilityHierarchy hierarchy => s_Instance.m_Hierarchy ??= new AccessibilityHierarchy();
+
+        // public static event Action<bool> narratorStatusChanged;
 
         /// <summary>
         /// Event triggered when the hierarchy is refreshed to allow components to be able to execute actions when that
         /// happens (e.g. focusing the dropdown after it opens).
         /// </summary>
         public static event Action hierarchyRefreshed;
-
-        /// <summary>
-        /// Recreates the whole accessibility hierarchy.
-        /// </summary>
-        static void RefreshHierarchy()
-        {
-            s_Instance.RebuildHierarchy();
-        }
-
-        /// <summary>
-        /// Recreates the whole accessibility sub hierarchy associated to the specified service.
-        /// </summary>
-        public static void RefreshHierarchy(AccessibilityService service)
-        {
-            s_Instance.RebuildHierarchy(service);
-
-            /*
-            AssistiveSupport.activeHierarchy = hierarchy;
-            service.CleanUp();
-            RegenerateNodes(service);
-            */
-        }
 
         /// <summary>
         /// Returns the registered accessibility service of the specified type or null if no such service was registered.
@@ -157,12 +134,37 @@ namespace Unity.Samples.ScreenReader
         /// </summary>
         void Update()
         {
+#if UNITY_6000_3_OR_NEWER
+            // Poll Narrator's status because it does not send AssistiveSupport.screenReaderStatusChanged events (low
+            // performance).
+
+            //if (Application.platform == RuntimePlatform.WindowsPlayer)
+            //{
+            //    m_TimeSinceLastNarratorStatusCheck += Time.deltaTime;
+
+            //    if (m_TimeSinceLastNarratorStatusCheck >= m_NarratorStatusCheckInterval)
+            //    {
+            //        if (m_IsNarratorEnabled != AssistiveSupport.isScreenReaderEnabled)
+            //        {
+            //            m_IsNarratorEnabled = AssistiveSupport.isScreenReaderEnabled;
+
+            //            narratorStatusChanged.Invoke(m_IsNarratorEnabled);
+            //        }
+
+            //        m_TimeSinceLastNarratorStatusCheck = 0.0f;
+            //    }
+            //}
+#endif // UNITY_6000_3_OR_NEWER
+
             // Rebuild the hierarchy on orientation change.
             if (m_PreviousOrientation != Screen.orientation)
             {
-                m_PreviousOrientation = Screen.orientation;
+                if (m_PreviousOrientation != 0)
+                {
+                    OnOrientationChanged();
+                }
 
-                StartCoroutine(OnOrientationChanged());
+                m_PreviousOrientation = Screen.orientation;
             }
 
             // Update the services.
@@ -176,13 +178,39 @@ namespace Unity.Samples.ScreenReader
         {
             s_Instance = this;
 
-            AssistiveSupport.screenReaderStatusOverride = AssistiveSupport.ScreenReaderStatusOverride.ForceEnabled;
             DontDestroyOnLoad(gameObject);
-            StartCoroutine(DelayInitialize());
+
+            // As scenes get loaded/unloaded, the accessibility hierarchy must be updated.
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneUnloaded += OnSceneUnloaded;
+
+            // No-performance-impact alternative to the Narrator status polling workaround in Update().
+            // if (Application.platform == RuntimePlatform.WindowsPlayer)
+            // {
+                AssistiveSupport.screenReaderStatusOverride = AssistiveSupport.ScreenReaderStatusOverride.ForceEnabled;
+            // }
+
+            // The accessibility hierarchy must be created when the screen reader is turned on and destroyed when the
+            // screen reader is turned off.
+            AssistiveSupport.screenReaderStatusChanged += OnScreenReaderStatusChanged;
+            // narratorStatusChanged += OnScreenReaderStatusChanged;
+
+            // Generate the accessibility hierarchy for the current scene and set it to AssistiveSupport.activeHierarchy
+            // so that the screen reader can use it.
+            var lastLoadedScene = GetLastLoadedScene();
+
+            GenerateHierarchy(lastLoadedScene);
+            AssistiveSupport.activeHierarchy = hierarchy;
         }
 
         void OnDisable()
         {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            SceneManager.sceneUnloaded -= OnSceneUnloaded;
+
+            AssistiveSupport.screenReaderStatusChanged -= OnScreenReaderStatusChanged;
+            // narratorStatusChanged -= OnScreenReaderStatusChanged;
+
             AssistiveSupport.activeHierarchy = null;
 
             s_Instance = null;
@@ -191,6 +219,11 @@ namespace Unity.Samples.ScreenReader
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             StartCoroutine(DelayRebuildHierarchy(scene));
+        }
+
+        void OnSceneUnloaded(Scene scene)
+        {
+            AssistiveSupport.activeHierarchy = null;
         }
 
         static Scene GetLastLoadedScene()
@@ -211,57 +244,17 @@ namespace Unity.Samples.ScreenReader
             return lastLoadedScene;
         }
 
-        void OnSceneUnloaded(Scene scene)
+        void OnOrientationChanged()
         {
-            AssistiveSupport.activeHierarchy = null;
-
-            var lastLoadedScene = GetLastLoadedScene();
-
-            if (lastLoadedScene.IsValid())
-            {
-                StartCoroutine(DelayRebuildHierarchy(lastLoadedScene));
-            }
-        }
-
-        IEnumerator DelayInitialize()
-        {
-            // Wait until the end of the frame to make sure all the GUI positions have been calculated.
-            yield return new WaitForEndOfFrame();
-
-            // As scenes get loaded/unloaded, the accessibility hierarchy must be updated.
-            SceneManager.sceneLoaded += OnSceneLoaded;
-            SceneManager.sceneUnloaded += OnSceneUnloaded;
-
-            // The accessibility hierarchy must be created when the screen reader is turned on and destroyed when the
-            // screen reader is turned off.
-            AssistiveSupport.screenReaderStatusChanged += OnScreenReaderStatusChanged;
-
-            // Generate the accessibility hierarchy for the current scene and set it to AssistiveSupport.activeHierarchy
-            // so that the screen reader can use it.
-            var lastLoadedScene = GetLastLoadedScene();
-
-            GenerateHierarchy(lastLoadedScene);
-            AssistiveSupport.activeHierarchy = hierarchy;
-        }
-
-        IEnumerator OnOrientationChanged()
-        {
-            yield return new WaitForEndOfFrame();
-
             RebuildHierarchy();
         }
 
-        void OnScreenReaderStatusChanged(bool status)
+        void OnScreenReaderStatusChanged(bool on)
         {
-            if (status)
+            if (on)
             {
                 // If the screen reader was turned on, generate and set the accessibility hierarchy.
-                var lastLoadedScene = GetLastLoadedScene();
-
-                if (lastLoadedScene.IsValid())
-                {
-                    OnSceneLoaded(lastLoadedScene, default);
-                }
+                RebuildHierarchy();
             }
             else
             {
@@ -270,59 +263,64 @@ namespace Unity.Samples.ScreenReader
             }
         }
 
-        void RebuildHierarchy()
+        static void RebuildHierarchy()
         {
-            AssistiveSupport.activeHierarchy = null;
+            RebuildHierarchy(null);
+        }
 
+        /// <summary>
+        /// Recreates the whole accessibility sub-hierarchy associated with the specified service.
+        /// </summary>
+        public static void RebuildHierarchy(AccessibilityService service)
+        {
             var lastLoadedScene = GetLastLoadedScene();
 
             if (lastLoadedScene.IsValid())
             {
-                OnSceneLoaded(lastLoadedScene, default);
+                s_Instance.StartCoroutine(s_Instance.DelayRebuildHierarchy(lastLoadedScene, service));
             }
         }
 
-        IEnumerator DelayRebuildHierarchy(Scene scene)
+        IEnumerator DelayRebuildHierarchy(Scene scene, AccessibilityService service = null)
         {
-            // Always wait for the end of the frame to guarantee that all the GUI positions have been set.
-            yield return new WaitForEndOfFrame();
-
-            GenerateHierarchy(scene);
-            AssistiveSupport.activeHierarchy = hierarchy;
-
-            hierarchyRefreshed?.Invoke();
-        }
-
-        void RebuildHierarchy(AccessibilityService service)
-        {
-            AssistiveSupport.activeHierarchy = null;
-
-            var lastLoadedScene = GetLastLoadedScene();
-
-            if (lastLoadedScene.IsValid())
+            if (!Application.isEditor && !AssistiveSupport.isScreenReaderEnabled)
             {
-                StartCoroutine(DelayRebuildHierarchy(service, lastLoadedScene));
+                yield break;
             }
-        }
 
-        IEnumerator DelayRebuildHierarchy( AccessibilityService service, Scene scene)
-        {
-            // Always wait for the end of the frame to guarantee that all the GUI positions have been set.
+            // Wait for the end frame before generating the hierarchy to make sure the layout has been computed.
             yield return new WaitForEndOfFrame();
 
-            service.CleanUp();
-            RegenerateNodes(service, scene);
-            AssistiveSupport.activeHierarchy = hierarchy;
+            if (service == null)
+            {
+                // Rebuild the whole hierarchy (for all registered services).
+                GenerateHierarchy(scene);
+            }
+            else
+            {
+                // Rebuild only the specified service's sub-hierarchy.
+                service.CleanUp();
+                GenerateSubHierarchyForService(scene, service);
+            }
+
+            if (AssistiveSupport.activeHierarchy == null)
+            {
+                AssistiveSupport.activeHierarchy = hierarchy;
+            }
+            else
+            {
+                AssistiveSupport.notificationDispatcher.SendScreenChanged();
+            }
 
             hierarchyRefreshed?.Invoke();
         }
 
         void GenerateHierarchy(Scene scene)
         {
-            LoadServices();
-
-            // Clears all nodes
+            // Clear all nodes.
             hierarchy.Clear();
+
+            LoadServices();
 
             using var _ = ListPool<AccessibilityService>.Get(out var sortedServices);
 
@@ -332,28 +330,20 @@ namespace Unity.Samples.ScreenReader
             // Release all root nodes created by registered services in the previous hierarchy generation.
             foreach (var service in sortedServices)
             {
-                service.CleanUp();
-                service.hierarchy.Dispose();
+                RemoveSubHierarchyForService(service);
             }
 
+            // Create a root node for each registered service.
             foreach (var service in sortedServices)
             {
-                CreateSubHierarchyForService(service, hierarchy);
+                CreateSubHierarchyForService(service);
             }
 
-            foreach (var system in sortedServices)
+            // Let each service populate its sub-hierarchy.
+            foreach (var service in sortedServices)
             {
-                RegenerateNodes(system, scene);
+                GenerateSubHierarchyForService(scene, service);
             }
-        }
-
-        void CreateSubHierarchyForService(AccessibilityService service, AccessibilityHierarchy hierarchy)
-        {
-            var rootNode = hierarchy.AddNode(service.serviceName);
-            rootNode.role = AccessibilityRole.Container;
-            rootNode.isActive = (Application.platform == RuntimePlatform.OSXPlayer);//false;
-
-            service.hierarchy = new AccessibilitySubHierarchy(hierarchy, rootNode);
         }
 
         void LoadServices()
@@ -367,7 +357,22 @@ namespace Unity.Samples.ScreenReader
             AddService(new UITkAccessibilityService());
         }
 
-        static void RegenerateNodes(AccessibilityService service, Scene scene)
+        static void RemoveSubHierarchyForService(AccessibilityService service)
+        {
+            service.CleanUp();
+            service.hierarchy.Dispose();
+        }
+
+        static void CreateSubHierarchyForService(AccessibilityService service)
+        {
+            var rootNode = hierarchy.AddNode(service.serviceName);
+            rootNode.role = AccessibilityRole.Container;
+            rootNode.isActive = Application.platform == RuntimePlatform.OSXPlayer; // false;
+
+            service.hierarchy = new AccessibilitySubHierarchy(hierarchy, rootNode);
+        }
+
+        static void GenerateSubHierarchyForService(Scene scene, AccessibilityService service)
         {
             service.hierarchy.Clear();
             service.SetUp(scene);

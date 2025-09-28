@@ -18,7 +18,9 @@ namespace Unity.Samples.ScreenReader
 
         void Start()
         {
+#if UNITY_2023_3_OR_NEWER
             role = AccessibilityRole.Slider;
+#endif // UNITY_2023_3_OR_NEWER
 
             m_Slider = GetComponentInChildren<Slider>();
             m_Text = GetComponentInChildren<Text>();

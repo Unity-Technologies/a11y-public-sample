@@ -12,13 +12,29 @@ namespace Unity.Samples.ScreenReader
     [ExecuteAlways]
     public sealed class AccessibleButton : AccessibleElement
     {
+        public bool isKeyboardKey;
+        public bool isTabButton;
+
         Button m_Button;
         Text m_Text;
         TMP_Text m_TMPText;
 
         void Start()
         {
-            role = AccessibilityRole.Button;
+            if (isKeyboardKey)
+            {
+                role = AccessibilityRole.KeyboardKey;
+            }
+#if UNITY_6000_3_OR_NEWER
+            else if (isTabButton)
+            {
+                role = AccessibilityRole.TabButton;
+            }
+#endif // UNITY_6000_3_OR_NEWER
+            else
+            {
+                role = AccessibilityRole.Button;
+            }
 
             m_Button = GetComponentInChildren<Button>();
             m_Text = GetComponentInChildren<Text>();
@@ -36,6 +52,8 @@ namespace Unity.Samples.ScreenReader
 
         protected override void BindToControl()
         {
+            base.BindToControl();
+
             if (m_Button != null)
             {
                 // By default, when the screen reader is on, the double-tap gesture sends a tap event to the center of
@@ -49,6 +67,8 @@ namespace Unity.Samples.ScreenReader
 
         protected override void UnbindFromControl()
         {
+            base.UnbindFromControl();
+
             if (m_Button != null)
             {
                 selected -= OnSelected;

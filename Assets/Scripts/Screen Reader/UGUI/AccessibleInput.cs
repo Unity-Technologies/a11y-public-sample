@@ -1,5 +1,7 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Accessibility;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Unity.Samples.ScreenReader
@@ -11,15 +13,32 @@ namespace Unity.Samples.ScreenReader
     [ExecuteAlways]
     public sealed class AccessibleInput : AccessibleElement
     {
+        public bool isSearchField;
+
         TMP_InputField m_TMPInputField;
         InputField m_InputField;
+
+        bool m_InputFieldExists;
 
         string m_PlaceholderText;
 
         void Start()
         {
+            if (isSearchField)
+            {
+                role = AccessibilityRole.SearchField;
+            }
+#if UNITY_6000_3_OR_NEWER
+            else
+            {
+                role = AccessibilityRole.TextField;
+            }
+#endif // UNITY_6000_3_OR_NEWER
+
             m_TMPInputField = GetComponentInChildren<TMP_InputField>();
             m_InputField = GetComponentInChildren<InputField>();
+
+            m_InputFieldExists = m_TMPInputField != null || m_InputField != null;
 
             if (m_TMPInputField != null)
             {
@@ -37,6 +56,8 @@ namespace Unity.Samples.ScreenReader
 
         protected override void BindToControl()
         {
+            base.BindToControl();
+
             if (m_TMPInputField != null)
             {
                 m_TMPInputField.onValueChanged.AddListener(UpdateValue);
@@ -45,10 +66,19 @@ namespace Unity.Samples.ScreenReader
             {
                 m_InputField.onValueChanged.AddListener(UpdateValue);
             }
+
+            if ((Application.platform == RuntimePlatform.OSXPlayer ||
+                    Application.platform == RuntimePlatform.WindowsPlayer) &&
+                m_InputFieldExists)
+            {
+                focused += OnFocused;
+            }
         }
 
         protected override void UnbindFromControl()
         {
+            base.UnbindFromControl();
+
             if (m_TMPInputField != null)
             {
                 m_TMPInputField.onValueChanged.RemoveListener(UpdateValue);
@@ -57,12 +87,39 @@ namespace Unity.Samples.ScreenReader
             {
                 m_InputField.onValueChanged.RemoveListener(UpdateValue);
             }
+
+            if ((Application.platform == RuntimePlatform.OSXPlayer ||
+                    Application.platform == RuntimePlatform.WindowsPlayer) &&
+                m_InputFieldExists)
+            {
+                focused -= OnFocused;
+            }
         }
 
         void UpdateValue(string newValue)
         {
             value = string.IsNullOrEmpty(newValue) ? m_PlaceholderText : newValue;
             SetNodeProperties();
+        }
+
+        void OnFocused(bool isFocused)
+        {
+            if (isFocused)
+            {
+                if (m_TMPInputField != null && m_TMPInputField.IsActive() && m_TMPInputField.IsInteractable())
+                {
+                    m_TMPInputField.Select();
+                }
+
+                if (m_InputField != null && m_InputField.IsActive() && m_InputField.IsInteractable())
+                {
+                    m_InputField.Select();
+                }
+            }
+            else if (!EventSystem.current.alreadySelecting)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+            }
         }
     }
 }

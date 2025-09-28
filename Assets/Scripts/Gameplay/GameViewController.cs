@@ -146,7 +146,7 @@ namespace Unity.Samples.LetterSpell
 
             if (Gameplay.instance != null && Gameplay.instance.state != Gameplay.State.Stopped)
             {
-                this.DelayRefreshHierarchy(AccessibilityManager.GetService<UGuiAccessibilityService>());
+                AccessibilityManager.GetService<UGuiAccessibilityService>()?.RebuildHierarchy();
 
                 Invoke(nameof(MoveAccessibilityFocusOnClue), 1f);
             }
@@ -165,7 +165,7 @@ namespace Unity.Samples.LetterSpell
 
                 // When a letter card is selected, deactivate all accessibility nodes except the ones corresponding to
                 // the letter cards to allow the selected card to be moved correctly.
-                AccessibilityManager.GetService<UGuiAccessibilityService>().ActivateOtherAccessibilityNodes(false, letterCardContainer);
+                AccessibilityManager.GetService<UGuiAccessibilityService>()?.ActivateOtherAccessibilityNodes(false, letterCardContainer);
 
                 letterCard.SetDraggingVisuals(true);
                 SetLetterCardsAccessibilityLabel(false);
@@ -174,7 +174,7 @@ namespace Unity.Samples.LetterSpell
             {
                 m_AccessibilitySelectedCard = null;
 
-                AccessibilityManager.GetService<UGuiAccessibilityService>().ActivateOtherAccessibilityNodes(true, letterCardContainer);
+                AccessibilityManager.GetService<UGuiAccessibilityService>()?.ActivateOtherAccessibilityNodes(true, letterCardContainer);
 
                 letterCard.SetDraggingVisuals(false);
                 SetLetterCardsAccessibilityLabel(true);
@@ -234,7 +234,7 @@ namespace Unity.Samples.LetterSpell
         {
             if (node != null)
             {
-                var element = AccessibilityManager.GetService<UGuiAccessibilityService>().GetAccessibleElementForNode(node);
+                var element = AccessibilityManager.GetService<UGuiAccessibilityService>()?.GetAccessibleElementForNode(node);
                 m_AccessibilityFocusedCard = element != null ? element.GetComponent<LetterCard>() : null;
                 MoveSelectedCard();
             }
@@ -313,7 +313,7 @@ namespace Unity.Samples.LetterSpell
                 // we need to recreate the whole hierarchy instead.
                 if (Application.platform == RuntimePlatform.IPhonePlayer)
                 {
-                    AccessibilityManager.GetService<UGuiAccessibilityService>().RebuildHierarchy();
+                    AccessibilityManager.GetService<UGuiAccessibilityService>()?.RebuildHierarchy();
                     m_WasHierarchyRefreshed = true;
 
                     // Add the node count to the element ID to match the ID of the node in the refreshed hierarchy,
@@ -321,7 +321,7 @@ namespace Unity.Samples.LetterSpell
                     var nodeToFocusId = element.node.id + AccessibilityManager.hierarchy.rootNodes.Count;
                     nodeToFocusId += shouldMoveLeft ? -count : count;
 
-                    this.DelayFocusOnNode(nodeToFocusId);
+                    StartCoroutine(this.FocusOnNode(nodeToFocusId));
                 }
                 else
                 {
@@ -329,7 +329,7 @@ namespace Unity.Samples.LetterSpell
                         element.transform.GetSiblingIndex());
 
                     // Only refresh the frames for now to leave the announcement request to be handled.
-                    this.DelayRefreshNodeFrames();
+                    StartCoroutine(this.RefreshNodeFrames());
 
                     AssistiveSupport.notificationDispatcher.SendLayoutChanged(element.node);
                 }

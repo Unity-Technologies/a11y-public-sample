@@ -29,13 +29,7 @@ namespace Unity.Samples.ScreenReader
         /// created from. This is often necessary to access information about the node, like its transform to calculate
         /// positions, for example.
         /// </summary>
-        Dictionary<AccessibilityNode, AccessibleElement> m_ElementForNodeMap = new();
-
-        /// <summary>
-        /// Event triggered when the hierarchy is refreshed to allow components to be able to execute actions when that
-        /// happens (e.g. focusing the dropdown after it opens).
-        /// </summary>
-        public static event Action hierarchyRefreshed;
+        Dictionary<AccessibilityNode, AccessibleElement> m_NodeToElement = new();
 
         /// <summary>
         /// Constructor for the UGuiAccessibleSystem class.
@@ -46,7 +40,7 @@ namespace Unity.Samples.ScreenReader
 
         public AccessibleElement GetAccessibleElementForNode(AccessibilityNode node)
         {
-            return m_ElementForNodeMap.GetValueOrDefault(node);
+            return m_NodeToElement.GetValueOrDefault(node);
         }
 
         /// <summary>
@@ -59,6 +53,12 @@ namespace Unity.Samples.ScreenReader
         public static Rect GetFrame(RectTransform rectTransform)
         {
             var canvas = rectTransform.GetComponentInParent<Canvas>();
+
+            if (canvas == null)
+            {
+                return default;
+            }
+
             var camera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
             var elementCorners = new Vector3[4];
             var screenCorners = new Vector3[4];
@@ -137,16 +137,27 @@ namespace Unity.Samples.ScreenReader
             }
         }
 
-        static void SetNodeProperties(AccessibilityNode node, AccessibleElement element)
+        internal void AddToHierarchy(AccessibleElement element, AccessibilityNode parent, int index = -1)
         {
+            var node = hierarchy.InsertNode(index, element.label, parent);
+
             element.node = node;
-            element.SetNodeProperties();
+            m_NodeToElement[node] = element;
+        }
 
-            node.frameGetter = element.GetFrame;
+        internal void RemoveFromHierarchy(AccessibleElement element, bool removeChildren = true)
+        {
+            if (removeChildren)
+            {
+                foreach (var child in element.node.children)
+                {
+                    m_NodeToElement.Remove(child);
+                }
+            }
 
-            node.focusChanged += element.InvokeFocusChanged;
-            node.incremented += element.InvokeIncremented;
-            node.decremented += element.InvokeDecremented;
+            m_NodeToElement.Remove(element.node);
+
+            hierarchy.RemoveNode(element.node, removeChildren);
         }
 
         public override void SetUp(Scene activeScene)
@@ -228,8 +239,8 @@ namespace Unity.Samples.ScreenReader
 
                     hierarchyStack.Push(item);
 
-                    SetNodeProperties(node, element);
-                    m_ElementForNodeMap[node] = element;
+                    element.node = node;
+                    m_NodeToElement[node] = element;
                 }
             }
 
@@ -266,7 +277,7 @@ namespace Unity.Samples.ScreenReader
 
         public override void CleanUp()
         {
-            m_ElementForNodeMap.Clear();
+            m_NodeToElement.Clear();
         }
     }
 }

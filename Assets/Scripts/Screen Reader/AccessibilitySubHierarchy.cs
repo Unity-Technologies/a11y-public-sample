@@ -187,14 +187,15 @@ namespace Unity.Samples.ScreenReader
         /// Removes the specified node from this sub hierarchy.
         /// </summary>
         /// <param name="node">The node to remove</param>
-        public void RemoveNode(AccessibilityNode node)
+        /// <param name="removeChildren"></param>
+        public void RemoveNode(AccessibilityNode node, bool removeChildren = true)
         {
             if (!ContainsNode(node))
             {
                 return;
             }
 
-            mainHierarchy.RemoveNode(node);
+            mainHierarchy.RemoveNode(node, removeChildren);
         }
 
         /// <summary>

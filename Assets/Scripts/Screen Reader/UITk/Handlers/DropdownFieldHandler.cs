@@ -10,6 +10,12 @@ namespace Unity.Samples.ScreenReader
     {
         bool m_HasPendingCheck;
 
+        
+        public override string GetHint()
+        {
+            return "Double tap to expand";
+        }
+        
         protected override void BindToElement(VisualElement element)
         {
             base.BindToElement(element);

@@ -9,15 +9,11 @@
                 </ui:VisualElement>
                 <ui:VisualElement name="loginView" style="flex-grow: 1; align-items: center; justify-content: center;">
                     <ui:VisualElement name="logo" class="lsp-logo"/>
-                    <ui:Label class="title-text">
-                        <Bindings>
-                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(405763420160)"/>
-                        </Bindings>
-                    </ui:Label>
-                    <ui:TextField placeholder-text="Enter your name" name="TextField" style="flex-direction: column; min-width: 252px; width: 949px;">
+                    <ui:TextField placeholder-text="Enter your name" name="loginNameField" label="What is your name?" style="min-width: 252px; width: 949px;">
                         <Bindings>
                             <ui:DataBinding property="value" data-source-path="userName" binding-mode="TwoWay"/>
                             <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(775025750016)"/>
+                            <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(405763420160)"/>
                         </Bindings>
                     </ui:TextField>
                     <ui:Button name="loginButton" class="purple">

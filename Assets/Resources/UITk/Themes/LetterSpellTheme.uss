@@ -136,6 +136,10 @@
     rotate: -15deg;
 }
 
+.lsp-letter-card:focus {
+    border-bottom-color: rgb(255, 0, 0);
+}
+
 .lsp-letter-card__button-container {
     position: absolute;
     top: 100%;
@@ -580,4 +584,15 @@
 }
 
 #clueLabel {
+}
+
+#loginNameField {
+    flex-direction: column;
+}
+
+#loginNameField .unity-base-field__label {
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
+    margin-bottom: 30px;
 }

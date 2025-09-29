@@ -5,11 +5,12 @@ using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 using Unity.Samples.ScreenReader;
+using UnityEditor;
 using Button = UnityEngine.UIElements.Button;
 
 namespace Unity.Samples.LetterSpell
 {
-    class UITkLetterCard : VisualElement
+    class UITkLetterCard : AccessibleVisualElement
     {
         Label m_TextElement;
         Vector2 m_Start;
@@ -27,86 +28,75 @@ namespace Unity.Samples.LetterSpell
         //     public override string GetLabel() => (owner as UITkLetterCard).text;
         // }
 
-       public bool selected => cardListView?.selectedCard == this;
+        private bool m_Selected;
+
+        public bool selected
+        {
+            get => m_Selected;
+            set
+            {
+                if (m_Selected == value)
+                    return;
+                m_Selected = value;
+                if (value)
+                    Focus();
+                UpdateSelectedState();
+            }
+        }
+
+        void UpdateSelectedState()
+        {
+            EnableInClassList("selected", selected);
+        }
 
         public string text
         {
             get => m_TextElement.text;
-            set => m_TextElement.text = value;
+            set
+            {
+                m_TextElement.text = value;
+                accessible.label = value;
+            }
         }
 
         public event Action<int, int> dropped;
-
-        [RegisterAccessibilityHandler(typeof(UITkLetterCard))]
-        [Preserve]
-        class AccessibleLetterCardHandler : VisualElementAccessibilityHandler
-        {
-            UITkLetterCard card => ownerElement as UITkLetterCard;
-
-            public override string GetLabel() => card.text;
-
-            protected override void BindToElement(VisualElement ve)
-            {
-                card.m_TextElement.GetOrCreateAccessibleProperties().ignored = true;
-            }
-
-            public AccessibleLetterCardHandler()
-            {
-                OnSelect += () =>
-                {
-                    var letter = ownerElement as UITkLetterCard;
-
-                    if (!letter.selected)
-                    {
-                        letter.Select();
-                    }
-                    else
-                    {
-                        letter.Unselect();
-                    }
-
-                    return true;
-                };
-            }
-        }
-
+        
         public void Select()
         {
-            cardListView.selectedCard = this;
-            OnScreenDebug.Log("Selected card: " + text);
+            if (cardListView.selectedCard != this)
+            {
+                cardListView.selectedCard = this;
+                
+                // check whether we are focused or not
+                var focused = this.focusController?.focusedElement == this;
+ 
+                AssistiveSupport.notificationDispatcher.SendAnnouncement($"Card {text} selected. Swipe Left or Right to move the card." + (focused ? "Or Double tap to unselect it." : ""));
+   
+                OnScreenDebug.Log("Selected card: " + text);
+            }
         }
 
         public void Unselect()
         {
             if (this == cardListView.selectedCard)
             {
-                cardListView.selectedCard = null;
+                // check whether we are focused or not
+                var focused = this.focusController?.focusedElement == this;
+                cardListView.selectedCard = null; 
+                
+                AssistiveSupport.notificationDispatcher.SendAnnouncement($"Card {text} selected. Swipe Left or Right to move the card." + (focused ? "Or Double tap to unselect it." : ""));
+
             }
         }
+        
         public UITkLetterCard()
         {
             m_TextElement = new Label();
             Add(m_TextElement);
             AddToClassList("lsp-letter-card");
             AddToClassList("lsp-card-view-item");
-
-            // style.transitionProperty = new StyleList<StylePropertyName>(new List<StylePropertyName>{ new StylePropertyName("left")});
-            // style.transitionDuration = new StyleList<TimeValue>(new List<TimeValue>{new(0.5f)});
-            /*style.marginLeft = 4;
-            style.marginTop = 4;
-            style.marginRight = 4;
-            style.marginBottom = 4;
-            */
-            /*style.fontSize = 40;
-            style.alignItems = Align.Center;
-            style.justifyContent = Justify.Center;
-
-            style.borderBottomLeftRadius = 6;
-            style.borderTopLeftRadius = 6;
-            style.borderBottomRightRadius = 6;
-            style.borderTopRightRadius = 6;*/
-
-            // style.backgroundColor = Color.white;
+            
+            focusable = true;
 
             style.position = Position.Absolute;
 
@@ -146,6 +136,26 @@ namespace Unity.Samples.LetterSpell
 
             RegisterCallbacksOnTarget();
             RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
+            RegisterCallback<FocusInEvent>(OnFocusIn);
+            RegisterCallback<BlurEvent>(OnBlur);
+            
+            // Accessibility
+            m_TextElement.GetOrCreateAccessibleProperties().ignored = true;
+            accessible.selected += () => 
+            {
+                if (!selected)
+                {
+                    Select();
+                    OnScreenDebug.Log("Selected card: " + text);
+                }
+                else
+                {
+                    OnScreenDebug.Log("UnSelected card: " + text);
+                    Unselect();
+                }
+
+                return true;
+            };
         }
 
         bool m_Animated;
@@ -173,6 +183,22 @@ namespace Unity.Samples.LetterSpell
             // TODO: FIX ANIMATION WHEN STARTING A GAME
             // schedule.Execute(() => animated = true).ExecuteLater(500);
         }
+
+        void OnFocusIn(FocusInEvent e)
+        {
+            AssistiveSupport.notificationDispatcher.SendAnnouncement($"Double tap to select Card {text} and start moving.");
+
+            OnScreenDebug.Log("OnFocusIn " + text);
+            e.StopPropagation();
+        }
+        
+        void OnBlur(BlurEvent e)
+        {
+            OnScreenDebug.Log("Un Focus " + text);
+            accessible.hint = null;
+            e.StopPropagation();
+        }
+        
         protected Rect CalculatePosition(float x, float y, float width, float height)
         {
             var rect = new Rect(x, y, width, height);
@@ -266,15 +292,6 @@ namespace Unity.Samples.LetterSpell
                 return;
             }
 
-            if (e.ctrlKey)
-            {
-                cardListView.selectedCard = cardListView.selectedCard == this ? null : this;
-            }
-            else
-            {
-                cardListView.selectedCard = this;
-            }
-
             if (m_Active)
             {
                 e.StopImmediatePropagation();
@@ -302,6 +319,8 @@ namespace Unity.Samples.LetterSpell
         {
             if (m_Active)
             {
+                // Ensure the card is selected when we start dragging it.
+                Select();
                 var diff = e.localMousePosition - m_Start;
 
                 if (!dragging && Math.Abs(diff.x) > 5)
@@ -346,6 +365,18 @@ namespace Unity.Samples.LetterSpell
             {
                 if (e.button == (int)MouseButton.LeftMouse)
                 {
+                    // Select or unselect the card if we didn't drag it.
+                    if (!m_Dragging)
+                    {
+                        if (selected)
+                        {
+                            Unselect();
+                        }
+                        else
+                        {
+                            Select();
+                        }
+                    }
                     m_Active = false;
                     dragging = false;
 
@@ -651,10 +682,14 @@ namespace Unity.Samples.LetterSpell
                     return;
                 }
 
-                m_SelectedCard?.RemoveFromClassList("selected");
+                if (m_SelectedCard != null)
+                    m_SelectedCard.selected = false;
+                
                 m_SelectedCard = value;
-                m_SelectedCard?.AddToClassList("selected");
-                m_SelectedCard?.UpdateButtonEnableState();
+                OnScreenDebug.Log("ListView selected card: " + (m_SelectedCard != null ? m_SelectedCard.text : "null"));
+                
+                if (m_SelectedCard != null)
+                    m_SelectedCard.selected = true;
             }
         }
 

@@ -1,4 +1,5 @@
 using System;
+using Unity.Samples.ScreenReader;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -68,7 +69,7 @@ namespace Unity.Samples.LetterSpell
                 }
 
                 m_ActiveView = value;
-
+                index = IndexOf(m_ActiveView);
                 if (panel != null)
                 {
                     StartTransition(oldView, m_ActiveView);
@@ -76,10 +77,8 @@ namespace Unity.Samples.LetterSpell
                 else
                 {
                     UpdateViews();
+                    activeViewChanged?.Invoke();
                 }
-
-                index = IndexOf(m_ActiveView);
-                activeViewChanged?.Invoke();
             }
         }
 
@@ -126,7 +125,12 @@ namespace Unity.Samples.LetterSpell
 
                         fadeOut.onAnimationCompleted += () =>
                         {
+                            activeViewChanged?.Invoke();
                         };
+                    }
+                    else
+                    {
+                        activeViewChanged?.Invoke();
                     }
                 };
             }
@@ -135,6 +139,7 @@ namespace Unity.Samples.LetterSpell
                 // If there is no from, just show the
                 to.style.display = DisplayStyle.Flex;
                 to.style.opacity = 1;
+                activeViewChanged?.Invoke();
             }
         }
 

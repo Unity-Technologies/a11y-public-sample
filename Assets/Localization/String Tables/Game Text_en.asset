@@ -167,6 +167,18 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 2216566543976235777
+  - m_Id: 1468861612453888
+    m_Localized: OS Settings (read-only)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1469259735789568
+    m_Localized: Closed Captions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1475968126578688
+    m_Localized: Bold Text
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

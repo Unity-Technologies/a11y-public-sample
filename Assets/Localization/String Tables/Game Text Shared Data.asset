@@ -159,6 +159,22 @@ MonoBehaviour:
     m_Key: SHOW_RESULTS
     m_Metadata:
       m_Items: []
+  - m_Id: 1468861612453888
+    m_Key: OS_SETTINGS_LABEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1469259735789568
+    m_Key: CLOSED_CAPTIONS_LABEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1475968126578688
+    m_Key: BOLD_TEXT_LABEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1476009310449664
+    m_Key: FONT_SCALE_LABEL
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

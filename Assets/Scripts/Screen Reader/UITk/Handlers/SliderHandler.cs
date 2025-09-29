@@ -15,7 +15,11 @@ namespace Unity.Samples.ScreenReader
 
         public void Step(bool incr)
         {
-            var slider = ownerElement as Slider;
+            if (ownerElement is not Slider slider)
+            {
+                return;
+            }
+
             var step = (slider.highValue - slider.lowValue) / 10f;
 
             if (!incr)

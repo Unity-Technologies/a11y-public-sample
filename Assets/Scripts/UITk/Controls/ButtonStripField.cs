@@ -8,18 +8,18 @@ namespace Unity.Samples.LetterSpell
     [UxmlElement]
     public partial class ButtonStripField : BaseField<int>
     {
-        public const string ussClassName = "lsp-button-strip-field";
-        public const string buttonContainerUssClassName = ussClassName + "__button-container";
-        public const string buttonUssClassName = ussClassName + "__button";
-        public const string buttonLeftUssClassName = buttonUssClassName + "--left";
-        public const string buttonMiddleUssClassName = buttonUssClassName + "--middle";
-        public const string buttonRightUssClassName = buttonUssClassName + "--right";
+        const string k_USSClassName = "lsp-button-strip-field";
+        const string k_ButtonContainerUssClassName = k_USSClassName + "__button-container";
+        const string k_ButtonUssClassName = k_USSClassName + "__button";
+        const string k_ButtonLeftUssClassName = k_ButtonUssClassName + "--left";
+        const string k_ButtonMiddleUssClassName = k_ButtonUssClassName + "--middle";
+        const string k_ButtonRightUssClassName = k_ButtonUssClassName + "--right";
 
         class ButtonBar : VisualElement
         {
             public ButtonBar()
             {
-                AddToClassList(buttonContainerUssClassName);
+                AddToClassList(k_ButtonContainerUssClassName);
             }
         }
 
@@ -42,7 +42,7 @@ namespace Unity.Samples.LetterSpell
         {
             m_ButtonBar = this.Q<ButtonBar>();
             choices = new List<string>();
-            AddToClassList(ussClassName);
+            AddToClassList(k_USSClassName);
             value = -1;
         }
 
@@ -54,7 +54,7 @@ namespace Unity.Samples.LetterSpell
                 text = text
             };
 
-            button.AddToClassList(buttonUssClassName);
+            button.AddToClassList(k_ButtonUssClassName);
             button.RegisterCallback<DetachFromPanelEvent>(OnButtonDetachFromPanel);
             button.clicked += () => { value = m_ButtonBar.IndexOf(button); };
 
@@ -107,21 +107,21 @@ namespace Unity.Samples.LetterSpell
             for (var i = 0; i < m_ButtonBar.childCount; i++)
             {
                 var button = m_ButtonBar[i] as Button;
-                button?.RemoveFromClassList(buttonLeftUssClassName);
-                button?.RemoveFromClassList(buttonMiddleUssClassName);
-                button?.RemoveFromClassList(buttonRightUssClassName);
+                button?.RemoveFromClassList(k_ButtonLeftUssClassName);
+                button?.RemoveFromClassList(k_ButtonMiddleUssClassName);
+                button?.RemoveFromClassList(k_ButtonRightUssClassName);
 
                 if (i == 0)
                 {
-                    button?.AddToClassList(buttonLeftUssClassName);
+                    button?.AddToClassList(k_ButtonLeftUssClassName);
                 }
                 else if (i == m_ButtonBar.childCount - 1)
                 {
-                    button?.AddToClassList(buttonRightUssClassName);
+                    button?.AddToClassList(k_ButtonRightUssClassName);
                 }
                 else
                 {
-                    button?.AddToClassList(buttonMiddleUssClassName);
+                    button?.AddToClassList(k_ButtonMiddleUssClassName);
                 }
             }
         }

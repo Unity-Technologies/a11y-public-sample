@@ -23,8 +23,7 @@ namespace Unity.Samples.ScreenReader
 
         public override string GetLabel()
         {
-            var index = ownerElement.parent.IndexOf(ownerElement);
-            return $"tab {index} {m_Tab.label}";
+            return m_Tab.label;
         }
     }
 

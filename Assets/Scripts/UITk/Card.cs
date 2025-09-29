@@ -2,10 +2,8 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Accessibility;
-using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 using Unity.Samples.ScreenReader;
-using UnityEditor;
 using Button = UnityEngine.UIElements.Button;
 
 namespace Unity.Samples.LetterSpell
@@ -28,7 +26,7 @@ namespace Unity.Samples.LetterSpell
         //     public override string GetLabel() => (owner as UITkLetterCard).text;
         // }
 
-        private bool m_Selected;
+        bool m_Selected;
 
         public bool selected
         {
@@ -60,18 +58,18 @@ namespace Unity.Samples.LetterSpell
         }
 
         public event Action<int, int> dropped;
-        
+
         public void Select()
         {
             if (cardListView.selectedCard != this)
             {
                 cardListView.selectedCard = this;
-                
+
                 // check whether we are focused or not
                 var focused = this.focusController?.focusedElement == this;
- 
+
                 AssistiveSupport.notificationDispatcher.SendAnnouncement($"Card {text} selected. Swipe Left or Right to move the card." + (focused ? "Or Double tap to unselect it." : ""));
-   
+
                 OnScreenDebug.Log("Selected card: " + text);
             }
         }
@@ -82,20 +80,20 @@ namespace Unity.Samples.LetterSpell
             {
                 // check whether we are focused or not
                 var focused = this.focusController?.focusedElement == this;
-                cardListView.selectedCard = null; 
-                
+                cardListView.selectedCard = null;
+
                 AssistiveSupport.notificationDispatcher.SendAnnouncement($"Card {text} selected. Swipe Left or Right to move the card." + (focused ? "Or Double tap to unselect it." : ""));
 
             }
         }
-        
+
         public UITkLetterCard()
         {
             m_TextElement = new Label();
             Add(m_TextElement);
             AddToClassList("lsp-letter-card");
             AddToClassList("lsp-card-view-item");
-            
+
             focusable = true;
 
             style.position = Position.Absolute;
@@ -138,10 +136,10 @@ namespace Unity.Samples.LetterSpell
             RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
             RegisterCallback<FocusInEvent>(OnFocusIn);
             RegisterCallback<BlurEvent>(OnBlur);
-            
+
             // Accessibility
             m_TextElement.GetOrCreateAccessibleProperties().ignored = true;
-            accessible.selected += () => 
+            accessible.selected += () =>
             {
                 if (!selected)
                 {
@@ -191,14 +189,14 @@ namespace Unity.Samples.LetterSpell
             OnScreenDebug.Log("OnFocusIn " + text);
             e.StopPropagation();
         }
-        
+
         void OnBlur(BlurEvent e)
         {
             OnScreenDebug.Log("Un Focus " + text);
             accessible.hint = null;
             e.StopPropagation();
         }
-        
+
         protected Rect CalculatePosition(float x, float y, float width, float height)
         {
             var rect = new Rect(x, y, width, height);
@@ -684,10 +682,10 @@ namespace Unity.Samples.LetterSpell
 
                 if (m_SelectedCard != null)
                     m_SelectedCard.selected = false;
-                
+
                 m_SelectedCard = value;
                 OnScreenDebug.Log("ListView selected card: " + (m_SelectedCard != null ? m_SelectedCard.text : "null"));
-                
+
                 if (m_SelectedCard != null)
                     m_SelectedCard.selected = true;
             }

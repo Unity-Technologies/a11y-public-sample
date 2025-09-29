@@ -197,10 +197,7 @@ namespace Unity.Samples.ScreenReader
 
             // Generate the accessibility hierarchy for the current scene and set it to AssistiveSupport.activeHierarchy
             // so that the screen reader can use it.
-            var lastLoadedScene = GetLastLoadedScene();
-
-            GenerateHierarchy(lastLoadedScene);
-            AssistiveSupport.activeHierarchy = hierarchy;
+            RebuildHierarchy();
         }
 
         void OnDisable()

@@ -431,6 +431,12 @@ namespace Unity.Samples.LetterSpell
                 // Trigger the bound strings to update.
                 m_PlayerSettings.Notify("boldTextEnabledText");
                 m_PlayerSettings.Notify("closedCaptionsEnabledText");
+
+                // Update text direction
+                if (loc.Identifier.CultureInfo.TextInfo.IsRightToLeft)
+                    root.languageDirection = LanguageDirection.RTL;
+                else
+                    root.languageDirection = LanguageDirection.LTR;
             };
 
             ShowSplash();

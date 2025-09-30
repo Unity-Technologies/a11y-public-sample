@@ -72,7 +72,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3801748762624
-    m_Localized: "\u304B\u3093\u305F\u3093,\u3080\u305A\u304B\u3057\u3044"
+    m_Localized: "F\xE1cil,Dif\xEDcil"
     m_Metadata:
       m_Items: []
   - m_Id: 17127719464960
@@ -140,19 +140,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36438190223360
-    m_Localized: "Ingl\xE9s"
+    m_Localized: "Ingl\xE9s (English)"
     m_Metadata:
       m_Items: []
   - m_Id: 36495383752704
-    m_Localized: "\xC1rabe (Espa\xF1ol)"
+    m_Localized: "\xC1rabe (\u0627\u0644\u0625\u0633\u0628\u0627\u0646\u064A\u0629)"
     m_Metadata:
       m_Items: []
   - m_Id: 36529051430912
-    m_Localized: "Espa\xF1ol (Spanish)"
+    m_Localized: "Espa\xF1ol"
     m_Metadata:
       m_Items: []
   - m_Id: 36559753736192
-    m_Localized: "Japon\xE9s (Japon\xE9s)"
+    m_Localized: "Japon\xE9s (\u65E5\u672C\u8A9E)"
     m_Metadata:
       m_Items: []
   - m_Id: 36785994493952
@@ -160,8 +160,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 45343066714112
-    m_Localized: "\xA1El juego ha terminado!\\n\\nEncontraste {completedWords:plural:{}
-      palabra|{} palabras} de un total de {totalWords}."
+    m_Localized: "\xA1El juego ha terminado!\\n\\nEncontraste {orderedWordCount:plural:{}
+      palabra|{} palabras} de un total de {totalWordCount}."
     m_Metadata:
       m_Items:
       - rid: 2216566543976235779

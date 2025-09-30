@@ -178,7 +178,7 @@ namespace Unity.Samples.LetterSpell
 
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
-        void Notify([CallerMemberName] string property = "")
+        public void Notify([CallerMemberName] string property = "")
         {
             propertyChanged?.Invoke(this, new BindablePropertyChangedEventArgs(property));
         }
@@ -357,7 +357,12 @@ namespace Unity.Samples.LetterSpell
             m_GameView = m_StackView.Q("gameView");
 
             m_ClueLabel = m_GameView.Q<Label>("clueLabel");
-            m_ClueLabel.GetOrCreateAccessibleProperties().label = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "CLUE_LABEL");
+            var localizedClue = new LocalizedString
+            {
+                TableReference = "Game Text",
+                TableEntryReference = "CLUE_LABEL"
+            };
+            localizedClue.StringChanged += s => m_ClueLabel.GetOrCreateAccessibleProperties().label = s;
 
             m_SuccessPill = m_GameView.Q("successPill");
             m_SuccessPill.GetOrCreateAccessibleProperties().ignored = true;
@@ -368,7 +373,12 @@ namespace Unity.Samples.LetterSpell
 
             m_PauseGameButton = m_GameView.Q<Button>("pauseGameButton");
             m_PauseGameButton.clicked += ShowExitGamePopup;
-            m_PauseGameButton.GetOrCreateAccessibleProperties().label = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "PAUSE_LABEL");
+            var localizedPause = new LocalizedString
+            {
+                TableReference = "Game Text",
+                TableEntryReference = "PAUSE_LABEL"
+            };
+            localizedPause.StringChanged += s => m_PauseGameButton.GetOrCreateAccessibleProperties().label = s;
 
             m_NextWordButton = m_GameView.Q<Button>("nextWordButton");
             m_NextWordButton.clicked += ShowNextWord;
@@ -415,6 +425,13 @@ namespace Unity.Samples.LetterSpell
             OnBoldTextStatusChanged(AccessibilitySettings.isBoldTextEnabled);
             OnClosedCaptioningStatusChanged(AccessibilitySettings.isClosedCaptioningEnabled);
             OnFontScaleValueChanged(AccessibilitySettings.fontScale);
+
+            LocalizationSettings.SelectedLocaleChanged += loc =>
+            {
+                // Trigger the bound strings to update.
+                m_PlayerSettings.Notify("boldTextEnabledText");
+                m_PlayerSettings.Notify("closedCaptionsEnabledText");
+            };
 
             ShowSplash();
         }

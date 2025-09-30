@@ -68,7 +68,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3801748762624
-    m_Localized: Easy,Hard
+    m_Localized: "\u0635\u0639\u0628"
     m_Metadata:
       m_Items: []
   - m_Id: 17127719464960
@@ -162,8 +162,8 @@ MonoBehaviour:
   - m_Id: 45343066714112
     m_Localized: 'The game is over!
 
-      You found {orderedWordCount} words out
-      of {totalWordCount}'
+      You found {orderedWordCount:plural:{}
+      word|{} words} out of {totalWordCount}'
     m_Metadata:
       m_Items:
       - rid: 2216566543976235777
@@ -175,8 +175,48 @@ MonoBehaviour:
     m_Localized: Closed Captions
     m_Metadata:
       m_Items: []
-  - m_Id: 1475968126578688
+  - m_Id: 1486964262072320
+    m_Localized: A fun spelling game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1782766347907072
+    m_Localized: Double tap to start moving.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1782851584552960
+    m_Localized: Bravo! You found the correct word.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1783465118953472
+    m_Localized: Double tap to expand options.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1783541123936256
+    m_Localized: Swipe left to navigate options. Double tap to close options.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1784705534029824
+    m_Localized: Off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1784705072656384
+    m_Localized: On
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1785195248381952
+    m_Localized: Clue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1785227762626560
+    m_Localized: Pause the game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1788997179437056
     m_Localized: Bold Text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1789109230268416
+    m_Localized: Font Scale
     m_Metadata:
       m_Items: []
   references:

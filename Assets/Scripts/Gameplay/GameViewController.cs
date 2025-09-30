@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings;
 
 namespace Unity.Samples.LetterSpell
 {
@@ -48,9 +49,6 @@ namespace Unity.Samples.LetterSpell
         /// Keeps track of whether the hierarchy was refreshed using AccessibilityManager.RefreshHierarchy();
         /// </summary>
         bool m_WasHierarchyRefreshed;
-
-        const string k_LetterCardHint = "Double tap to start moving";
-        const string k_SuccessAnnouncement = "Bravo! You found the correct word.";
 
         void OnEnable()
         {
@@ -143,7 +141,7 @@ namespace Unity.Samples.LetterSpell
 
                 var element = card.AddComponent<AccessibleElement>();
                 element.label = letterCardModel.letter.ToString();
-                element.hint = k_LetterCardHint;
+                element.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT");
                 element.selected += OnLetterCardSelected;
             }
 
@@ -207,7 +205,7 @@ namespace Unity.Samples.LetterSpell
                 const float announcementDelay = 1f;
 
                 yield return new WaitForSeconds(announcementDelay);
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(k_SuccessAnnouncement);
+                AssistiveSupport.notificationDispatcher.SendAnnouncement(LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "SUCCESS_ANNOUNCEMENT"));
 
                 const float imageDuration = 2f;
                 const float fadeOutDelay = imageDuration - announcementDelay - fadeDuration;
@@ -284,7 +282,7 @@ namespace Unity.Samples.LetterSpell
             {
                 var element = letterCardTransform.GetComponent<AccessibleElement>();
                 element.label = hasLabel ? letterCardTransform.name : null;
-                element.hint = hasLabel ? k_LetterCardHint : null;
+                element.hint = hasLabel ? LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT") : null;
                 element.SetNodeProperties();
             }
         }

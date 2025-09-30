@@ -9,6 +9,7 @@ using Unity.Samples.ScreenReader;
 using UnityEngine.Localization;
 using UnityEngine.Localization.SmartFormat.Extensions;
 using UnityEngine.Localization.SmartFormat.PersistentVariables;
+using UnityEngine.Localization.Settings;
 
 namespace Unity.Samples.LetterSpell
 {
@@ -22,8 +23,6 @@ namespace Unity.Samples.LetterSpell
         const string k_MusicPref = "MusicVolume";
         const string k_ColorThemePref = "ColorTheme";
         const string k_DisplaySizePref = "DisplaySize";
-        const string k_SettingOn = "On";
-        const string k_SettingOff = "Off";
 
         [CreateProperty]
         public string userName
@@ -169,10 +168,10 @@ namespace Unity.Samples.LetterSpell
         }
 
         [CreateProperty]
-        public string closedCaptionsEnabledText => AccessibilitySettings.isClosedCaptioningEnabled ? k_SettingOn : k_SettingOff;
+        public string closedCaptionsEnabledText => LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", AccessibilitySettings.isClosedCaptioningEnabled ? "SETTING_ON" : "SETTING_OFF");
 
         [CreateProperty]
-        public string boldTextEnabledText => AccessibilitySettings.isBoldTextEnabled ? k_SettingOn : k_SettingOff;
+        public string boldTextEnabledText => LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", AccessibilitySettings.isBoldTextEnabled ? "SETTING_ON" : "SETTING_OFF");
 
         [CreateProperty]
         public float fontScale => AccessibilitySettings.fontScale;
@@ -218,9 +217,6 @@ namespace Unity.Samples.LetterSpell
         Button m_InGameSettingsButton;
         VisualElement m_LastView;
         LetterCardListModel m_Model = new();
-
-        const string k_ClueLabel = "Clue";
-        const string k_PauseLabel = "Pause the game";
 
         Gameplay.DifficultyLevel m_SelectedDifficultyLevel = Gameplay.DifficultyLevel.Hard;
 
@@ -361,7 +357,7 @@ namespace Unity.Samples.LetterSpell
             m_GameView = m_StackView.Q("gameView");
 
             m_ClueLabel = m_GameView.Q<Label>("clueLabel");
-            m_ClueLabel.GetOrCreateAccessibleProperties().label = k_ClueLabel;
+            m_ClueLabel.GetOrCreateAccessibleProperties().label = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "CLUE_LABEL");
 
             m_SuccessPill = m_GameView.Q("successPill");
             m_SuccessPill.GetOrCreateAccessibleProperties().ignored = true;
@@ -372,7 +368,7 @@ namespace Unity.Samples.LetterSpell
 
             m_PauseGameButton = m_GameView.Q<Button>("pauseGameButton");
             m_PauseGameButton.clicked += ShowExitGamePopup;
-            m_PauseGameButton.GetOrCreateAccessibleProperties().label = k_PauseLabel;
+            m_PauseGameButton.GetOrCreateAccessibleProperties().label = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "PAUSE_LABEL");
 
             m_NextWordButton = m_GameView.Q<Button>("nextWordButton");
             m_NextWordButton.clicked += ShowNextWord;

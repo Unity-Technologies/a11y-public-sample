@@ -1,5 +1,6 @@
 using Unity.Samples.LetterSpell;
 using UnityEngine.Accessibility;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -10,11 +11,9 @@ namespace Unity.Samples.ScreenReader
     {
         bool m_HasPendingCheck;
 
-        const string k_Hint = "Double tap to expand options.";
-
         public override string GetHint()
         {
-            return k_Hint;
+            return LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "DROPDOWN_CLOSED_HINT");
         }
 
         protected override void BindToElement(VisualElement element)

@@ -24,7 +24,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 405763420160
-    m_Localized: "\xBFCu\xE1l es tu nombre?"
+    m_Localized: "\xBFC\xF3mo te llamas?"
     m_Metadata:
       m_Items: []
   - m_Id: 602912485376
@@ -36,11 +36,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1101841723392
-    m_Localized: "Jugar F\xE1cil"
+    m_Localized: "Jugar f\xE1cil"
     m_Metadata:
       m_Items: []
   - m_Id: 1118581190656
-    m_Localized: "Jugar Dif\xEDcil"
+    m_Localized: "Jugar dif\xEDcil"
     m_Metadata:
       m_Items: []
   - m_Id: 1976530268160
@@ -48,7 +48,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2162409238528
-    m_Localized: Siguiente Palabra
+    m_Localized: Siguiente palabra
     m_Metadata:
       m_Items: []
   - m_Id: 2696889397248
@@ -56,39 +56,39 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2876929896448
-    m_Localized: "Opciones de B\xFAsqueda"
+    m_Localized: Buscar opciones
     m_Metadata:
       m_Items: []
   - m_Id: 3051354222592
-    m_Localized: Jugabilidad
+    m_Localized: Juego
     m_Metadata:
       m_Items: []
   - m_Id: 3183403495424
-    m_Localized: Nombre de Usuario
+    m_Localized: Nombre de usuario
     m_Metadata:
       m_Items: []
   - m_Id: 3577265418240
-    m_Localized: Nivel de Dificultad
+    m_Localized: Nivel de dificultad
     m_Metadata:
       m_Items: []
   - m_Id: 3801748762624
-    m_Localized: "F\xE1cil,Dif\xEDcil"
+    m_Localized: "\u304B\u3093\u305F\u3093,\u3080\u305A\u304B\u3057\u3044"
     m_Metadata:
       m_Items: []
   - m_Id: 17127719464960
-    m_Localized: "N\xFAmero de Palabras"
+    m_Localized: "N\xFAmero de palabras"
     m_Metadata:
       m_Items: []
   - m_Id: 17263564582912
-    m_Localized: Tres
+    m_Localized: 3
     m_Metadata:
       m_Items: []
   - m_Id: 17369965686784
-    m_Localized: Seis
+    m_Localized: 6
     m_Metadata:
       m_Items: []
   - m_Id: 17491977990144
-    m_Localized: "Mostrar Pistas de Ortograf\xEDa"
+    m_Localized: "Mostrar pistas de ortograf\xEDa"
     m_Metadata:
       m_Items: []
   - m_Id: 17616599150592
@@ -96,11 +96,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 17717329555456
-    m_Localized: Volumen de Efectos de Sonido
+    m_Localized: Volumen de efectos de sonido
     m_Metadata:
       m_Items: []
   - m_Id: 17842659553280
-    m_Localized: "Volumen de M\xFAsica"
+    m_Localized: "Volumen de la m\xFAsica"
     m_Metadata:
       m_Items: []
   - m_Id: 18100730884096
@@ -112,11 +112,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18441962680320
-    m_Localized: Tema de Color
+    m_Localized: Tema de color
     m_Metadata:
       m_Items: []
   - m_Id: 19534851502080
-    m_Localized: "Tama\xF1o de Pantalla"
+    m_Localized: "Tama\xF1o de pantalla"
     m_Metadata:
       m_Items: []
   - m_Id: 19656456957952
@@ -124,46 +124,100 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 20147798700032
-    m_Localized: Salir
+    m_Localized: Terminar juego
     m_Metadata:
       m_Items: []
   - m_Id: 20374383390720
-    m_Localized: Reanudar
+    m_Localized: Continuar
     m_Metadata:
       m_Items: []
   - m_Id: 21672893771776
-    m_Localized: "Men\xFA Principal"
+    m_Localized: "Men\xFA principal"
     m_Metadata:
       m_Items: []
   - m_Id: 21754405875712
-    m_Localized: Jugar de Nuevo
+    m_Localized: Jugar de nuevo
     m_Metadata:
       m_Items: []
   - m_Id: 36438190223360
-    m_Localized: "Ingl\xE9s (English)"
+    m_Localized: "Ingl\xE9s"
     m_Metadata:
       m_Items: []
   - m_Id: 36495383752704
-    m_Localized: "\xC1rabe (\u0627\u0644\u0625\u0633\u0628\u0627\u0646\u064A\u0629)"
+    m_Localized: "\xC1rabe (Espa\xF1ol)"
     m_Metadata:
       m_Items: []
   - m_Id: 36529051430912
-    m_Localized: "Espa\xF1ol"
+    m_Localized: "Espa\xF1ol (Spanish)"
     m_Metadata:
       m_Items: []
   - m_Id: 36559753736192
-    m_Localized: 
+    m_Localized: "Japon\xE9s (Japon\xE9s)"
     m_Metadata:
       m_Items: []
   - m_Id: 36785994493952
-    m_Localized: 
+    m_Localized: Idioma
     m_Metadata:
       m_Items: []
   - m_Id: 45343066714112
-    m_Localized: 
+    m_Localized: "\xA1El juego ha terminado!\\n\\nEncontraste {completedWords:plural:{}
+      palabra|{} palabras} de un total de {totalWords}."
     m_Metadata:
       m_Items:
       - rid: 2216566543976235779
+  - m_Id: 1468861612453888
+    m_Localized: "Configuraci\xF3n del SO (solo lectura)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1469259735789568
+    m_Localized: "Subt\xEDtulos cerrados"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1486964262072320
+    m_Localized: "Un juego de ortograf\xEDa divertido"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1782766347907072
+    m_Localized: Toca dos veces para empezar a mover.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1782851584552960
+    m_Localized: "\xA1Bravo! Encontraste la palabra correcta."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1783465118953472
+    m_Localized: Toca dos veces para expandir las opciones.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1783541123936256
+    m_Localized: Desliza a la izquierda para navegar por las opciones. Toca dos veces
+      para cerrar las opciones.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1784705072656384
+    m_Localized: Activado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1784705534029824
+    m_Localized: Desactivado
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1785195248381952
+    m_Localized: Pista
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1785227762626560
+    m_Localized: Pausar el juego
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1788997179437056
+    m_Localized: Texto en negrita
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1789109230268416
+    m_Localized: "Tama\xF1o de fuente"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

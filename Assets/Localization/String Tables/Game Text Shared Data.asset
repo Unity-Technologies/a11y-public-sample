@@ -167,11 +167,47 @@ MonoBehaviour:
     m_Key: CLOSED_CAPTIONS_LABEL
     m_Metadata:
       m_Items: []
-  - m_Id: 1475968126578688
+  - m_Id: 1486964262072320
+    m_Key: GAME_SUBTITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1782766347907072
+    m_Key: LETTER_CARD_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1782851584552960
+    m_Key: SUCCESS_ANNOUNCEMENT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1783465118953472
+    m_Key: DROPDOWN_CLOSED_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1783541123936256
+    m_Key: DROPDOWN_OPEN_HINT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1784705072656384
+    m_Key: SETTING_ON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1784705534029824
+    m_Key: SETTING_OFF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1785195248381952
+    m_Key: CLUE_LABEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1785227762626560
+    m_Key: PAUSE_LABEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1788997179437056
     m_Key: BOLD_TEXT_LABEL
     m_Metadata:
       m_Items: []
-  - m_Id: 1476009310449664
+  - m_Id: 1789109230268416
     m_Key: FONT_SCALE_LABEL
     m_Metadata:
       m_Items: []

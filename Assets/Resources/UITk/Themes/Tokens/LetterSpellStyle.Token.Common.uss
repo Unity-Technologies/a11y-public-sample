@@ -1,0 +1,35 @@
+:root {
+    /* Spacing */
+    --lsp-spacing-sm: 15px;
+    --lsp-spacing-md: 30px;
+    --lsp-spacing-lg: 70px;
+
+    /* Dropdown */
+    --lsp-popup-field-arrow-width-md: 50px;
+    
+    /* Size */
+    --lsp-field-label-min-width: 680px;
+    
+    /* Border */
+    --lsp-border-radius-xs: 7px;
+    --lsp-border-radius-sm: 20px;
+    --lsp-border-radius-md: 30px;
+    --lsp-border-radius-lg: 33px;
+
+    --lsp-border-width-sm: 6px;
+    --lsp-border-width-md: 10px;
+    
+    /* Checkmark */
+    --lsp-checkmark-size-xs: 20px;
+    --lsp-checkmark-size-sm: 50px;
+    --lsp-checkmark-size-md: 70px;
+
+    --lsp-font-size-md: 64px;
+    
+    --lsp-font-bold: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
+
+    /* Slider */
+    --lsp-slider-groove-height-md: 10px;
+    --lsp-slider-thumb-width-md: 40px;
+    --lsp-slider-thumb-height-md: 70px;
+}

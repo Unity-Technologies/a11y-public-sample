@@ -1,0 +1,14 @@
+:root {
+    --lsp-color-green: rgb(2, 197, 132);
+    --lsp-color-transparent: rgba(0, 0, 0, 0);
+    --lsp-color-white: white;
+    --lsp-color-black: black;
+    --lsp-color-gray-164: rgb(164, 164, 164);
+    --lsp-color-yellow: rgb(220, 180, 0);
+    --lsp-color-yellow-darker-130: rgb(170, 130, 0);
+    --lsp-color-yellow-darker-180: rgb(120, 80, 0);
+    --lsp-color-blue-600: #59a7f6;
+    --lsp-color-purple: rgb(161, 116, 244);
+    --lsp-color-purple-lighter-130: rgb(191, 156, 255);
+    --lsp-color-purple-darker-120: rgb(121, 76, 194);
+}

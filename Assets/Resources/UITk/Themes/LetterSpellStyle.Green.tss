@@ -1,0 +1,24 @@
+@import url("Tokens/LetterSpellStyle.Token.Colors.Green.uss");
+@import url("LetterSpellStyle.Common.uss");
+
+:root {
+    --lsp-primary-color: var(--lsp-color-green);
+    --lsp-accent-color: var(--lsp-color-purple);
+    --lsp-accent-color-hover: var(--lsp-color-purple-lighter-130);
+    --lsp-accent-color-checked: var(--lsp-color-purple-darker-120);
+
+    --lsp-control-bg-color: var(--lsp-color-white);
+    --lsp-control-bg-color-hover: var(--lsp-color-yellow);
+    --lsp-control-bg-color-checked: var(--lsp-color-yellow-darker-130);
+    --lsp-control-border-color: var(--lsp-color-black);
+    --lsp-control-border-color-hover: var(--lsp-color-yellow);
+    --lsp-control-border-color-focus: var(--lsp-color-blue-600);
+
+    --lsp-input-bg-color: var(--lsp-color-white);
+    --lsp-input-bg-color-hover: var(--lsp-color-yellow);
+    --lsp-input-bg-color-checked: var(--lsp-color-yellow-darker-130);
+    --lsp-input-border-color: var(--lsp-color-black);
+    
+    /* Images */
+    --unity-icons-dropdown: url("project://database/Assets/UI/Images/Dropdown-Arrow.png?fileID=2800000&guid=29e091d0e13ce4d928a786bc1ff99351&type=3#Dropdown-Arrow");
+}

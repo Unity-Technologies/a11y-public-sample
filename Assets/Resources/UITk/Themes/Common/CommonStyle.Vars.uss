@@ -1,0 +1,12 @@
+:root {
+    --lsp-metrics-default-font_size: 64px;
+    --lsp-metrics-default-margin: 30px;
+    --lsp-metrics-default-hmargin: 70px;
+    --lsp-metrics-default-vpadding: 30px;
+    --lsp-metrics-default-hpadding: 70px;
+    --lsp-metrics-default-border_radius: 30px;
+    --lsp-metrics-default-border_inner_radius: 20px;
+    --lsp-metrics-default-border_width: 30px;
+    --lsp-metrics-dropdown_checkmark-width: 50px;
+    --lsp-metrics-dropdown_checkmark-height: 50px;
+}

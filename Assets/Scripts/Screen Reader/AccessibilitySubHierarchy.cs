@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Accessibility;
 
@@ -17,7 +18,7 @@ namespace Unity.Samples.ScreenReader
         /// <summary>
         /// Returns the node used as root for this sub-hierarchy.
         /// </summary>
-        public AccessibilityNode rootNode { get; private set; }
+        public List<AccessibilityNode> rootNodes { get; private set; }
 
         /// <summary>
         /// Returns true if this sub-hierarchy is valid.
@@ -27,25 +28,11 @@ namespace Unity.Samples.ScreenReader
         /// <summary>
         /// Constructs a sub-hierarchy from the specified hierarchy and root node.
         /// </summary>
-        /// <param name="mainHierarchy"></param>
-        /// <param name="rootNode"></param>
-        public AccessibilitySubHierarchy(AccessibilityHierarchy mainHierarchy, AccessibilityNode rootNode)
+        /// <param name="hierarchy"></param>
+        public AccessibilitySubHierarchy(AccessibilityHierarchy hierarchy)
         {
-            // Assert that the main hierarchy exists.
-            if (mainHierarchy == null)
-            {
-                throw new System.ArgumentNullException(nameof(mainHierarchy), "The main hierarchy cannot be null.");
-            }
-
-            // Assert that the root node belongs to the main hierarchy.
-            if (rootNode != null && !mainHierarchy.ContainsNode(rootNode))
-            {
-                throw new System.ArgumentException("The root node must belong to the main hierarchy.", nameof(rootNode));
-            }
-
-            // Note: if the root element is null then the sub-hierarchy represents the whole hierarchy.
-            this.mainHierarchy = mainHierarchy;
-            this.rootNode = rootNode;
+            mainHierarchy = hierarchy ?? throw new System.ArgumentNullException(nameof(hierarchy), "The main hierarchy cannot be null.");
+            rootNodes = new List<AccessibilityNode>();
         }
 
         /// <summary>
@@ -53,13 +40,19 @@ namespace Unity.Samples.ScreenReader
         /// </summary>
         public void Dispose()
         {
-            if (mainHierarchy != null && rootNode != null && mainHierarchy.ContainsNode(rootNode))
+            if (mainHierarchy != null)
             {
-                mainHierarchy.RemoveNode(rootNode);
+                foreach (var rootNode in rootNodes)
+                {
+                    if (mainHierarchy.ContainsNode(rootNode))
+                    {
+                        mainHierarchy.RemoveNode(rootNode);
+                    }
+                }
             }
 
             mainHierarchy = null;
-            rootNode = null;
+            rootNodes?.Clear();
         }
 
         /// <summary>
@@ -80,16 +73,16 @@ namespace Unity.Samples.ScreenReader
             }
 
             // We know the node is in the main hierarchy, now we need to check if it's part of this sub-hierarchy.
-            var parentNode = node.parent;
+            var currentNode = node;
 
-            while (parentNode != null)
+            while (currentNode != null)
             {
-                if (parentNode == rootNode)
+                if (rootNodes.Contains(currentNode))
                 {
                     return true;
                 }
 
-                parentNode = parentNode.parent;
+                currentNode = currentNode.parent;
             }
 
             return false;
@@ -159,9 +152,14 @@ namespace Unity.Samples.ScreenReader
                 return null;
             }
 
-            var actualParent = parent ?? rootNode;
+            var node = mainHierarchy.InsertNode(childIndex, label, parent);
 
-            return mainHierarchy.AddNode(label, actualParent);
+            if (parent == null)
+            {
+                rootNodes.Add(node);
+            }
+
+            return node;
         }
 
         /// <summary>
@@ -178,9 +176,7 @@ namespace Unity.Samples.ScreenReader
                 return false;
             }
 
-            var actualParent = newParent ?? rootNode;
-
-            return mainHierarchy.MoveNode(node, actualParent, newChildIndex);
+            return mainHierarchy.MoveNode(node, newParent, newChildIndex);
         }
 
         /// <summary>
@@ -203,12 +199,12 @@ namespace Unity.Samples.ScreenReader
         /// </summary>
         public void Clear()
         {
-            if (rootNode != null)
+            if (rootNodes is { Count: > 0 })
             {
                 // Removes from the last to the first to avoid messing up the indices.
-                for (var i = rootNode.children.Count - 1; i >= 0; i--)
+                for (var i = rootNodes.Count - 1; i >= 0; i--)
                 {
-                    mainHierarchy.RemoveNode(rootNode.children[i]);
+                    mainHierarchy.RemoveNode(rootNodes[i]);
                 }
             }
             else

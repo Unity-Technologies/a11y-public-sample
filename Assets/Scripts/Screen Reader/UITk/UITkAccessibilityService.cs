@@ -27,51 +27,8 @@ namespace Unity.Samples.ScreenReader
             AssistiveSupport.nodeFocusChanged += OnNodeFocusChanged;
         }
 
-        bool m_NeedsToRecomputeRootFrames;
-
-        public void DirtyRootFrames()
-        {
-            m_NeedsToRecomputeRootFrames = true;
-        }
-
-        public void UpdateRootAndPanelFrames()
-        {
-            m_NeedsToRecomputeRootFrames = true;
-
-            foreach (var accessibilityUpdater in m_AccessibilityUpdaters)
-            {
-                accessibilityUpdater.UpdateRootFrame();
-            }
-
-            var serviceRootFrame = Rect.zero;
-
-            foreach (var panelNode in hierarchy.rootNode.children)
-            {
-                // Calculate the union of all root nodes frames.
-                if (panelNode.frame.size != Vector2.zero)
-                {
-                    Encompass(ref serviceRootFrame, panelNode.frame);
-                }
-            }
-
-            hierarchy.rootNode.frame = serviceRootFrame;
-            void Encompass(ref Rect a, Rect b)
-            {
-                a.xMin = Math.Min(a.xMin, b.xMin);
-                a.yMin = Math.Min(a.yMin, b.yMin);
-                a.xMax = Math.Max(a.xMax, b.xMax);
-                a.yMax = Math.Max(a.yMax, b.yMax);
-            }
-        }
-
         public override void Update()
         {
-            if (m_NeedsToRecomputeRootFrames)
-            {
-                UpdateRootAndPanelFrames();
-                m_NeedsToRecomputeRootFrames = false;
-            }
-
             foreach (var accessibilityUpdater in m_AccessibilityUpdaters)
             {
                 accessibilityUpdater.Update();
@@ -170,11 +127,6 @@ namespace Unity.Samples.ScreenReader
                 }
 
                 var panel = uiDocument.runtimePanel;
-                var rootAcc = uiDocument.rootVisualElement.GetOrCreateAccessibleProperties();
-
-                rootAcc.label = uiDocument.rootVisualElement.name;
-                rootAcc.active = Application.platform == RuntimePlatform.OSXPlayer; // false;
-                rootAcc.role = AccessibilityRole.Container;
 
                 if (!panels.Contains(panel))
                 {

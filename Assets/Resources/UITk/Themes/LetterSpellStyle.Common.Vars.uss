@@ -22,9 +22,15 @@
     --unity-colors-button-background-checked: var(--lsp-control-bg-color-checked);
     
     /* DropdownField */
+    --unity-metrics-dropdown_popup-border_width: var(--lsp-border-width-md);
+    --unity-metrics-dropdown_popup-border_radius: var(--lsp-border-radius-md);
     --unity-metrics-dropdown_item_checkmark-width: var(--lsp-checkmark-size-sm);
     --unity-metrics-dropdown_item_checkmark-height: var(--lsp-checkmark-size-sm);
     --unity-metrics-dropdown_item_checkmark-margin: var(--lsp-spacing-md);
+    
+    --unity-colors-dropdown_popup-border: var(--lsp-control-border-color);
+    --unity-colors-dropdown_popup-background: var(--lsp-secondary-color);
+    --unity-colors-dropdown_item-background-hover: var(--lsp-primary-color);
     
     /* Input Field */
     --unity-metrics-input_field-border_width: var(--lsp-border-width-md);
@@ -97,6 +103,13 @@
     --unity-colors-slider_thumb-border: var(--lsp-control-border-color);
     --unity-colors-slider_thumb-border-focus: var(--lsp-control-border-color-focus);
 
+    /* Window */
+    --unity-metrics-window-border_width: var(--lsp-border-width-md);
+    --unity-metrics-window-border_radius: var(--lsp-border-radius-md);
+    
+    --unity-colors-window-background: var(--lsp-color-white);
+    --unity-colors-window-border: var(--lsp-color-black);
+     
     /***************************************/
     /*   LetterSpellStyle Specific Styles  */
     /***************************************/

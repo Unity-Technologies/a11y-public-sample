@@ -6,7 +6,7 @@
     --lsp-spacing-lg: 70px;
     --lsp-spacing-xl: 100px;
     --lsp-spacing-xxl: 140px;
-
+    
     /* Dropdown */
     --lsp-popup-field-arrow-width-md: 50px;
     

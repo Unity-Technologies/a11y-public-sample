@@ -3,7 +3,7 @@
     <ui:VisualElement name="root" style="flex-grow: 1; background-color: rgb(11, 163, 109);">
         <ui:VisualElement name="logo" class="lsp-logo"/>
         <ui:VisualElement name="clueContainer">
-            <ui:Label text="#clue" name="clueLabel" class="lsp-title-text" style="-unity-text-align: middle-center;"/>
+            <ui:Label text="#clue" name="clueLabel" class="lsp-h1" style="-unity-text-align: middle-center;"/>
             <ui:VisualElement name="successPill" class="lsp-pill">
                 <ui:VisualElement name="successPillCheckmark"/>
                 <ui:Label text="Correct" class="success-pill__label"/>

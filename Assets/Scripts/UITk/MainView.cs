@@ -22,8 +22,7 @@ namespace Unity.Samples.LetterSpell
         Button m_LoginButton;
         Button m_EasyButton;
         Button m_HardButton;
-        Button m_StartGameButton;
-        VisualElement m_LevelChoiceView;
+        VisualElement m_MainMenu;
         VisualElement m_GameView;
         Label m_ClueLabel;
         VisualElement m_SuccessPill;
@@ -156,22 +155,16 @@ namespace Unity.Samples.LetterSpell
             m_LoginView = m_StackView.Q("loginView");
             m_LoginView.dataSource = m_PlayerSettings;
             
-            m_LoginButton = m_LoginView.Q<Button>("loginButton");
+            m_LoginButton = m_LoginView.Q<Button>("nextButton");
             m_LoginButton.clicked += ShowLevelChoiceView;
 
-            m_LevelChoiceView = m_StackView.Q("levelChoiceView");
+            m_MainMenu = m_StackView.Q("mainMenu");
 
-            m_EasyButton = m_LevelChoiceView.Q<Button>("easyButton");
+            m_EasyButton = m_MainMenu.Q<Button>("easyButton");
             m_EasyButton.clicked += () => ShowGameView(Gameplay.DifficultyLevel.Easy);
-            // selectedDifficultyLevel = Gameplay.DifficultyLevel.Easy;
 
-            m_HardButton = m_LevelChoiceView.Q<Button>("hardButton");
+            m_HardButton = m_MainMenu.Q<Button>("hardButton");
             m_HardButton.clicked += () => ShowGameView(Gameplay.DifficultyLevel.Hard);
-            // selectedDifficultyLevel = Gameplay.DifficultyLevel.Hard;
-
-            m_StartGameButton = m_LevelChoiceView.Q<Button>("startGameButton");
-            m_StartGameButton.clicked += () => ShowGameView(selectedDifficultyLevel);
-            m_StartGameButton.style.display = DisplayStyle.None;
 
             UpdateChoiceButtons();
 
@@ -182,7 +175,6 @@ namespace Unity.Samples.LetterSpell
 
             m_SuccessPill = m_GameView.Q("successPill");
             m_SuccessPill.GetOrCreateAccessibleProperties().ignored = true;
-            // m_SuccessImage.style.display = DisplayStyle.None;
             m_SuccessPill.style.opacity = 0;
 
             m_LetterCardView = m_GameView.Q<LetterCardView>("letterCardView");
@@ -195,9 +187,7 @@ namespace Unity.Samples.LetterSpell
             m_NextWordButton = m_GameView.Q<Button>("nextWordButton");
             m_NextWordButton.clicked += ShowNextWord;
 
-            m_ScreenResult = root.Q<Popup>("resultScreen");
-            m_ScreenResult.AddToClassList("unity-modal");
-
+            m_ScreenResult = root.Q<Popup>("resultPopup");
             m_ResultLabel = m_ScreenResult.Q<Label>("resultLabel");
 
             m_ScreenResultMainMenuButton = m_ScreenResult.Q<Button>("resultMainMenuButton");
@@ -217,14 +207,10 @@ namespace Unity.Samples.LetterSpell
             m_SettingsView = m_StackView.Q("settingsView");
             m_SettingsView.dataSource = m_PlayerSettings;
 
-            // m_SettingsPopup = new PopupWindow();
-            // m_SettingsPopup.content = m_SettingsView;
-
             m_CloseSettingsButton = m_SettingsView.Q<Button>("closeSettingsButton");
             m_CloseSettingsButton.clicked += CloseSettings;
 
-            m_SettingsButton = root.Q<Button>("settingsButton");
-            // m_SettingsButton.style.display = DisplayStyle.None;
+            m_SettingsButton = root.Q<Button>("optionsButton");
             m_SettingsButton.clicked += ShowSettings;
 
             m_InGameSettingsButton = root.Q<Button>("inGameSettingsButton");
@@ -250,8 +236,6 @@ namespace Unity.Samples.LetterSpell
             gameplay.stateChanged.AddListener(OnGameStateChanged);
 
             AssistiveSupport.nodeFocusChanged += OnNodeFocusChanged;
-            OnScreenDebug.Log("MainWindow.OnEnable");
-
             AccessibilitySettings.boldTextStatusChanged += OnBoldTextStatusChanged;
             AccessibilitySettings.closedCaptioningStatusChanged += OnClosedCaptioningStatusChanged;
             AccessibilitySettings.fontScaleChanged += OnFontScaleValueChanged;
@@ -536,7 +520,7 @@ namespace Unity.Samples.LetterSpell
 
         void ShowLevelChoiceView()
         {
-            m_StackView.activeView = m_LevelChoiceView;
+            m_StackView.activeView = m_MainMenu;
             // m_SettingsButton.style.display = DisplayStyle.Flex;
         }
 

@@ -1,0 +1,23 @@
+:root {
+}
+
+.lsp-popup-content .unity-label {
+    -unity-text-align: middle-center;
+    -unity-font-definition: var(--lsp-font-bold);
+    margin-top: var(--lsp-spacing-md);
+    margin-bottom: var(--lsp-spacing-lg);
+}
+
+.lsp-popup-content .unity-button {
+    min-width: 137px;
+}
+
+
+
+.lsp-button-box {
+    flex-grow: 1;
+    flex-direction: row;
+    margin-top: 10px;
+    align-items: center;
+    justify-content: center;
+}

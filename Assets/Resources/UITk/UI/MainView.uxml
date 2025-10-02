@@ -1,16 +1,18 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:lsp="Unity.Samples.LetterSpell" xmlns:sr="Unity.Samples.ScreenReader" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="ExitGameView" src="project://database/Assets/Resources/UITk/UI/ExitGameView.uxml?fileID=9197481963319205126&amp;guid=66385de7d2e1b46fbab7805869f4ae2b&amp;type=3#ExitGameView"/>
     <ui:Template name="GameView" src="project://database/Assets/Resources/UITk/UI/GameView.uxml?fileID=9197481963319205126&amp;guid=6c0478d0e80b24706984a61410830aac&amp;type=3#GameView"/>
     <ui:Template name="LoginView" src="project://database/Assets/Resources/UITk/UI/LoginView.uxml?fileID=9197481963319205126&amp;guid=077667c70092f4209abb73da80a8faad&amp;type=3#LoginView"/>
     <ui:Template name="MainMenu" src="project://database/Assets/Resources/UITk/UI/MainMenu.uxml?fileID=9197481963319205126&amp;guid=04d189e35bac141deb5b14501898b9b1&amp;type=3#MainMenu"/>
+    <ui:Template name="ResultView" src="project://database/Assets/Resources/UITk/UI/ResultView.uxml?fileID=9197481963319205126&amp;guid=dc939db8da5384827b657b3c5a50ebbe&amp;type=3#ResultView"/>
     <ui:Template name="SettingsView" src="project://database/Assets/Resources/UITk/UI/SettingsView.uxml?fileID=9197481963319205126&amp;guid=accec2036303345889bb641ccfc87786&amp;type=3#SettingsView"/>
     <ui:Template name="SplashScreen" src="project://database/Assets/Resources/UITk/UI/SplashScreen.uxml?fileID=9197481963319205126&amp;guid=089a8250abff34490bb8b7e2fdb2a162&amp;type=3#SplashScreen"/>
-    <Style src="project://database/Assets/Resources/UITk/Themes/LetterSpellTheme.uss?fileID=7433441132597879392&amp;guid=7acba8f342ac14076bfc143ce31d7bcc&amp;type=3#LetterSpellTheme"/>
+    <Style src="project://database/Assets/Resources/UITk/UI/MainView.uss?fileID=7433441132597879392&amp;guid=7acba8f342ac14076bfc143ce31d7bcc&amp;type=3#MainView"/>
     <ui:VisualElement name="root" style="flex-grow: 1;">
-        <ui:VisualElement name="background" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background-color: rgb(11, 163, 109);"/>
+        <ui:VisualElement name="background" class="lsp-background"/>
         <ui:VisualElement name="viewContainer" style="flex-grow: 1;">
-            <Unity.Samples.LetterSpell.StackView name="stackView" index="4" style="flex-grow: 1;">
-                <ui:Instance template="SplashScreen" name="splashScreen" style="flex-grow: 1;"/>
-                <ui:Instance template="LoginView" name="loginView"/>
+            <Unity.Samples.LetterSpell.StackView name="stackView" index="0" style="flex-grow: 1;">
+                <ui:Instance template="SplashScreen" name="splashView" style="flex-grow: 1;"/>
+                <ui:Instance template="LoginView" name="loginView" style="flex-grow: 1;"/>
                 <ui:Instance template="MainMenu" name="mainMenu" style="flex-grow: 1;"/>
                 <ui:Instance template="GameView" name="gameView" style="flex-grow: 1;"/>
                 <ui:Instance template="SettingsView" name="settingsView" style="flex-grow: 1;"/>
@@ -19,52 +21,11 @@
                 <UnityEngine.Localization.LocalizedTexture property="style.backgroundImage" table="GUID:7a3c0612d6a067448bdc5058f2111932" entry="Id(1290280815812608)"/>
             </Bindings>
         </ui:VisualElement>
-        <lsp:Popup name="exitGamePopup">
-            <ui:Label text="Game Paused">
-                <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(76489584640)"/>
-                </Bindings>
-            </ui:Label>
-            <ui:VisualElement name="exitPopupButtonBox" style="flex-grow: 1; flex-direction: row; align-items: center; justify-content: center;">
-                <ui:Button name="exitGameButton">
-                    <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(20147798700032)"/>
-                    </Bindings>
-                </ui:Button>
-                <ui:Button name="resumeGameButton" class="purple">
-                    <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(20374383390720)"/>
-                    </Bindings>
-                </ui:Button>
-            </ui:VisualElement>
-        </lsp:Popup>
-        <lsp:Popup name="resultScreen" close-policy="NoAutoClose">
-            <ui:Label text="1 of 3 correct" name="resultLabel">
-                <Bindings>
-                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(45343066714112)">
-                        <variables>
-                            <UnityEngine.Localization.LocalVariable name="orderedWordCount">
-                                <UnityEngine.Localization.SmartFormat.PersistentVariables.IntVariable/>
-                            </UnityEngine.Localization.LocalVariable>
-                            <UnityEngine.Localization.LocalVariable name="totalWordCount">
-                                <UnityEngine.Localization.SmartFormat.PersistentVariables.IntVariable/>
-                            </UnityEngine.Localization.LocalVariable>
-                        </variables>
-                    </UnityEngine.Localization.LocalizedString>
-                </Bindings>
-            </ui:Label>
-            <ui:VisualElement name="resultButtonContainer" style="flex-grow: 1; flex-direction: row; margin-top: 10px; align-items: center;">
-                <ui:Button name="resultMainMenuButton">
-                    <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(21672893771776)"/>
-                    </Bindings>
-                </ui:Button>
-                <ui:Button text="Play Again" name="resultPlayAgainButton" class="purple">
-                    <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(21754405875712)"/>
-                    </Bindings>
-                </ui:Button>
-            </ui:VisualElement>
-        </lsp:Popup>
     </ui:VisualElement>
+    <lsp:Popup name="exitGamePopup">
+        <ui:Instance template="ExitGameView" name="ExitGameView"/>
+    </lsp:Popup>
+    <lsp:Popup name="resultPopup" close-policy="NoAutoClose">
+        <ui:Instance template="ResultView" name="resultView"/>
+    </lsp:Popup>
 </ui:UXML>

@@ -15,7 +15,6 @@ namespace Unity.Samples.LetterSpell
 
         public override VisualElement contentContainer => m_ContentContainer;
 
-
         [UxmlAttribute]
         public int index
         {

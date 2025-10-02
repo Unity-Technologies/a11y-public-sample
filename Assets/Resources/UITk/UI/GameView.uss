@@ -1,0 +1,22 @@
+:root {
+}
+
+#clueContainer {
+    align-items: center;
+    padding-top: var(--lsp-spacing-xxl);
+    padding-bottom: var(--lsp-spacing-md);
+}
+
+#successPillCheckmark {
+    width: var(--lsp-icons-success-check-w);
+    height: var(--lsp-icons-success-check-h);
+    background-image: var(--lsp-icons-success-check);
+    margin-right: var(--lsp-spacing-sm);
+}
+
+.success-pill__label {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-top: 0;
+    margin-bottom: 0;
+}

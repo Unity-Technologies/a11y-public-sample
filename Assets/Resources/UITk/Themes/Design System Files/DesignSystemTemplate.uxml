@@ -1,14 +1,12 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="UIElementsDesignSystemTemplate" src="project://database/Assets/Resources/UITk/Themes/Design%20System%20Files/UIElementsDesignSystemTemplate.uxml?fileID=9197481963319205126&amp;guid=1db949a81502f4c6e88a39409aefb357&amp;type=3#UIElementsDesignSystemTemplate"/>
     <ui:VisualElement class="lsp-background" style="flex-grow: 1;">
         <ui:ScrollView name="ScrollView">
-            <ui:VisualElement name="UIElementsDesignSystemTemplate">
-                <ui:Label text="Label"/>
-                <ui:Button text="Button"/>
-                <ui:Toggle label="Toggle" text="On"/>
-                <ui:RadioButton label="Radio Button"/>
-                <ui:TextField label="Text Field" placeholder-text="filler text"/>
-                <ui:DropdownField label="Dropdown" choices="Option 1,Option 2,Option 3"/>
-                <ui:Slider label="Slider" value="42" high-value="100"/>
+            <ui:Label text="UIElements" style="-unity-font-style: bold; margin-bottom: 60px;"/>
+            <ui:Instance template="UIElementsDesignSystemTemplate" name="UIElementsDesignSystemTemplate"/>
+            <ui:Label text="Letter Spell " style="-unity-font-style: bold; margin-bottom: 60px; margin-top: 60px;"/>
+            <ui:VisualElement name="lspUIContainer" style="flex-grow: 1;">
+                <Unity.Samples.LetterSpell.LetterCardView name="letterCardView" letters="a,b,c,u" style="height: 500px;"/>
             </ui:VisualElement>
         </ui:ScrollView>
     </ui:VisualElement>

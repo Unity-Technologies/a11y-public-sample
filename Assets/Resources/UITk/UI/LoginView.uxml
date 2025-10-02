@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:lsp="Unity.Samples.LetterSpell" xmlns:sr="Unity.Samples.ScreenReader" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/UITk/UI/LoginView.uss?fileID=7433441132597879392&amp;guid=d15e33b7f758a47be978203fb8bd9ec3&amp;type=3#LoginView"/>
+    <ui:VisualElement name="root" style="flex-grow: 1; align-items: center; justify-content: center;">
+        <ui:VisualElement name="logo" class="lsp-logo"/>
+        <ui:TextField placeholder-text="Enter your name" name="userNameField" label="What is your name?" style="min-width: 252px; width: 949px;">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="userName" binding-mode="TwoWay"/>
+                <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(775025750016)"/>
+                <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(405763420160)"/>
+            </Bindings>
+        </ui:TextField>
+        <ui:Button name="nextButton" class="lsp-primary-accent-button">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(602912485376)"/>
+            </Bindings>
+        </ui:Button>
+    </ui:VisualElement>
+</ui:UXML>

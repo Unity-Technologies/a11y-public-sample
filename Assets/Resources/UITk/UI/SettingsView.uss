@@ -1,0 +1,16 @@
+:root {
+    --lsp-colors-button_strip_field_button-background: var(--lsp-primary-accent-color);
+}
+
+#root {
+    padding: var(--lsp-spacing-lg);
+    padding-bottom: var(--lsp-spacing-xs);
+}
+
+.unity-radio-button .unity-base-field__label {
+    min-width: 0;
+}
+
+.lsp-background {
+    background-color: var(--lsp-color-yellow-light);
+}

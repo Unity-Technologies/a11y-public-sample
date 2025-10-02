@@ -165,6 +165,9 @@ namespace Unity.Samples.ScreenReader
 
             foreach (var uiDocument in uiDocuments)
             {
+                if (!uiDocument.enabled)
+                    continue;
+                        
                 // Ignore the OnScreenDebug UI Document.
                 if (uiDocument.GetComponent<OnScreenDebugBehavior>() != null)
                 {

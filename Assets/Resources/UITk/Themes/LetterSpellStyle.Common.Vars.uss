@@ -3,6 +3,10 @@
 :root {
     font-size: var(--lsp-font-size-md);
     
+    /* BaseField */
+    --unity-metrics-base_field_label-min_width: var(--lsp-field-label-min-width);
+    --unity-metrics-base_field_label-margin: var(--lsp-spacing-md) var(--lsp-spacing-md);
+    
     /* Button */
     --unity-metrics-button-border_width: var(--lsp-border-width-md);
     --unity-metrics-button-border_radius: var(--lsp-border-radius-md);
@@ -14,7 +18,8 @@
     --unity-colors-button-border-hover: var(--lsp-control-border-color);
     --unity-colors-button-border-focus: var(--lsp-color-blue-600);
     --unity-colors-button-background-hover: var(--lsp-control-bg-color-hover);
-    --unity-colors-button-background-pressed: var(--lsp-control-bg-color-checked);
+    --unity-colors-button-background-pressed: var(--lsp-control-bg-color-pressed);
+    --unity-colors-button-background-checked: var(--lsp-control-bg-color-checked);
     
     /* DropdownField */
     --unity-metrics-dropdown_item_checkmark-width: var(--lsp-checkmark-size-sm);
@@ -58,9 +63,9 @@
     --unity-colors-radio_button_checkmark_background-background: var(--lsp-control-bg-color);
     --unity-colors-radio_button_checkmark_background-background-hover: var(--lsp-control-bg-color-hover);
     --unity-colors-radio_button_checkmark_background-border: var(--lsp-control-border-color);
-    --unity-colors-radio_button_checkmark-background: var(--lsp-accent-color);
-    --unity-colors-radio_button_checkmark-background-hover: var(--lsp-accent-color-hover);
-    --unity-colors-radio_button_checkmark-background-pressed: var(--lsp-accent-color-checked);
+    --unity-colors-radio_button_checkmark-background: var(--lsp-primary-accent-color);
+    --unity-colors-radio_button_checkmark-background-hover: var(--lsp-primary-accent-color-hover);
+    --unity-colors-radio_button_checkmark-background-pressed: var(--lsp-primary-accent-color-checked);
 
     /* Toggle */
     --unity-metrics-toggle_checkmark-width: var(--lsp-checkmark-size-md);
@@ -73,7 +78,7 @@
     --unity-colors-toggle_checkmark-background-hover: var(--lsp-control-bg-color-hover);
     --unity-colors-toggle_checkmark-border: var(--lsp-control-border-color);
     --unity-colors-toggle_checkmark-border-focus: var(--lsp-control-border-color);
-    --unity-colors-toggle_checkmark-text: var(--lsp-accent-color);
+    --unity-colors-toggle_checkmark-text: var(--lsp-primary-accent-color);
     
     /* Slider */
     --unity-metrics-slider_groove-height: var(--lsp-slider-groove-height-md);
@@ -87,8 +92,19 @@
     --unity-colors-slider_groove-background-hover: var(--lsp-control-border-color-hover);
     --unity-colors-slider_groove-border: var(--lsp-control-border-color);
     --unity-colors-slider_groove-border-hover: var(--lsp-control-border-color-hover);
-    --unity-colors-slider_thumb-background: var(--lsp-accent-color);
-    --unity-colors-slider_thumb-background-hover: var(--lsp-accent-color-hover);
+    --unity-colors-slider_thumb-background: var(--lsp-primary-accent-color);
+    --unity-colors-slider_thumb-background-hover: var(--lsp-primary-accent-color-hover);
     --unity-colors-slider_thumb-border: var(--lsp-control-border-color);
     --unity-colors-slider_thumb-border-focus: var(--lsp-control-border-color-focus);
+
+    /***************************************/
+    /*   LetterSpellStyle Specific Styles  */
+    /***************************************/
+    --lsp-metrics-letter_card_view_item-border_width: var(--lsp-border-width-md);
+    --lsp-metrics-letter_card_view_item-border_radius: var(--lsp-border-radius-md);
+    
+    --lsp-colors-letter_card_view_item-background: var(--lsp-card-bg-color);
+    --lsp-colors-letter_card_view_item-background-selected: var(--lsp-card-bg-color-selected);
+    --lsp-colors-letter_card_view_item-border: var(--lsp-card-border-color);
+    --lsp-colors-letter_card_view_item-border-selected: var(--lsp-card-border-color-selected);
 }

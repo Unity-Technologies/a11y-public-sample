@@ -1,0 +1,25 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:lsp="Unity.Samples.LetterSpell" xmlns:sr="Unity.Samples.ScreenReader" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/UITk/UI/%20MainMenu.uss?fileID=7433441132597879392&amp;guid=4538736f0e9494db1a7b76ee9349bde4&amp;type=3# MainMenu"/>
+    <ui:VisualElement name="root" style="flex-grow: 1;">
+        <ui:VisualElement name="logo" class="lsp-logo"/>
+        <ui:VisualElement style="flex-grow: 1; justify-content: center; align-items: center;">
+            <ui:VisualElement name="choiceButtonContainer">
+                <ui:Button name="easyButton" class="choice-button lsp-button-xl lsp-secondary-accent-button">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(1101841723392)"/>
+                    </Bindings>
+                </ui:Button>
+                <ui:Button name="hardButton" class="choice-button lsp-button-xl lsp-third-accent-button">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(1118581190656)"/>
+                    </Bindings>
+                </ui:Button>
+            </ui:VisualElement>
+            <ui:Button name="optionsButton" style="position: absolute; right: 22px; top: 5px;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(19656456957952)"/>
+                </Bindings>
+            </ui:Button>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

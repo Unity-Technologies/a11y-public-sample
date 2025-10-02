@@ -1,0 +1,21 @@
+:root {
+}
+
+.lsp-splashscreen-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-image: var(--lsp-images-splash);
+}
+
+.lsp-splashscreen-subtitle {
+    position: absolute;
+    top: 60%;
+    left: 0;
+    right: 0;
+    -unity-text-align: upper-center;
+    color: var(--lsp-secondary-text-color);
+}
+

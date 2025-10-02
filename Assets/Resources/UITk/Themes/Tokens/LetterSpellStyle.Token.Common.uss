@@ -1,8 +1,11 @@
 :root {
     /* Spacing */
+    --lsp-spacing-xs: 4px;
     --lsp-spacing-sm: 15px;
     --lsp-spacing-md: 30px;
     --lsp-spacing-lg: 70px;
+    --lsp-spacing-xl: 100px;
+    --lsp-spacing-xxl: 140px;
 
     /* Dropdown */
     --lsp-popup-field-arrow-width-md: 50px;
@@ -15,8 +18,10 @@
     --lsp-border-radius-sm: 20px;
     --lsp-border-radius-md: 30px;
     --lsp-border-radius-lg: 33px;
+    --lsp-border-radius-xl: 38px;
 
     --lsp-border-width-sm: 6px;
+    --lsp-border-width-md-half: 5px;
     --lsp-border-width-md: 10px;
     
     /* Checkmark */

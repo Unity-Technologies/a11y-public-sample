@@ -1,228 +1,7 @@
-.unity-button {
-    padding-top: 30px;
-    padding-right: 70px;
-    padding-bottom: 30px;
-    padding-left: 70px;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 30px;
-    border-top-width: 10px;
-    border-right-width: 10px;
-    border-bottom-width: 10px;
-    border-left-width: 10px;
-    border-left-color: rgb(0, 0, 0);
-    border-right-color: rgb(0, 0, 0);
-    border-top-color: rgb(0, 0, 0);
-    border-bottom-color: rgb(0, 0, 0);
-    margin-top: 30px;
-    background-color: rgb(255, 255, 255);
-    margin-bottom: 30px;
-    margin-right: 30px;
-    margin-left: 30px;
-    -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
-}
-
-.unity-button:hover {
-    background-color: rgb(220, 180, 0);
-}
-
-.unity-label {
-}
-
-.unity-base-text-field__input {
-    border-top-width: 10px;
-    border-right-width: 10px;
-    border-bottom-width: 10px;
-    border-left-width: 10px;
-    border-left-color: rgb(0, 0, 0);
-    border-right-color: rgb(0, 0, 0);
-    border-top-color: rgb(0, 0, 0);
-    border-bottom-color: rgb(0, 0, 0);
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 30px;
-    background-color: rgb(255, 255, 255);
-    padding-top: 30px;
-    padding-bottom: 30px;
-    padding-right: 70px;
-    padding-left: 70px;
-}
-
-.unity-base-text-field {
-    margin-top: 30px;
-    margin-right: 4px;
-    margin-bottom: 30px;
-    margin-left: 4px;
-}
-
-#easyButton {
-    background-color: rgb(255, 190, 0);
-    border-left-color: rgb(255, 251, 232);
-    border-right-color: rgb(255, 251, 232);
-    border-top-color: rgb(255, 251, 232);
-    border-bottom-color: rgb(255, 251, 232);
-}
-
-#easyButton:hover {
-    background-color: rgb(250, 201, 55);
-}
-
-#easyButton:active {
-    background-color: rgb(195, 147, 8);
-}
-
-#hardButton {
-    background-color: rgb(1, 168, 255);
-    border-left-color: rgb(114, 207, 255);
-    border-right-color: rgb(114, 207, 255);
-    border-top-color: rgb(114, 207, 255);
-    border-bottom-color: rgb(114, 207, 255);
-}
-
-#hardButton:hover {
-    background-color: rgb(46, 180, 250);
-}
-
-#hardButton:active {
-    background-color: rgb(5, 131, 197);
-}
-
-.choice-button {
-    padding-top: 140px;
-    padding-right: 100px;
-    padding-bottom: 140px;
-    padding-left: 100px;
-    margin-top: 30px;
-    margin-right: 70px;
-    margin-bottom: 30px;
-    margin-left: 70px;
-    border-top-left-radius: 35px;
-    border-top-right-radius: 35px;
-    border-bottom-right-radius: 35px;
-    border-bottom-left-radius: 35px;
-}
-
-#nextWordButton {
-}
-
-.lsp-letter-card {
-    transition-property: rotate;
-    transition-duration: 400ms;
-    background-color: rgb(255, 251, 232);
-    border-top-width: 10px;
-    border-right-width: 10px;
-    border-bottom-width: 10px;
-    border-left-width: 10px;
-    width: 208px;
-    height: 208px;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 30px;
-    align-items: center;
-    justify-content: center;
-    -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
-}
-
-.lsp-letter-card.selected {
-    margin-top: 0;
-    background-color: rgb(255, 190, 0);
-    border-left-color: rgb(0, 0, 0);
-    border-right-color: rgb(0, 0, 0);
-    border-top-color: rgb(0, 0, 0);
-    border-bottom-color: rgb(0, 0, 0);
-    rotate: -15deg;
-}
-
-.lsp-letter-card:focus {
-    border-bottom-color: rgb(255, 0, 0);
-}
-
-.lsp-letter-card__button-container {
-    position: absolute;
-    top: 100%;
-    padding: 5px;
-    display: none;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(209, 253, 236);
-    border-radius: 12px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-}
-
-.lsp-letter-card.selected .lsp-letter-card__button-container {
-    display: flex;
-}
-
-.lsp-letter-card__button {
-    margin: 0;
-    padding: 6px;
-    -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
-}
-
-.lsp-letter-card__button--first {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-right-width: 2px;
-}
-
-.lsp-letter-card__button--mid {
-    border-radius: 0;
-    border-left-width: 2px;
-    border-right-width: 2px;
-}
-
-.lsp-letter-card__button--last {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-left-width: 2px;
-}
-
-#cancelMoveButton {
-    margin-left: 4px;
-    background-color: rgb(243, 33, 33);
-    color: white;
-}
-
 .lsp-card-view-item.animated {
     transition-property: left, top, margin-top, rotate;
     transition-duration: 0.4s, 0.4s, 0.4s, 0.4s;
     transition-timing-function: ease, ease, ease, ease-out;
-}
-
-.lsp-insertion-placeholder {
-}
-
-.lsp-letter-card.dragged {
-    rotate: -20deg;
-    border-left-color: rgb(0, 0, 0);
-    border-right-color: rgb(0, 0, 0);
-    border-top-color: rgb(0, 0, 0);
-    border-bottom-color: rgb(0, 0, 0);
-    background-color: rgb(214, 167, 49);
-}
-
-.lsp-letter-card.dragged.dragging--left {
-    rotate: 20deg;
-}
-
-.lsp-letter-card.dragged.dragging--right {
-    rotate: -20deg;
-}
-
-#settingsView {
-    padding-top: 60px;
-    padding-right: 70px;
-    padding-bottom: 4px;
-    padding-left: 70px;
-}
-
-.unity-base-field__label {
-    min-width: 680px;
 }
 
 .unity-radio-button-group__container {
@@ -231,123 +10,6 @@
 
 .unity-radio-button .unity-base-field__label {
     min-width: 0;
-}
-
-.unity-base-field__label {
-    -unity-text-align: middle-left;
-    margin-right: 30px;
-}
-
-.settings-header-label {
-    margin-top: 70px;
-    -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
-    margin-bottom: 30px;
-}
-
-.unity-radio-button__checkmark-background {
-    border-top-width: 6px;
-    border-right-width: 6px;
-    border-bottom-width: 6px;
-    border-left-width: 6px;
-    border-left-color: rgb(0, 0, 0);
-    border-right-color: rgb(0, 0, 0);
-    border-top-color: rgb(0, 0, 0);
-    border-bottom-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0);
-    padding-top: 0;
-    padding-right: 0;
-    padding-bottom: 0;
-    padding-left: 0;
-    width: 50px;
-    height: 50px;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
-    border-bottom-right-radius: 25px;
-    border-bottom-left-radius: 25px;
-}
-
-.unity-radio-button__checkmark {
-    width: 39px;
-    height: 39.5px;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-    background-color: rgb(161, 116, 244);
-}
-
-.unity-toggle__checkmark {
-    background-color: rgba(0, 0, 0, 0);
-    border-left-color: rgb(0, 0, 0);
-    border-right-color: rgb(0, 0, 0);
-    border-top-color: rgb(0, 0, 0);
-    border-bottom-color: rgb(0, 0, 0);
-    border-top-width: 6px;
-    border-right-width: 6px;
-    border-bottom-width: 6px;
-    border-left-width: 6px;
-    border-top-left-radius: 7px;
-    border-top-right-radius: 7px;
-    border-bottom-right-radius: 7px;
-    border-bottom-left-radius: 7px;
-    -unity-background-image-tint-color: rgb(161, 116, 244);
-    width: 50px;
-    height: 50px;
-    margin-right: 30px;
-}
-
-.unity-base-slider__tracker {
-    background-color: rgb(0, 0, 0);
-    height: 10px;
-    border-top-width: 0;
-    border-right-width: 0;
-    border-bottom-width: 0;
-    border-left-width: 0;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-}
-
-.unity-base-slider__dragger {
-    background-color: rgb(161, 116, 244);
-    border-top-width: 6px;
-    border-right-width: 6px;
-    border-bottom-width: 6px;
-    border-left-width: 6px;
-    border-left-color: rgb(0, 0, 0);
-    border-right-color: rgb(0, 0, 0);
-    border-top-color: rgb(0, 0, 0);
-    border-bottom-color: rgb(0, 0, 0);
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    width: 40px;
-    height: 66px;
-    margin-top: -33px;
-}
-
-.unity-base-popup-field__input {
-    background-color: rgb(255, 255, 255);
-    border-left-color: rgb(0, 0, 0);
-    border-right-color: rgb(0, 0, 0);
-    border-top-color: rgb(0, 0, 0);
-    border-bottom-color: rgb(0, 0, 0);
-    border-top-width: 10px;
-    border-right-width: 10px;
-    border-bottom-width: 10px;
-    border-left-width: 10px;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-}
-
-.unity-base-text-field__input--placeholder {
-    color: rgb(164, 164, 164);
 }
 
 .purple {
@@ -379,22 +41,6 @@
     min-width: 137px;
 }
 
-.title-text {
-    -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
-    margin-top: 30px;
-    margin-bottom: 30px;
-    color: rgb(255, 255, 255);
-}
-
-.lsp-logo {
-    position: absolute;
-    width: 330px;
-    height: 82px;
-    top: 58px;
-    left: 52px;
-    background-image: url("project://database/Assets/UI/Images/LetterSpell_smallLogo.png?fileID=2800000&guid=75dc9c01c37ed4403948da36191f22df&type=3#LetterSpell_smallLogo");
-}
-
 .lsp-debug-view {
     font-size: 24px;
 }
@@ -410,15 +56,6 @@
     flex-direction: row;
 }
 
-.start-game-button {
-}
-
-#pauseButtonIcon {
-    background-image: url("project://database/Assets/UI/Images/PauseIcon.png?fileID=2800000&guid=c9d90502b54df4fb8a6679c396a05fc0&type=3#PauseIcon");
-    width: 45px;
-    height: 47px;
-    -unity-background-scale-mode: scale-to-fit;
-}
 
 .lsp-popup .unity-label {
     -unity-text-align: middle-center;
@@ -430,11 +67,6 @@
 .purple:active {
     background-color: rgb(130, 68, 243);
     color: rgb(255, 255, 255);
-}
-
-.unity-base-field {
-    margin-top: 30px;
-    margin-bottom: 30px;
 }
 
 .lsp-button-strip-field__button-container {
@@ -472,53 +104,12 @@
     background-color: rgb(116, 45, 243);
 }
 
-.unity-radio-button__label {
-    min-width: 0;
-    margin-right: 30px;
-    margin-left: 30px;
-}
-
-.unity-radio-button {
-    flex-direction: row-reverse;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.unity-foldout__toggle > .unity-toggle__input:focus:checked > .unity-toggle__checkmark {
-    background-image: url("project://database/Assets/UI/Images/Toggle-Checkmark.png?fileID=2800000&guid=c049f948873dd43099c96def60ac9c31&type=3#Toggle-Checkmark");
-}
-
-.unity-base-popup-field__arrow {
-    width: 50px;
-    height: 50px;
-    margin-right: 30px;
-    background-image: url("project://database/Assets/UI/Images/Dropdown-Arrow.png?fileID=2800000&guid=29e091d0e13ce4d928a786bc1ff99351&type=3#Dropdown-Arrow");
-    margin-top: 14px;
-    margin-bottom: 14px;
-}
-
 .row {
     flex-direction: row;
 }
 
 #closeSettingsButton {
     margin-left: 0;
-}
-
-:root.bold-text {
-    -unity-font-style: bold;
-}
-
-.unity-base-dropdown__item {
-}
-
-.unity-base-dropdown__checkmark {
-    margin-top: 30px;
-    margin-right: 30px;
-    margin-bottom: 30px;
-    margin-left: 30px;
-    width: 50px;
-    height: 50px;
 }
 
 .unity-base-dropdown__item:checked > .unity-base-dropdown__item-content > .unity-base-dropdown__label {
@@ -535,64 +126,4 @@
     width: 100%;
     height: 100%;
     background-color: rgb(2, 197, 132);
-}
-
-#splashSubTitle {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    -unity-text-align: upper-center;
-    margin-top: 70px;
-    color: rgb(255, 255, 255);
-}
-
-#successPill {
-    background-color: rgb(255, 255, 255);
-    border-top-left-radius: 38px;
-    border-top-right-radius: 38px;
-    border-bottom-right-radius: 38px;
-    border-bottom-left-radius: 38px;
-    padding-right: 38px;
-    padding-left: 38px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-#successPillCheckmark {
-    width: 52px;
-    height: 47px;
-    background-image: url("project://database/Assets/UI/Images/Success-Check.png?fileID=2800000&guid=8eb6e6371b15149a7b6e3cd6117749c1&type=3#Success-Check");
-    margin-right: 15px;
-}
-
-.success-pill__label {
-    padding-top: 2px;
-    padding-bottom: 2px;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-#clueContainer {
-    align-items: center;
-    padding-top: 168px;
-    padding-bottom: 30px;
-}
-
-#clueLabel {
-}
-
-#loginNameField {
-    flex-direction: column;
-}
-
-#loginNameField .unity-base-field__label {
-    -unity-text-align: middle-center;
-    color: rgb(255, 255, 255);
-    -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
-    margin-bottom: 30px;
 }

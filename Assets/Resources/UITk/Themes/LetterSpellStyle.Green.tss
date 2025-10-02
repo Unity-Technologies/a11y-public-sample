@@ -1,15 +1,30 @@
-@import url("Tokens/LetterSpellStyle.Token.Colors.Green.uss");
+@import url("Tokens/LetterSpellStyle.Token.Green.uss");
 @import url("LetterSpellStyle.Common.uss");
 
 :root {
     --lsp-primary-color: var(--lsp-color-green);
-    --lsp-accent-color: var(--lsp-color-purple);
-    --lsp-accent-color-hover: var(--lsp-color-purple-lighter-130);
-    --lsp-accent-color-checked: var(--lsp-color-purple-darker-120);
-
+    --lsp-secondary-color: var(--lsp-color-white);
+    --lsp-primary-text-color: var(--lsp-color-black);
+    --lsp-secondary-text-color: var(--lsp-color-white);
+    --lsp-primary-accent-color: var(--lsp-color-purple);
+    --lsp-primary-accent-color-hover: var(--lsp-color-purple-lighter-130);
+    --lsp-primary-accent-color-checked: var(--lsp-color-purple-darker-120);
+    --lsp-primary-accent-text-color: var(--lsp-color-white);
+    --lsp-secondary-accent-color: var(--lsp-color-yellow);
+    --lsp-secondary-accent-color-hover: var(--lsp-color-yellow-lighter-110);
+    --lsp-secondary-accent-color-checked: var(--lsp-color-yellow-darker-130);
+    --lsp-secondary-accent-border-color: var(--lsp-color-yellow-light);
+    --lsp-secondary-accent-text-color: var(--lsp-color-white);
+    --lsp-third-accent-color: var(--lsp-color-blue);
+    --lsp-third-accent-color-hover: var(--lsp-color-blue-lighter-110);
+    --lsp-third-accent-color-checked: var(--lsp-color-blue-darker-120);
+    --lsp-third-accent-border-color: var(--lsp-color-blue-light);
+    --lsp-third-accent-text-color: var(--lsp-color-white);
+    
     --lsp-control-bg-color: var(--lsp-color-white);
     --lsp-control-bg-color-hover: var(--lsp-color-yellow);
-    --lsp-control-bg-color-checked: var(--lsp-color-yellow-darker-130);
+    --lsp-control-bg-color-pressed: var(--lsp-color-yellow-darker-130);
+    --lsp-control-bg-color-checked: var(--lsp-color-yellow-darker-120);
     --lsp-control-border-color: var(--lsp-color-black);
     --lsp-control-border-color-hover: var(--lsp-color-yellow);
     --lsp-control-border-color-focus: var(--lsp-color-blue-600);
@@ -19,6 +34,8 @@
     --lsp-input-bg-color-checked: var(--lsp-color-yellow-darker-130);
     --lsp-input-border-color: var(--lsp-color-black);
     
-    /* Images */
-    --unity-icons-dropdown: url("project://database/Assets/UI/Images/Dropdown-Arrow.png?fileID=2800000&guid=29e091d0e13ce4d928a786bc1ff99351&type=3#Dropdown-Arrow");
+    --lsp-card-bg-color: var(--lsp-color-yellow-light);
+    --lsp-card-bg-color-selected: var(--lsp-color-yellow);
+    --lsp-card-border-color: var(--lsp-color-yellow-light);
+    --lsp-card-border-color-selected: var(--lsp-color-black);
 }

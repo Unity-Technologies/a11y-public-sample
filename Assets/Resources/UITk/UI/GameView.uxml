@@ -1,0 +1,30 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:lsp="Unity.Samples.LetterSpell" xmlns:sr="Unity.Samples.ScreenReader" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/UITk/UI/GameView.uss?fileID=7433441132597879392&amp;guid=a78fa2696ccab406aa7d8e0085f51cb7&amp;type=3#GameView"/>
+    <ui:VisualElement name="root" style="flex-grow: 1; background-color: rgb(11, 163, 109);">
+        <ui:VisualElement name="logo" class="lsp-logo"/>
+        <ui:VisualElement name="clueContainer">
+            <ui:Label text="#clue" name="clueLabel" class="lsp-title-text" style="-unity-text-align: middle-center;"/>
+            <ui:VisualElement name="successPill" class="lsp-pill">
+                <ui:VisualElement name="successPillCheckmark"/>
+                <ui:Label text="Correct" class="success-pill__label"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <Unity.Samples.LetterSpell.LetterCardView name="letterCardView" style="flex-grow: 1;"/>
+        <ui:VisualElement name="gameViewButtonContainer" style="flex-direction: row; padding-top: 4px; padding-right: 18px; padding-bottom: 18px; padding-left: 18px;">
+            <ui:Button text="" name="pauseGameButton">
+                <ui:VisualElement name="pauseButtonIcon" class="lsp-pause-icon" style="flex-grow: 1;"/>
+            </ui:Button>
+            <ui:Button name="inGameSettingsButton">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(19656456957952)"/>
+                </Bindings>
+            </ui:Button>
+            <ui:VisualElement name="VisualElement" style="flex-grow: 1;"/>
+            <ui:Button name="nextWordButton" class="lsp-primary-accent-button">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(2162409238528)"/>
+                </Bindings>
+            </ui:Button>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

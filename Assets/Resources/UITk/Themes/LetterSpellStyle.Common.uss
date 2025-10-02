@@ -1,9 +1,20 @@
 @import url("unity-theme://default");
 @import url("LetterSpellStyle.Common.Vars.uss");
 
+:root {
+    font-size: var(--lsp-font-size-md);
+    color: var(--lsp-primary-text-color);
+}
+
 /* BaseField */
 .unity-base-field {
     margin: var(--unity-metrics-input_field-margin);
+}
+
+.unity-base-field__label {
+    min-width: var(--unity-metrics-base_field_label-min_width);
+    -unity-text-align: middle-left;
+    margin: var(--unity-metrics-base_field_label-margin);
 }
 
 /* Button */
@@ -21,7 +32,8 @@
     border-color: var(--unity-colors-button-border-focus);
 }
 
-.unity-button:hover:enabled {
+.unity-button:hover:enabled,
+.unity-button:hover:checked:enabled {
     background-color: var(--unity-colors-button-background-hover);
     border-color: var(--unity-colors-button-border-hover);
 }
@@ -30,8 +42,8 @@
     background-color: var(--unity-colors-button-background-pressed);
 }
 
-.unity-base-field__label {
-    min-width: var(--lsp-field-label-min-width);
+.unity-button:checked:enabled {
+    background-color: var(--unity-colors-button-background-checked);
 }
 
 /* DropdownField and EnumField */
@@ -199,7 +211,185 @@
     border-color: var(--unity-colors-toggle_checkmark-border-focus);
 }
 
-/* LetterSpellStyle Specific Styles */
+/************************************************/
+/*        LetterSpellStyle Specific Styles      */
+/************************************************/
 .lsp-background {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     background-color: var(--lsp-primary-color);
+}
+
+/* Button */
+.unity-button.lsp-primary-accent-button {
+    background-color: var(--lsp-primary-accent-color);
+    color: var(--lsp-primary-accent-text-color);
+}
+
+.unity-button.lsp-primary-accent-button:hover:enabled {
+    background-color: var(--lsp-primary-accent-color-hover);
+}
+
+.unity-button.lsp-primary-accent-button:active:enabled {
+    background-color: var(--lsp-primary-accent-color-checked);
+}
+
+.unity-button.lsp-secondary-accent-button {
+    background-color: var(--lsp-secondary-accent-color);
+    border-color: var(--lsp-secondary-accent-border-color);
+    color: var(--lsp-secondary-accent-text-color);
+}
+
+.unity-button.lsp-secondary-accent-button:hover:enabled {
+    background-color: var(--lsp-secondary-accent-color-hover);
+    border-color: var(--lsp-secondary-accent-border-color);
+}
+
+.unity-button.lsp-secondary-accent-button:active:enabled {
+    background-color: var(--lsp-secondary-accent-color-checked);
+    border-color: var(--lsp-secondary-accent-border-color);
+}
+
+.unity-button.lsp-secondary-accent-button:focus {
+    border-color: var(--lsp-secondary-accent-border-color);
+}
+
+.unity-button.lsp-third-accent-button {
+    background-color: var(--lsp-third-accent-color);
+    border-color: var(--lsp-third-accent-border-color);
+    color: var(--lsp-third-accent-text-color);
+}
+
+.unity-button.lsp-third-accent-button:hover:enabled {
+    background-color: var(--lsp-third-accent-color-hover);
+    border-color: var(--lsp-third-accent-border-color);
+}
+
+.unity-button.lsp-third-accent-button:active:enabled {
+    background-color: var(--lsp-third-accent-color-checked);
+    border-color: var(--lsp-third-accent-border-color);
+}
+
+.unity-button.lsp-third-accent-button:focus {
+    border-color: var(--lsp-third-accent-border-color);
+}
+
+.unity-button.lsp-button-xl {
+    padding: var(--lsp-spacing-xxl) var(--lsp-spacing-xl);
+    margin: var(--lsp-spacing-md) var(--lsp-spacing-lg);
+}
+
+
+/* ButtonStrip */
+.lsp-button-strip-field {
+    --unity-colors-button-background: var(--lsp-primary-accent-color);
+    --unity-colors-button-background-hover: var(--lsp-primary-accent-color-hover);
+    --unity-colors-button-background-pressed: var(--lsp-primary-accent-color-pressed);
+    --unity-colors-button-background-checked: var(--lsp-primary-accent-color-checked);
+    color: var(--lsp-primary-accent-text-color);
+}
+
+.lsp-button-strip-field__button-container {
+    flex-direction: row;
+}
+
+.lsp-button-strip-field__button {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.lsp-button-strip-field__button--left {
+    margin-right: 0;
+    border-right-width: var(--lsp-border-width-md-half);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.lsp-button-strip-field__button--right {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left-width: 5px;
+    margin-left: 0;
+}
+
+/*.lsp-button-strip-field__button:checked {
+    background-color: rgb(116, 45, 243);
+}
+*/
+/* Card */
+.lsp-letter-card {
+}
+
+.lsp-letter-card-view > .lsp-letter-card-view__item {
+    position: absolute;
+    transition-property: rotate;
+    transition-duration: 400ms;
+    background-color: var(--lsp-colors-letter_card_view_item-background);
+    border-width: var(--lsp-metrics-letter_card_view_item-border_width);
+    border-radius: var(--lsp-metrics-letter_card_view_item-border_radius);
+    align-items: center;
+    justify-content: center;
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
+}
+
+.lsp-letter-card-view > .lsp-letter-card-view__item--selected {
+    background-color: var( --lsp-colors-letter_card_view_item-background-selected);
+    border-color: var(--lsp-colors-letter_card_view_item-border-selected);
+    rotate: -15deg;
+}
+
+.lsp-letter-card-view > .lsp-letter-card-view__item--dragged-left {
+    rotate: 20deg;
+}
+
+.lsp-letter-card-view > .lsp-letter-card-view__item--dragged-right {
+    rotate: -20deg;
+}
+
+/* Title text */
+.lsp-h1 {
+    -unity-font-definition: var(--lsp-font-bold);
+    margin-top: var(--lsp-spacing-md);
+    margin-bottom: var(--lsp-spacing-md);
+    color: var(--lsp-secondary-text-color);
+}
+
+.lsp-h2 {
+    margin-top: var(--lsp-spacing-lg);
+    margin-bottom: var(--lsp-spacing-md);
+    -unity-font-definition: var(--lsp-font-bold);
+}
+
+/* Logo */
+.lsp-logo {
+    position: absolute;
+    background-image: var(--lsp-images-logo);
+    width: var(--lsp-images-logo-w);
+    height: var(--lsp-images-logo-h);
+    top: 58px;
+    left: 52px;
+}
+
+/* Pause */
+.lsp-pause-icon {
+    background-image: var(--lsp-icons-pause);
+    width: var(--lsp-icons-pause-w);
+    height: var(--lsp-icons-pause-h);
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* Pill */
+.lsp-pill {
+    background-color: var(--lsp-secondary-color);
+    border-radius: var(--lsp-border-radius-xl);
+    padding: var(--lsp-spacing-xs) var(--lsp-spacing-md);
+    -unity-font-definition: var(--lsp-font-bold);
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }

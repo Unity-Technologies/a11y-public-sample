@@ -90,7 +90,9 @@ namespace Unity.Samples.ScreenReader
             {
                 var popupAcc = popupMenu.GetOrCreateAccessibleProperties();
 
+#if UNITY_6000_3_OR_NEWER
                 popupAcc.role = AccessibilityRole.Dropdown;
+#endif // UNITY_6000_3_OR_NEWER
                 popupAcc.active = false;
                 popupAcc.modal = true;
 
@@ -116,7 +118,10 @@ namespace Unity.Samples.ScreenReader
                 // NotifyChange();
             }
 
-            /*var popup = ve.Q("unity-popup");
+            /*
+ #if UNITY_6000_3_OR_NEWER
+            var popup = ve.Q("unity-popup");
+
             if (popup != null && popup.style.display == DisplayStyle.Flex)
             {
                 SetState(AccessibilityState.Expanded);
@@ -124,7 +129,9 @@ namespace Unity.Samples.ScreenReader
             else
             {
                 SetState(AccessibilityState.Collapsed);
-            }*/
+            }
+#endif // UNITY_6000_3_OR_NEWER
+            */
         }
     }
 }

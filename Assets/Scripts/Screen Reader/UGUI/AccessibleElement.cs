@@ -70,7 +70,6 @@ namespace Unity.Samples.ScreenReader
         public event Action incremented;
         public event Action decremented;
 
-#if UNITY_6000_3_OR_NEWER
         event Func<AccessibilityScrollDirection, bool> m_Scrolled;
         public event Func<AccessibilityScrollDirection, bool> scrolled
         {
@@ -89,7 +88,6 @@ namespace Unity.Samples.ScreenReader
                 }
             }
         }
-#endif // UNITY_6000_3_OR_NEWER
 
         event Func<bool> m_Dismissed;
         public event Func<bool> dismissed
@@ -242,12 +240,7 @@ namespace Unity.Samples.ScreenReader
 
         bool InvokeSelected()
         {
-            var success = m_Selected?.Invoke() ?? false;
-
-            node.value = value;
-            node.state = state;
-
-            return success;
+            return m_Selected?.Invoke() ?? false;
         }
 
         void ConnectToIncremented()
@@ -304,12 +297,12 @@ namespace Unity.Samples.ScreenReader
 
         void ConnectToScrolled()
         {
-#if UNITY_6000_3_OR_NEWER
             if (node == null || m_Scrolled == null)
             {
                 return;
             }
 
+#if UNITY_6000_3_OR_NEWER
             node.scrolled -= InvokeScrolled;
             node.scrolled += InvokeScrolled;
 #endif // UNITY_6000_3_OR_NEWER
@@ -327,12 +320,10 @@ namespace Unity.Samples.ScreenReader
 #endif // UNITY_6000_3_OR_NEWER
         }
 
-#if UNITY_6000_3_OR_NEWER
         bool InvokeScrolled(AccessibilityScrollDirection direction)
         {
             return m_Scrolled?.Invoke(direction) ?? false;
         }
-#endif // UNITY_6000_3_OR_NEWER
 
         void ConnectToDismissed()
         {

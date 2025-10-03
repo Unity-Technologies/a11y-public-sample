@@ -75,14 +75,8 @@ namespace Unity.Samples.LetterSpell
 
         PopupOverlay m_Overlay;
 
-        ClosePolicy m_ClosePolicy = ClosePolicy.CloseOnPressOutside | ClosePolicy.CloseOnEscape;
-
         [UxmlAttribute, CreateProperty]
-        public ClosePolicy closePolicy
-        {
-            get => m_ClosePolicy;
-            set => m_ClosePolicy = value;
-        }
+        public ClosePolicy closePolicy { get; set; } = ClosePolicy.CloseOnPressOutside | ClosePolicy.CloseOnEscape;
 
         public Popup()
         {

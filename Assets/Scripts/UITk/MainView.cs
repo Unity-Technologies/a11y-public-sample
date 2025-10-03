@@ -740,7 +740,7 @@ namespace Unity.Samples.LetterSpell
             // two cards.
             m_MainView.schedule.Execute(() =>
                 AssistiveSupport.notificationDispatcher.SendLayoutChanged(node)
-                ).ExecuteLater(50);
+                ).ExecuteLater(100);
 
             if (moved)
             {
@@ -751,7 +751,7 @@ namespace Unity.Samples.LetterSpell
                 // processed first so that the announcement is not interrupted by the focus change.
                 m_MainView.schedule.Execute(() =>
                     AssistiveSupport.notificationDispatcher.SendAnnouncement(message)
-                ).ExecuteLater(100);
+                ).ExecuteLater(200);
             }
 
             /*var accElement = draggable.transform.GetComponent<AccessibleElement>();
@@ -817,6 +817,8 @@ namespace Unity.Samples.LetterSpell
         void ShowExitGamePopup()
         {
             m_ExitGamePopup.Show();
+
+            AccessibilityManager.GetService<UITkAccessibilityService>()?.RebuildHierarchy();
         }
 
         void CloseExitGamePopup()

@@ -124,6 +124,10 @@ namespace Unity.Samples.ScreenReader
         public event Func<AccessibilityScrollDirection, bool> scrolled;
         public event Func<bool> dismissed;
 
+        public bool selectable => selected != null;
+        public bool scrollable => scrolled != null;
+        public bool dismissable => dismissed != null;
+
         internal void InvokeFocused(AccessibilityNode accessibilityNode, bool isFocused)
         {
             focused?.Invoke(isFocused);

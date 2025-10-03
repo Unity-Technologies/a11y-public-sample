@@ -599,7 +599,10 @@ namespace Unity.Samples.LetterSpell
                 card.text = letterCard.letter.ToString();
                 card.name = letterCard.letter.ToString();
                 card.GetOrCreateAccessibleProperties().label = card.text;
-                card.dropped += (oldIndex, newIndex) => { gameplay.ReorderLetter(oldIndex, newIndex); };
+                card.dropped += (oldIndex, newIndex) =>
+                {
+                    gameplay.ReorderLetter(oldIndex, newIndex);
+                };
             }
         }
 

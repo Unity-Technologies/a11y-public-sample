@@ -3,7 +3,7 @@
     <ui:VisualElement name="root" style="flex-grow: 1;">
         <ui:VisualElement name="background" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background-color: rgb(11, 163, 109);"/>
         <ui:VisualElement name="viewContainer" style="flex-grow: 1;">
-            <Unity.Samples.LetterSpell.StackView name="stackView" index="4" style="flex-grow: 1;">
+            <Unity.Samples.LetterSpell.StackView name="stackView" index="0" style="flex-grow: 1;">
                 <ui:VisualElement name="splashView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Splash-Screen.png?fileID=4602334432413793429&amp;guid=364b68ded9ed04f07848b6c7de25fdad&amp;type=3#Intro Screen_0&quot;);">
                     <ui:Label text="A fun spelling game" name="splashSubTitle">
                         <Bindings>
@@ -51,7 +51,7 @@
                         </ui:Button>
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="gameView" style="flex-grow: 1; background-color: rgb(11, 163, 109);">
+                <ui:VisualElement name="gameView" style="flex-grow: 1; background-color: rgb(2, 197, 132);">
                     <ui:VisualElement name="logo" class="lsp-logo"/>
                     <ui:VisualElement name="clueContainer">
                         <ui:Label text="#clue" name="clueLabel" class="title-text" style="-unity-text-align: middle-center;"/>

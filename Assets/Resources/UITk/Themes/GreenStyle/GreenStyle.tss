@@ -4,6 +4,7 @@
 
 :root {
     font-size: 64px;
+    -unity-text-generator: advanced
 }
 
  :root {

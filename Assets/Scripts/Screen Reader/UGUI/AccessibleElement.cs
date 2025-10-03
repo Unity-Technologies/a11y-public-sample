@@ -34,23 +34,10 @@ namespace Unity.Samples.ScreenReader
                     return;
                 }
 
-                DisconnectFromFocusChanged();
-                DisconnectFromSelected();
-                DisconnectFromIncremented();
-                DisconnectFromDecremented();
-                DisconnectFromScrolled();
-                DisconnectFromDismissed();
-
+                DisconnectFromNode();
                 m_Node = value;
-
                 SetNodeProperties();
-
-                ConnectToFocusChanged();
-                ConnectToSelected();
-                ConnectToIncremented();
-                ConnectToDecremented();
-                ConnectToScrolled();
-                ConnectToDismissed();
+                ConnectToNode();
             }
         }
 
@@ -175,6 +162,26 @@ namespace Unity.Samples.ScreenReader
 #endif // UNITY_6000_3_OR_NEWER
         }
 
+        void ConnectToNode()
+        {
+            ConnectToFocusChanged();
+            ConnectToSelected();
+            ConnectToIncremented();
+            ConnectToDecremented();
+            ConnectToScrolled();
+            ConnectToDismissed();
+        }
+
+        void DisconnectFromNode()
+        {
+            DisconnectFromFocusChanged();
+            DisconnectFromSelected();
+            DisconnectFromIncremented();
+            DisconnectFromDecremented();
+            DisconnectFromScrolled();
+            DisconnectFromDismissed();
+        }
+
         void ConnectToFocusChanged()
         {
             if (node == null)
@@ -184,6 +191,21 @@ namespace Unity.Samples.ScreenReader
 
             node.focusChanged -= InvokeFocused;
             node.focusChanged += InvokeFocused;
+        }
+
+        void DisconnectFromFocusChanged()
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            node.focusChanged -= InvokeFocused;
+        }
+
+        void InvokeFocused(AccessibilityNode accessibilityNode, bool isFocused)
+        {
+            focused?.Invoke(isFocused);
         }
 
         void ConnectToSelected()
@@ -204,6 +226,30 @@ namespace Unity.Samples.ScreenReader
 #endif // UNITY_6000_3_OR_NEWER
         }
 
+        void DisconnectFromSelected()
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+#if UNITY_6000_3_OR_NEWER
+            node.invoked -= InvokeSelected;
+#else // UNITY_6000_3_OR_NEWER
+            node.selected -= InvokeSelected;
+#endif // UNITY_6000_3_OR_NEWER
+        }
+
+        bool InvokeSelected()
+        {
+            var success = m_Selected?.Invoke() ?? false;
+
+            node.value = value;
+            node.state = state;
+
+            return success;
+        }
+
         void ConnectToIncremented()
         {
             if (node == null)
@@ -215,6 +261,21 @@ namespace Unity.Samples.ScreenReader
             node.incremented += InvokeIncremented;
         }
 
+        void DisconnectFromIncremented()
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            node.incremented -= InvokeIncremented;
+        }
+
+        void InvokeIncremented()
+        {
+            incremented?.Invoke();
+        }
+
         void ConnectToDecremented()
         {
             if (node == null)
@@ -224,6 +285,21 @@ namespace Unity.Samples.ScreenReader
 
             node.decremented -= InvokeDecremented;
             node.decremented += InvokeDecremented;
+        }
+
+        void DisconnectFromDecremented()
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            node.decremented -= InvokeDecremented;
+        }
+
+        void InvokeDecremented()
+        {
+            decremented?.Invoke();
         }
 
         void ConnectToScrolled()
@@ -238,6 +314,25 @@ namespace Unity.Samples.ScreenReader
             node.scrolled += InvokeScrolled;
 #endif // UNITY_6000_3_OR_NEWER
         }
+
+        void DisconnectFromScrolled()
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+#if UNITY_6000_3_OR_NEWER
+            node.scrolled -= InvokeScrolled;
+#endif // UNITY_6000_3_OR_NEWER
+        }
+
+#if UNITY_6000_3_OR_NEWER
+        bool InvokeScrolled(AccessibilityScrollDirection direction)
+        {
+            return m_Scrolled?.Invoke(direction) ?? false;
+        }
+#endif // UNITY_6000_3_OR_NEWER
 
         void ConnectToDismissed()
         {
@@ -255,62 +350,6 @@ namespace Unity.Samples.ScreenReader
 #endif // UNITY_2023_3_OR_NEWER
         }
 
-        void DisconnectFromFocusChanged()
-        {
-            if (node == null)
-            {
-                return;
-            }
-
-            node.focusChanged -= InvokeFocused;
-        }
-
-        void DisconnectFromSelected()
-        {
-            if (node == null)
-            {
-                return;
-            }
-
-#if UNITY_6000_3_OR_NEWER
-            node.invoked -= InvokeSelected;
-#else // UNITY_6000_3_OR_NEWER
-            node.selected -= InvokeSelected;
-#endif // UNITY_6000_3_OR_NEWER
-        }
-
-        void DisconnectFromIncremented()
-        {
-            if (node == null)
-            {
-                return;
-            }
-
-            node.incremented -= InvokeIncremented;
-        }
-
-        void DisconnectFromDecremented()
-        {
-            if (node == null)
-            {
-                return;
-            }
-
-            node.decremented -= InvokeDecremented;
-        }
-
-        void DisconnectFromScrolled()
-        {
-            if (node == null)
-            {
-                return;
-            }
-
-#if UNITY_6000_3_OR_NEWER
-            node.scrolled -= InvokeScrolled;
-#endif // UNITY_6000_3_OR_NEWER
-        }
-
         void DisconnectFromDismissed()
         {
             if (node == null)
@@ -323,41 +362,9 @@ namespace Unity.Samples.ScreenReader
 #endif // UNITY_2023_3_OR_NEWER
         }
 
-        void InvokeFocused(AccessibilityNode accessibilityNode, bool isFocused)
-        {
-            focused?.Invoke(isFocused);
-        }
-
-        bool InvokeSelected()
-        {
-            var success = m_Selected != null && m_Selected.Invoke();
-
-            node.value = value;
-            node.state = state;
-
-            return success;
-        }
-
-        internal void InvokeIncremented()
-        {
-            incremented?.Invoke();
-        }
-
-        internal void InvokeDecremented()
-        {
-            decremented?.Invoke();
-        }
-
-#if UNITY_6000_3_OR_NEWER
-        bool InvokeScrolled(AccessibilityScrollDirection direction)
-        {
-            return m_Scrolled != null && m_Scrolled.Invoke(direction);
-        }
-#endif // UNITY_6000_3_OR_NEWER
-
         bool InvokeDismissed()
         {
-            return m_Dismissed != null && m_Dismissed.Invoke();
+            return m_Dismissed?.Invoke() ?? false;
         }
 
         public void SetNodeProperties()

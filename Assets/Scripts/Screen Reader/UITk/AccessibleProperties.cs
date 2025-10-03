@@ -117,9 +117,17 @@ namespace Unity.Samples.ScreenReader
             set => m_AllowsDirectInteraction.Set(this, value);
         }
 
+        public event Action<bool> focused;
         public event Func<bool> selected;
-        public Action incremented;
-        public Action decremented;
+        public event Action incremented;
+        public event Action decremented;
+        public event Func<AccessibilityScrollDirection, bool> scrolled;
+        public event Func<bool> dismissed;
+
+        internal void InvokeFocused(AccessibilityNode accessibilityNode, bool isFocused)
+        {
+            focused?.Invoke(isFocused);
+        }
 
         internal bool InvokeSelected()
         {
@@ -135,15 +143,25 @@ namespace Unity.Samples.ScreenReader
         {
             decremented?.Invoke();
         }
+
+        internal bool InvokeScrolled(AccessibilityScrollDirection direction)
+        {
+            return scrolled?.Invoke(direction) ?? false;
+        }
+
+        internal bool InvokeDismissed()
+        {
+            return dismissed?.Invoke() ?? false;
+        }
     }
 
     public static class AccessibilityVisualElementExtensions
     {
-        static Dictionary<VisualElement, AccessibleProperties> m_AttachedAccessibleProperties = new();
+        static Dictionary<VisualElement, AccessibleProperties> s_AttachedAccessibleProperties = new();
 
         static AccessibleProperties GetAttachedAccessibleProperties(VisualElement ve)
         {
-            return m_AttachedAccessibleProperties.GetValueOrDefault(ve);
+            return s_AttachedAccessibleProperties.GetValueOrDefault(ve);
         }
 
         static AccessibleProperties AttachAccessibleProperties(VisualElement ve)
@@ -151,7 +169,7 @@ namespace Unity.Samples.ScreenReader
             var accessible = new AccessibleProperties();
             accessible.owner = ve;
 
-            m_AttachedAccessibleProperties[ve] = accessible;
+            s_AttachedAccessibleProperties[ve] = accessible;
 
             return accessible;
         }

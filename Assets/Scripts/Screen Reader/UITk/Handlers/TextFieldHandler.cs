@@ -1,4 +1,6 @@
+using UnityEngine;
 using UnityEngine.Accessibility;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -7,6 +9,17 @@ namespace Unity.Samples.ScreenReader
     [Preserve]
     class TextFieldFieldHandler : BaseFieldHandler<string>
     {
+        public TextFieldFieldHandler()
+        {
+            selected += () =>
+            {
+                var textField = ownerElement as TextField;
+                textField?.Focus();
+
+                return true;
+            };
+        }
+
         public override string GetValue()
         {
             var textField = ownerElement as TextField;
@@ -19,20 +32,21 @@ namespace Unity.Samples.ScreenReader
             return base.GetValue();
         }
 
+        public override string GetHint()
+        {
+            // if (Application.platform == RuntimePlatform.Android ||
+            //     Application.platform == RuntimePlatform.IPhonePlayer)
+            // {
+            //     // TODO: "Double tap to edit." should be localized.
+            //     LocalizationSettings.StringDatabase.GetLocalizedString("", "");
+            // }
+
+            return base.GetHint();
+        }
+
         public override AccessibilityRole GetRole()
         {
             return AccessibilityRole.TextField;
-        }
-
-        public TextFieldFieldHandler()
-        {
-            OnSelect += () =>
-            {
-                var textField = ownerElement as TextField;
-                textField?.Focus();
-
-                return true;
-            };
         }
     }
 }

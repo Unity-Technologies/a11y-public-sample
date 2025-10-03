@@ -208,208 +208,307 @@ namespace Unity.Samples.ScreenReader
         {
         }
 
+        public event Action<bool> focused;
+
+        event Func<bool> m_Selected;
+        public event Func<bool> selected
+        {
+            add
+            {
+                m_Selected += value;
+                ConnectToSelected();
+            }
+            remove
+            {
+                m_Selected -= value;
+
+                if (m_Selected == null)
+                {
+                    DisconnectFromSelected();
+                }
+            }
+        }
+
+        public event Action incremented;
+        public event Action decremented;
+
+#if UNITY_6000_3_OR_NEWER
+        event Func<AccessibilityScrollDirection, bool> m_Scrolled;
+        public event Func<AccessibilityScrollDirection, bool> scrolled
+        {
+            add
+            {
+                m_Scrolled += value;
+                ConnectToScrolled();
+            }
+            remove
+            {
+                m_Scrolled -= value;
+
+                if (m_Scrolled == null)
+                {
+                    DisconnectFromScrolled();
+                }
+            }
+        }
+#endif // UNITY_6000_3_OR_NEWER
+
+        event Func<bool> m_Dismissed;
+        public event Func<bool> dismissed
+        {
+            add
+            {
+                m_Dismissed += value;
+                ConnectToDismissed();
+            }
+            remove
+            {
+                m_Dismissed -= value;
+
+                if (m_Dismissed == null)
+                {
+                    DisconnectFromDismissed();
+                }
+            }
+        }
+
         void ConnectToNode()
         {
-            ConnectToNodeSelected();
-            ConnectToNodeIncrement();
-            ConnectToNodeDecrement();
+            ConnectToFocusChanged();
+            ConnectToSelected();
+            ConnectToIncremented();
+            ConnectToDecremented();
+            ConnectToScrolled();
+            ConnectToDismissed();
         }
 
         void DisconnectFromNode()
         {
-            DisconnectFromNodeDecrement();
-            DisconnectFromNodeDecrement();
-            DisconnectFromNodeSelected();
+            DisconnectFromFocusChanged();
+            DisconnectFromSelected();
+            DisconnectFromIncremented();
+            DisconnectFromDecremented();
+            DisconnectFromScrolled();
+            DisconnectFromDismissed();
         }
 
-        void ConnectToNodeSelected()
-        {
-            // Do not connect if the node does not exist or OnSelect is not yet implemented.
-            if (node == null || m_OnSelect == null)
-            {
-                return;
-            }
-
-            node.invoked -= OnNodeSelected;
-            node.invoked += OnNodeSelected;
-        }
-
-        void DisconnectFromNodeSelected()
+        void ConnectToFocusChanged()
         {
             if (node == null)
             {
                 return;
             }
 
-            // Disconnect even if OnSelect is implemented when the node is unset.
-            node.invoked -= OnNodeSelected;
+            node.focusChanged -= InvokeFocused;
+            node.focusChanged += InvokeFocused;
         }
 
-        bool OnNodeSelected()
+        void DisconnectFromFocusChanged()
         {
-            var sel = InvokeOnSelect();
-
-            node.value = value;
-            node.state = state;
-
-            return sel;
-        }
-
-        internal void InvokeOnFocus(AccessibilityNode node, bool isFocused)
-        {
-            if (isFocused)
+            if (node == null)
             {
-                OnFocused?.Invoke();
+                return;
             }
+
+            node.focusChanged -= InvokeFocused;
         }
 
-        public event Action OnFocused;
-
-        internal bool InvokeOnSelect()
+        void InvokeFocused(AccessibilityNode accessibilityNode, bool isFocused)
         {
-            var selected = false;
+            m_OwnerElement?.GetAccessibleProperties()?.InvokeFocused(accessibilityNode, isFocused);
+            focused?.Invoke(isFocused);
+        }
+
+        void ConnectToSelected()
+        {
+            // Implementing the selected event tells the screen reader that the node is selectable, which may lead to
+            // a specific behaviour. Therefore, we don't implement the node's selected event unless we actually need it.
+            if (node == null || m_Selected == null)
+            {
+                return;
+            }
+
+#if UNITY_6000_3_OR_NEWER
+            node.invoked -= InvokeSelected;
+            node.invoked += InvokeSelected;
+#else // UNITY_6000_3_OR_NEWER
+            node.selected -= InvokeSelected;
+            node.selected += InvokeSelected;
+#endif // UNITY_6000_3_OR_NEWER
+        }
+
+        void DisconnectFromSelected()
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+#if UNITY_6000_3_OR_NEWER
+            node.invoked -= InvokeSelected;
+#else // UNITY_6000_3_OR_NEWER
+            node.selected -= InvokeSelected;
+#endif // UNITY_6000_3_OR_NEWER
+        }
+
+        bool InvokeSelected()
+        {
+            var success = false;
 
             if (m_OwnerElement.GetAccessibleProperties() != null)
             {
-                selected = m_OwnerElement.GetAccessibleProperties().InvokeSelected();
+                success = m_OwnerElement.GetAccessibleProperties().InvokeSelected();
             }
 
-            return (m_OnSelect != null && m_OnSelect.Invoke()) || selected;
+            success |= m_Selected?.Invoke() ?? false;
+
+            node.value = value;
+            node.state = state;
+
+            return success;
         }
 
-        event Func<bool> m_OnSelect;
-
-        public event Func<bool> OnSelect
-        {
-            add
-            {
-                m_OnSelect += value;
-                ConnectToNodeSelected();
-            }
-            remove
-            {
-                m_OnSelect -= value;
-
-                if (m_OnSelect == null)
-                {
-                    DisconnectFromNodeSelected();
-                }
-            }
-        }
-
-        event Action m_OnIncrement;
-
-        public event Action OnIncrement
-        {
-            add
-            {
-                m_OnIncrement += value;
-                ConnectToNodeIncrement();
-            }
-            remove
-            {
-                m_OnIncrement -= value;
-
-                if (m_OnIncrement == null)
-                {
-                    DisconnectFromNodeIncrement();
-                }
-            }
-        }
-
-        void ConnectToNodeIncrement()
-        {
-            // Do not connect if the node does not exist or OnNodeIncremented is not yet implemented.
-            if (node == null || m_OnIncrement == null)
-            {
-                return;
-            }
-
-            node.incremented -= OnNodeIncremented;
-            node.incremented += OnNodeIncremented;
-        }
-
-        void DisconnectFromNodeIncrement()
+        void ConnectToIncremented()
         {
             if (node == null)
             {
                 return;
             }
 
-            // Disconnect even if OnNodeIncremented is implemented when the node is unset.
-            node.incremented -= OnNodeIncremented;
+            node.incremented -= InvokeIncremented;
+            node.incremented += InvokeIncremented;
         }
 
-        internal void InvokeOnIncrement()
+        void DisconnectFromIncremented()
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            node.incremented -= InvokeIncremented;
+        }
+
+        void InvokeIncremented()
         {
             m_OwnerElement?.GetAccessibleProperties()?.InvokeIncremented();
-            m_OnIncrement?.Invoke();
-        }
-
-        void OnNodeIncremented()
-        {
-            InvokeOnIncrement();
+            incremented?.Invoke();
 
             node.value = value;
             node.state = state;
         }
 
-        event Action m_OnDecrement;
-
-        public event Action OnDecrement
-        {
-            add
-            {
-                m_OnDecrement += value;
-                ConnectToNodeDecrement();
-            }
-            remove
-            {
-                m_OnDecrement -= value;
-
-                if (m_OnDecrement == null)
-                {
-                    DisconnectFromNodeDecrement();
-                }
-            }
-        }
-
-        void ConnectToNodeDecrement()
-        {
-            // Do not connect if the node does not exist or OnNodeDecremented is not yet implemented.
-            if (node == null || m_OnDecrement == null)
-            {
-                return;
-            }
-
-            node.decremented -= OnNodeDecremented;
-            node.decremented += OnNodeDecremented;
-        }
-
-        void DisconnectFromNodeDecrement()
+        void ConnectToDecremented()
         {
             if (node == null)
             {
                 return;
             }
 
-            // Disconnect even if OnNodeDecremented is implemented when the node is unset.
-            node.decremented -= OnNodeDecremented;
+            node.decremented -= InvokeDecremented;
+            node.decremented += InvokeDecremented;
         }
 
+        void DisconnectFromDecremented()
+        {
+            if (node == null)
+            {
+                return;
+            }
 
-        internal void InvokeOnDecrement()
+            node.decremented -= InvokeDecremented;
+        }
+
+        void InvokeDecremented()
         {
             m_OwnerElement?.GetAccessibleProperties()?.InvokeDecremented();
-            m_OnDecrement?.Invoke();
-        }
-
-        void OnNodeDecremented()
-        {
-            InvokeOnDecrement();
+            decremented?.Invoke();
 
             node.value = value;
             node.state = state;
+        }
+
+        void ConnectToScrolled()
+        {
+#if UNITY_6000_3_OR_NEWER
+            if (node == null || m_Scrolled == null)
+            {
+                return;
+            }
+
+            node.scrolled -= InvokeScrolled;
+            node.scrolled += InvokeScrolled;
+#endif // UNITY_6000_3_OR_NEWER
+        }
+
+        void DisconnectFromScrolled()
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+#if UNITY_6000_3_OR_NEWER
+            node.scrolled -= InvokeScrolled;
+#endif // UNITY_6000_3_OR_NEWER
+        }
+
+#if UNITY_6000_3_OR_NEWER
+        bool InvokeScrolled(AccessibilityScrollDirection direction)
+        {
+            var success = false;
+
+            if (m_OwnerElement.GetAccessibleProperties() != null)
+            {
+                success = m_OwnerElement.GetAccessibleProperties().InvokeScrolled(direction);
+            }
+
+            success |= m_Scrolled?.Invoke(direction) ?? false;
+
+            return success;
+        }
+#endif // UNITY_6000_3_OR_NEWER
+
+        void ConnectToDismissed()
+        {
+            // Implementing the dismissed event tells the screen reader that the node is dismissible, which may lead to
+            // a specific behaviour. Therefore, we don't implement the node's dismissed event unless we actually need
+            // it.
+            if (node == null || m_Dismissed == null)
+            {
+                return;
+            }
+
+#if UNITY_2023_3_OR_NEWER
+            node.dismissed -= InvokeDismissed;
+            node.dismissed += InvokeDismissed;
+#endif // UNITY_2023_3_OR_NEWER
+        }
+
+        void DisconnectFromDismissed()
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+#if UNITY_2023_3_OR_NEWER
+            node.dismissed -= InvokeDismissed;
+#endif // UNITY_2023_3_OR_NEWER
+        }
+
+        bool InvokeDismissed()
+        {
+            var success = false;
+
+            if (m_OwnerElement.GetAccessibleProperties() != null)
+            {
+                success = m_OwnerElement.GetAccessibleProperties().InvokeDismissed();
+            }
+
+            success |= m_Dismissed?.Invoke() ?? false;
+
+            return success;
         }
 
         public static bool IsElementVisible(VisualElement element)

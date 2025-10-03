@@ -11,6 +11,20 @@ namespace Unity.Samples.ScreenReader
     {
         bool m_HasPendingCheck;
 
+        public DropdownFieldHandler()
+        {
+            /*OnSelect += () =>
+            {
+                ownerElement.schedule.Execute(CheckForOpenedPopupMenu).ExecuteLater(200);
+
+               using var evt = NavigationSubmitEvent.GetPooled();
+                ownerElement.SendEvent(evt);
+                OnScreenDebug.Log("Submit event sent to " + ownerElement.name);
+
+                return false;//true;
+            };*/
+        }
+
         public override string GetHint()
         {
             return LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "DROPDOWN_CLOSED_HINT");
@@ -111,20 +125,6 @@ namespace Unity.Samples.ScreenReader
             {
                 SetState(AccessibilityState.Collapsed);
             }*/
-        }
-
-        public DropdownFieldHandler()
-        {
-            /*OnSelect += () =>
-            {
-                ownerElement.schedule.Execute(CheckForOpenedPopupMenu).ExecuteLater(200);
-
-               using var evt = NavigationSubmitEvent.GetPooled();
-                ownerElement.SendEvent(evt);
-                OnScreenDebug.Log("Submit event sent to " + ownerElement.name);
-
-                return false;//true;
-            };*/
         }
     }
 }

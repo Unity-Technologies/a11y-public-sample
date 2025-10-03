@@ -9,8 +9,8 @@ namespace Unity.Samples.ScreenReader
     {
         public BaseSliderHandler()
         {
-            OnIncrement += () => Step(true);
-            OnDecrement += () => Step(false);
+            incremented += () => Step(true);
+            decremented += () => Step(false);
         }
 
         public void Step(bool incr)

@@ -1,4 +1,4 @@
-@import url("Tokens/LetterSpellStyle.Token.Green.uss");
+@import url("Tokens/LetterSpellStyle.Tokens.Green.uss");
 @import url("LetterSpellStyle.Common.uss");
 
 :root {

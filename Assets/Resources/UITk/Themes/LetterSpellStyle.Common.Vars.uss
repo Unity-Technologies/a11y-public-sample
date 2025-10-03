@@ -1,4 +1,4 @@
-@import url("Tokens/LetterSpellStyle.Token.Common.uss");
+@import url("Tokens/LetterSpellStyle.Tokens.Common.uss");
 
 :root {
     font-size: var(--lsp-font-size-md);

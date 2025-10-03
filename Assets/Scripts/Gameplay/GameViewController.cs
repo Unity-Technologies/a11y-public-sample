@@ -304,6 +304,7 @@ namespace Unity.Samples.LetterSpell
                 var otherSibling = draggable.transform.parent.GetChild(otherSiblingIndex);
 
                 // Make the letter uppercase to ensure correct phonetic pronunciation.
+                // TODO: This should be localized.
                 var announcement = $"Moved {draggable.name.ToUpper()} {(shouldMoveLeft ? "before" : "after")} {otherSibling.name.ToUpper()}";
 
                 // Announce that the card was moved.

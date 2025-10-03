@@ -506,13 +506,6 @@ namespace Unity.Samples.LetterSpell
             {
                 m_LetterCardContainer.canPlayCards = false;
                 AudioManager.instance.PlayResult(gameplay.reorderedWordCount == gameplay.words.Count);
-
-                m_MainView.schedule.Execute(() =>
-                {
-                    AssistiveSupport.notificationDispatcher.SendAnnouncement($"The game is over! you found " +
-                        $"{gameplay.reorderedWordCount} words out of {gameplay.words.Count}");
-                }).ExecuteLater(2000);
-
                 gameplay.StopGame();
                 ShowResults(gameplay.reorderedWordCount, gameplay.words.Count);
             }
@@ -617,6 +610,7 @@ namespace Unity.Samples.LetterSpell
 
         void StateTheLetters()
         {
+            // TODO: This should be localized.
             var listCardMessage = "The letters are now " + string.Join(", ",
                 m_Model.letterCards.Select(c => c.letter).ToArray());
             AssistiveSupport.notificationDispatcher.SendAnnouncement(listCardMessage);
@@ -633,6 +627,7 @@ namespace Unity.Samples.LetterSpell
 
         void AnnounceCorrectWord()
         {
+            // TODO: This should be localized.
             AssistiveSupport.notificationDispatcher.SendAnnouncement($"You found the correct word! It was " +
                 $"{gameplay.currentWord.word}.");
             FadeSuccessImageIn();
@@ -727,6 +722,8 @@ namespace Unity.Samples.LetterSpell
                 var index = m_LetterCardContainer.IndexOf(m_LetterCardContainer.selectedCard);
                 var otherCardIndex = shouldMoveLeft ? index + 1 : index - 1;
                 var otherCard = m_LetterCardContainer[otherCardIndex] as UITkLetterCard;
+
+                // TODO: This should be localized.
                 var message = $"Moved {m_LetterCardContainer.selectedCard.text} {(shouldMoveLeft ? "before" : "after")} {otherCard?.text}";
 
                 // Announce that the card was moved.

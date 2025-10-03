@@ -3,7 +3,7 @@
     <ui:VisualElement name="root" style="flex-grow: 1;">
         <ui:VisualElement name="background" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0; background-color: rgb(11, 163, 109);"/>
         <ui:VisualElement name="viewContainer" style="flex-grow: 1;">
-            <Unity.Samples.LetterSpell.StackView name="stackView" index="0" style="flex-grow: 1;">
+            <Unity.Samples.LetterSpell.StackView name="stackView" index="4" style="flex-grow: 1;">
                 <ui:VisualElement name="splashView" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Images/Splash-Screen.png?fileID=4602334432413793429&amp;guid=364b68ded9ed04f07848b6c7de25fdad&amp;type=3#Intro Screen_0&quot;);">
                     <ui:Label text="A fun spelling game" name="splashSubTitle">
                         <Bindings>
@@ -13,7 +13,7 @@
                 </ui:VisualElement>
                 <ui:VisualElement name="loginView" style="flex-grow: 1; align-items: center; justify-content: center;">
                     <ui:VisualElement name="logo" class="lsp-logo"/>
-                    <ui:TextField placeholder-text="Enter your name" name="loginNameField" label="What is your name?" style="min-width: 252px; width: 949px;">
+                    <ui:TextField placeholder-text="Enter your name" name="loginNameField" label="What is your name?" language-direction="LTR" style="min-width: 252px; width: 949px;">
                         <Bindings>
                             <ui:DataBinding property="value" data-source-path="userName" binding-mode="TwoWay"/>
                             <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(775025750016)"/>
@@ -97,7 +97,7 @@
                                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3051354222592)"/>
                             </Bindings>
                         </ui:Label>
-                        <ui:TextField label="Username" placeholder-text="Enter your name" name="settingsUserNameField">
+                        <ui:TextField label="Username" placeholder-text="Enter your name" name="settingsUserNameField" language-direction="LTR">
                             <Bindings>
                                 <ui:DataBinding property="value" data-source-path="userName" binding-mode="TwoWay"/>
                                 <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3183403495424)"/>
@@ -111,7 +111,7 @@
                                 <UnityEngine.Localization.LocalizedStringList property="choices" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3801748762624)"/>
                             </Bindings>
                         </lsp:ButtonStripField>
-                        <ui:VisualElement name="settingsNumberOfWords" class="unity-base-field" style="flex-direction: row;">
+                        <ui:VisualElement name="settingsNumberOfWords" class="unity-base-field">
                             <ui:Label name="Label" class="unity-base-field__label">
                                 <Bindings>
                                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17127719464960)"/>

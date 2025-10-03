@@ -441,9 +441,19 @@ namespace Unity.Samples.LetterSpell
                     root.languageDirection = LanguageDirection.RTL;
                 else
                     root.languageDirection = LanguageDirection.LTR;
+                UpdateUSSLangDirection(root);
             };
 
+            UpdateUSSLangDirection(root);
             ShowSplash();
+        }
+
+        void UpdateUSSLangDirection(VisualElement root)
+        {
+            if (root.panel == null)
+                return;
+            root.panel.visualTree.EnableInClassList("lsp-dir-ltr", LocalizationSettings.SelectedLocale?.Identifier.CultureInfo.TextInfo.IsRightToLeft == false);
+            root.panel.visualTree.EnableInClassList("lsp-dir-rtl", LocalizationSettings.SelectedLocale?.Identifier.CultureInfo.TextInfo.IsRightToLeft == true);
         }
 
         void OnEnable()

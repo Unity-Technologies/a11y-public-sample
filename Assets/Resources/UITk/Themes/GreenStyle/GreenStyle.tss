@@ -6,9 +6,27 @@
     font-size: 64px;
 }
 
+ :root {
+    --lsp-row: row;
+    --lsp-row-reverse: row-reverse;
+    --lsp-left: left;
+    --lsp-middle-left: middle-left;
+    --lsp-right: right;
+    --lsp-middle-right: middle-right;
+}
 
 :root.bold-text {
-    -unity-font-style: bold
+    -unity-font-style: bold;
+}
+
+:root.lsp-dir-rtl {
+    --lsp-row: row-reverse;
+    --lsp-row-reverse: row;
+    --lsp-left: right;
+    --lsp-middle-left: middle-right;
+    --lsp-right: left;
+    --lsp-middle-right: middle-left;
+    -unity-text-align: right;
 }
 
 /* Dropdown */

@@ -644,8 +644,8 @@ namespace Unity.Samples.ScreenReader
                 shouldBeIgnored |= accElement.isIgnored;
                 modal = accElement.isModal;
 
-                // If the branch is visible but the AccessibleElement does not have a node yet then create it.
-                if (!shouldBeIgnored)
+                // If the branch is visible but the AccessibleElement does not have a node yet, then create it.
+                if (!shouldBeIgnored && !modal)
                 {
                     if (!IsNodeValid(accElement.node))
                     {

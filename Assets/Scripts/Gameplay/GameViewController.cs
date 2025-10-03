@@ -169,7 +169,11 @@ namespace Unity.Samples.LetterSpell
                 AccessibilityManager.GetService<UGuiAccessibilityService>()?.ActivateOtherAccessibilityNodes(false, letterCardContainer);
 
                 letterCard.SetDraggingVisuals(true);
-                SetLetterCardsAccessibilityLabel(false);
+
+                var element = m_AccessibilityFocusedCard.GetComponent<AccessibleElement>();
+                // TODO: This should be localized.
+                element.hint = "Navigate left or right to move. Submit to unselect.";
+                element.SetNodeProperties();
             }
             else
             {
@@ -178,7 +182,10 @@ namespace Unity.Samples.LetterSpell
                 AccessibilityManager.GetService<UGuiAccessibilityService>()?.ActivateOtherAccessibilityNodes(true, letterCardContainer);
 
                 letterCard.SetDraggingVisuals(false);
-                SetLetterCardsAccessibilityLabel(true);
+
+                var element = m_AccessibilityFocusedCard.GetComponent<AccessibleElement>();
+                element.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT");
+                element.SetNodeProperties();
             }
 
             return true;
@@ -192,6 +199,9 @@ namespace Unity.Samples.LetterSpell
 
         public void OnWordReorderingCompleted()
         {
+            m_AccessibilitySelectedCard.SetDraggingVisuals(false);
+            m_AccessibilitySelectedCard = null;
+
             StartCoroutine(DelayWordReorderingCompleted());
             return;
 
@@ -273,17 +283,6 @@ namespace Unity.Samples.LetterSpell
             else if (selectedCardIndex < focusedCardIndex)
             {
                 MoveCard(false, focusedCardIndex - selectedCardIndex);
-            }
-        }
-
-        void SetLetterCardsAccessibilityLabel(bool hasLabel)
-        {
-            foreach (Transform letterCardTransform in letterCardContainer)
-            {
-                var element = letterCardTransform.GetComponent<AccessibleElement>();
-                element.label = hasLabel ? letterCardTransform.name : null;
-                element.hint = hasLabel ? LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT") : null;
-                element.SetNodeProperties();
             }
         }
 

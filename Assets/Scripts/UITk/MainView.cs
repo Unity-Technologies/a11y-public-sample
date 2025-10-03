@@ -247,7 +247,9 @@ namespace Unity.Samples.LetterSpell
             set
             {
                 if (m_AccessibilityFocusedCard == value)
+                {
                     return;
+                }
 
                 m_AccessibilityFocusedCard?.Blur();
 
@@ -262,12 +264,14 @@ namespace Unity.Samples.LetterSpell
                 // Note: we don't want to steal the focus if the user is dragging a card.
                 OnScreenDebug.Log("In Acc Focus " + (m_AccessibilityFocusedCard != null ? m_AccessibilityFocusedCard.name : "null") +
                     " selected " + (m_LetterCardContainer.selectedCard != null ? m_LetterCardContainer.selectedCard.name : "null"));
+
                 if (m_AccessibilityFocusedCard != null && m_LetterCardContainer.selectedCard == null)
+                {
                     m_AccessibilityFocusedCard.Focus();
+                }
 
                 OnScreenDebug.Log("After Acc Focus " + (m_AccessibilityFocusedCard != null ? m_AccessibilityFocusedCard.name : "null") +
                                   " selected " + (m_LetterCardContainer.selectedCard != null ? m_LetterCardContainer.selectedCard.name : "null"));
-
             }
         }
 
@@ -623,6 +627,7 @@ namespace Unity.Samples.LetterSpell
         public void OnWordReorderingCompleted()
         {
             m_LetterCardContainer.canPlayCards = false;
+            m_LetterCardContainer.selectedCard.Unselect();
 
             m_MainView.schedule.Execute(_ => AnnounceCorrectWord()).ExecuteLater(2000);
 
@@ -650,18 +655,17 @@ namespace Unity.Samples.LetterSpell
 
         void OnNodeFocusChanged(AccessibilityNode node)
         {
-            if (node != null)
+            if (node == null)
             {
-                var service = AccessibilityManager.GetService<UITkAccessibilityService>();
-                var element = service.GetVisualElementForNode(m_MainView.panel, node);
+                return;
+            }
 
-                accessibilityFocusedCard = element as UITkLetterCard;
-                MoveSelectedCardOnAssistedFocus();
-            }
-            else
-            {
-                accessibilityFocusedCard = null;
-            }
+            var service = AccessibilityManager.GetService<UITkAccessibilityService>();
+            var element = service.GetVisualElementForNode(m_MainView.panel, node);
+
+            accessibilityFocusedCard = element as UITkLetterCard;
+
+            MoveSelectedCardOnAssistedFocus();
         }
 
         void MoveSelectedCardOnAssistedFocus()
@@ -716,27 +720,34 @@ namespace Unity.Samples.LetterSpell
 
             // OnScreenDebug.Log("MoveCard " + (shouldMoveLeft ? "left" : "right" + " count " + count));
 
+            var updater = m_LetterCardContainer.selectedCard.panel.GetAccessibilityUpdater();
+            var node = updater.GetNodeForVisualElement(m_LetterCardContainer.selectedCard);
+
+            var selectedCardText = m_LetterCardContainer.selectedCard.text;
+
+            var index = m_LetterCardContainer.IndexOf(m_LetterCardContainer.selectedCard);
+            var otherCardIndex = shouldMoveLeft ? index - 1 : index + 1;
+            var otherCard = m_LetterCardContainer[otherCardIndex] as UITkLetterCard;
+            var otherCardText = otherCard?.text;
+
             var moved = shouldMoveLeft ?
                 m_LetterCardContainer.selectedCard.MoveLeft(count) :
                 m_LetterCardContainer.selectedCard.MoveRight(count);
 
+            m_MainView.schedule.Execute(() =>
+                AssistiveSupport.notificationDispatcher.SendLayoutChanged(node)
+                ).ExecuteLater(50);
+
             if (moved)
             {
-                var index = m_LetterCardContainer.IndexOf(m_LetterCardContainer.selectedCard);
-                var otherCardIndex = shouldMoveLeft ? index + 1 : index - 1;
-                var otherCard = m_LetterCardContainer[otherCardIndex] as UITkLetterCard;
-
                 // TODO: This should be localized.
-                var message = $"Moved {m_LetterCardContainer.selectedCard.text} {(shouldMoveLeft ? "before" : "after")} {otherCard?.text}";
+                var message = $"Moved {selectedCardText} {(shouldMoveLeft ? "before" : "after")} {otherCardText}";
 
                 // Announce that the card was moved.
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(message);
+                m_MainView.schedule.Execute(() =>
+                    AssistiveSupport.notificationDispatcher.SendAnnouncement(message)
+                ).ExecuteLater(100);
             }
-
-            var updater = m_LetterCardContainer.selectedCard.panel.GetAccessibilityUpdater();
-            var node = updater.GetNodeForVisualElement(m_LetterCardContainer.selectedCard);
-
-            AssistiveSupport.notificationDispatcher.SendLayoutChanged(node);
 
             /*var accElement = draggable.transform.GetComponent<AccessibleElement>();
 

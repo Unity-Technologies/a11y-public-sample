@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.UIElements;
 using Unity.Samples.ScreenReader;
+using UnityEngine.Localization.Settings;
 
 namespace Unity.Samples.LetterSpell
 {
@@ -68,15 +69,8 @@ namespace Unity.Samples.LetterSpell
             {
                 cardListView.selectedCard = this;
 
-                // Check whether the card is focused or not.
-                var focused = focusController?.focusedElement == this;
-
                 // TODO: This should be localized.
-                accessible.hint = focused ? "Submit to unselect." : "Submit to select.";
-
-                // TODO: These should be localized.
-                AssistiveSupport.notificationDispatcher.SendAnnouncement($"Card {text} selected. Navigate left or " +
-                    "right to move the card." + (focused ? "Submit to unselect it." : ""));
+                accessible.hint = "Navigate left or right to move. Submit to unselect.";
 
                 OnScreenDebug.Log("Selected card: " + text);
             }
@@ -86,16 +80,10 @@ namespace Unity.Samples.LetterSpell
         {
             if (this == cardListView.selectedCard)
             {
-                // Check whether the card is focused or not.
-                var focused = focusController?.focusedElement == this;
                 cardListView.selectedCard = null;
 
-                // TODO: This should be localized.
-                accessible.hint = focused ? "Submit to unselect." : "Submit to select.";
-
-                // TODO: These should be localized.
-                AssistiveSupport.notificationDispatcher.SendAnnouncement($"Card {text} selected. Navigate left or " +
-                    "right to move the card." + (focused ? "Submit to unselect it." : ""));
+                // TODO: Change to "Submit to select, then navigate left or right to move."
+                accessible.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT");
             }
         }
 
@@ -115,6 +103,8 @@ namespace Unity.Samples.LetterSpell
 
             // Accessibility
             m_TextElement.GetOrCreateAccessibleProperties().ignored = true;
+
+            accessible.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT");
             accessible.selected += () =>
             {
                 if (!selected)

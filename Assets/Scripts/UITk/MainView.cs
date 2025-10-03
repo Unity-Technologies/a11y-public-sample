@@ -734,6 +734,10 @@ namespace Unity.Samples.LetterSpell
                 m_LetterCardContainer.selectedCard.MoveLeft(count) :
                 m_LetterCardContainer.selectedCard.MoveRight(count);
 
+            // After the move, the screen reader will refocus on the other card, but with a little delay. Move the focus
+            // to the selected card, but wait a bit to let the first focus change complete. Otherwise, the screen reader
+            // will focus on the selected card first, then still on the other card, triggering an infinite swap of the
+            // two cards.
             m_MainView.schedule.Execute(() =>
                 AssistiveSupport.notificationDispatcher.SendLayoutChanged(node)
                 ).ExecuteLater(50);
@@ -743,7 +747,8 @@ namespace Unity.Samples.LetterSpell
                 // TODO: This should be localized.
                 var message = $"Moved {selectedCardText} {(shouldMoveLeft ? "before" : "after")} {otherCardText}";
 
-                // Announce that the card was moved.
+                // Announce that the card was moved. Give a bit of time for the layout change notification to be
+                // processed first so that the announcement is not interrupted by the focus change.
                 m_MainView.schedule.Execute(() =>
                     AssistiveSupport.notificationDispatcher.SendAnnouncement(message)
                 ).ExecuteLater(100);

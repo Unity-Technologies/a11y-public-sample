@@ -30,6 +30,8 @@ namespace Unity.Samples.ScreenReader
             slider.value += step;
         }
 
+#if UNITY_2023_3_OR_NEWER
         public override AccessibilityRole GetRole() => AccessibilityRole.Slider;
+#endif // UNITY_2023_3_OR_NEWER
     }
 }

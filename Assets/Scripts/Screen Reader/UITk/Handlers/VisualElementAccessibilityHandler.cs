@@ -232,7 +232,6 @@ namespace Unity.Samples.ScreenReader
         public event Action incremented;
         public event Action decremented;
 
-#if UNITY_6000_3_OR_NEWER
         event Func<AccessibilityScrollDirection, bool> m_Scrolled;
         public event Func<AccessibilityScrollDirection, bool> scrolled
         {
@@ -251,7 +250,6 @@ namespace Unity.Samples.ScreenReader
                 }
             }
         }
-#endif // UNITY_6000_3_OR_NEWER
 
         event Func<bool> m_Dismissed;
         public event Func<bool> dismissed
@@ -410,9 +408,6 @@ namespace Unity.Samples.ScreenReader
 
             success |= m_Selected?.Invoke() ?? false;
 
-            node.value = value;
-            node.state = state;
-
             return success;
         }
 
@@ -441,9 +436,6 @@ namespace Unity.Samples.ScreenReader
         {
             m_OwnerElement?.GetAccessibleProperties()?.InvokeIncremented();
             incremented?.Invoke();
-
-            node.value = value;
-            node.state = state;
         }
 
         void ConnectToDecremented()
@@ -471,19 +463,17 @@ namespace Unity.Samples.ScreenReader
         {
             m_OwnerElement?.GetAccessibleProperties()?.InvokeDecremented();
             decremented?.Invoke();
-
-            node.value = value;
-            node.state = state;
         }
 
         void ConnectToScrolled()
         {
-#if UNITY_6000_3_OR_NEWER
             if (node == null || !m_Scrollable)
             {
                 return;
             }
 
+
+#if UNITY_6000_3_OR_NEWER
             node.scrolled -= InvokeScrolled;
             node.scrolled += InvokeScrolled;
 #endif // UNITY_6000_3_OR_NEWER
@@ -501,7 +491,6 @@ namespace Unity.Samples.ScreenReader
 #endif // UNITY_6000_3_OR_NEWER
         }
 
-#if UNITY_6000_3_OR_NEWER
         bool InvokeScrolled(AccessibilityScrollDirection direction)
         {
             var success = false;
@@ -515,7 +504,6 @@ namespace Unity.Samples.ScreenReader
 
             return success;
         }
-#endif // UNITY_6000_3_OR_NEWER
 
         void ConnectToDismissed()
         {

@@ -44,9 +44,8 @@ namespace Unity.Samples.ScreenReader
             return base.GetHint();
         }
 
-        public override AccessibilityRole GetRole()
-        {
-            return AccessibilityRole.TextField;
-        }
+#if UNITY_6000_3_OR_NEWER
+        public override AccessibilityRole GetRole() => AccessibilityRole.TextField;
+#endif // UNITY_6000_3_OR_NEWER
     }
 }

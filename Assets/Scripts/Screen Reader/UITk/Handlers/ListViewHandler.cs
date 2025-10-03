@@ -13,10 +13,7 @@ namespace Unity.Samples.ScreenReader
     {
         public override string GetLabel()
         {
-            var listViewItem = ownerElement;
-            var label = listViewItem.Q<Label>();
-
-            return label?.text;
+            return ownerElement.Q<Label>()?.text;
         }
     }
 

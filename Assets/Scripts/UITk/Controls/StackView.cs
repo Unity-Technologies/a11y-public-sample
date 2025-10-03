@@ -1,5 +1,4 @@
 using System;
-using Unity.Samples.ScreenReader;
 using UnityEngine;
 using UnityEngine.UIElements;
 

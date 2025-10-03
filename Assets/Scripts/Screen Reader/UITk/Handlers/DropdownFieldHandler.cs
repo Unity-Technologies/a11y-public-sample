@@ -1,5 +1,6 @@
 using Unity.Samples.LetterSpell;
 using UnityEngine.Accessibility;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -10,12 +11,25 @@ namespace Unity.Samples.ScreenReader
     {
         bool m_HasPendingCheck;
 
-        
+        public DropdownFieldHandler()
+        {
+            /*OnSelect += () =>
+            {
+                ownerElement.schedule.Execute(CheckForOpenedPopupMenu).ExecuteLater(200);
+
+               using var evt = NavigationSubmitEvent.GetPooled();
+                ownerElement.SendEvent(evt);
+                OnScreenDebug.Log("Submit event sent to " + ownerElement.name);
+
+                return false;//true;
+            };*/
+        }
+
         public override string GetHint()
         {
-            return "Double tap to expand";
+            return LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "DROPDOWN_CLOSED_HINT");
         }
-        
+
         protected override void BindToElement(VisualElement element)
         {
             base.BindToElement(element);
@@ -111,20 +125,6 @@ namespace Unity.Samples.ScreenReader
             {
                 SetState(AccessibilityState.Collapsed);
             }*/
-        }
-
-        public DropdownFieldHandler()
-        {
-            /*OnSelect += () =>
-            {
-                ownerElement.schedule.Execute(CheckForOpenedPopupMenu).ExecuteLater(200);
-
-               using var evt = NavigationSubmitEvent.GetPooled();
-                ownerElement.SendEvent(evt);
-                OnScreenDebug.Log("Submit event sent to " + ownerElement.name);
-
-                return false;//true;
-            };*/
         }
     }
 }

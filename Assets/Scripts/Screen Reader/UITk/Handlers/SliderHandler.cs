@@ -9,13 +9,17 @@ namespace Unity.Samples.ScreenReader
     {
         public BaseSliderHandler()
         {
-            OnIncrement += () => Step(true);
-            OnDecrement += () => Step(false);
+            incremented += () => Step(true);
+            decremented += () => Step(false);
         }
 
         public void Step(bool incr)
         {
-            var slider = ownerElement as Slider;
+            if (ownerElement is not Slider slider)
+            {
+                return;
+            }
+
             var step = (slider.highValue - slider.lowValue) / 10f;
 
             if (!incr)

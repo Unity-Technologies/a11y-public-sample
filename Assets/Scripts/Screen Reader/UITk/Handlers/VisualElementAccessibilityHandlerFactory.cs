@@ -78,12 +78,12 @@ namespace Unity.Samples.ScreenReader
                         break;
                     }
 
-                    if (type.IsGenericType && type.GetGenericTypeDefinition() == m_VisualElementGenericTypeDefinition)
+                    if (type is { IsGenericType: true } && type.GetGenericTypeDefinition() == m_VisualElementGenericTypeDefinition)
                     {
                         return true;
                     }
 
-                    type = type.BaseType;
+                    type = type?.BaseType;
                 }
 
                 return false;
@@ -94,9 +94,9 @@ namespace Unity.Samples.ScreenReader
                 var type = element.GetType();
 
                 // Find the exact BaseField<> class type is
-                while (!(type.IsGenericType && type.GetGenericTypeDefinition() == m_VisualElementGenericTypeDefinition))
+                while (!(type is { IsGenericType: true } && type.GetGenericTypeDefinition() == m_VisualElementGenericTypeDefinition))
                 {
-                    type = type.BaseType;
+                    type = type?.BaseType;
                 }
 
                 var args = type.GetGenericArguments();

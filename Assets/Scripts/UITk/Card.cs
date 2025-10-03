@@ -2,11 +2,9 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Accessibility;
-using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 using Unity.Samples.ScreenReader;
-using UnityEditor;
-using Button = UnityEngine.UIElements.Button;
+using UnityEngine.Localization.Settings;
 
 namespace Unity.Samples.LetterSpell
 {
@@ -16,9 +14,6 @@ namespace Unity.Samples.LetterSpell
         Vector2 m_Start;
         protected bool m_Active;
         VisualElement m_Element;
-        Button m_MoveLeftButton;
-        Button m_MoveRightButton;
-        Button m_UnselectCardButton;
 
         CardListView cardListView => parent as CardListView;
 
@@ -28,7 +23,7 @@ namespace Unity.Samples.LetterSpell
         //     public override string GetLabel() => (owner as UITkLetterCard).text;
         // }
 
-        private bool m_Selected;
+        bool m_Selected;
 
         public bool selected
         {
@@ -36,10 +31,17 @@ namespace Unity.Samples.LetterSpell
             set
             {
                 if (m_Selected == value)
+                {
                     return;
+                }
+
                 m_Selected = value;
+
                 if (value)
+                {
                     Focus();
+                }
+
                 UpdateSelectedState();
             }
         }
@@ -60,18 +62,16 @@ namespace Unity.Samples.LetterSpell
         }
 
         public event Action<int, int> dropped;
-        
+
         public void Select()
         {
             if (cardListView.selectedCard != this)
             {
                 cardListView.selectedCard = this;
-                
-                // check whether we are focused or not
-                var focused = this.focusController?.focusedElement == this;
- 
-                AssistiveSupport.notificationDispatcher.SendAnnouncement($"Card {text} selected. Swipe Left or Right to move the card." + (focused ? "Or Double tap to unselect it." : ""));
-   
+
+                // TODO: This should be localized.
+                accessible.hint = "Navigate left or right to move. Submit to unselect.";
+
                 OnScreenDebug.Log("Selected card: " + text);
             }
         }
@@ -80,68 +80,32 @@ namespace Unity.Samples.LetterSpell
         {
             if (this == cardListView.selectedCard)
             {
-                // check whether we are focused or not
-                var focused = this.focusController?.focusedElement == this;
-                cardListView.selectedCard = null; 
-                
-                AssistiveSupport.notificationDispatcher.SendAnnouncement($"Card {text} selected. Swipe Left or Right to move the card." + (focused ? "Or Double tap to unselect it." : ""));
+                cardListView.selectedCard = null;
 
+                // TODO: Change to "Submit to select, then navigate left or right to move."
+                accessible.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT");
             }
         }
-        
+
         public UITkLetterCard()
         {
             m_TextElement = new Label();
             Add(m_TextElement);
             AddToClassList("lsp-letter-card");
             AddToClassList("lsp-card-view-item");
-            
+
             focusable = true;
 
             style.position = Position.Absolute;
 
-            var buttonsContainer = new AccessibleVisualElement()
-            {
-                pickingMode = PickingMode.Ignore
-            };
-
-            buttonsContainer.AddToClassList("lsp-letter-card__button-container");
-            buttonsContainer.accessible.modal = true;
-            buttonsContainer.style.display = DisplayStyle.None;
-
-            m_MoveLeftButton = new Button { text = "<" };
-            m_MoveLeftButton.AddToClassList("lsp-letter-card__button");
-            m_MoveLeftButton.AddToClassList("lsp-letter-card__button--first");
-            m_MoveLeftButton.clicked += ()=> MoveLeft();
-
-            m_MoveRightButton = new Button { text = ">" };
-            m_MoveRightButton.AddToClassList("lsp-letter-card__button");
-            m_MoveRightButton.AddToClassList("lsp-letter-card__button--last");
-            m_MoveRightButton.clicked += ()=> MoveRight();
-
-            m_UnselectCardButton = new Button
-            {
-                name="cancelMoveButton",
-                text = "X"
-            };
-            m_UnselectCardButton.AddToClassList("lsp-letter-card__button");
-            // m_UnselectCardButton.AddToClassList("lsp-letter-card__button--flat");
-            m_UnselectCardButton.clicked += Unselect;
-
-            buttonsContainer.Add(m_MoveLeftButton);
-            buttonsContainer.Add(m_MoveRightButton);
-            buttonsContainer.Add(m_UnselectCardButton);
-
-            Add(buttonsContainer);
-
             RegisterCallbacksOnTarget();
             RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
-            RegisterCallback<FocusInEvent>(OnFocusIn);
-            RegisterCallback<BlurEvent>(OnBlur);
-            
+
             // Accessibility
             m_TextElement.GetOrCreateAccessibleProperties().ignored = true;
-            accessible.selected += () => 
+
+            accessible.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT");
+            accessible.selected += () =>
             {
                 if (!selected)
                 {
@@ -184,21 +148,6 @@ namespace Unity.Samples.LetterSpell
             // schedule.Execute(() => animated = true).ExecuteLater(500);
         }
 
-        void OnFocusIn(FocusInEvent e)
-        {
-            AssistiveSupport.notificationDispatcher.SendAnnouncement($"Double tap to select Card {text} and start moving.");
-
-            OnScreenDebug.Log("OnFocusIn " + text);
-            e.StopPropagation();
-        }
-        
-        void OnBlur(BlurEvent e)
-        {
-            OnScreenDebug.Log("Un Focus " + text);
-            accessible.hint = null;
-            e.StopPropagation();
-        }
-        
         protected Rect CalculatePosition(float x, float y, float width, float height)
         {
             var rect = new Rect(x, y, width, height);
@@ -286,13 +235,7 @@ namespace Unity.Samples.LetterSpell
 
         protected void OnMouseDown(MouseDownEvent e)
         {
-            if (!cardListView.canPlayCards)
-            {
-                e.StopImmediatePropagation();
-                return;
-            }
-
-            if (m_Active)
+            if (!cardListView.canPlayCards || m_Active)
             {
                 e.StopImmediatePropagation();
                 return;
@@ -321,6 +264,7 @@ namespace Unity.Samples.LetterSpell
             {
                 // Ensure the card is selected when we start dragging it.
                 Select();
+
                 var diff = e.localMousePosition - m_Start;
 
                 if (!dragging && Math.Abs(diff.x) > 5)
@@ -430,7 +374,7 @@ namespace Unity.Samples.LetterSpell
 
             if (index == parent.childCount - 1)
             {
-                PlaceInFront(this.parent[index]);
+                PlaceInFront(parent[index]);
             }
             else
             {
@@ -445,14 +389,7 @@ namespace Unity.Samples.LetterSpell
             }
 
             cardListView.DoLayout();
-            UpdateButtonEnableState();
             dropped?.Invoke(oldIndex, index);
-        }
-
-        public void UpdateButtonEnableState()
-        {
-            m_MoveLeftButton.SetEnabled(parent.IndexOf(this) != 0);
-            m_MoveRightButton.SetEnabled(parent.IndexOf(this) != parent.childCount - 1);
         }
     }
 
@@ -515,11 +452,13 @@ namespace Unity.Samples.LetterSpell
                     continue;
                 }
 
-                var r = new Rect();
-                r.xMin = startX + i * cardSize + (i + 1) *spacing;
-                r.width = cardSize;
-                r.height = cardSize;
-                r.yMin = (layout.height - cardSize)/2;
+                var r = new Rect
+                {
+                    xMin = startX + i * cardSize + (i + 1) * spacing,
+                    width = cardSize,
+                    height = cardSize,
+                    yMin = (layout.height - cardSize) / 2
+                };
 
                 if (card.layout.center.x > r.xMax)
                 {
@@ -584,7 +523,7 @@ namespace Unity.Samples.LetterSpell
         {
             m_StartIndex = IndexOf(card);
             // style.position = Position.Absolute;
-            card.PlaceInFront(this.Children().Last());
+            card.PlaceInFront(Children().Last());
             Insert(m_StartIndex, m_InsertionPlaceholder);
             ComputeInsertionIndex(card);
             DoLayout();
@@ -683,13 +622,17 @@ namespace Unity.Samples.LetterSpell
                 }
 
                 if (m_SelectedCard != null)
+                {
                     m_SelectedCard.selected = false;
-                
+                }
+
                 m_SelectedCard = value;
                 OnScreenDebug.Log("ListView selected card: " + (m_SelectedCard != null ? m_SelectedCard.text : "null"));
-                
+
                 if (m_SelectedCard != null)
+                {
                     m_SelectedCard.selected = true;
+                }
             }
         }
 
@@ -760,6 +703,8 @@ namespace Unity.Samples.LetterSpell
                 var index = IndexOf(draggable);
                 var otherSiblingIndex = shouldMoveLeft ? index + 1 : index - 1;
                 var otherSibling = this[otherSiblingIndex];
+
+                // TODO: This should be localized.
                 var message = $"Moved {draggable.name} {(shouldMoveLeft ? "before" : "after")} {otherSibling.name}";
 
                 // Announce that the card was moved.
@@ -776,7 +721,7 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
-        protected  void UnregisterCallbacksFromTarget()
+        protected void UnregisterCallbacksFromTarget()
         {
             UnregisterCallback<MouseDownEvent>(OnMouseDown);
             UnregisterCallback<MouseMoveEvent>(OnMouseMove);

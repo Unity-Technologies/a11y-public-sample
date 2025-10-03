@@ -9,6 +9,7 @@ using Unity.Samples.ScreenReader;
 using UnityEngine.Localization;
 using UnityEngine.Localization.SmartFormat.Extensions;
 using UnityEngine.Localization.SmartFormat.PersistentVariables;
+using UnityEngine.Localization.Settings;
 
 namespace Unity.Samples.LetterSpell
 {
@@ -17,13 +18,11 @@ namespace Unity.Samples.LetterSpell
         const string k_UsernamePref = "Username";
         const string k_DifficultyPref = "GameDifficulty";
         const string k_WordsPref = "GameWords";
-        public const string k_CluePref = "ShowClues";
-        public const string k_SoundEffectsPref = "SoundEffectsVolume";
-        public const string k_MusicPref = "MusicVolume";
+        const string k_CluePref = "ShowClues";
+        const string k_SoundEffectsPref = "SoundEffectsVolume";
+        const string k_MusicPref = "MusicVolume";
         const string k_ColorThemePref = "ColorTheme";
         const string k_DisplaySizePref = "DisplaySize";
-        const string k_SettingOn = "On";
-        const string k_SettingOff = "Off";
 
         [CreateProperty]
         public string userName
@@ -169,17 +168,17 @@ namespace Unity.Samples.LetterSpell
         }
 
         [CreateProperty]
-        public string closedCaptionsEnabledText => AccessibilitySettings.isClosedCaptioningEnabled ? k_SettingOn : k_SettingOff;
+        public string closedCaptionsEnabledText => LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", AccessibilitySettings.isClosedCaptioningEnabled ? "SETTING_ON" : "SETTING_OFF");
 
         [CreateProperty]
-        public string boldTextEnabledText => AccessibilitySettings.isBoldTextEnabled ? k_SettingOn : k_SettingOff;
+        public string boldTextEnabledText => LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", AccessibilitySettings.isBoldTextEnabled ? "SETTING_ON" : "SETTING_OFF");
 
         [CreateProperty]
         public float fontScale => AccessibilitySettings.fontScale;
 
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
-        void Notify([CallerMemberName] string property = "")
+        public void Notify([CallerMemberName] string property = "")
         {
             propertyChanged?.Invoke(this, new BindablePropertyChangedEventArgs(property));
         }
@@ -187,7 +186,7 @@ namespace Unity.Samples.LetterSpell
 
     class MainView : MonoBehaviour
     {
-        PlayerSettingsData m_PlayerSettings = new PlayerSettingsData();
+        PlayerSettingsData m_PlayerSettings = new();
         StackView m_StackView;
         VisualElement m_MainView;
         // VisualElement m_Logo;
@@ -248,27 +247,31 @@ namespace Unity.Samples.LetterSpell
             set
             {
                 if (m_AccessibilityFocusedCard == value)
+                {
                     return;
-                
+                }
+
                 m_AccessibilityFocusedCard?.Blur();
-                
+
                 OnScreenDebug.Log("Before Acc Focus " + (m_AccessibilityFocusedCard != null ? m_AccessibilityFocusedCard.name : "null") +
                                   " selected " + (m_LetterCardContainer.selectedCard != null ? m_LetterCardContainer.selectedCard.name : "null"));
 
                 m_AccessibilityFocusedCard = value;
-                
+
                 // Focus on the card that has the accessibility focus if no card is currently selected.
                 // This can happen when the user is not dragging a card and just navigating the screen reader
                 // focus using swipe gestures.
                 // Note: we don't want to steal the focus if the user is dragging a card.
                 OnScreenDebug.Log("In Acc Focus " + (m_AccessibilityFocusedCard != null ? m_AccessibilityFocusedCard.name : "null") +
                     " selected " + (m_LetterCardContainer.selectedCard != null ? m_LetterCardContainer.selectedCard.name : "null"));
+
                 if (m_AccessibilityFocusedCard != null && m_LetterCardContainer.selectedCard == null)
+                {
                     m_AccessibilityFocusedCard.Focus();
-                
+                }
+
                 OnScreenDebug.Log("After Acc Focus " + (m_AccessibilityFocusedCard != null ? m_AccessibilityFocusedCard.name : "null") +
                                   " selected " + (m_LetterCardContainer.selectedCard != null ? m_LetterCardContainer.selectedCard.name : "null"));
-
             }
         }
 
@@ -295,7 +298,7 @@ namespace Unity.Samples.LetterSpell
             var root = uiDoc.rootVisualElement;
 
             // Uncomment to enable the on-screen debug log.
-            
+
             /*var debugPanel = new VisualElement() { name = "debugPanel" };
             debugPanel.style.position = Position.Absolute;
             debugPanel.style.bottom = 0;
@@ -335,7 +338,7 @@ namespace Unity.Samples.LetterSpell
 
             m_LoginView = m_StackView.Q("loginView");
             m_LoginView.dataSource = m_PlayerSettings;
-            
+
             m_LoginButton = m_LoginView.Q<Button>("loginButton");
             m_LoginButton.clicked += ShowLevelChoiceView;
 
@@ -358,7 +361,12 @@ namespace Unity.Samples.LetterSpell
             m_GameView = m_StackView.Q("gameView");
 
             m_ClueLabel = m_GameView.Q<Label>("clueLabel");
-            m_ClueLabel.GetOrCreateAccessibleProperties().label = "Clue";
+            var localizedClue = new LocalizedString
+            {
+                TableReference = "Game Text",
+                TableEntryReference = "CLUE_LABEL"
+            };
+            localizedClue.StringChanged += s => m_ClueLabel.GetOrCreateAccessibleProperties().label = s;
 
             m_SuccessPill = m_GameView.Q("successPill");
             m_SuccessPill.GetOrCreateAccessibleProperties().ignored = true;
@@ -369,7 +377,12 @@ namespace Unity.Samples.LetterSpell
 
             m_PauseGameButton = m_GameView.Q<Button>("pauseGameButton");
             m_PauseGameButton.clicked += ShowExitGamePopup;
-            m_PauseGameButton.GetOrCreateAccessibleProperties().label = "Pause the game";
+            var localizedPause = new LocalizedString
+            {
+                TableReference = "Game Text",
+                TableEntryReference = "PAUSE_LABEL"
+            };
+            localizedPause.StringChanged += s => m_PauseGameButton.GetOrCreateAccessibleProperties().label = s;
 
             m_NextWordButton = m_GameView.Q<Button>("nextWordButton");
             m_NextWordButton.clicked += ShowNextWord;
@@ -416,6 +429,19 @@ namespace Unity.Samples.LetterSpell
             OnBoldTextStatusChanged(AccessibilitySettings.isBoldTextEnabled);
             OnClosedCaptioningStatusChanged(AccessibilitySettings.isClosedCaptioningEnabled);
             OnFontScaleValueChanged(AccessibilitySettings.fontScale);
+
+            LocalizationSettings.SelectedLocaleChanged += loc =>
+            {
+                // Trigger the bound strings to update.
+                m_PlayerSettings.Notify("boldTextEnabledText");
+                m_PlayerSettings.Notify("closedCaptionsEnabledText");
+
+                // Update text direction
+                if (loc.Identifier.CultureInfo.TextInfo.IsRightToLeft)
+                    root.languageDirection = LanguageDirection.RTL;
+                else
+                    root.languageDirection = LanguageDirection.LTR;
+            };
 
             ShowSplash();
         }
@@ -484,13 +510,6 @@ namespace Unity.Samples.LetterSpell
             {
                 m_LetterCardContainer.canPlayCards = false;
                 AudioManager.instance.PlayResult(gameplay.reorderedWordCount == gameplay.words.Count);
-
-                m_MainView.schedule.Execute(() =>
-                {
-                    AssistiveSupport.notificationDispatcher.SendAnnouncement($"The game is over! you found " +
-                        $"{gameplay.reorderedWordCount} words out of {gameplay.words.Count}");
-                }).ExecuteLater(2000);
-
                 gameplay.StopGame();
                 ShowResults(gameplay.reorderedWordCount, gameplay.words.Count);
             }
@@ -584,7 +603,10 @@ namespace Unity.Samples.LetterSpell
                 card.text = letterCard.letter.ToString();
                 card.name = letterCard.letter.ToString();
                 card.GetOrCreateAccessibleProperties().label = card.text;
-                card.dropped += (oldIndex, newIndex) => { gameplay.ReorderLetter(oldIndex, newIndex); };
+                card.dropped += (oldIndex, newIndex) =>
+                {
+                    gameplay.ReorderLetter(oldIndex, newIndex);
+                };
             }
         }
 
@@ -592,9 +614,10 @@ namespace Unity.Samples.LetterSpell
         {
             m_MainView.schedule.Execute(StateTheLetters).ExecuteLater(1000);
         }
-        
+
         void StateTheLetters()
         {
+            // TODO: This should be localized.
             var listCardMessage = "The letters are now " + string.Join(", ",
                 m_Model.letterCards.Select(c => c.letter).ToArray());
             AssistiveSupport.notificationDispatcher.SendAnnouncement(listCardMessage);
@@ -604,22 +627,24 @@ namespace Unity.Samples.LetterSpell
         public void OnWordReorderingCompleted()
         {
             m_LetterCardContainer.canPlayCards = false;
+            m_LetterCardContainer.selectedCard.Unselect();
 
             m_MainView.schedule.Execute(_ => AnnounceCorrectWord()).ExecuteLater(2000);
-          
+
         }
 
         void AnnounceCorrectWord()
         {
+            // TODO: This should be localized.
             AssistiveSupport.notificationDispatcher.SendAnnouncement($"You found the correct word! It was " +
-                                                                     $"{gameplay.currentWord.word}.");
+                $"{gameplay.currentWord.word}.");
             FadeSuccessImageIn();
         }
 
         void FadeSuccessImageIn()
         {
             m_SuccessPill.style.opacity = 1;
-            
+
             m_MainView.schedule.Execute(_ => FadeSuccessImageOut()).ExecuteLater(5000);
         }
 
@@ -630,18 +655,17 @@ namespace Unity.Samples.LetterSpell
 
         void OnNodeFocusChanged(AccessibilityNode node)
         {
-            if (node != null)
+            if (node == null)
             {
-                var service = AccessibilityManager.GetService<UITkAccessibilityService>();
-                var element = service.GetVisualElementForNode(m_MainView.panel, node);
+                return;
+            }
 
-                accessibilityFocusedCard = element as UITkLetterCard;
-                MoveSelectedCardOnAssistedFocus();
-            }
-            else
-            {
-                accessibilityFocusedCard = null;
-            }
+            var service = AccessibilityManager.GetService<UITkAccessibilityService>();
+            var element = service.GetVisualElementForNode(m_MainView.panel, node);
+
+            accessibilityFocusedCard = element as UITkLetterCard;
+
+            MoveSelectedCardOnAssistedFocus();
         }
 
         void MoveSelectedCardOnAssistedFocus()
@@ -696,31 +720,39 @@ namespace Unity.Samples.LetterSpell
 
             // OnScreenDebug.Log("MoveCard " + (shouldMoveLeft ? "left" : "right" + " count " + count));
 
-            bool moved = false;
-            if (shouldMoveLeft)
-            {
-                moved = m_LetterCardContainer.selectedCard.MoveLeft(count);
-            }
-            else
-            {
-                moved = m_LetterCardContainer.selectedCard.MoveRight(count);
-            }
-
-            if (moved)
-            {
-                var index = m_LetterCardContainer.IndexOf(m_LetterCardContainer.selectedCard);
-                var otherCardIndex = shouldMoveLeft ? index + 1 : index - 1;
-                var otherCard = m_LetterCardContainer[otherCardIndex] as UITkLetterCard;
-                var message = $"Moved {m_LetterCardContainer.selectedCard.text} {(shouldMoveLeft ? "before" : "after")} {otherCard.text}";
-
-                // Announce that the card was moved.
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(message);
-            }
-
             var updater = m_LetterCardContainer.selectedCard.panel.GetAccessibilityUpdater();
             var node = updater.GetNodeForVisualElement(m_LetterCardContainer.selectedCard);
 
-            AssistiveSupport.notificationDispatcher.SendLayoutChanged(node);
+            var selectedCardText = m_LetterCardContainer.selectedCard.text;
+
+            var index = m_LetterCardContainer.IndexOf(m_LetterCardContainer.selectedCard);
+            var otherCardIndex = shouldMoveLeft ? index - 1 : index + 1;
+            var otherCard = m_LetterCardContainer[otherCardIndex] as UITkLetterCard;
+            var otherCardText = otherCard?.text;
+
+            var moved = shouldMoveLeft ?
+                m_LetterCardContainer.selectedCard.MoveLeft(count) :
+                m_LetterCardContainer.selectedCard.MoveRight(count);
+
+            // After the move, the screen reader will refocus on the other card, but with a little delay. Move the focus
+            // to the selected card, but wait a bit to let the first focus change complete. Otherwise, the screen reader
+            // will focus on the selected card first, then still on the other card, triggering an infinite swap of the
+            // two cards.
+            m_MainView.schedule.Execute(() =>
+                AssistiveSupport.notificationDispatcher.SendLayoutChanged(node)
+                ).ExecuteLater(50);
+
+            if (moved)
+            {
+                // TODO: This should be localized.
+                var message = $"Moved {selectedCardText} {(shouldMoveLeft ? "before" : "after")} {otherCardText}";
+
+                // Announce that the card was moved. Give a bit of time for the layout change notification to be
+                // processed first so that the announcement is not interrupted by the focus change.
+                m_MainView.schedule.Execute(() =>
+                    AssistiveSupport.notificationDispatcher.SendAnnouncement(message)
+                ).ExecuteLater(100);
+            }
 
             /*var accElement = draggable.transform.GetComponent<AccessibleElement>();
 

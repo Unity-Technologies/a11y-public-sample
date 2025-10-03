@@ -136,10 +136,6 @@
     rotate: -15deg;
 }
 
-.lsp-letter-card:focus {
-    border-bottom-color: rgb(255, 0, 0);
-}
-
 .lsp-letter-card__button-container {
     position: absolute;
     top: 100%;

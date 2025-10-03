@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings;
 
 namespace Unity.Samples.LetterSpell
 {
@@ -40,8 +41,6 @@ namespace Unity.Samples.LetterSpell
         public const string musicPreference = "MusicVolume";
         const string k_ColorThemePreference = "ColorTheme";
         const string k_DisplaySizePreference = "DisplaySize";
-        const string k_SettingOn = "On";
-        const string k_SettingOff = "Off";
 
         void Update()
         {
@@ -240,13 +239,15 @@ namespace Unity.Samples.LetterSpell
         {
             if (boldTextStatus)
             {
-                boldTextAccessibleElement.value = k_SettingOn;
-                boldTextValue.text = k_SettingOn;
+                var settingOnText = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "SETTING_ON");
+                boldTextAccessibleElement.value = settingOnText;
+                boldTextValue.text = settingOnText;
             }
             else
             {
-                boldTextAccessibleElement.value = k_SettingOff;
-                boldTextValue.text = k_SettingOff;
+                var settingOffText = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "SETTING_OFF");
+                boldTextAccessibleElement.value = settingOffText;
+                boldTextValue.text = settingOffText;
             }
 
             boldTextAccessibleElement.SetNodeProperties();
@@ -256,13 +257,15 @@ namespace Unity.Samples.LetterSpell
         {
             if (closedCaptioningStatus)
             {
-                closedCaptionAccessibleElement.value = k_SettingOn;
-                closedCaptionValue.text = k_SettingOn;
+                var settingOnText = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "SETTING_ON");
+                closedCaptionAccessibleElement.value = settingOnText;
+                closedCaptionValue.text = settingOnText;
             }
             else
             {
-                closedCaptionAccessibleElement.value = k_SettingOff;
-                closedCaptionValue.text = k_SettingOff;
+                var settingOffText = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "SETTING_OFF");
+                closedCaptionAccessibleElement.value = settingOffText;
+                closedCaptionValue.text = settingOffText;
             }
 
             closedCaptionAccessibleElement.SetNodeProperties();

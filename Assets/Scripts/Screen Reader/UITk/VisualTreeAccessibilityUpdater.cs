@@ -300,14 +300,12 @@ namespace Unity.Samples.ScreenReader
 
         static Rect GetScreenPosition(VisualElement ve)
         {
-            if (ve == null)
+            if (ve is not { panel: IRuntimePanel panel })
             {
                 return Rect.zero;
             }
 
             var worldRect = ve.worldBound;
-            var panel = ve.panel as IRuntimePanel;
-
             var scale = panel.scaledPixelsPerPoint;
 
             return new Rect(worldRect.position * scale, worldRect.size * scale);

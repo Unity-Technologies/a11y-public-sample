@@ -1,4 +1,6 @@
+using UnityEngine;
 using UnityEngine.Accessibility;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -7,29 +9,44 @@ namespace Unity.Samples.ScreenReader
     [Preserve]
     class TextFieldFieldHandler : BaseFieldHandler<string>
     {
-        public override string GetValue()
-        {
-            var textField = ownerElement as TextField;
-            
-            if (string.IsNullOrEmpty(textField.value))
-                return ownerElement is TextField tf ? tf.textEdition.placeholder : textField.value;
-            return base.GetValue();
-        }
-        
-        public override AccessibilityRole GetRole()
-        {
-            return AccessibilityRole.TextField;
-        }
-
         public TextFieldFieldHandler()
         {
-            OnSelect += () =>
+            selected += () =>
             {
                 var textField = ownerElement as TextField;
                 textField?.Focus();
 
                 return true;
             };
+        }
+
+        public override string GetValue()
+        {
+            var textField = ownerElement as TextField;
+
+            if (string.IsNullOrEmpty(textField?.value))
+            {
+                return ownerElement is TextField tf ? tf.textEdition.placeholder : null;
+            }
+
+            return base.GetValue();
+        }
+
+        public override string GetHint()
+        {
+            // if (Application.platform == RuntimePlatform.Android ||
+            //     Application.platform == RuntimePlatform.IPhonePlayer)
+            // {
+            //     // TODO: "Double tap to edit." should be localized.
+            //     LocalizationSettings.StringDatabase.GetLocalizedString("", "");
+            // }
+
+            return base.GetHint();
+        }
+
+        public override AccessibilityRole GetRole()
+        {
+            return AccessibilityRole.TextField;
         }
     }
 }

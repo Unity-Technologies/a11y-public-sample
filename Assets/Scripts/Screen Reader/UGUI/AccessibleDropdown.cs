@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings;
 
 namespace Unity.Samples.ScreenReader
 {
@@ -22,9 +23,6 @@ namespace Unity.Samples.ScreenReader
 
         Coroutine m_ActiveCoroutine;
         AccessibleElement[] m_Options;
-
-        const string k_DropdownClosedHint = "Double tap to expand options.";
-        const string k_DropdownOpenHint = "Swipe left to navigate options. Double tap to close options.";
 
         void Start()
         {
@@ -51,7 +49,7 @@ namespace Unity.Samples.ScreenReader
                 UpdateValue(m_Dropdown.value);
             }
 
-            hint = k_DropdownClosedHint;
+            hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "DROPDOWN_CLOSED_HINT");
         }
 
         protected override void BindToControl()
@@ -112,7 +110,7 @@ namespace Unity.Samples.ScreenReader
             yield return new WaitUntil(IsDropdownOpen);
             yield return new WaitForEndOfFrame();
 
-            hint = k_DropdownOpenHint;
+            hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "DROPDOWN_OPEN_HINT");
 
 #if UNITY_6000_3_OR_NEWER
             state |= AccessibilityState.Expanded;
@@ -133,7 +131,7 @@ namespace Unity.Samples.ScreenReader
         {
             yield return new WaitUntil(() => !IsDropdownOpen());
 
-            hint = k_DropdownClosedHint;
+            hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "DROPDOWN_CLOSED_HINT");
 
 #if UNITY_6000_3_OR_NEWER
             state &= ~AccessibilityState.Expanded;

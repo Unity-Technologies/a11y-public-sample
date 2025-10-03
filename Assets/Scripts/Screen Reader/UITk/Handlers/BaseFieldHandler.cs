@@ -8,14 +8,13 @@ namespace Unity.Samples.ScreenReader
     {
         public override string GetLabel()
         {
-            var field = ownerElement as BaseField<TValueType>;
-            return field?.label;
+            return (ownerElement as BaseField<TValueType>)?.label;
         }
 
         public override string GetValue()
         {
             var field = ownerElement as BaseField<TValueType>;
-            return "" + field.value;
+            return field == null ? "" : $"{field.value}";
         }
 
         protected override void BindToElement(VisualElement ve)

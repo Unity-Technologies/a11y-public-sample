@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.UI;
+using UnityEngine.Localization.Settings;
 
 namespace Unity.Samples.LetterSpell
 {
@@ -140,7 +141,7 @@ namespace Unity.Samples.LetterSpell
 
                 var element = card.AddComponent<AccessibleElement>();
                 element.label = letterCardModel.letter.ToString();
-                element.hint = "Double tap to start moving.";
+                element.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT");
                 element.selected += OnLetterCardSelected;
             }
 
@@ -168,7 +169,11 @@ namespace Unity.Samples.LetterSpell
                 AccessibilityManager.GetService<UGuiAccessibilityService>()?.ActivateOtherAccessibilityNodes(false, letterCardContainer);
 
                 letterCard.SetDraggingVisuals(true);
-                SetLetterCardsAccessibilityLabel(false);
+
+                var element = m_AccessibilityFocusedCard.GetComponent<AccessibleElement>();
+                // TODO: This should be localized.
+                element.hint = "Navigate left or right to move. Submit to unselect.";
+                element.SetNodeProperties();
             }
             else
             {
@@ -177,7 +182,10 @@ namespace Unity.Samples.LetterSpell
                 AccessibilityManager.GetService<UGuiAccessibilityService>()?.ActivateOtherAccessibilityNodes(true, letterCardContainer);
 
                 letterCard.SetDraggingVisuals(false);
-                SetLetterCardsAccessibilityLabel(true);
+
+                var element = m_AccessibilityFocusedCard.GetComponent<AccessibleElement>();
+                element.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT");
+                element.SetNodeProperties();
             }
 
             return true;
@@ -191,6 +199,9 @@ namespace Unity.Samples.LetterSpell
 
         public void OnWordReorderingCompleted()
         {
+            m_AccessibilitySelectedCard.SetDraggingVisuals(false);
+            m_AccessibilitySelectedCard = null;
+
             StartCoroutine(DelayWordReorderingCompleted());
             return;
 
@@ -202,9 +213,9 @@ namespace Unity.Samples.LetterSpell
                 FadeSuccessImageIn(fadeDuration);
 
                 const float announcementDelay = 1f;
-                const string successAnnouncement = "Bravo! You found the correct word.";
+
                 yield return new WaitForSeconds(announcementDelay);
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(successAnnouncement);
+                AssistiveSupport.notificationDispatcher.SendAnnouncement(LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "SUCCESS_ANNOUNCEMENT"));
 
                 const float imageDuration = 2f;
                 const float fadeOutDelay = imageDuration - announcementDelay - fadeDuration;
@@ -275,17 +286,6 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
-        void SetLetterCardsAccessibilityLabel(bool hasLabel)
-        {
-            foreach (Transform letterCardTransform in letterCardContainer)
-            {
-                var element = letterCardTransform.GetComponent<AccessibleElement>();
-                element.label = hasLabel ? letterCardTransform.name : null;
-                element.hint = hasLabel ? "Double tap to start moving." : null;
-                element.SetNodeProperties();
-            }
-        }
-
         void MoveCard(bool shouldMoveLeft, int count)
         {
             var draggable = m_AccessibilitySelectedCard;
@@ -303,6 +303,7 @@ namespace Unity.Samples.LetterSpell
                 var otherSibling = draggable.transform.parent.GetChild(otherSiblingIndex);
 
                 // Make the letter uppercase to ensure correct phonetic pronunciation.
+                // TODO: This should be localized.
                 var announcement = $"Moved {draggable.name.ToUpper()} {(shouldMoveLeft ? "before" : "after")} {otherSibling.name.ToUpper()}";
 
                 // Announce that the card was moved.
@@ -311,17 +312,18 @@ namespace Unity.Samples.LetterSpell
                 AssistiveSupport.activeHierarchy.MoveNode(element.node, element.node.parent,
                     element.transform.GetSiblingIndex());
 
-                // Only refresh the frames for now to leave the announcement request to be handled.
-                StartCoroutine(RefreshNodeFrames());
-
-                AssistiveSupport.notificationDispatcher.SendLayoutChanged(element.node);
+                // After the move, the screen reader will refocus on the other card, but with a little delay. Move the
+                // focus to the selected card, but wait a bit to let the first focus change complete. Otherwise, the
+                // screen reader will focus on the selected card first, then still on the other card, triggering an
+                // infinite swap of the two cards.
+                StartCoroutine(DelaySendLayoutChanged());
                 return;
 
-                IEnumerator RefreshNodeFrames()
+                IEnumerator DelaySendLayoutChanged()
                 {
                     yield return new WaitForEndOfFrame();
 
-                    AssistiveSupport.activeHierarchy?.RefreshNodeFrames();
+                    AssistiveSupport.notificationDispatcher.SendLayoutChanged(element.node);
                 }
             }
         }

@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.UIElements;
 using Unity.Samples.ScreenReader;
-using Button = UnityEngine.UIElements.Button;
 
 namespace Unity.Samples.LetterSpell
 {

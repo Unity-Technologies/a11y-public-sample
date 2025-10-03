@@ -222,7 +222,7 @@ namespace Unity.Samples.ScreenReader
             {
                 m_Selected -= value;
 
-                if (m_Selected == null)
+                if (!m_Selectable)
                 {
                     DisconnectFromSelected();
                 }
@@ -245,7 +245,7 @@ namespace Unity.Samples.ScreenReader
             {
                 m_Scrolled -= value;
 
-                if (m_Scrolled == null)
+                if (!m_Scrollable)
                 {
                     DisconnectFromScrolled();
                 }
@@ -265,10 +265,58 @@ namespace Unity.Samples.ScreenReader
             {
                 m_Dismissed -= value;
 
-                if (m_Dismissed == null)
+                if (!m_Dismissable)
                 {
                     DisconnectFromDismissed();
                 }
+            }
+        }
+
+        bool m_Selectable
+        {
+            get
+            {
+                var selectable = m_Selected != null;
+                var acc = m_OwnerElement?.GetAccessibleProperties();
+
+                if (acc != null)
+                {
+                    selectable |= acc.selectable;
+                }
+
+                return selectable;
+            }
+        }
+
+        bool m_Scrollable
+        {
+            get
+            {
+                var scrollable = m_Scrolled != null;
+                var acc = m_OwnerElement?.GetAccessibleProperties();
+
+                if (acc != null)
+                {
+                    scrollable |= acc.scrollable;
+                }
+
+                return scrollable;
+            }
+        }
+
+        bool m_Dismissable
+        {
+            get
+            {
+                var dismissable = m_Dismissed != null;
+                var acc = m_OwnerElement?.GetAccessibleProperties();
+
+                if (acc != null)
+                {
+                    dismissable |= acc.dismissable;
+                }
+
+                return dismissable;
             }
         }
 
@@ -323,7 +371,7 @@ namespace Unity.Samples.ScreenReader
         {
             // Implementing the selected event tells the screen reader that the node is selectable, which may lead to
             // a specific behaviour. Therefore, we don't implement the node's selected event unless we actually need it.
-            if (node == null || m_Selected == null)
+            if (node == null || !m_Selectable)
             {
                 return;
             }
@@ -431,7 +479,7 @@ namespace Unity.Samples.ScreenReader
         void ConnectToScrolled()
         {
 #if UNITY_6000_3_OR_NEWER
-            if (node == null || m_Scrolled == null)
+            if (node == null || !m_Scrollable)
             {
                 return;
             }
@@ -474,7 +522,7 @@ namespace Unity.Samples.ScreenReader
             // Implementing the dismissed event tells the screen reader that the node is dismissible, which may lead to
             // a specific behaviour. Therefore, we don't implement the node's dismissed event unless we actually need
             // it.
-            if (node == null || m_Dismissed == null)
+            if (node == null || !m_Dismissable)
             {
                 return;
             }

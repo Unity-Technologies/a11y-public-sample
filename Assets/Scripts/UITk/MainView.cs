@@ -131,6 +131,11 @@ namespace Unity.Samples.LetterSpell
                 }
 
                 PlayerPrefs.SetFloat(k_MusicPref, value);
+
+                if (AudioManager.instance != null)
+                {
+                    AudioManager.instance.SetMusicVolume(value);
+                }
                 Notify();
             }
         }
@@ -217,6 +222,8 @@ namespace Unity.Samples.LetterSpell
         Button m_InGameSettingsButton;
         VisualElement m_LastView;
         LetterCardListModel m_Model = new();
+        
+       // Label m_AnswerLabel;
 
         Gameplay.DifficultyLevel m_SelectedDifficultyLevel = Gameplay.DifficultyLevel.Hard;
 
@@ -436,24 +443,29 @@ namespace Unity.Samples.LetterSpell
                 m_PlayerSettings.Notify("boldTextEnabledText");
                 m_PlayerSettings.Notify("closedCaptionsEnabledText");
 
-                // Update text direction
-                if (loc.Identifier.CultureInfo.TextInfo.IsRightToLeft)
-                    root.languageDirection = LanguageDirection.RTL;
-                else
-                    root.languageDirection = LanguageDirection.LTR;
-                UpdateUSSLangDirection(root);
+                UpdateLangDirection(root);
             };
 
-            UpdateUSSLangDirection(root);
+            UpdateLangDirection(root);
             ShowSplash();
+
+            //root.Add(m_AnswerLabel = new Label());
+            //m_AnswerLabel.style.position = Position.Absolute;
+            
         }
 
-        void UpdateUSSLangDirection(VisualElement root)
+        void UpdateLangDirection(VisualElement root)
         {
             if (root.panel == null)
                 return;
-            root.panel.visualTree.EnableInClassList("lsp-dir-ltr", LocalizationSettings.SelectedLocale?.Identifier.CultureInfo.TextInfo.IsRightToLeft == false);
-            root.panel.visualTree.EnableInClassList("lsp-dir-rtl", LocalizationSettings.SelectedLocale?.Identifier.CultureInfo.TextInfo.IsRightToLeft == true);
+            
+            bool isRightToLeft = LocalizationSettings.SelectedLocale?.Identifier.CultureInfo.TextInfo.IsRightToLeft ?? false;
+            
+            // Update text direction
+            root.languageDirection = isRightToLeft ? LanguageDirection.RTL : LanguageDirection.LTR;
+            root.panel.visualTree.EnableInClassList("lsp-dir-ltr", !isRightToLeft);
+            root.panel.visualTree.EnableInClassList("lsp-dir-rtl", isRightToLeft);
+            gameplay.rightToLeft = isRightToLeft;
         }
 
         void OnEnable()
@@ -530,6 +542,7 @@ namespace Unity.Samples.LetterSpell
                 DelayStateTheLetters();
             }
 
+            //m_AnswerLabel.text = gameplay.currentWord.word;
             AccessibilityManager.GetService<UITkAccessibilityService>()?.RebuildHierarchy();
         }
 

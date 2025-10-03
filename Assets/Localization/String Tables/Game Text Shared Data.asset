@@ -211,6 +211,10 @@ MonoBehaviour:
     m_Key: FONT_SCALE_LABEL
     m_Metadata:
       m_Items: []
+  - m_Id: 3064538126606336
+    m_Key: CORRECT_LABEL
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

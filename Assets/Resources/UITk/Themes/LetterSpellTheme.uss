@@ -586,7 +586,7 @@
     padding-top: 4px;
     padding-bottom: 4px;
     -unity-font-definition: url("project://database/Assets/UI/Fonts/Inter-SemiBold.ttf?fileID=12800000&guid=3b458681b475c476ea29f3244c5c85da&type=3#Inter-SemiBold");
-    flex-direction: row;
+    flex-direction: var(--lsp-row);
     justify-content: center;
     align-items: center;
 }

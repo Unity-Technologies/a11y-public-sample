@@ -312,17 +312,18 @@ namespace Unity.Samples.LetterSpell
                 AssistiveSupport.activeHierarchy.MoveNode(element.node, element.node.parent,
                     element.transform.GetSiblingIndex());
 
-                // Only refresh the frames for now to leave the announcement request to be handled.
-                StartCoroutine(RefreshNodeFrames());
-
-                AssistiveSupport.notificationDispatcher.SendLayoutChanged(element.node);
+                // After the move, the screen reader will refocus on the other card, but with a little delay. Move the
+                // focus to the selected card, but wait a bit to let the first focus change complete. Otherwise, the
+                // screen reader will focus on the selected card first, then still on the other card, triggering an
+                // infinite swap of the two cards.
+                StartCoroutine(DelaySendLayoutChanged());
                 return;
 
-                IEnumerator RefreshNodeFrames()
+                IEnumerator DelaySendLayoutChanged()
                 {
                     yield return new WaitForEndOfFrame();
 
-                    AssistiveSupport.activeHierarchy?.RefreshNodeFrames();
+                    AssistiveSupport.notificationDispatcher.SendLayoutChanged(element.node);
                 }
             }
         }

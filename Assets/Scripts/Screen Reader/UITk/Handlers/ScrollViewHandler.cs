@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -7,6 +8,11 @@ namespace Unity.Samples.ScreenReader
     [Preserve]
     public class ScrollViewHandler : VisualElementAccessibilityHandler
     {
+        public override AccessibilityRole GetRole()
+        {
+            return AccessibilityRole.ScrollView;
+        }
+        
         protected override void BindToElement(VisualElement ve)
         {
             var scrollView = ve as ScrollView;

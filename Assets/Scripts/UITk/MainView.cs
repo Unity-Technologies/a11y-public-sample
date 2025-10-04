@@ -220,6 +220,7 @@ namespace Unity.Samples.LetterSpell
         Button m_CloseSettingsButton;
         Button m_SettingsButton;
         Button m_InGameSettingsButton;
+        private TextField m_SearchField;
         VisualElement m_LastView;
         LetterCardListModel m_Model = new();
         
@@ -415,6 +416,14 @@ namespace Unity.Samples.LetterSpell
 
             m_SettingsView = m_StackView.Q("settingsView");
             m_SettingsView.dataSource = m_PlayerSettings;
+            
+            var settingsScrollView = m_SettingsView.Q<ScrollView>("settingsScrollView");
+            settingsScrollView.GetOrCreateAccessibleProperties().label = "Settings Scroll View";
+            
+            m_SearchField = m_SettingsView.Q<TextField>("settingsSearchField");
+            m_SearchField.GetOrCreateAccessibleProperties().label = "Search";
+            m_SearchField.GetOrCreateAccessibleProperties().role = AccessibilityRole.SearchField;
+            m_SearchField.RegisterValueChangedCallback((e) => UpdateSearchField());
 
             // m_SettingsPopup = new PopupWindow();
             // m_SettingsPopup.content = m_SettingsView;
@@ -605,6 +614,35 @@ namespace Unity.Samples.LetterSpell
         public void PauseGame()
         {
             Gameplay.instance.PauseGame();
+        }
+
+        void UpdateSearchField()
+        {
+            var searchText = m_SearchField.text.Trim().ToLowerInvariant();
+
+            foreach (var field in m_SettingsView.Query<Label>(className: "unity-base-field__label").ToList())
+            {
+                if (string.IsNullOrEmpty(searchText))
+                {
+                    field.parent.style.display = DisplayStyle.Flex;
+                    continue;
+                }
+
+                var label = field.Q<Label>();
+                
+                if (label != null && label.text.ToLowerInvariant().Contains(searchText))
+                {
+                    field.parent.style.display = DisplayStyle.Flex;
+                }
+                else
+                {
+                    field.parent.style.display = DisplayStyle.None;
+                }
+            }
+
+            // Refresh the hierarchy to ensure the screen reader is aware of the changes.
+            //AccessibilityManager.GetService<UITkAccessibilityService>()?.RebuildHierarchy();
+            //m_WasHierarchyRefreshed = true;
         }
 
         /// <summary>

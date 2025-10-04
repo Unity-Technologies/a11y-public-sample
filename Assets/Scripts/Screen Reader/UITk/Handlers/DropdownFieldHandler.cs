@@ -30,6 +30,10 @@ namespace Unity.Samples.ScreenReader
             return LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "DROPDOWN_CLOSED_HINT");
         }
 
+#if UNITY_6000_3_OR_NEWER
+        public override AccessibilityRole GetRole() => AccessibilityRole.Dropdown;
+#endif // UNITY_6000_3_OR_NEWER
+
         protected override void BindToElement(VisualElement element)
         {
             base.BindToElement(element);

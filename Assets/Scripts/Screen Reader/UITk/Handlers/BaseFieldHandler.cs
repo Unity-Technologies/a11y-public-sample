@@ -1,3 +1,4 @@
+using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -44,6 +45,24 @@ namespace Unity.Samples.ScreenReader
             {
                 field.labelElement.GetOrCreateAccessibleProperties().ignored = true;
             }
+        }
+    }
+
+    [Preserve]
+    class ToggleHandler : BaseFieldHandler<bool>
+    {
+        public override AccessibilityRole GetRole()
+        {
+            return AccessibilityRole.Toggle;
+        }
+    }
+    
+    [Preserve]
+    class RadioButtonHandler : BaseFieldHandler<bool>
+    {
+        public override AccessibilityRole GetRole()
+        {
+            return AccessibilityRole.Toggle;
         }
     }
 }

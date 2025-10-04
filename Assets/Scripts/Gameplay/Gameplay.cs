@@ -36,6 +36,11 @@ namespace Unity.Samples.LetterSpell
         public static Gameplay instance;
 
         /// <summary>
+        /// Indicates whether the game is played right to left (for example for Arabic or Hebrew).
+        /// </summary>
+        public bool rightToLeft { get; set; }
+
+        /// <summary>
         /// The database of words.
         /// </summary>
         public WordDatabase wordDatabase => m_LocalizedWordDatabase.LoadAsset();
@@ -358,7 +363,22 @@ namespace Unity.Samples.LetterSpell
         /// </summary>
         public bool IsWordComplete()
         {
-            return m_Words[m_CurrentWordIndex].word.SequenceEqual(m_CurrentWordState);
+            var word = currentWord.word;
+
+            if (word.Length != this.m_CurrentWordState.Length)
+            {
+                return false;
+            }
+
+            for (var i = 0; i < word.Length; i++)
+            {
+                if (word[rightToLeft ? word.Length - 1 - i : i] != m_CurrentWordState[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>

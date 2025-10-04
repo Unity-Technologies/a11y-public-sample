@@ -13,7 +13,7 @@
                 </ui:VisualElement>
                 <ui:VisualElement name="loginView" style="flex-grow: 1; align-items: center; justify-content: center;">
                     <ui:VisualElement name="logo" class="lsp-logo"/>
-                    <ui:TextField placeholder-text="Enter your name" name="loginNameField" label="What is your name?" style="min-width: 252px; width: 949px;">
+                    <ui:TextField placeholder-text="Enter your name" name="loginNameField" label="What is your name?" language-direction="LTR" style="min-width: 252px; width: 949px;">
                         <Bindings>
                             <ui:DataBinding property="value" data-source-path="userName" binding-mode="TwoWay"/>
                             <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(775025750016)"/>
@@ -51,13 +51,17 @@
                         </ui:Button>
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="gameView" style="flex-grow: 1; background-color: rgb(11, 163, 109);">
+                <ui:VisualElement name="gameView" style="flex-grow: 1; background-color: rgb(2, 197, 132);">
                     <ui:VisualElement name="logo" class="lsp-logo"/>
                     <ui:VisualElement name="clueContainer">
                         <ui:Label text="#clue" name="clueLabel" class="title-text" style="-unity-text-align: middle-center;"/>
                         <ui:VisualElement name="successPill">
                             <ui:VisualElement name="successPillCheckmark"/>
-                            <ui:Label text="Correct" class="success-pill__label"/>
+                            <ui:Label class="success-pill__label">
+                                <Bindings>
+                                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3064538126606336)"/>
+                                </Bindings>
+                            </ui:Label>
                         </ui:VisualElement>
                     </ui:VisualElement>
                     <Unity.Samples.LetterSpell.CardListView name="letterCardContainer" style="flex-grow: 1;"/>
@@ -97,7 +101,7 @@
                                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3051354222592)"/>
                             </Bindings>
                         </ui:Label>
-                        <ui:TextField label="Username" placeholder-text="Enter your name" name="settingsUserNameField">
+                        <ui:TextField label="Username" placeholder-text="Enter your name" name="settingsUserNameField" language-direction="LTR">
                             <Bindings>
                                 <ui:DataBinding property="value" data-source-path="userName" binding-mode="TwoWay"/>
                                 <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3183403495424)"/>
@@ -111,7 +115,7 @@
                                 <UnityEngine.Localization.LocalizedStringList property="choices" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3801748762624)"/>
                             </Bindings>
                         </lsp:ButtonStripField>
-                        <ui:VisualElement name="settingsNumberOfWords" class="unity-base-field" style="flex-direction: row;">
+                        <ui:VisualElement name="settingsNumberOfWords" class="unity-base-field">
                             <ui:Label name="Label" class="unity-base-field__label">
                                 <Bindings>
                                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17127719464960)"/>

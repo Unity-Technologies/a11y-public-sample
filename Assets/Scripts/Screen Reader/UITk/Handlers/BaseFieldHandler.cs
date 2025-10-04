@@ -1,3 +1,4 @@
+using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -45,5 +46,21 @@ namespace Unity.Samples.ScreenReader
                 field.labelElement.GetOrCreateAccessibleProperties().ignored = true;
             }
         }
+    }
+
+    [Preserve]
+    class ToggleHandler : BaseFieldHandler<bool>
+    {
+#if UNITY_2023_3_OR_NEWER
+        public override AccessibilityRole GetRole() => AccessibilityRole.Toggle;
+#endif // UNITY_2023_3_OR_NEWER
+    }
+
+    [Preserve]
+    class RadioButtonHandler : BaseFieldHandler<bool>
+    {
+#if UNITY_2023_3_OR_NEWER
+        public override AccessibilityRole GetRole() => AccessibilityRole.Toggle;
+#endif // UNITY_2023_3_OR_NEWER
     }
 }

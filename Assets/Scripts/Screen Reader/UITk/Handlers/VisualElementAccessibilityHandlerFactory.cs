@@ -188,6 +188,9 @@ namespace Unity.Samples.ScreenReader
             RegisterGenericFactory(typeof(BaseSlider<>), typeof(BaseSliderHandler<>));
             RegisterGenericFactory(typeof(BasePopupField<,>), typeof(BasePopupFieldHandler<,>));
             RegisterFactory<TextField, TextFieldFieldHandler>();
+            RegisterFactory<UnityEngine.UIElements.Toggle, ToggleHandler>();
+            RegisterFactory<UnityEngine.UIElements.RadioButton, RadioButtonHandler>();
+            
             //RegisterFactory<DropdownField, DropdownFieldHandler>();
             RegisterFactory<ListView, ListViewHandler>();
             RegisterFactory<ScrollView, ScrollViewHandler>();

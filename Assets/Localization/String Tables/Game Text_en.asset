@@ -168,7 +168,7 @@ MonoBehaviour:
       m_Items:
       - rid: 2216566543976235777
   - m_Id: 1468861612453888
-    m_Localized: OS Settings (read-only)
+    m_Localized: System Settings (read-only)
     m_Metadata:
       m_Items: []
   - m_Id: 1469259735789568

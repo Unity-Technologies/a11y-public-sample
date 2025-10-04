@@ -166,7 +166,7 @@ MonoBehaviour:
       m_Items:
       - rid: 2216566543976235779
   - m_Id: 1468861612453888
-    m_Localized: "Configuraci\xF3n del SO (solo lectura)"
+    m_Localized: "Configuraci\xF3n del sistema (solo lectura)"
     m_Metadata:
       m_Items: []
   - m_Id: 1469259735789568

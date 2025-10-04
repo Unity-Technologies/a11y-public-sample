@@ -216,14 +216,19 @@ namespace Unity.Samples.LetterSpell
         Label m_ResultLabel;
         Button m_ScreenResultMainMenuButton;
         Button m_ScreenResultPlayAgainButton;
+
         VisualElement m_SettingsView;
         Button m_CloseSettingsButton;
         Button m_SettingsButton;
         Button m_InGameSettingsButton;
-        private TextField m_SearchField;
+        TextField m_SearchField;
+        Label m_GameplayHeader;
+        Label m_AudioHeader;
+        Label m_AppearanceHeader;
+        Label m_SettingsHeader;
         VisualElement m_LastView;
         LetterCardListModel m_Model = new();
-        
+
        // Label m_AnswerLabel;
 
         Gameplay.DifficultyLevel m_SelectedDifficultyLevel = Gameplay.DifficultyLevel.Hard;
@@ -416,14 +421,27 @@ namespace Unity.Samples.LetterSpell
 
             m_SettingsView = m_StackView.Q("settingsView");
             m_SettingsView.dataSource = m_PlayerSettings;
-            
+
             var settingsScrollView = m_SettingsView.Q<ScrollView>("settingsScrollView");
             settingsScrollView.GetOrCreateAccessibleProperties().label = "Settings Scroll View";
-            
+
             m_SearchField = m_SettingsView.Q<TextField>("settingsSearchField");
+            // TODO: This should be localized.
             m_SearchField.GetOrCreateAccessibleProperties().label = "Search";
             m_SearchField.GetOrCreateAccessibleProperties().role = AccessibilityRole.SearchField;
             m_SearchField.RegisterValueChangedCallback((e) => UpdateSearchField());
+
+            m_GameplayHeader = m_SettingsView.Q<Label>("gameplayHeader");
+            m_GameplayHeader.GetOrCreateAccessibleProperties().role = AccessibilityRole.Header;
+
+            m_AudioHeader = m_SettingsView.Q<Label>("audioHeader");
+            m_AudioHeader.GetOrCreateAccessibleProperties().role = AccessibilityRole.Header;
+
+            m_AppearanceHeader = m_SettingsView.Q<Label>("appearanceHeader");
+            m_AppearanceHeader.GetOrCreateAccessibleProperties().role = AccessibilityRole.Header;
+
+            m_SettingsHeader = m_SettingsView.Q<Label>("settingsHeader");
+            m_SettingsHeader.GetOrCreateAccessibleProperties().role = AccessibilityRole.Header;
 
             // m_SettingsPopup = new PopupWindow();
             // m_SettingsPopup.content = m_SettingsView;
@@ -460,16 +478,16 @@ namespace Unity.Samples.LetterSpell
 
             //root.Add(m_AnswerLabel = new Label());
             //m_AnswerLabel.style.position = Position.Absolute;
-            
+
         }
 
         void UpdateLangDirection(VisualElement root)
         {
             if (root.panel == null)
                 return;
-            
+
             bool isRightToLeft = LocalizationSettings.SelectedLocale?.Identifier.CultureInfo.TextInfo.IsRightToLeft ?? false;
-            
+
             // Update text direction
             root.languageDirection = isRightToLeft ? LanguageDirection.RTL : LanguageDirection.LTR;
             root.panel.visualTree.EnableInClassList("lsp-dir-ltr", !isRightToLeft);
@@ -629,7 +647,7 @@ namespace Unity.Samples.LetterSpell
                 }
 
                 var label = field.Q<Label>();
-                
+
                 if (label != null && label.text.ToLowerInvariant().Contains(searchText))
                 {
                     field.parent.style.display = DisplayStyle.Flex;

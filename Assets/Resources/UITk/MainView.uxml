@@ -96,7 +96,7 @@
                                 <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(2876929896448)"/>
                             </Bindings>
                         </ui:TextField>
-                        <ui:Label class="settings-header-label">
+                        <ui:Label name="gameplayHeader" class="settings-header-label">
                             <Bindings>
                                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3051354222592)"/>
                             </Bindings>
@@ -146,7 +146,7 @@
                                 <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(36785994493952)"/>
                             </Bindings>
                         </UnityEngine.Localization.LanguageSelection>
-                        <ui:Label class="settings-header-label">
+                        <ui:Label name="audioHeader" class="settings-header-label">
                             <Bindings>
                                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17616599150592)"/>
                             </Bindings>
@@ -163,7 +163,7 @@
                                 <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17842659553280)"/>
                             </Bindings>
                         </ui:Slider>
-                        <ui:Label text="Appearance" class="settings-header-label">
+                        <ui:Label name="appearanceHeader" text="Appearance" class="settings-header-label">
                             <Bindings>
                                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(18100730884096)"/>
                             </Bindings>
@@ -181,7 +181,7 @@
                                 <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(19534851502080)"/>
                             </Bindings>
                         </ui:Slider>
-                        <ui:Label class="settings-header-label">
+                        <ui:Label name="settingsHeader" class="settings-header-label">
                             <Bindings>
                                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(1468861612453888)"/>
                             </Bindings>

@@ -7,11 +7,11 @@ using UnityEngine.UIElements;
 namespace Unity.Samples.ScreenReader
 {
     [Preserve]
-    class DropdownFieldHandler : BaseFieldHandler<string>
+    class BasePopupFieldHandler<TValue, TValueChoice> : BaseFieldHandler<TValue>
     {
         bool m_HasPendingCheck;
 
-        public DropdownFieldHandler()
+        public BasePopupFieldHandler()
         {
             /*OnSelect += () =>
             {

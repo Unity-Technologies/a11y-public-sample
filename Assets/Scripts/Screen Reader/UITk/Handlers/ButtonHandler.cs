@@ -29,10 +29,10 @@ namespace Unity.Samples.ScreenReader
             return (ownerElement as Button)?.text;
         }
 
+        public override AccessibilityRole GetRole() => AccessibilityRole.Button;
+
         protected override void BindToElement(VisualElement ve)
         {
         }
-
-        public override AccessibilityRole GetRole() => AccessibilityRole.Button;
     }
 }

@@ -1,3 +1,4 @@
+using UnityEngine.Accessibility;
 using UnityEngine.UIElements;
 
 namespace Unity.Samples.ScreenReader
@@ -25,6 +26,10 @@ namespace Unity.Samples.ScreenReader
         {
             return m_Tab.label;
         }
+
+#if UNITY_6000_3_OR_NEWER
+        public override AccessibilityRole GetRole() => AccessibilityRole.TabButton;
+#endif // UNITY_6000_3_OR_NEWER
     }
 
     class TabHandlerCreator : VisualElementAccessibilityHandlerFactory.ICreator

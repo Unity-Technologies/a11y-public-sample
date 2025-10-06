@@ -170,17 +170,18 @@ namespace Unity.Samples.ScreenReader
 
         void InsertNode(VisualElementAccessibilityHandler parentHandler, VisualElementAccessibilityHandler accHandler)
         {
+            // Keep track of the insertion index for each parent node.
+            var index = parentHandler?.nextInsertionIndex ?? m_RootNextInsertionIndex;
+            var label = accHandler.ownerElement.name;
             var parentNode = parentHandler?.node;
 
-            // Keep track of insertion index for each parent node.
-            var index = parentHandler?.nextInsertionIndex ?? m_RootNextInsertionIndex;
-            var node = hierarchy.InsertNode(index, accHandler.ownerElement.name, parentNode);
-
-            accHandler.node = node;
-            accHandler.change = VisualElementAccessibilityHandler.k_AccessibilityChange;
+            var node = hierarchy.InsertNode(index, label, parentNode);
 
             node.label = accHandler.label;
             node.role = accHandler.role;
+
+            accHandler.node = node;
+            accHandler.change = VisualElementAccessibilityHandler.k_AccessibilityChange;
 
             m_HandlersForNodes[node] = accHandler;
 
@@ -514,8 +515,6 @@ namespace Unity.Samples.ScreenReader
 
                     shouldSendNotification = true;
                 }
-
-                AssistiveSupport.activeHierarchy ??= m_AccessibilityService.hierarchy.mainHierarchy;
 
                 m_Notification = NotificationType.None;
                 ResetAllInsertionIndex();

@@ -27,7 +27,7 @@ namespace Unity.Samples.ScreenReader
             label ??= "Scroll View";
 
 #if UNITY_6000_3_OR_NEWER
-            role = AccessibilityRole.Container;
+            role = AccessibilityRole.ScrollView;
 #else // UNITY_6000_3_OR_NEWER
             // The scroll view should not be accessible (i.e. focusable with the screen reader) on mobile platforms.
             // The purpose of this component is to automatically scroll to the focused node inside the scroll view if

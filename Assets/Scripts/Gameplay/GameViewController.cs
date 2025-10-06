@@ -304,7 +304,7 @@ namespace Unity.Samples.LetterSpell
 
                 // Make the letter uppercase to ensure correct phonetic pronunciation.
                 // TODO: This should be localized.
-                var announcement = $"Moved {draggable.name.ToUpper()} {(shouldMoveLeft ? "before" : "after")} {otherSibling.name.ToUpper()}";
+                var announcement = $"Moved \"{draggable.name.ToUpper()}\" {(shouldMoveLeft ? "before" : "after")} \"{otherSibling.name.ToUpper()}\"";
 
                 // Announce that the card was moved.
                 AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);

@@ -705,7 +705,7 @@ namespace Unity.Samples.LetterSpell
                 var otherSibling = this[otherSiblingIndex];
 
                 // TODO: This should be localized.
-                var message = $"Moved {draggable.name} {(shouldMoveLeft ? "before" : "after")} {otherSibling.name}";
+                var message = $"Moved \"{draggable.name}\" {(shouldMoveLeft ? "before" : "after")} \"{otherSibling.name}\"";
 
                 // Announce that the card was moved.
                 AssistiveSupport.notificationDispatcher.SendAnnouncement(message);

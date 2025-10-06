@@ -215,7 +215,7 @@ namespace Unity.Samples.ScreenReader
 
         void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            StartCoroutine(DelayRebuildHierarchy(scene));
+            RebuildHierarchyForScene(scene);
         }
 
         void OnSceneUnloaded(Scene scene)
@@ -274,19 +274,16 @@ namespace Unity.Samples.ScreenReader
 
             if (lastLoadedScene.IsValid())
             {
-                s_Instance.StartCoroutine(s_Instance.DelayRebuildHierarchy(lastLoadedScene, service));
+                s_Instance.RebuildHierarchyForScene(lastLoadedScene, service);
             }
         }
 
-        IEnumerator DelayRebuildHierarchy(Scene scene, AccessibilityService service = null)
+        void RebuildHierarchyForScene(Scene scene, AccessibilityService service = null)
         {
             if (!Application.isEditor && !AssistiveSupport.isScreenReaderEnabled)
             {
-                yield break;
+                return;
             }
-
-            // Wait for the end frame before generating the hierarchy to make sure the layout has been computed.
-            yield return new WaitForEndOfFrame();
 
             if (service == null)
             {

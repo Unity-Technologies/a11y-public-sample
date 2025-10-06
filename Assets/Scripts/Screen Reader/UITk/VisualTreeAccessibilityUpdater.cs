@@ -34,24 +34,11 @@ namespace Unity.Samples.ScreenReader
         VisualElement m_VisualTree;
         IVisualElementScheduledItem m_UpdateJob;
         UITkAccessibilityService m_AccessibilityService;
-        AccessibilitySubHierarchy m_SubHierarchy;
 
         /// <summary>
         /// The sub-hierarchy this updater is managing.
         /// </summary>
-        public AccessibilitySubHierarchy hierarchy
-        {
-            get => m_SubHierarchy;
-            set
-            {
-                m_SubHierarchy = value;
-
-                if (m_SubHierarchy.isValid && visualTree != null)
-                {
-                    DirtyRootFrame();
-                }
-            }
-        }
+        public AccessibilitySubHierarchy hierarchy { get; set; }
 
         /// <summary>
         /// The panel of the visual tree being managed.
@@ -111,14 +98,10 @@ namespace Unity.Samples.ScreenReader
             m_AccessibilityService = service;
             visualTree.RegisterCallback<AttachToPanelEvent>(OnAttachmentToPanel);
             visualTree.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
-
-            DirtyRootFrame();
         }
 
         void OnGeometryChanged(GeometryChangedEvent evt)
         {
-            DirtyRootFrame();
-
             // OnScreenDebug.Log("OnGeometryChanged " + evt.target);
 
             OnVersionChanged(evt.target as VisualElement, VersionChangeType.Size | VersionChangeType.Transform);
@@ -202,9 +185,9 @@ namespace Unity.Samples.ScreenReader
 
             m_HandlersForNodes[node] = accHandler;
 
-            if (p != null)
+            if (parentHandler != null)
             {
-                p.nextInsertionIndex++;
+                parentHandler.nextInsertionIndex++;
             }
             else
             {
@@ -216,14 +199,13 @@ namespace Unity.Samples.ScreenReader
 
         bool MoveNode(VisualElementAccessibilityHandler parentElement, VisualElementAccessibilityHandler accHandler)
         {
-            var p = parentElement;
-            var parentNode = p?.node;
-            var index = p?.nextInsertionIndex ?? m_RootNextInsertionIndex;
+            var parentNode = parentElement?.node;
+            var index = parentElement?.nextInsertionIndex ?? m_RootNextInsertionIndex;
             var moved = hierarchy.MoveNode(accHandler.node, parentNode, index);
 
-            if (p != null)
+            if (parentElement != null)
             {
-                p.nextInsertionIndex++;
+                parentElement.nextInsertionIndex++;
             }
             else
             {
@@ -431,19 +413,6 @@ namespace Unity.Samples.ScreenReader
             }
         }
 
-        void DirtyRootFrame()
-        {
-            m_AccessibilityService.DirtyRootFrames();
-        }
-
-        public void UpdateRootFrame()
-        {
-            if (hierarchy.isValid)
-            {
-                hierarchy.rootNode.frame = GetScreenPosition(visualTree);
-            }
-        }
-
         void UpdateNode(VisualElementAccessibilityHandler accElement)
         {
             if (!IsNodeValid(accElement.node))
@@ -528,30 +497,9 @@ namespace Unity.Samples.ScreenReader
             Update(visualTree);
         }
 
-        string GetPanelName(VisualElement ve)
-        {
-            // Try to get the name of the panel using reflection.
-            var panel = ve.panel;
-
-            if (panel == null)
-            {
-                return null;
-            }
-
-            var panelType = panel.GetType();
-            var nameProperty = panelType.GetProperty("name");
-
-            if (nameProperty != null)
-            {
-                return nameProperty.GetValue(panel, null) as string;
-            }
-
-            return null;
-        }
-
         NotificationType m_Notification = NotificationType.None;
 
-        void Update(VisualElement visualTree)
+        void Update(VisualElement ve)
         {
             var shouldSendNotification = false;
 
@@ -563,13 +511,8 @@ namespace Unity.Samples.ScreenReader
             {
                 if (!hierarchy.isValid)
                 {
-                    var panelName = GetPanelName(visualTree);
-                    var rootNode = m_AccessibilityService.hierarchy.AddNode(string.IsNullOrEmpty(panelName) ?
-                        visualTree.name : panelName);
-                    rootNode.role = AccessibilityRole.Container;
-                    rootNode.isActive = Application.platform == RuntimePlatform.OSXPlayer;
-                    hierarchy = new AccessibilitySubHierarchy(m_AccessibilityService.hierarchy.mainHierarchy, rootNode);
-                    DirtyRootFrame();
+                    hierarchy = new AccessibilitySubHierarchy(m_AccessibilityService.hierarchy.mainHierarchy);
+
                     shouldSendNotification = true;
                 }
 
@@ -578,24 +521,24 @@ namespace Unity.Samples.ScreenReader
 
                 var modalElement = currentModalElement;
 
-                UpdateAccessibilityHierarchyRecursively(visualTree, null, false, true);
+                UpdateAccessibilityHierarchyRecursively(ve, null, false, true);
 
                 // If there is a current modal element or if the current model element has changed then update the
                 // active state of all nodes.
                 if (currentModalElement != null || currentModalElement != modalElement)
                 {
                     OnScreenDebug.Log("Updating active state from modality " + currentModalElement?.name);
-                    UpdateActiveStateFromModalityRecursively(visualTree);
+                    UpdateActiveStateFromModalityRecursively(ve);
                 }
             }
 
             if (shouldSendNotification || m_Notification.HasFlag(NotificationType.ScreenChanged))
             {
-                visualTree.schedule.Execute(() => AssistiveSupport.notificationDispatcher.SendScreenChanged());
+                ve.schedule.Execute(() => AssistiveSupport.notificationDispatcher.SendScreenChanged());
             }
             else if (m_Notification.HasFlag(NotificationType.LayoutChanged))
             {
-                visualTree.schedule.Execute(() => AssistiveSupport.notificationDispatcher.SendLayoutChanged());
+                ve.schedule.Execute(() => AssistiveSupport.notificationDispatcher.SendLayoutChanged());
             }
         }
 

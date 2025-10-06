@@ -359,11 +359,7 @@ namespace Unity.Samples.ScreenReader
 
         static void CreateSubHierarchyForService(AccessibilityService service)
         {
-            var rootNode = hierarchy.AddNode(service.serviceName);
-            rootNode.role = AccessibilityRole.Container;
-            rootNode.isActive = Application.platform == RuntimePlatform.OSXPlayer; // false;
-
-            service.hierarchy = new AccessibilitySubHierarchy(hierarchy, rootNode);
+            service.hierarchy = new AccessibilitySubHierarchy(hierarchy);
         }
 
         static void GenerateSubHierarchyForService(Scene scene, AccessibilityService service)

@@ -226,6 +226,9 @@ namespace Unity.Samples.LetterSpell
         Label m_AudioHeader;
         Label m_AppearanceHeader;
         Label m_SettingsHeader;
+        Label m_BoldTextLabel;
+        Label m_FontScaleLabel;
+
         VisualElement m_LastView;
         LetterCardListModel m_Model = new();
 
@@ -443,6 +446,9 @@ namespace Unity.Samples.LetterSpell
             m_SettingsHeader = m_SettingsView.Q<Label>("settingsHeader");
             m_SettingsHeader.GetOrCreateAccessibleProperties().role = AccessibilityRole.Header;
 
+            m_BoldTextLabel = m_SettingsView.Q<Label>("boldTextLabel");
+            m_FontScaleLabel = m_SettingsView.Q<Label>("fontScaleLabel");
+
             // m_SettingsPopup = new PopupWindow();
             // m_SettingsPopup.content = m_SettingsView;
 
@@ -531,6 +537,8 @@ namespace Unity.Samples.LetterSpell
             // m_MainView.panel.visualTree.style.unityFontStyleAndWeight = boldTextStatus ? FontStyle.Bold : FontStyle.Normal;
 
             m_MainView.panel.visualTree.EnableInClassList("bold-text", boldTextStatus);
+
+            m_BoldTextLabel.text = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", boldTextStatus ? "SETTING_ON" : "SETTING_OFF");
         }
 
         void OnClosedCaptioningStatusChanged(bool closedCaptioningStatus)
@@ -541,6 +549,8 @@ namespace Unity.Samples.LetterSpell
         {
             m_MainView.panel.visualTree.style.fontSize = 64 * fontScale;
             m_LetterCardContainer.fontScale = fontScale;
+
+            m_FontScaleLabel.text = $"{fontScale:0.00}";
         }
 
         void OnGameStateChanged(Gameplay.State state)

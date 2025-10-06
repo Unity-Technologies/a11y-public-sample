@@ -601,7 +601,7 @@ namespace Unity.Samples.LetterSpell
             // m_ClueLabel.style.display = DisplayStyle.None;
 
             // Ensure the clue label always the same space in the view so do not hide it.
-            m_ClueLabel.text = " ";
+            m_ClueLabel.text = "";
             m_ClueLabel.style.visibility = Visibility.Hidden;
         }
 
@@ -679,7 +679,7 @@ namespace Unity.Samples.LetterSpell
             {
                 var card = new UITkLetterCard();
                 m_LetterCardContainer.Add(card);
-                card.text = letterCard.letter.ToString();
+                card.text = letterCard.letter.ToString().ToUpper();
                 card.name = letterCard.letter.ToString();
                 card.GetOrCreateAccessibleProperties().label = card.text;
                 card.dropped += (oldIndex, newIndex) =>
@@ -698,7 +698,7 @@ namespace Unity.Samples.LetterSpell
         {
             // TODO: This should be localized.
             var listCardMessage = "The letters are now " + string.Join(", ",
-                m_Model.letterCards.Select(c => c.letter).ToArray());
+                m_Model.letterCards.Select(c => "\"" + c.letter + "\"").ToArray());
             AssistiveSupport.notificationDispatcher.SendAnnouncement(listCardMessage);
             Debug.Log(listCardMessage);
         }
@@ -715,8 +715,8 @@ namespace Unity.Samples.LetterSpell
         void AnnounceCorrectWord()
         {
             // TODO: This should be localized.
-            AssistiveSupport.notificationDispatcher.SendAnnouncement($"You found the correct word! It was " +
-                $"{gameplay.currentWord.word}.");
+            AssistiveSupport.notificationDispatcher.SendAnnouncement($"You found the correct word! It was \"" +
+                $"{gameplay.currentWord.word}\".");
             FadeSuccessImageIn();
         }
 
@@ -824,13 +824,14 @@ namespace Unity.Samples.LetterSpell
             if (moved)
             {
                 // TODO: This should be localized.
-                var message = $"Moved {selectedCardText} {(shouldMoveLeft ? "before" : "after")} {otherCardText}";
+                var message = $"Moved \"{selectedCardText}\" {(shouldMoveLeft ? "before" : "after")} " +
+                    $"\"{otherCardText}\"";
 
                 // Announce that the card was moved. Give a bit of time for the layout change notification to be
                 // processed first so that the announcement is not interrupted by the focus change.
                 m_MainView.schedule.Execute(() =>
                     AssistiveSupport.notificationDispatcher.SendAnnouncement(message)
-                ).ExecuteLater(200);
+                    ).ExecuteLater(200);
             }
 
             /*var accElement = draggable.transform.GetComponent<AccessibleElement>();
@@ -840,7 +841,7 @@ namespace Unity.Samples.LetterSpell
                 var index = draggable.transform.GetSiblingIndex();
                 var otherSiblingIndex = shouldMoveLeft ? index + 1 : index - 1;
                 var otherSibling = draggable.transform.parent.GetChild(otherSiblingIndex);
-                var message = $"Moved {draggable.name} {(shouldMoveLeft ? "before" : "after")} {otherSibling.name}";
+                var message = $"Moved \"{draggable.name}\" {(shouldMoveLeft ? "before" : "after")} \"{otherSibling.name}\"";
 
                 // Announce that the card was moved.
                 AssistiveSupport.notificationDispatcher.SendAnnouncement(message);

@@ -372,12 +372,12 @@ namespace Unity.Samples.LetterSpell
             m_GameView = m_StackView.Q("gameView");
 
             m_ClueLabel = m_GameView.Q<Label>("clueLabel");
-            var localizedClue = new LocalizedString
-            {
-                TableReference = "Game Text",
-                TableEntryReference = "CLUE_LABEL"
-            };
-            localizedClue.StringChanged += s => m_ClueLabel.GetOrCreateAccessibleProperties().label = s;
+            // var localizedClue = new LocalizedString
+            // {
+            //     TableReference = "Game Text",
+            //     TableEntryReference = "CLUE_LABEL"
+            // };
+            // localizedClue.StringChanged += s => m_ClueLabel.GetOrCreateAccessibleProperties().label = s;
 
             m_SuccessPill = m_GameView.Q("successPill");
             m_SuccessPill.GetOrCreateAccessibleProperties().ignored = true;
@@ -613,7 +613,7 @@ namespace Unity.Samples.LetterSpell
         public void OnCurrentWordIndexChanged(int index)
         {
             m_ClueLabel.text = gameplay.currentWord.clue;
-            m_ClueLabel.GetOrCreateAccessibleProperties().value = gameplay.currentWord.clue;
+            // m_ClueLabel.GetOrCreateAccessibleProperties().label = gameplay.currentWord.clue;
 
             ShowOrHideClue();
         }

@@ -53,6 +53,7 @@ namespace Unity.Samples.ScreenReader
         internal Value<bool> m_IsActive = new(true);
         internal Value<string> m_Label;
         internal Value<AccessibilityRole> m_Role;
+        internal Value<AccessibilityState> m_State;
         internal Value<bool> m_Ignored;
         internal Value<bool> m_Modal;
         internal Value<string> m_Value;
@@ -94,6 +95,13 @@ namespace Unity.Samples.ScreenReader
         {
             get => m_Role.Get();
             set => m_Role.Set(this, value);
+        }
+
+        [UxmlAttribute, CreateProperty]
+        public AccessibilityState state
+        {
+            get => m_State.Get();
+            set => m_State.Set(this, value);
         }
 
         [UxmlAttribute, CreateProperty]

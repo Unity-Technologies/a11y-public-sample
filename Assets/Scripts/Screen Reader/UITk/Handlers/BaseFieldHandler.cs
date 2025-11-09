@@ -14,8 +14,7 @@ namespace Unity.Samples.ScreenReader
 
         public override string GetValue()
         {
-            var field = ownerElement as BaseField<TValueType>;
-            return field == null ? "" : $"{field.value}";
+            return ownerElement is BaseField<TValueType> field ? $"{field.value}" : "";
         }
 
         protected override void BindToElement(VisualElement ve)
@@ -33,8 +32,15 @@ namespace Unity.Samples.ScreenReader
 
         void OnValueChanged(ChangeEvent<TValueType> e)
         {
-            EnsureLabelIsNotAccessible();
-            NotifyChange();
+            if (ownerElement is Toggle or RadioButton or Slider)
+            {
+                var updater = ownerElement.panel.GetAccessibilityUpdater();
+                updater?.UpdateNode(this);
+            }
+            else
+            {
+                NotifyChange();
+            }
         }
 
         void EnsureLabelIsNotAccessible()
@@ -46,21 +52,5 @@ namespace Unity.Samples.ScreenReader
                 field.labelElement.GetOrCreateAccessibleProperties().ignored = true;
             }
         }
-    }
-
-    [Preserve]
-    class ToggleHandler : BaseFieldHandler<bool>
-    {
-#if UNITY_2023_3_OR_NEWER
-        public override AccessibilityRole GetRole() => AccessibilityRole.Toggle;
-#endif // UNITY_2023_3_OR_NEWER
-    }
-
-    [Preserve]
-    class RadioButtonHandler : BaseFieldHandler<bool>
-    {
-#if UNITY_2023_3_OR_NEWER
-        public override AccessibilityRole GetRole() => AccessibilityRole.Toggle;
-#endif // UNITY_2023_3_OR_NEWER
     }
 }

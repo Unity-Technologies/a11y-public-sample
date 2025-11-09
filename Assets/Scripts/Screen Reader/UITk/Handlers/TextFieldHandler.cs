@@ -11,12 +11,18 @@ namespace Unity.Samples.ScreenReader
     {
         public TextFieldFieldHandler()
         {
-            selected += () =>
+            focused += focused =>
             {
                 var textField = ownerElement as TextField;
-                textField?.Focus();
 
-                return true;
+                if (focused)
+                {
+                    textField?.Focus();
+                }
+                else
+                {
+                    textField?.Blur();
+                }
             };
         }
 

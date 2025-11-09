@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.Properties;
+using Unity.Samples.ScreenReader;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -56,7 +57,10 @@ namespace Unity.Samples.LetterSpell
 
             button.AddToClassList(k_ButtonUssClassName);
             button.RegisterCallback<DetachFromPanelEvent>(OnButtonDetachFromPanel);
-            button.clicked += () => { value = m_ButtonBar.IndexOf(button); };
+            button.clicked += () =>
+            {
+                value = m_ButtonBar.IndexOf(button);
+            };
 
             return button;
         }
@@ -99,6 +103,9 @@ namespace Unity.Samples.LetterSpell
             for (var i = 0; i < m_ButtonBar.childCount; ++i)
             {
                 m_ButtonBar[i].SetCheckedPseudoState(i == value);
+
+                var updater = panel.GetAccessibilityUpdater();
+                updater?.OnVersionChanged(m_ButtonBar[i], VisualElementAccessibilityHandler.k_AccessibilityChange);
             }
         }
 

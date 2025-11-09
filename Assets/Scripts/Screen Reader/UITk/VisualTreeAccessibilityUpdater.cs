@@ -444,7 +444,7 @@ namespace Unity.Samples.ScreenReader
             }
         }
 
-        void UpdateNode(VisualElementAccessibilityHandler accElement)
+        internal void UpdateNode(VisualElementAccessibilityHandler accElement)
         {
             if (!IsNodeValid(accElement.node))
             {
@@ -647,7 +647,7 @@ namespace Unity.Samples.ScreenReader
                 {
                     if (!IsNodeValid(accElement.node))
                     {
-                        m_Notification |= NotificationType.ScreenChanged;
+                        m_Notification |= NotificationType.LayoutChanged;
                         InsertNode(parentAccessible, accElement);
                     }
                     else if (MoveNode(parentAccessible, accElement))

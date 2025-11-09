@@ -13,16 +13,18 @@ namespace Unity.Samples.ScreenReader
 
         public BasePopupFieldHandler()
         {
-            /*OnSelect += () =>
+            selected += () =>
             {
-                ownerElement.schedule.Execute(CheckForOpenedPopupMenu).ExecuteLater(200);
+                ownerElement.schedule.Execute(CheckForOpenedPopupMenu).ExecuteLater(300);
 
-               using var evt = NavigationSubmitEvent.GetPooled();
+                using var evt = NavigationSubmitEvent.GetPooled();
+                evt.target = ownerElement;
                 ownerElement.SendEvent(evt);
+
                 OnScreenDebug.Log("Submit event sent to " + ownerElement.name);
 
-                return false;//true;
-            };*/
+                return true;
+            };
         }
 
         public override string GetHint()
@@ -116,27 +118,23 @@ namespace Unity.Samples.ScreenReader
 
                     itemAcc.label = itemLabel != null ? itemLabel.text : $"Item {i}";
                     itemAcc.role = AccessibilityRole.Button;
+                    itemAcc.state = item.hasCheckedPseudoState ? AccessibilityState.Selected : AccessibilityState.None;
+                    itemAcc.selected += () =>
+                    {
+                        using var evt = NavigationSubmitEvent.GetPooled();
+                        evt.target = item;
+                        item.SendEvent(evt);
+
+                        return true;
+                    };
+
                     itemLabel.GetOrCreateAccessibleProperties().ignored = true;
+
                     i++;
                 }
 
                 // NotifyChange();
             }
-
-            /*
- #if UNITY_6000_3_OR_NEWER
-            var popup = ve.Q("unity-popup");
-
-            if (popup != null && popup.style.display == DisplayStyle.Flex)
-            {
-                SetState(AccessibilityState.Expanded);
-            }
-            else
-            {
-                SetState(AccessibilityState.Collapsed);
-            }
-#endif // UNITY_6000_3_OR_NEWER
-            */
         }
     }
 }

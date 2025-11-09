@@ -30,6 +30,11 @@ namespace Unity.Samples.ScreenReader
             slider.value += step;
         }
 
+        public override string GetValue()
+        {
+            return ownerElement is Slider field ? $"{field.value:P0}" : "";
+        }
+
 #if UNITY_2023_3_OR_NEWER
         public override AccessibilityRole GetRole() => AccessibilityRole.Slider;
 #endif // UNITY_2023_3_OR_NEWER

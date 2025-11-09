@@ -643,23 +643,21 @@ namespace Unity.Samples.LetterSpell
         {
             var searchText = m_SearchField.text.Trim().ToLowerInvariant();
 
-            foreach (var field in m_SettingsView.Query<Label>(className: "unity-base-field__label").ToList())
+            foreach (var label in m_SettingsView.Query<Label>(className: "unity-base-field__label").ToList())
             {
                 if (string.IsNullOrEmpty(searchText))
                 {
-                    field.parent.style.display = DisplayStyle.Flex;
+                    label.parent.style.display = DisplayStyle.Flex;
                     continue;
                 }
 
-                var label = field.Q<Label>();
-
-                if (label != null && label.text.ToLowerInvariant().Contains(searchText))
+                if (label.text.ToLowerInvariant().Contains(searchText))
                 {
-                    field.parent.style.display = DisplayStyle.Flex;
+                    label.parent.style.display = DisplayStyle.Flex;
                 }
-                else
+                else if (label.parent is not RadioButton)
                 {
-                    field.parent.style.display = DisplayStyle.None;
+                    label.parent.style.display = DisplayStyle.None;
                 }
             }
         }
@@ -891,8 +889,6 @@ namespace Unity.Samples.LetterSpell
         void ShowExitGamePopup()
         {
             m_ExitGamePopup.Show();
-
-            AccessibilityManager.GetService<UITkAccessibilityService>()?.RebuildHierarchy();
         }
 
         void CloseExitGamePopup()

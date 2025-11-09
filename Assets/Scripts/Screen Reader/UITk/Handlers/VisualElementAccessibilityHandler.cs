@@ -96,6 +96,11 @@ namespace Unity.Samples.ScreenReader
                     return true;
                 }
 
+                if (m_OwnerElement.parent.parent is Toggle)
+                {
+                    return true;
+                }
+
                 var acc = m_OwnerElement.GetAccessibleProperties();
 
                 return acc is { ignored: true };
@@ -190,8 +195,29 @@ namespace Unity.Samples.ScreenReader
 
         public virtual AccessibilityRole GetRole() => AccessibilityRole.None;
 
-        public virtual AccessibilityState state => m_OwnerElement is {enabledSelf: false} ?
-            AccessibilityState.Disabled : AccessibilityState.None;
+        public AccessibilityState state
+        {
+            get
+            {
+                if (m_OwnerElement == null)
+                {
+                    return AccessibilityState.None;
+                }
+
+                var acc = m_OwnerElement.GetAccessibleProperties();
+
+                var states = acc is { m_State: { defined: true } } ? acc.state : GetState();
+
+                if (m_OwnerElement is { enabledSelf: false })
+                {
+                    states |= AccessibilityState.Disabled;
+                }
+
+                return states;
+            }
+        }
+
+        public virtual AccessibilityState GetState() => AccessibilityState.None;
 
         public Action<VisualElement, VersionChangeType> onVersionChanged;
 

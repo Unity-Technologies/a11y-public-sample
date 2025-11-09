@@ -45,11 +45,6 @@ namespace Unity.Samples.LetterSpell
         /// </summary>
         LetterCard m_AccessibilitySelectedCard;
 
-        /// <summary>
-        /// Keeps track of whether the hierarchy was refreshed using AccessibilityManager.RefreshHierarchy();
-        /// </summary>
-        bool m_WasHierarchyRefreshed;
-
         void OnEnable()
         {
             m_Model.letterCardsChanged += OnLetterCardsChanged;
@@ -261,13 +256,6 @@ namespace Unity.Samples.LetterSpell
                 m_AccessibilitySelectedCard == null ||
                 m_AccessibilityFocusedCard == null)
             {
-                return;
-            }
-
-            // Don't move the card if the focus change occurred because of a hierarchy rebuild.
-            if (m_WasHierarchyRefreshed)
-            {
-                m_WasHierarchyRefreshed = false;
                 return;
             }
 

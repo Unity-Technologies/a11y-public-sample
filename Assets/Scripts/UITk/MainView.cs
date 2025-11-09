@@ -25,12 +25,12 @@ namespace Unity.Samples.LetterSpell
         const string k_DisplaySizePref = "DisplaySize";
 
         [CreateProperty]
-        public string userName
+        public string username
         {
             get => PlayerPrefs.GetString(k_UsernamePref);
             set
             {
-                if (userName == value)
+                if (username == value)
                 {
                     return;
                 }
@@ -88,12 +88,12 @@ namespace Unity.Samples.LetterSpell
         }
 
         [CreateProperty]
-        public bool showsSpellingClues
+        public bool showSpellingClues
         {
             get => PlayerPrefs.GetInt(k_CluePref, 0) == 1;
             set
             {
-                if (showsSpellingClues == value)
+                if (showSpellingClues == value)
                 {
                     return;
                 }
@@ -290,11 +290,6 @@ namespace Unity.Samples.LetterSpell
                                   " selected " + (m_LetterCardContainer.selectedCard != null ? m_LetterCardContainer.selectedCard.name : "null"));
             }
         }
-
-        /// <summary>
-        /// Keeps track of whether the hierarchy was refreshed using AccessibilityManager.RefreshHierarchy();
-        /// </summary>
-        bool m_WasHierarchyRefreshed;
 
         public readonly float splashScreenDuration = 8; // 4000;
 
@@ -625,7 +620,7 @@ namespace Unity.Samples.LetterSpell
 
         void ShowOrHideClue()
         {
-            m_ClueLabel.style.visibility = m_PlayerSettings.showsSpellingClues ?
+            m_ClueLabel.style.visibility = m_PlayerSettings.showSpellingClues ?
                 Visibility.Visible : Visibility.Hidden;
         }
 
@@ -667,10 +662,6 @@ namespace Unity.Samples.LetterSpell
                     field.parent.style.display = DisplayStyle.None;
                 }
             }
-
-            // Refresh the hierarchy to ensure the screen reader is aware of the changes.
-            //AccessibilityManager.GetService<UITkAccessibilityService>()?.RebuildHierarchy();
-            //m_WasHierarchyRefreshed = true;
         }
 
         /// <summary>
@@ -763,13 +754,6 @@ namespace Unity.Samples.LetterSpell
                 m_LetterCardContainer.selectedCard == null ||
                 accessibilityFocusedCard == null)
             {
-                return;
-            }
-
-            // Don't move the card if the focus change occurred because of a hierarchy rebuild.
-            if (m_WasHierarchyRefreshed)
-            {
-                m_WasHierarchyRefreshed = false;
                 return;
             }
 

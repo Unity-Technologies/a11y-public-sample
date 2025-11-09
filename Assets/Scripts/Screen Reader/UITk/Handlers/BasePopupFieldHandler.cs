@@ -51,6 +51,7 @@ namespace Unity.Samples.ScreenReader
         void OnNavigationSubmit(NavigationSubmitEvent evt)
         {
             OnScreenDebug.Log("Submit event received by " + ownerElement.name);
+
             ScheduledCheckForOpenedPopupMenu();
         }
 

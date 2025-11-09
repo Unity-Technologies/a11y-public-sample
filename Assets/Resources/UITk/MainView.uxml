@@ -15,7 +15,7 @@
                     <ui:VisualElement name="logo" class="lsp-logo"/>
                     <ui:TextField placeholder-text="Enter your name" name="loginNameField" label="What is your name?" language-direction="LTR" style="min-width: 252px; width: 949px;">
                         <Bindings>
-                            <ui:DataBinding property="value" data-source-path="userName" binding-mode="TwoWay"/>
+                            <ui:DataBinding property="value" data-source-path="username" binding-mode="TwoWay"/>
                             <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(775025750016)"/>
                             <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(405763420160)"/>
                         </Bindings>
@@ -103,7 +103,7 @@
                         </ui:Label>
                         <ui:TextField label="Username" placeholder-text="Enter your name" name="settingsUserNameField" language-direction="LTR">
                             <Bindings>
-                                <ui:DataBinding property="value" data-source-path="userName" binding-mode="TwoWay"/>
+                                <ui:DataBinding property="value" data-source-path="username" binding-mode="TwoWay"/>
                                 <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3183403495424)"/>
                                 <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(775025750016)"/>
                             </Bindings>
@@ -121,13 +121,13 @@
                                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17127719464960)"/>
                                 </Bindings>
                             </ui:Label>
-                            <ui:RadioButton label="3" name="settingsThreeWordsButton" value="true">
+                            <ui:RadioButton label="Three" name="settingsThreeWordsButton" value="true">
                                 <Bindings>
                                     <ui:DataBinding property="value" data-source-path="isThreeWords" binding-mode="TwoWay"/>
                                     <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17263564582912)"/>
                                 </Bindings>
                             </ui:RadioButton>
-                            <ui:RadioButton label="6" name="settingsSixWordsButton">
+                            <ui:RadioButton label="Six" name="settingsSixWordsButton">
                                 <Bindings>
                                     <ui:DataBinding property="value" data-source-path="isSixWords" binding-mode="TwoWay"/>
                                     <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17369965686784)"/>
@@ -136,7 +136,7 @@
                         </ui:VisualElement>
                         <ui:Toggle label="Show Spelling Clues" name="settingsShowSpellingClues">
                             <Bindings>
-                                <ui:DataBinding property="value" data-source-path="showsSpellingClues" binding-mode="TwoWay"/>
+                                <ui:DataBinding property="value" data-source-path="showSpellingClues" binding-mode="TwoWay"/>
                                 <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17491977990144)"/>
                                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(1784705072656384)"/>
                             </Bindings>

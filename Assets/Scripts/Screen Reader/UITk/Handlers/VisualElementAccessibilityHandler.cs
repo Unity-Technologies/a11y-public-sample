@@ -73,7 +73,7 @@ namespace Unity.Samples.ScreenReader
             {
                 if (m_OwnerElement != null)
                 {
-                    // If the node is disabled or hidden then it is set as inactive regardless of
+                    // If the node is disabled or hidden, then it is set as inactive regardless of
                     // AccessibilityProperties.isActive.
                     if (IsElementVisible(m_OwnerElement))
                     {

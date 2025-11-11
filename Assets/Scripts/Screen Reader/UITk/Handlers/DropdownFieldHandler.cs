@@ -1,6 +1,5 @@
 using Unity.Samples.LetterSpell;
 using UnityEngine.Accessibility;
-using UnityEngine.Localization.Settings;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -25,11 +24,6 @@ namespace Unity.Samples.ScreenReader
 
                 return true;
             };
-        }
-
-        public override string GetHint()
-        {
-            return LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "DROPDOWN_CLOSED_HINT");
         }
 
 #if UNITY_6000_3_OR_NEWER

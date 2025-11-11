@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.UI;
-using UnityEngine.Localization.Settings;
 
 namespace Unity.Samples.ScreenReader
 {
@@ -48,8 +47,6 @@ namespace Unity.Samples.ScreenReader
             {
                 UpdateValue(m_Dropdown.value);
             }
-
-            hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "DROPDOWN_CLOSED_HINT");
         }
 
         protected override void BindToControl()
@@ -110,8 +107,6 @@ namespace Unity.Samples.ScreenReader
             yield return new WaitUntil(IsDropdownOpen);
             yield return new WaitForEndOfFrame();
 
-            hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "DROPDOWN_OPEN_HINT");
-
 #if UNITY_6000_3_OR_NEWER
             state |= AccessibilityState.Expanded;
             SetNodeProperties();
@@ -130,8 +125,6 @@ namespace Unity.Samples.ScreenReader
         IEnumerator WaitForDropdownClose(AccessibilityNode parentNode)
         {
             yield return new WaitUntil(() => !IsDropdownOpen());
-
-            hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "DROPDOWN_CLOSED_HINT");
 
 #if UNITY_6000_3_OR_NEWER
             state &= ~AccessibilityState.Expanded;

@@ -178,22 +178,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1782766347907072
-    m_Localized: Toca dos veces para empezar a mover.
+    m_Localized: "Env\xEDa para seleccionar y luego navega hacia la izquierda o hacia
+      la derecha para moverte."
     m_Metadata:
       m_Items: []
   - m_Id: 1782851584552960
-    m_Localized: "\xA1Bravo! Encontraste la palabra correcta."
+    m_Localized: "Has encontrado la palabra correcta: \xAB{word}\xBB."
     m_Metadata:
-      m_Items: []
-  - m_Id: 1783465118953472
-    m_Localized: Toca dos veces para expandir las opciones.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1783541123936256
-    m_Localized: Desliza a la izquierda para navegar por las opciones. Toca dos veces
-      para cerrar las opciones.
-    m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 2216566543976235779
   - m_Id: 1784705072656384
     m_Localized: Activado
     m_Metadata:
@@ -222,6 +215,22 @@ MonoBehaviour:
     m_Localized: Correcto
     m_Metadata:
       m_Items: []
+  - m_Id: 17102792500961280
+    m_Localized: "Navega hacia la izquierda o hacia la derecha para moverte. Env\xEDa
+      para deseleccionar."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17103729613332480
+    m_Localized: "Se ha movido \xAB{selectedLetter}\xBB {shouldMoveLeft:antes|despu\xE9s}
+      de \xAB{otherLetter}\xBB."
+    m_Metadata:
+      m_Items:
+      - rid: 2216566543976235779
+  - m_Id: 17143825305690112
+    m_Localized: 'Las letras ahora son: {letters}.'
+    m_Metadata:
+      m_Items:
+      - rid: 2216566543976235779
   references:
     version: 2
     RefIds:
@@ -231,3 +240,6 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 45343066714112
+        - id: 1782851584552960
+        - id: 17103729613332480
+        - id: 17143825305690112

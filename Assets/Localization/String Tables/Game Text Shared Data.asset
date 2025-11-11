@@ -172,19 +172,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1782766347907072
-    m_Key: LETTER_CARD_HINT
+    m_Key: LETTER_CARD_HINT_UNSELECTED
     m_Metadata:
       m_Items: []
   - m_Id: 1782851584552960
-    m_Key: SUCCESS_ANNOUNCEMENT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1783465118953472
-    m_Key: DROPDOWN_CLOSED_HINT
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1783541123936256
-    m_Key: DROPDOWN_OPEN_HINT
+    m_Key: ANNOUNCEMENT_WORD_FOUND
     m_Metadata:
       m_Items: []
   - m_Id: 1784705072656384
@@ -213,6 +205,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3064538126606336
     m_Key: CORRECT_LABEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17102792500961280
+    m_Key: LETTER_CARD_HINT_SELECTED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17103729613332480
+    m_Key: ANNOUNCEMENT_CARD_MOVED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17143825305690112
+    m_Key: ANNOUNCEMENT_LETTERS
     m_Metadata:
       m_Items: []
   m_Metadata:

@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Unity.Properties;
@@ -372,12 +373,6 @@ namespace Unity.Samples.LetterSpell
             m_GameView = m_StackView.Q("gameView");
 
             m_ClueLabel = m_GameView.Q<Label>("clueLabel");
-            // var localizedClue = new LocalizedString
-            // {
-            //     TableReference = "Game Text",
-            //     TableEntryReference = "CLUE_LABEL"
-            // };
-            // localizedClue.StringChanged += s => m_ClueLabel.GetOrCreateAccessibleProperties().label = s;
 
             m_SuccessPill = m_GameView.Q("successPill");
             m_SuccessPill.GetOrCreateAccessibleProperties().ignored = true;
@@ -421,13 +416,16 @@ namespace Unity.Samples.LetterSpell
             m_SettingsView.dataSource = m_PlayerSettings;
 
             var settingsScrollView = m_SettingsView.Q<ScrollView>("settingsScrollView");
-            settingsScrollView.GetOrCreateAccessibleProperties().label = "Settings Scroll View";
+            var localizedSettings = new LocalizedString
+            {
+                TableReference = "Game Text",
+                TableEntryReference = "BUTTON_OPTIONS"
+            };
+            localizedSettings.StringChanged += s => settingsScrollView.GetOrCreateAccessibleProperties().label = s;
 
             m_SearchField = m_SettingsView.Q<TextField>("settingsSearchField");
-            // TODO: This should be localized.
-            m_SearchField.GetOrCreateAccessibleProperties().label = "Search";
             m_SearchField.GetOrCreateAccessibleProperties().role = AccessibilityRole.SearchField;
-            m_SearchField.RegisterValueChangedCallback((e) => UpdateSearchField());
+            m_SearchField.RegisterValueChangedCallback(e => UpdateSearchField());
 
             m_GameplayHeader = m_SettingsView.Q<Label>("gameplayHeader");
             m_GameplayHeader.GetOrCreateAccessibleProperties().role = AccessibilityRole.Header;
@@ -571,7 +569,7 @@ namespace Unity.Samples.LetterSpell
             {
                 m_LetterCardContainer.canPlayCards = true;
                 gameplay.ShowNextWord();
-                DelayStateTheLetters();
+                DelayStateLetters();
             }
 
             //m_AnswerLabel.text = gameplay.currentWord.word;
@@ -598,12 +596,7 @@ namespace Unity.Samples.LetterSpell
 
             PersistentVariablesSource.EndUpdating();
 
-            // m_ResultLabel.text = $"The game is over!\nYou found {orderedWordCount} words out of {totalWordCount}";
-            // m_ResultLabel.text = $"{orderedWordCount} of {totalWordCount} correct";
-
             m_ScreenResult.Show();
-
-            // m_ClueLabel.style.display = DisplayStyle.None;
 
             // Ensure the clue label always the same space in the view so do not hide it.
             m_ClueLabel.text = "";
@@ -612,8 +605,10 @@ namespace Unity.Samples.LetterSpell
 
         public void OnCurrentWordIndexChanged(int index)
         {
-            m_ClueLabel.text = gameplay.currentWord.clue;
-            // m_ClueLabel.GetOrCreateAccessibleProperties().label = gameplay.currentWord.clue;
+            var clue = gameplay.currentWord.clue;
+
+            m_ClueLabel.text = clue;
+            m_ClueLabel.GetOrCreateAccessibleProperties().label = clue;
 
             ShowOrHideClue();
         }
@@ -628,15 +623,15 @@ namespace Unity.Samples.LetterSpell
         {
             m_ScreenResult.Close();
             m_LetterCardContainer.canPlayCards = true;
-            Gameplay.instance.StartGame();
+            gameplay.StartGame();
 
             AccessibilityManager.GetService<UITkAccessibilityService>()?.RebuildHierarchy();
-            DelayStateTheLetters();
+            DelayStateLetters();
         }
 
         public void PauseGame()
         {
-            Gameplay.instance.PauseGame();
+            gameplay.PauseGame();
         }
 
         void UpdateSearchField()
@@ -678,8 +673,12 @@ namespace Unity.Samples.LetterSpell
             {
                 var card = new UITkLetterCard();
                 m_LetterCardContainer.Add(card);
-                card.text = letterCard.letter.ToString().ToUpper();
-                card.name = letterCard.letter.ToString();
+
+                var cultureInfo = LocalizationSettings.SelectedLocale?.Identifier.CultureInfo ?? CultureInfo.CurrentUICulture;
+                var letter = letterCard.letter.ToString().ToUpper(cultureInfo);
+
+                card.text = letter;
+                card.name = letter;
                 card.GetOrCreateAccessibleProperties().label = card.text;
                 card.dropped += (oldIndex, newIndex) =>
                 {
@@ -688,18 +687,38 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
-        void DelayStateTheLetters()
+        void DelayStateLetters()
         {
-            m_MainView.schedule.Execute(StateTheLetters).ExecuteLater(1000);
+            m_MainView.schedule.Execute(StateLetters).ExecuteLater(1000);
         }
 
-        void StateTheLetters()
+        void StateLetters()
         {
-            // TODO: This should be localized.
-            var listCardMessage = "The letters are now " + string.Join(", ",
-                m_Model.letterCards.Select(c => "\"" + c.letter + "\"").ToArray());
-            AssistiveSupport.notificationDispatcher.SendAnnouncement(listCardMessage);
-            Debug.Log(listCardMessage);
+            var cultureInfo = LocalizationSettings.SelectedLocale?.Identifier.CultureInfo ?? CultureInfo.CurrentUICulture;
+            var letterList = m_Model.letterCards.Select(c =>
+                "\"" + char.ToUpper(c.letter, cultureInfo) + "\""
+            ).ToArray();
+
+            if (gameplay.rightToLeft)
+            {
+                letterList = letterList.Reverse().ToArray();
+            }
+
+            var localizedString = new LocalizedString
+            {
+                TableReference = "Game Text",
+                TableEntryReference = "ANNOUNCEMENT_LETTERS"
+            };
+
+            var letters = new StringVariable
+            {
+                Value = string.Join(", ", letterList)
+            };
+
+            localizedString.Add("letters", letters);
+
+            localizedString.StringChanged += announcement =>
+                AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);
         }
 
         public void OnWordReorderingCompleted()
@@ -713,9 +732,22 @@ namespace Unity.Samples.LetterSpell
 
         void AnnounceCorrectWord()
         {
-            // TODO: This should be localized.
-            AssistiveSupport.notificationDispatcher.SendAnnouncement($"You found the correct word! It was \"" +
-                $"{gameplay.currentWord.word}\".");
+            var localizedString = new LocalizedString
+            {
+                TableReference = "Game Text",
+                TableEntryReference = "ANNOUNCEMENT_WORD_FOUND"
+            };
+
+            var word = new StringVariable
+            {
+                Value = gameplay.currentWord.word
+            };
+
+            localizedString.Add("word", word);
+
+            localizedString.StringChanged += announcement =>
+                AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);
+
             FadeSuccessImageIn();
         }
 
@@ -815,15 +847,39 @@ namespace Unity.Samples.LetterSpell
 
             if (moved)
             {
-                // TODO: This should be localized.
-                var message = $"Moved \"{selectedCardText}\" {(shouldMoveLeft ? "before" : "after")} " +
-                    $"\"{otherCardText}\"";
+                // Announce that the card was moved.
+                var localizedString = new LocalizedString
+                {
+                    TableReference = "Game Text",
+                    TableEntryReference = "ANNOUNCEMENT_CARD_MOVED"
+                };
 
-                // Announce that the card was moved. Give a bit of time for the layout change notification to be
-                // processed first so that the announcement is not interrupted by the focus change.
+                var selectedLetter = new StringVariable
+                {
+                    Value = selectedCardText
+                };
+
+                var moveLeft = new BoolVariable
+                {
+                    Value = shouldMoveLeft
+                };
+
+                var otherLetter = new StringVariable
+                {
+                    Value = otherCardText
+                };
+
+                localizedString.Add("selectedLetter", selectedLetter);
+                localizedString.Add("shouldMoveLeft", moveLeft);
+                localizedString.Add("otherLetter", otherLetter);
+
+                // Give a bit of time for the layout change notification to be processed first so that the announcement
+                // is not interrupted by the focus change.
                 m_MainView.schedule.Execute(() =>
-                    AssistiveSupport.notificationDispatcher.SendAnnouncement(message)
-                    ).ExecuteLater(200);
+                {
+                    localizedString.StringChanged += announcement =>
+                        AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);
+                }).ExecuteLater(200);
             }
 
             /*var accElement = draggable.transform.GetComponent<AccessibleElement>();
@@ -883,7 +939,7 @@ namespace Unity.Samples.LetterSpell
             m_LetterCardContainer.canPlayCards = true;
             // CardListView.cardSize = level == Gameplay.DifficultyLevel.Easy ? 208 : 100;
             gameplay.StartGame();
-            DelayStateTheLetters();
+            DelayStateLetters();
         }
 
         void ShowExitGamePopup()
@@ -899,14 +955,14 @@ namespace Unity.Samples.LetterSpell
         void ResumeGame()
         {
             CloseExitGamePopup();
-            Gameplay.instance.ResumeGame();
+            gameplay.ResumeGame();
             m_StackView.activeView = m_GameView;
         }
 
 
         void ExitGame()
         {
-            Gameplay.instance.StopGame();
+            gameplay.StopGame();
             m_ScreenResult.Close();
             CloseExitGamePopup();
             ShowLevelChoiceView();

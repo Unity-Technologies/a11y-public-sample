@@ -202,9 +202,9 @@ namespace Unity.Samples.ScreenReader
 
             m_HandlersForNodes[node] = accHandler;
 
-            if (p != null)
+            if (parentHandler != null)
             {
-                p.nextInsertionIndex++;
+                parentHandler.nextInsertionIndex++;
             }
             else
             {
@@ -214,16 +214,15 @@ namespace Unity.Samples.ScreenReader
             // OnScreenDebug.Log("InsertNode: " + node.id + " \"" + node.label + "\" Role:" + node.role + " State:" + node.state);
         }
 
-        bool MoveNode(VisualElementAccessibilityHandler parentElement, VisualElementAccessibilityHandler accHandler)
+        bool MoveNode(VisualElementAccessibilityHandler parentHandler, VisualElementAccessibilityHandler accHandler)
         {
-            var p = parentElement;
-            var parentNode = p?.node;
-            var index = p?.nextInsertionIndex ?? m_RootNextInsertionIndex;
+            var parentNode = parentHandler?.node;
+            var index = parentHandler?.nextInsertionIndex ?? m_RootNextInsertionIndex;
             var moved = hierarchy.MoveNode(accHandler.node, parentNode, index);
 
-            if (p != null)
+            if (parentHandler != null)
             {
-                p.nextInsertionIndex++;
+                parentHandler.nextInsertionIndex++;
             }
             else
             {

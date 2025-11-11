@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.UIElements;
 using Unity.Samples.ScreenReader;
+using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
 namespace Unity.Samples.LetterSpell
 {
@@ -69,8 +71,7 @@ namespace Unity.Samples.LetterSpell
             {
                 cardListView.selectedCard = this;
 
-                // TODO: This should be localized.
-                accessible.hint = "Navigate left or right to move. Submit to unselect.";
+                accessible.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT_SELECTED");
 
                 OnScreenDebug.Log("Selected card: " + text);
             }
@@ -82,8 +83,7 @@ namespace Unity.Samples.LetterSpell
             {
                 cardListView.selectedCard = null;
 
-                // TODO: Change to "Submit to select, then navigate left or right to move."
-                accessible.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT");
+                accessible.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT_UNSELECTED");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Unity.Samples.LetterSpell
             // Accessibility
             m_TextElement.GetOrCreateAccessibleProperties().ignored = true;
 
-            accessible.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT");
+            accessible.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT_UNSELECTED");
             accessible.selected += () =>
             {
                 if (!selected)
@@ -704,11 +704,34 @@ namespace Unity.Samples.LetterSpell
                 var otherSiblingIndex = shouldMoveLeft ? index + 1 : index - 1;
                 var otherSibling = this[otherSiblingIndex];
 
-                // TODO: This should be localized.
-                var message = $"Moved \"{draggable.name}\" {(shouldMoveLeft ? "before" : "after")} \"{otherSibling.name}\"";
-
                 // Announce that the card was moved.
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(message);
+                var localizedString = new LocalizedString
+                {
+                    TableReference = "Game Text",
+                    TableEntryReference = "ANNOUNCEMENT_CARD_MOVED"
+                };
+
+                var selectedLetter = new StringVariable
+                {
+                    Value = draggable.name
+                };
+
+                var moveLeft = new BoolVariable
+                {
+                    Value = shouldMoveLeft
+                };
+
+                var otherLetter = new StringVariable
+                {
+                    Value = otherSibling.name
+                };
+
+                localizedString.Add("selectedLetter", selectedLetter);
+                localizedString.Add("shouldMoveLeft", moveLeft);
+                localizedString.Add("otherLetter", otherLetter);
+
+                localizedString.StringChanged += announcement =>
+                    AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);
 
                 // AssistiveSupport.defaultHierarchy.MoveNode(accElement.node, accElement.node.parent,
                 //     accElement.transform.GetSiblingIndex());

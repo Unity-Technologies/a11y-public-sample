@@ -162,8 +162,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 45343066714112
-    m_Localized: "\u0627\u0646\u062A\u0647\u062A \u0627\u0644\u0644\u0639\u0628\u0629!
-      \u0644\u0642\u062F \u0648\u062C\u062F\u062A {orderedWordCount:plural:{} \u0643\u0644\u0645\u0629
+    m_Localized: "\u0627\u0646\u062A\u0647\u062A \u0627\u0644\u0644\u0639\u0628\u0629!\\n\\n\u0644\u0642\u062F
+      \u0648\u062C\u062F\u062A {orderedWordCount:plural:{} \u0643\u0644\u0645\u0629
       |{} \u0643\u0644\u0645\u0627\u062A} \u0645\u0646 \u0625\u062C\u0645\u0627\u0644\u064A
       {totalWordCount}"
     m_Metadata:
@@ -184,27 +184,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1782766347907072
-    m_Localized: "\u0627\u0646\u0642\u0631 \u0646\u0642\u0631\u0627\u064B \u0645\u0632\u062F\u0648\u062C\u0627\u064B
-      \u0644\u0644\u0628\u062F\u0621 \u0641\u064A \u0627\u0644\u062A\u062D\u0631\u064A\u0643."
+    m_Localized: "\u0641\u064A \u0647\u0630\u0647 \u0627\u0644\u0645\u0631\u062D\u0644\u0629\u060C
+      \u0644\u0627 \u062A\u0641\u0647\u0645 \u0627\u0644\u062C\u062F\u0627\u062A
+      \u0627\u0644\u0625\u0633\u0628\u0627\u0646\u064A\u0627\u062A \u0644\u0639\u0628\u062A\u0646\u0627."
     m_Metadata:
       m_Items: []
   - m_Id: 1782851584552960
-    m_Localized: "\u0623\u062D\u0633\u0646\u062A! \u0644\u0642\u062F \u0648\u062C\u062F\u062A
-      \u0627\u0644\u0643\u0644\u0645\u0629 \u0627\u0644\u0635\u062D\u064A\u062D\u0629."
+    m_Localized: "\u0644\u0642\u062F \u0648\u062C\u062F\u062A \u0627\u0644\u0643\u0644\u0645\u0629
+      \u0627\u0644\u0635\u062D\u064A\u062D\u0629: \u201D{word}\u201C."
     m_Metadata:
-      m_Items: []
-  - m_Id: 1783465118953472
-    m_Localized: "\u0627\u0646\u0642\u0631 \u0646\u0642\u0631\u0627\u064B \u0645\u0632\u062F\u0648\u062C\u0627\u064B
-      \u0644\u062A\u0648\u0633\u064A\u0639 \u0627\u0644\u062E\u064A\u0627\u0631\u0627\u062A."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1783541123936256
-    m_Localized: "\u0627\u0633\u062D\u0628 \u0644\u0644\u064A\u0633\u0627\u0631 \u0644\u0644\u062A\u0646\u0642\u0644
-      \u0628\u064A\u0646 \u0627\u0644\u062E\u064A\u0627\u0631\u0627\u062A. \u0627\u0646\u0642\u0631
-      \u0646\u0642\u0631\u0627\u064B \u0645\u0632\u062F\u0648\u062C\u0627\u064B \u0644\u0625\u063A\u0644\u0627\u0642
-      \u0627\u0644\u062E\u064A\u0627\u0631\u0627\u062A."
-    m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 2216566543976235776
   - m_Id: 1784705072656384
     m_Localized: "\u062A\u0634\u063A\u064A\u0644"
     m_Metadata:
@@ -233,6 +223,24 @@ MonoBehaviour:
     m_Localized: "\u0635\u062D\u064A\u062D"
     m_Metadata:
       m_Items: []
+  - m_Id: 17102792500961280
+    m_Localized: "\u062A\u0646\u0642\u0644 \u0625\u0644\u0649 \u0627\u0644\u064A\u0633\u0627\u0631
+      \u0623\u0648 \u0627\u0644\u064A\u0645\u064A\u0646 \u0644\u0644\u062A\u062D\u0631\u0643.
+      \u0623\u0631\u0633\u0644 \u0644\u0625\u0644\u063A\u0627\u0621 \u0627\u0644\u062A\u062D\u062F\u064A\u062F."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17103729613332480
+    m_Localized: "\u0646\u0642\u0644\u062A \u201D{selectedLetter}\u201C {shouldMoveLeft:\u0642\u0628\u0644|\u0628\u0639\u062F}
+      \u201D{otherLetter}\u201C."
+    m_Metadata:
+      m_Items:
+      - rid: 2216566543976235776
+  - m_Id: 17143825305690112
+    m_Localized: "\u0627\u0644\u062D\u0631\u0648\u0641 \u0627\u0644\u0622\u0646 \u0647\u064A:
+      {letters}."
+    m_Metadata:
+      m_Items:
+      - rid: 2216566543976235776
   references:
     version: 2
     RefIds:
@@ -242,3 +250,6 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 45343066714112
+        - id: 1782851584552960
+        - id: 17103729613332480
+        - id: 17143825305690112

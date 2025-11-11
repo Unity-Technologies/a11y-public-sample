@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Accessibility;
-using UnityEngine.Localization.Settings;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -36,18 +35,6 @@ namespace Unity.Samples.ScreenReader
             }
 
             return base.GetValue();
-        }
-
-        public override string GetHint()
-        {
-            // if (Application.platform == RuntimePlatform.Android ||
-            //     Application.platform == RuntimePlatform.IPhonePlayer)
-            // {
-            //     // TODO: "Double tap to edit." should be localized.
-            //     LocalizationSettings.StringDatabase.GetLocalizedString("", "");
-            // }
-
-            return base.GetHint();
         }
 
 #if UNITY_6000_3_OR_NEWER

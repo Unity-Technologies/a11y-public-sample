@@ -1,10 +1,13 @@
 using System.Collections;
+using System.Globalization;
 using Unity.Samples.ScreenReader;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 using UnityEngine.Localization.Settings;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 
 namespace Unity.Samples.LetterSpell
 {
@@ -91,7 +94,7 @@ namespace Unity.Samples.LetterSpell
             var clue = gameplay.currentWord.clue;
 
             clueText.GetComponent<TextMeshProUGUI>().text = clue;
-            clueText.GetComponent<AccessibleElement>().value = clue;
+            clueText.GetComponent<AccessibleElement>().label = clue;
 
             ShowOrHideClue(Gameplay.State.Playing);
         }
@@ -124,23 +127,26 @@ namespace Unity.Samples.LetterSpell
             }
 
             // Generate new cards.
-            foreach (var letterCardModel in m_Model.letterCards)
+            foreach (var letterCard in m_Model.letterCards)
             {
+                var cultureInfo = LocalizationSettings.SelectedLocale?.Identifier.CultureInfo ?? CultureInfo.CurrentUICulture;
+                var letter = letterCard.letter.ToString().ToUpper(cultureInfo);
+
                 var card = Instantiate(letterCardTemplate, letterCardContainer);
-                card.GetComponentInChildren<TextMeshProUGUI>().text = letterCardModel.letter.ToString();
-                card.name = letterCardModel.letter.ToString();
+                card.GetComponentInChildren<TextMeshProUGUI>().text = letter;
+                card.name = letter;
                 card.GetComponent<LetterCard>().dropped += (oldIndex, newIndex) =>
                 {
                     gameplay.ReorderLetter(oldIndex, newIndex);
                 };
 
                 var element = card.AddComponent<AccessibleElement>();
-                element.label = letterCardModel.letter.ToString();
-                element.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT");
+                element.label = letter;
+                element.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT_UNSELECTED");
                 element.selected += OnLetterCardSelected;
             }
 
-            if (Gameplay.instance != null && Gameplay.instance.state != Gameplay.State.Stopped)
+            if (gameplay != null && gameplay.state != Gameplay.State.Stopped)
             {
                 AccessibilityManager.GetService<UGuiAccessibilityService>()?.RebuildHierarchy();
 
@@ -166,8 +172,7 @@ namespace Unity.Samples.LetterSpell
                 letterCard.SetDraggingVisuals(true);
 
                 var element = m_AccessibilityFocusedCard.GetComponent<AccessibleElement>();
-                // TODO: This should be localized.
-                element.hint = "Navigate left or right to move. Submit to unselect.";
+                element.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT_SELECTED");
                 element.SetNodeProperties();
             }
             else
@@ -179,7 +184,7 @@ namespace Unity.Samples.LetterSpell
                 letterCard.SetDraggingVisuals(false);
 
                 var element = m_AccessibilityFocusedCard.GetComponent<AccessibleElement>();
-                element.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT");
+                element.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT_UNSELECTED");
                 element.SetNodeProperties();
             }
 
@@ -210,7 +215,22 @@ namespace Unity.Samples.LetterSpell
                 const float announcementDelay = 1f;
 
                 yield return new WaitForSeconds(announcementDelay);
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "SUCCESS_ANNOUNCEMENT"));
+
+                var localizedString = new LocalizedString
+                {
+                    TableReference = "Game Text",
+                    TableEntryReference = "ANNOUNCEMENT_WORD_FOUND"
+                };
+
+                var word = new StringVariable
+                {
+                    Value = gameplay.currentWord.word
+                };
+
+                localizedString.Add("word", word);
+
+                localizedString.StringChanged += announcement =>
+                    AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);
 
                 const float imageDuration = 2f;
                 const float fadeOutDelay = imageDuration - announcementDelay - fadeDuration;
@@ -290,12 +310,34 @@ namespace Unity.Samples.LetterSpell
                 var otherSiblingIndex = shouldMoveLeft ? index + 1 : index - 1;
                 var otherSibling = draggable.transform.parent.GetChild(otherSiblingIndex);
 
-                // Make the letter uppercase to ensure correct phonetic pronunciation.
-                // TODO: This should be localized.
-                var announcement = $"Moved \"{draggable.name.ToUpper()}\" {(shouldMoveLeft ? "before" : "after")} \"{otherSibling.name.ToUpper()}\"";
-
                 // Announce that the card was moved.
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);
+                var localizedString = new LocalizedString
+                {
+                    TableReference = "Game Text",
+                    TableEntryReference = "ANNOUNCEMENT_CARD_MOVED"
+                };
+
+                var selectedLetter = new StringVariable
+                {
+                    Value = draggable.name
+                };
+
+                var moveLeft = new BoolVariable
+                {
+                    Value = shouldMoveLeft
+                };
+
+                var otherLetter = new StringVariable
+                {
+                    Value = otherSibling.name
+                };
+
+                localizedString.Add("selectedLetter", selectedLetter);
+                localizedString.Add("shouldMoveLeft", moveLeft);
+                localizedString.Add("otherLetter", otherLetter);
+
+                localizedString.StringChanged += announcement =>
+                    AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);
 
                 AssistiveSupport.activeHierarchy.MoveNode(element.node, element.node.parent,
                     element.transform.GetSiblingIndex());

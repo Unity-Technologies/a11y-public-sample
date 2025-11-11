@@ -160,10 +160,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 45343066714112
-    m_Localized: 'The game is over!
-
-      You found {orderedWordCount:plural:{}
-      word|{} words} out of {totalWordCount}'
+    m_Localized: The game is over!\n\nYou found {orderedWordCount:plural:{} word|{}
+      words} out of {totalWordCount}.
     m_Metadata:
       m_Items:
       - rid: 2216566543976235777
@@ -180,21 +178,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1782766347907072
-    m_Localized: Double tap to start moving.
+    m_Localized: Submit to select, then navigate left or right to move.
     m_Metadata:
       m_Items: []
   - m_Id: 1782851584552960
-    m_Localized: Bravo! You found the correct word.
+    m_Localized: 'You found the correct word: \"{word}\".'
     m_Metadata:
-      m_Items: []
-  - m_Id: 1783465118953472
-    m_Localized: Double tap to expand options.
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1783541123936256
-    m_Localized: Swipe left to navigate options. Double tap to close options.
-    m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 2216566543976235777
   - m_Id: 1784705534029824
     m_Localized: Off
     m_Metadata:
@@ -223,6 +214,20 @@ MonoBehaviour:
     m_Localized: Correct
     m_Metadata:
       m_Items: []
+  - m_Id: 17102792500961280
+    m_Localized: Navigate left or right to move. Submit to unselect.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17103729613332480
+    m_Localized: Moved \"{selectedLetter}\" {shouldMoveLeft:before|after} \"{otherLetter}\".
+    m_Metadata:
+      m_Items:
+      - rid: 2216566543976235777
+  - m_Id: 17143825305690112
+    m_Localized: 'The letters are now: {letters}.'
+    m_Metadata:
+      m_Items:
+      - rid: 2216566543976235777
   references:
     version: 2
     RefIds:
@@ -232,3 +237,6 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 45343066714112
+        - id: 1782851584552960
+        - id: 17103729613332480
+        - id: 17143825305690112

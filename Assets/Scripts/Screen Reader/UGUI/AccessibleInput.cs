@@ -2,7 +2,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.EventSystems;
-using UnityEngine.Localization.Settings;
 using UnityEngine.UI;
 
 namespace Unity.Samples.ScreenReader
@@ -51,13 +50,6 @@ namespace Unity.Samples.ScreenReader
                 m_PlaceholderText = (m_InputField.placeholder as Text)?.text;
                 UpdateValue(m_InputField.text);
             }
-
-            // if (Application.platform == RuntimePlatform.Android ||
-            //     Application.platform == RuntimePlatform.IPhonePlayer)
-            // {
-            //     // TODO: "Double tap to edit." should be localized.
-            //     hint = LocalizationSettings.StringDatabase.GetLocalizedString("", "");
-            // }
         }
 
         protected override void BindToControl()

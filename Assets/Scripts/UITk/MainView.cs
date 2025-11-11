@@ -269,26 +269,16 @@ namespace Unity.Samples.LetterSpell
                 }
 
                 m_AccessibilityFocusedCard?.Blur();
-
-                OnScreenDebug.Log("Before Acc Focus " + (m_AccessibilityFocusedCard != null ? m_AccessibilityFocusedCard.name : "null") +
-                                  " selected " + (m_LetterCardContainer.selectedCard != null ? m_LetterCardContainer.selectedCard.name : "null"));
-
                 m_AccessibilityFocusedCard = value;
 
                 // Focus on the card that has the accessibility focus if no card is currently selected.
                 // This can happen when the user is not dragging a card and just navigating the screen reader
                 // focus using swipe gestures.
                 // Note: we don't want to steal the focus if the user is dragging a card.
-                OnScreenDebug.Log("In Acc Focus " + (m_AccessibilityFocusedCard != null ? m_AccessibilityFocusedCard.name : "null") +
-                    " selected " + (m_LetterCardContainer.selectedCard != null ? m_LetterCardContainer.selectedCard.name : "null"));
-
                 if (m_AccessibilityFocusedCard != null && m_LetterCardContainer.selectedCard == null)
                 {
                     m_AccessibilityFocusedCard.Focus();
                 }
-
-                OnScreenDebug.Log("After Acc Focus " + (m_AccessibilityFocusedCard != null ? m_AccessibilityFocusedCard.name : "null") +
-                                  " selected " + (m_LetterCardContainer.selectedCard != null ? m_LetterCardContainer.selectedCard.name : "null"));
             }
         }
 
@@ -503,7 +493,6 @@ namespace Unity.Samples.LetterSpell
             gameplay.stateChanged.AddListener(OnGameStateChanged);
 
             AssistiveSupport.nodeFocusChanged += OnNodeFocusChanged;
-            OnScreenDebug.Log("MainWindow.OnEnable");
 
             AccessibilitySettings.boldTextStatusChanged += OnBoldTextStatusChanged;
             AccessibilitySettings.closedCaptioningStatusChanged += OnClosedCaptioningStatusChanged;
@@ -821,8 +810,6 @@ namespace Unity.Samples.LetterSpell
                 return;
             }
 
-            // OnScreenDebug.Log("MoveCard " + (shouldMoveLeft ? "left" : "right" + " count " + count));
-
             var updater = m_LetterCardContainer.selectedCard.panel.GetAccessibilityUpdater();
             var node = updater.GetNodeForVisualElement(m_LetterCardContainer.selectedCard);
 
@@ -907,21 +894,16 @@ namespace Unity.Samples.LetterSpell
         void ShowSplash()
         {
             m_StackView.index = 0;
-            OnScreenDebug.Log("Showing splash screen " + DateTime.Now);
 
             Invoke(nameof(DelayShowLogin), splashScreenDuration);
         }
 
         void DelayShowLogin()
         {
-            OnScreenDebug.Log("DelayShowLogin " + DateTime.Now);
-
             // m_SettingsButton.style.display = DisplayStyle.None;
             // m_Logo.style.display = DisplayStyle.Flex;
 
             m_StackView.activeView = m_LoginView;
-
-            OnScreenDebug.Log("Showing Login " + DateTime.Now);
         }
 
         void ShowLevelChoiceView()

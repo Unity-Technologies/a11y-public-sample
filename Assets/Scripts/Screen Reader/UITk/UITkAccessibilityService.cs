@@ -150,8 +150,6 @@ namespace Unity.Samples.ScreenReader
 
         public override void SetUp(Scene scene)
         {
-            // OnScreenDebug.Log("Start Setup UITkAccessibilityService for scene " + scene.name);
-
             var uiDocuments = Object.FindObjectsByType<UIDocument>(FindObjectsInactive.Include,
                 FindObjectsSortMode.None);
 
@@ -184,8 +182,6 @@ namespace Unity.Samples.ScreenReader
                     visualTrees.Add(uiDocument.rootVisualElement.parent);
                 }
             }
-
-            // OnScreenDebug.Log("Generating UITk Nodes Panel " + panels.Count);
 
             for (var i = 0; i < panels.Count; i++)
             {

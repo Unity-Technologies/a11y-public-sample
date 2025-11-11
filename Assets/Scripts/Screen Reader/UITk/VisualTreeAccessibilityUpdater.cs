@@ -81,8 +81,6 @@ namespace Unity.Samples.ScreenReader
 
                 if (m_VisualTree != null)
                 {
-                    // OnScreenDebug.Log("m_VisualTree.visualTree");
-
                     m_UpdateJob = m_VisualTree.schedule.Execute(Update).Every(100);
                 }
             }
@@ -96,13 +94,6 @@ namespace Unity.Samples.ScreenReader
         /// <param name="service"></param>
         public VisualTreeAccessibilityUpdater(IPanel panel, VisualElement visualTree, UITkAccessibilityService service)
         {
-            OnScreenDebug.Log("Create Updater for panel " + m_UpdaterInstanceId);
-
-            if (m_UpdaterInstanceId == 4)
-            {
-                Debug.Log("Break here " + panel);
-            }
-
             this.panel = panel;
             this.visualTree = visualTree;
             hierarchy = default;
@@ -119,15 +110,11 @@ namespace Unity.Samples.ScreenReader
         {
             DirtyRootFrame();
 
-            // OnScreenDebug.Log("OnGeometryChanged " + evt.target);
-
             OnVersionChanged(evt.target as VisualElement, VersionChangeType.Size | VersionChangeType.Transform);
         }
 
         void OnAttachmentToPanel(AttachToPanelEvent evt)
         {
-            // OnScreenDebug.Log("OnAttachmentToPanel " + evt.target);
-
             m_Version++;
         }
 
@@ -210,8 +197,6 @@ namespace Unity.Samples.ScreenReader
             {
                 m_RootNextInsertionIndex++;
             }
-
-            // OnScreenDebug.Log("InsertNode: " + node.id + " \"" + node.label + "\" Role:" + node.role + " State:" + node.state);
         }
 
         bool MoveNode(VisualElementAccessibilityHandler parentHandler, VisualElementAccessibilityHandler accHandler)
@@ -228,8 +213,6 @@ namespace Unity.Samples.ScreenReader
             {
                 m_RootNextInsertionIndex++;
             }
-
-            // OnScreenDebug.Log("MoveNode: " + accHandler.node.id + " \"" + accHandler.node.label + "\" At:" + index);
 
             return moved;
         }
@@ -277,8 +260,6 @@ namespace Unity.Samples.ScreenReader
             visualTree.UnregisterCallback<GeometryChangedEvent>(OnGeometryChanged);
             visualTree.UnregisterCallback<AttachToPanelEvent>(OnAttachmentToPanel);
             m_VisualTree = null;
-
-            // OnScreenDebug.Log("Dispose VisualTreeAccessibilityUpdater " + m_UpdaterInstanceId);
         }
 
         void OnDetachFromPanel(DetachFromPanelEvent evt)
@@ -462,15 +443,10 @@ namespace Unity.Samples.ScreenReader
 
         public void OnVersionChanged(VisualElement ve, VersionChangeType versionChangeType)
         {
-            // OnScreenDebug.Log("OnVersionChanged " + ve + " " + versionChangeType);
-
             if (ve != null && !OnVersionChangedInternal(ve, versionChangeType))
             {
-                OnScreenDebug.Log("Event ignore version changed");
                 return;
             }
-
-            // OnScreenDebug.Log("Finished version changed " + m_Version + " - " + m_UpdaterInstanceId);
 
             ++m_Version;
         }
@@ -583,7 +559,6 @@ namespace Unity.Samples.ScreenReader
                 // active state of all nodes.
                 if (currentModalElement != null || currentModalElement != modalElement)
                 {
-                    OnScreenDebug.Log("Updating active state from modality " + currentModalElement?.name);
                     UpdateActiveStateFromModalityRecursively(visualTree);
                 }
             }

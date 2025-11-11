@@ -72,8 +72,6 @@ namespace Unity.Samples.LetterSpell
                 cardListView.selectedCard = this;
 
                 accessible.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT_SELECTED");
-
-                OnScreenDebug.Log("Selected card: " + text);
             }
         }
 
@@ -110,11 +108,9 @@ namespace Unity.Samples.LetterSpell
                 if (!selected)
                 {
                     Select();
-                    OnScreenDebug.Log("Selected card: " + text);
                 }
                 else
                 {
-                    OnScreenDebug.Log("UnSelected card: " + text);
                     Unselect();
                 }
 
@@ -370,8 +366,6 @@ namespace Unity.Samples.LetterSpell
         {
             var oldIndex = parent.IndexOf(this);
 
-            Debug.Log($"Move {this} To Index {index}");
-
             if (index == parent.childCount - 1)
             {
                 PlaceInFront(parent[index]);
@@ -562,8 +556,6 @@ namespace Unity.Samples.LetterSpell
         {
             var i = 0;
 
-            // Debug.Log(" DoLayout()");
-
             var cc = childCount;
 
             foreach (var child in Children())
@@ -592,8 +584,6 @@ namespace Unity.Samples.LetterSpell
                 child.style.top = 0; // DON'T CENTER ANYMORE, (layout.height - cardSize) / 2;
                 i++;
             }
-
-            // Debug.Log("EndDoLayout()");
         }
 
         protected void RegisterCallbacksOnTarget()
@@ -627,7 +617,6 @@ namespace Unity.Samples.LetterSpell
                 }
 
                 m_SelectedCard = value;
-                OnScreenDebug.Log("ListView selected card: " + (m_SelectedCard != null ? m_SelectedCard.text : "null"));
 
                 if (m_SelectedCard != null)
                 {
@@ -640,7 +629,6 @@ namespace Unity.Samples.LetterSpell
         {
             m_Active = true;
             m_Start = e.localMousePosition;
-            // Debug.Log("Mouse Down");
         }
 
         void OnMouseMove(MouseMoveEvent e)
@@ -661,8 +649,6 @@ namespace Unity.Samples.LetterSpell
         {
             if (m_Dragging)
             {
-                // Debug.Log("Mouse Up " + swipeLeft);
-
                 if (m_SwipeLeft)
                 {
                     OnSwipeLeft();

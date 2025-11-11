@@ -20,8 +20,6 @@ namespace Unity.Samples.ScreenReader
                 evt.target = ownerElement;
                 ownerElement.SendEvent(evt);
 
-                OnScreenDebug.Log("Submit event sent to " + ownerElement.name);
-
                 return true;
             };
         }
@@ -46,14 +44,11 @@ namespace Unity.Samples.ScreenReader
 
         void OnNavigationSubmit(NavigationSubmitEvent evt)
         {
-            OnScreenDebug.Log("Submit event received by " + ownerElement.name);
             ScheduledCheckForOpenedPopupMenu();
         }
 
         void OnPointerDown(PointerDownEvent evt)
         {
-            OnScreenDebug.Log("Pointer Down event " + ownerElement.name);
-
             ScheduledCheckForOpenedPopupMenu();
         }
 
@@ -84,8 +79,6 @@ namespace Unity.Samples.ScreenReader
             var panelRootVisualElement = panel.visualTree;
             var popupMenu = panelRootVisualElement.Q(classes: GenericDropdownMenu.ussClassName);
 
-            OnScreenDebug.Log("Showing popup menu: " + (popupMenu != null));
-
             if (popupMenu != null)
             {
                 var popupAcc = popupMenu.GetOrCreateAccessibleProperties();
@@ -100,7 +93,6 @@ namespace Unity.Samples.ScreenReader
                 var items = popupMenu.Query(classes: GenericDropdownMenu.itemUssClassName).ToList();
                 var i = 0;
 
-                OnScreenDebug.Log("Item count : " + items.Count);
                 foreach (var item in items)
                 {
                    // if (item.GetAccessibleProperties() != null)

@@ -32,16 +32,11 @@ namespace Unity.Samples.ScreenReader
 
         void OnScrollValueChanged(ChangeEvent<float> evt)
         {
-            // OnScreenDebug.Log("ScrollView value changed " + evt.newValue);
-
             NotifyChange(VersionChangeType.Transform | VersionChangeType.Layout);
         }
 
         void OnGeometryChanged(GeometryChangedEvent evt)
         {
-            // OnScreenDebug.Log("Geometry Changed " + evt.target + " old: " + (evt.target as VisualElement).layout);
-            // OnScreenDebug.Log("Geometry Changed " + evt.target + " old: " + evt.oldRect + " new: " + evt.newRect);
-
             NotifyChange(VersionChangeType.Transform | VersionChangeType.Layout);
         }
     }

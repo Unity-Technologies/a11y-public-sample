@@ -21,7 +21,7 @@ namespace Unity.Samples.ScreenReader
 
         public override string GetLabel()
         {
-            return (ownerElement as Button)?.text;
+            return ownerElement is Button button ? button.text : base.GetLabel();
         }
 
         public override AccessibilityRole GetRole() => AccessibilityRole.Button;

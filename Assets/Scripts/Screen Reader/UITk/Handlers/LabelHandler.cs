@@ -9,7 +9,7 @@ namespace Unity.Samples.ScreenReader
     {
         public override string GetLabel()
         {
-            return (ownerElement as Label)?.text;
+            return ownerElement is Label lbl ? lbl.text : base.GetLabel();
         }
 
         public override AccessibilityRole GetRole() => AccessibilityRole.StaticText;

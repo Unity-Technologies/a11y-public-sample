@@ -71,21 +71,25 @@ namespace Unity.Samples.ScreenReader
         {
             get
             {
-                if (m_OwnerElement != null)
+                if (m_OwnerElement == null)
                 {
-                    // If the node is disabled or hidden, then it is set as inactive regardless of
-                    // AccessibilityProperties.isActive.
-                    if (IsElementVisible(m_OwnerElement))
-                    {
-                        var acc = m_OwnerElement.GetAccessibleProperties();
-
-                        return acc is not { m_IsActive: { defined: true } } || acc.active;
-                    }
+                    return false;
                 }
 
-                return false;
+                // If the node is disabled or hidden, then it is set as inactive regardless of
+                // AccessibilityProperties.isActive.
+                if (!IsElementVisible(m_OwnerElement))
+                {
+                    return false;
+                }
+
+                var acc = m_OwnerElement.GetAccessibleProperties();
+
+                return (acc is not { m_IsActive: { defined: true } } || acc.active) && IsActive();
             }
         }
+
+        public virtual bool IsActive() => true;
 
         public bool isIgnored
         {

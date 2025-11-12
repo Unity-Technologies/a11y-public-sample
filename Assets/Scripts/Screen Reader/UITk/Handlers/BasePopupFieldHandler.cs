@@ -1,4 +1,3 @@
-using Unity.Samples.LetterSpell;
 using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
@@ -14,8 +13,6 @@ namespace Unity.Samples.ScreenReader
         {
             selected += () =>
             {
-                ownerElement.schedule.Execute(CheckForOpenedPopupMenu).ExecuteLater(300);
-
                 using var evt = NavigationSubmitEvent.GetPooled();
                 evt.target = ownerElement;
                 ownerElement.SendEvent(evt);
@@ -98,9 +95,10 @@ namespace Unity.Samples.ScreenReader
                    // if (item.GetAccessibleProperties() != null)
                    //     continue;
 
-                    var itemAcc = item.GetOrCreateAccessibleProperties();
                     var itemLabel = item.Q<Label>();
+                    itemLabel.GetOrCreateAccessibleProperties().ignored = true;
 
+                    var itemAcc = item.GetOrCreateAccessibleProperties();
                     itemAcc.label = itemLabel != null ? itemLabel.text : $"Item {i}";
                     itemAcc.role = AccessibilityRole.Button;
                     itemAcc.state = item.hasCheckedPseudoState ? AccessibilityState.Selected : AccessibilityState.None;
@@ -112,8 +110,6 @@ namespace Unity.Samples.ScreenReader
 
                         return true;
                     };
-
-                    itemLabel.GetOrCreateAccessibleProperties().ignored = true;
 
                     i++;
                 }

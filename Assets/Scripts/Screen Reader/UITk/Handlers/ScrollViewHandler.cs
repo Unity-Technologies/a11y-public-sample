@@ -10,6 +10,10 @@ namespace Unity.Samples.ScreenReader
     {
 #if UNITY_6000_3_OR_NEWER
         public override AccessibilityRole GetRole() => AccessibilityRole.ScrollView;
+#else // UNITY_6000_3_OR_NEWER
+        public override bool IsActive() =>
+            Application.platform != RuntimePlatform.Android &&
+            Application.platform != RuntimePlatform.IPhonePlayer;
 #endif // UNITY_6000_3_OR_NEWER
 
         protected override void BindToElement(VisualElement ve)

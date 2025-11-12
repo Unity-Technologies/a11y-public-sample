@@ -10,31 +10,35 @@ namespace Unity.Samples.ScreenReader
     {
         public TextFieldFieldHandler()
         {
-            focused += focused =>
+            if (Application.platform == RuntimePlatform.OSXPlayer ||
+                Application.platform == RuntimePlatform.WindowsPlayer)
             {
-                var textField = ownerElement as TextField;
+                focused += focused =>
+                {
+                    var textField = ownerElement as TextField;
 
-                if (focused)
-                {
-                    textField?.Focus();
-                }
-                else
-                {
-                    textField?.Blur();
-                }
-            };
+                    if (focused)
+                    {
+                        textField?.Focus();
+                    }
+                    else
+                    {
+                        textField?.Blur();
+                    }
+                };
+            }
+        }
+
+        public override string GetLabel()
+        {
+            return ownerElement is TextField textField ? textField.label : base.GetLabel();
         }
 
         public override string GetValue()
         {
-            var textField = ownerElement as TextField;
-
-            if (string.IsNullOrEmpty(textField?.value))
-            {
-                return ownerElement is TextField tf ? tf.textEdition.placeholder : null;
-            }
-
-            return base.GetValue();
+            return ownerElement is TextField textField ?
+                string.IsNullOrEmpty(textField.value) ? textField.textEdition.placeholder : textField.value :
+                base.GetValue();
         }
 
 #if UNITY_6000_3_OR_NEWER

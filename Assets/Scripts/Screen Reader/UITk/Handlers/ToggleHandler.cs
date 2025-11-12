@@ -19,6 +19,11 @@ namespace Unity.Samples.ScreenReader
             };
         }
 
+        public override string GetLabel()
+        {
+            return ownerElement is Toggle toggle ? toggle.label : base.GetLabel();
+        }
+
         public override string GetValue() => "";
 
 #if UNITY_2023_3_OR_NEWER

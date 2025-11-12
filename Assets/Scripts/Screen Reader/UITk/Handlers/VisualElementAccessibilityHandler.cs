@@ -126,10 +126,8 @@ namespace Unity.Samples.ScreenReader
             }
         }
 
-        public virtual bool IsModal()
-        {
-            return ownerElement != null && ownerElement.ClassListContains(GenericDropdownMenu.ussClassName);
-        }
+        public virtual bool IsModal() => ownerElement != null &&
+            ownerElement.ClassListContains(GenericDropdownMenu.ussClassName);
 
         public string label
         {

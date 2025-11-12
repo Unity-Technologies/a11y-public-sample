@@ -151,7 +151,7 @@
                                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17616599150592)"/>
                             </Bindings>
                         </ui:Label>
-                        <ui:Slider high-value="1" name="settingsSoundEffectVolumne">
+                        <ui:Slider high-value="1" name="settingsSoundEffectVolume">
                             <Bindings>
                                 <ui:DataBinding property="value" data-source-path="soundEffectVolume" binding-mode="TwoWay"/>
                                 <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17717329555456)"/>

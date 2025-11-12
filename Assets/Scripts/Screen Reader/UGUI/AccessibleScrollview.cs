@@ -78,7 +78,7 @@ namespace Unity.Samples.ScreenReader
                 }
             }
 
-            var element = AccessibilityManager.GetService<UGuiAccessibilityService>()?.GetAccessibleElementForNode(accessibilityNode);
+            var element = UGuiAccessibilityManager.instance.GetAccessibleElementForNode(accessibilityNode);
 
             if (element == null)
             {

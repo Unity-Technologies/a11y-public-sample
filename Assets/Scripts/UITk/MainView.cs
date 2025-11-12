@@ -445,8 +445,7 @@ namespace Unity.Samples.LetterSpell
             m_InGameSettingsButton = root.Q<Button>("inGameSettingsButton");
             m_InGameSettingsButton.clicked += ShowSettings;
 
-            m_StackView.activeViewChanged += () =>
-                AccessibilityManager.GetService<UITkAccessibilityService>()?.RebuildHierarchy();
+            m_StackView.activeViewChanged += AccessibilityManager.RebuildHierarchy;
 
             // Initialize the values for the read-only settings.
             OnBoldTextStatusChanged(AccessibilitySettings.isBoldTextEnabled);
@@ -562,7 +561,7 @@ namespace Unity.Samples.LetterSpell
             }
 
             //m_AnswerLabel.text = gameplay.currentWord.word;
-            AccessibilityManager.GetService<UITkAccessibilityService>()?.RebuildHierarchy();
+            AccessibilityManager.RebuildHierarchy();
         }
 
         void ShowResults(int orderedWordCount, int totalWordCount)
@@ -614,7 +613,7 @@ namespace Unity.Samples.LetterSpell
             m_LetterCardContainer.canPlayCards = true;
             gameplay.StartGame();
 
-            AccessibilityManager.GetService<UITkAccessibilityService>()?.RebuildHierarchy();
+            AccessibilityManager.RebuildHierarchy();
             DelayStateLetters();
         }
 
@@ -759,8 +758,7 @@ namespace Unity.Samples.LetterSpell
                 return;
             }
 
-            var service = AccessibilityManager.GetService<UITkAccessibilityService>();
-            var element = service.GetVisualElementForNode(m_MainView.panel, node);
+            var element = UITkAccessibilityManager.instance?.GetVisualElementForNode(m_MainView.panel, node);
 
             accessibilityFocusedCard = element as UITkLetterCard;
 
@@ -810,7 +808,7 @@ namespace Unity.Samples.LetterSpell
                 return;
             }
 
-            var updater = m_LetterCardContainer.selectedCard.panel.GetAccessibilityUpdater();
+            var updater = UITkAccessibilityManager.instance?.accessiblityUpdater;
             var node = updater.GetNodeForVisualElement(m_LetterCardContainer.selectedCard);
 
             var selectedCardText = m_LetterCardContainer.selectedCard.text;

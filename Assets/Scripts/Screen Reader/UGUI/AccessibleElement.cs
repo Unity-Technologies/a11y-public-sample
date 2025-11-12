@@ -110,7 +110,7 @@ namespace Unity.Samples.ScreenReader
 
         void Awake()
         {
-            frameGetter = () => UGuiAccessibilityService.GetFrame(gameObject.transform as RectTransform);
+            frameGetter = () => UGuiAccessibilityManager.GetFrame(gameObject.transform as RectTransform);
         }
 
         void OnEnable()
@@ -682,7 +682,7 @@ namespace Unity.Samples.ScreenReader
                     {
                         // Go to the next sibling.
                         var sibling = siblings[++siblingIndex];
-                        var siblingElement = AccessibilityManager.GetService<UGuiAccessibilityService>()?.GetAccessibleElementForNode(sibling);
+                        var siblingElement = UGuiAccessibilityManager.instance.GetAccessibleElementForNode(sibling);
 
                         if (siblingElement == null)
                         {
@@ -720,7 +720,7 @@ namespace Unity.Samples.ScreenReader
                     {
                         // Go to the previous sibling.
                         var sibling = siblings[--siblingIndex];
-                        var siblingElement = AccessibilityManager.GetService<UGuiAccessibilityService>()?.GetAccessibleElementForNode(sibling);
+                        var siblingElement = UGuiAccessibilityManager.instance.GetAccessibleElementForNode(sibling);
 
                         if (siblingElement == null)
                         {
@@ -759,7 +759,7 @@ namespace Unity.Samples.ScreenReader
             foreach (var index in activeSiblingIndexes)
             {
                 var sibling = siblings[index];
-                var siblingElement = AccessibilityManager.GetService<UGuiAccessibilityService>()?.GetAccessibleElementForNode(sibling);
+                var siblingElement = UGuiAccessibilityManager.instance.GetAccessibleElementForNode(sibling);
 
                 if (siblingElement != null && siblingElement.IsVisibleInScrollView())
                 {

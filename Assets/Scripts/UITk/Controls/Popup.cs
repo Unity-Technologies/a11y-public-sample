@@ -97,7 +97,7 @@ namespace Unity.Samples.LetterSpell
             MoveChildrenToContentContainer();
             panel.visualTree.Add(m_Overlay);
 
-            var updater = panel.GetAccessibilityUpdater();
+            var updater = UITkAccessibilityManager.instance?.accessiblityUpdater;
             updater?.OnVersionChanged(panel.visualTree, VersionChangeType.Hierarchy);
         }
 
@@ -105,7 +105,7 @@ namespace Unity.Samples.LetterSpell
         {
             m_Overlay?.RemoveFromHierarchy();
 
-            var updater = panel?.GetAccessibilityUpdater();
+            var updater = UITkAccessibilityManager.instance?.accessiblityUpdater;
             updater?.OnVersionChanged(panel.visualTree, VersionChangeType.Hierarchy);
         }
 

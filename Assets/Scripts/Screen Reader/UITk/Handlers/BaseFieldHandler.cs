@@ -33,7 +33,7 @@ namespace Unity.Samples.ScreenReader
         {
             if (ownerElement is Toggle or RadioButton or Slider)
             {
-                var updater = ownerElement.panel.GetAccessibilityUpdater();
+                var updater = UITkAccessibilityManager.instance?.accessiblityUpdater;
                 updater?.UpdateNode(this);
             }
             else

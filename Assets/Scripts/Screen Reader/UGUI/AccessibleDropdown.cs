@@ -163,7 +163,7 @@ namespace Unity.Samples.ScreenReader
         {
             foreach (var option in m_Options)
             {
-                AccessibilityManager.GetService<UGuiAccessibilityService>()?.AddToHierarchy(option, parent);
+                UGuiAccessibilityManager.instance.AddToHierarchy(option, parent);
             }
         }
 
@@ -171,7 +171,7 @@ namespace Unity.Samples.ScreenReader
         {
             foreach (var option in m_Options)
             {
-                AccessibilityManager.GetService<UGuiAccessibilityService>()?.RemoveFromHierarchy(option);
+                UGuiAccessibilityManager.instance.RemoveFromHierarchy(option);
             }
         }
 

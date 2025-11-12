@@ -148,7 +148,7 @@ namespace Unity.Samples.LetterSpell
 
             if (gameplay != null && gameplay.state != Gameplay.State.Stopped)
             {
-                AccessibilityManager.GetService<UGuiAccessibilityService>()?.RebuildHierarchy();
+                AccessibilityManager.RebuildHierarchy();
 
                 Invoke(nameof(MoveAccessibilityFocusOnClue), 1f);
             }
@@ -167,7 +167,7 @@ namespace Unity.Samples.LetterSpell
 
                 // When a letter card is selected, deactivate all accessibility nodes except the ones corresponding to
                 // the letter cards to allow the selected card to be moved correctly.
-                AccessibilityManager.GetService<UGuiAccessibilityService>()?.ActivateOtherAccessibilityNodes(false, letterCardContainer);
+                UGuiAccessibilityManager.instance.ActivateOtherAccessibilityNodes(false, letterCardContainer);
 
                 letterCard.SetDraggingVisuals(true);
 
@@ -179,7 +179,7 @@ namespace Unity.Samples.LetterSpell
             {
                 m_AccessibilitySelectedCard = null;
 
-                AccessibilityManager.GetService<UGuiAccessibilityService>()?.ActivateOtherAccessibilityNodes(true, letterCardContainer);
+                UGuiAccessibilityManager.instance.ActivateOtherAccessibilityNodes(true, letterCardContainer);
 
                 letterCard.SetDraggingVisuals(false);
 
@@ -199,7 +199,7 @@ namespace Unity.Samples.LetterSpell
 
         public void OnWordReorderingCompleted()
         {
-            m_AccessibilitySelectedCard.SetDraggingVisuals(false);
+            m_AccessibilitySelectedCard?.SetDraggingVisuals(false);
             m_AccessibilitySelectedCard = null;
 
             StartCoroutine(DelayWordReorderingCompleted());
@@ -260,7 +260,7 @@ namespace Unity.Samples.LetterSpell
         {
             if (node != null)
             {
-                var element = AccessibilityManager.GetService<UGuiAccessibilityService>()?.GetAccessibleElementForNode(node);
+                var element = UGuiAccessibilityManager.instance.GetAccessibleElementForNode(node);
                 m_AccessibilityFocusedCard = element != null ? element.GetComponent<LetterCard>() : null;
                 MoveSelectedCard();
             }

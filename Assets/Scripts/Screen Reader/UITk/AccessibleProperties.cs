@@ -44,7 +44,7 @@ namespace Unity.Samples.ScreenReader
 
                 if (panel != null)
                 {
-                    var updater = panel.GetAccessibilityUpdater();
+                    var updater = UITkAccessibilityManager.instance?.accessiblityUpdater;
                     updater?.OnVersionChanged(element, VisualElementAccessibilityHandler.k_AccessibilityChange);
                 }
             }

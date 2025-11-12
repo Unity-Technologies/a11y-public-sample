@@ -104,7 +104,7 @@ namespace Unity.Samples.LetterSpell
             {
                 m_ButtonBar[i].SetCheckedPseudoState(i == value);
 
-                var updater = panel.GetAccessibilityUpdater();
+                var updater = UITkAccessibilityManager.instance?.accessiblityUpdater;
                 updater?.OnVersionChanged(m_ButtonBar[i], VisualElementAccessibilityHandler.k_AccessibilityChange);
             }
         }

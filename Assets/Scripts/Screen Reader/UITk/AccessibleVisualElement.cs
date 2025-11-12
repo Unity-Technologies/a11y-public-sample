@@ -46,13 +46,13 @@ namespace Unity.Samples.ScreenReader
 
         void OnAttachToPanel(AttachToPanelEvent evt)
         {
-            var updater = evt.destinationPanel.GetAccessibilityUpdater();
+            var updater = UITkAccessibilityManager.instance?.accessiblityUpdater;
             updater?.OnVersionChanged(parent ?? this, VersionChangeType.Hierarchy);
         }
 
         void OnDetachFromPanel(DetachFromPanelEvent evt)
         {
-            var updater = evt.originPanel?.GetAccessibilityUpdater();
+            var updater = UITkAccessibilityManager.instance?.accessiblityUpdater;
             updater?.OnVersionChanged(null, VersionChangeType.Hierarchy);
         }
     }

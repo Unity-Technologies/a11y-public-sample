@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 namespace Unity.Samples.LetterSpell
 {
     [UxmlElement]
-    public partial class StackView : VisualElement
+    public partial class  StackView : VisualElement
     {
         VisualElement m_ContentContainer;
         VisualElement m_ActiveView;

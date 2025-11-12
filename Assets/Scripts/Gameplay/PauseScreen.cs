@@ -28,7 +28,7 @@ namespace Unity.Samples.LetterSpell
         {
             // The pause screen is presented over the gameplay screen like a modal view, so all accessibility nodes
             // outside the pause screen should be deactivated while it is open.
-            AccessibilityManager.GetService<UGuiAccessibilityService>()?.ActivateOtherAccessibilityNodes(false, transform);
+            UGuiAccessibilityManager.instance?.ActivateOtherAccessibilityNodes(false, transform);
 
             // When the pause screen opens, move the accessibility focus to its status text (which is also the first
             // accessibility node on the pause screen).
@@ -41,7 +41,7 @@ namespace Unity.Samples.LetterSpell
 
         void OnDisable()
         {
-            AccessibilityManager.GetService<UGuiAccessibilityService>()?.ActivateOtherAccessibilityNodes(true, transform);
+            UGuiAccessibilityManager.instance?.ActivateOtherAccessibilityNodes(true, transform);
 
             dismissButton.GetComponent<AccessibleButton>().dismissed -= OnDismissed;
         }

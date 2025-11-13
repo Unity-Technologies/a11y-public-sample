@@ -663,11 +663,11 @@ namespace Unity.Samples.LetterSpell
                 m_LetterCardContainer.Add(card);
 
                 var cultureInfo = LocalizationSettings.SelectedLocale?.Identifier.CultureInfo ?? CultureInfo.CurrentUICulture;
-                var letter = letterCard.letter.ToString().ToUpper(cultureInfo);
+                var letter = letterCard.letter.ToString();
 
-                card.text = letter;
-                card.name = letter;
-                card.GetOrCreateAccessibleProperties().label = card.text;
+                card.text = letter.ToUpper(cultureInfo);
+                card.name = letter.ToUpper(cultureInfo);
+                card.GetOrCreateAccessibleProperties().label = letter;
                 card.dropped += (oldIndex, newIndex) =>
                 {
                     gameplay.ReorderLetter(oldIndex, newIndex);

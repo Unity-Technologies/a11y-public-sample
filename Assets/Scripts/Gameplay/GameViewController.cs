@@ -130,11 +130,11 @@ namespace Unity.Samples.LetterSpell
             foreach (var letterCard in m_Model.letterCards)
             {
                 var cultureInfo = LocalizationSettings.SelectedLocale?.Identifier.CultureInfo ?? CultureInfo.CurrentUICulture;
-                var letter = letterCard.letter.ToString().ToUpper(cultureInfo);
+                var letter = letterCard.letter.ToString();
 
                 var card = Instantiate(letterCardTemplate, letterCardContainer);
-                card.GetComponentInChildren<TextMeshProUGUI>().text = letter;
-                card.name = letter;
+                card.GetComponentInChildren<TextMeshProUGUI>().text = letter.ToUpper(cultureInfo);
+                card.name = letter.ToUpper(cultureInfo);
                 card.GetComponent<LetterCard>().dropped += (oldIndex, newIndex) =>
                 {
                     gameplay.ReorderLetter(oldIndex, newIndex);

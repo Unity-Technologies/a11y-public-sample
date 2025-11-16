@@ -9,20 +9,20 @@
                 </Bindings>
             </ui:Button>
         </ui:VisualElement>
-        <ui:ScrollView name="ScrollView" vertical-scroller-visibility="Hidden">
+        <ui:ScrollView name="settingsScrollView" vertical-scroller-visibility="Hidden">
             <ui:TextField placeholder-text="Search Options" name="settingsSearchField">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(2876929896448)"/>
                 </Bindings>
             </ui:TextField>
-            <ui:Label class="lsp-h2">
+            <ui:Label  name="gameplayHeader" class="lsp-h2">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3051354222592)"/>
                 </Bindings>
             </ui:Label>
             <ui:TextField label="Username" placeholder-text="Enter your name" name="settingsUserNameField">
                 <Bindings>
-                    <ui:DataBinding property="value" data-source-path="userName" binding-mode="TwoWay"/>
+                    <ui:DataBinding property="value" data-source-path="username" binding-mode="TwoWay"/>
                     <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3183403495424)"/>
                     <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(775025750016)"/>
                 </Bindings>
@@ -40,13 +40,13 @@
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17127719464960)"/>
                     </Bindings>
                 </ui:Label>
-                <ui:RadioButton label="3" name="settingsThreeWordsButton" value="true">
+                <ui:RadioButton label="Three" name="settingsThreeWordsButton" value="true">
                     <Bindings>
                         <ui:DataBinding property="value" data-source-path="isThreeWords" binding-mode="TwoWay"/>
                         <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17263564582912)"/>
                     </Bindings>
                 </ui:RadioButton>
-                <ui:RadioButton label="6" name="settingsSixWordsButton">
+                <ui:RadioButton label="Six" name="settingsSixWordsButton">
                     <Bindings>
                         <ui:DataBinding property="value" data-source-path="isSixWords" binding-mode="TwoWay"/>
                         <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17369965686784)"/>
@@ -55,7 +55,7 @@
             </ui:VisualElement>
             <ui:Toggle label="Show Spelling Clues" name="settingsShowSpellingClues" text="On">
                 <Bindings>
-                    <ui:DataBinding property="value" data-source-path="showsSpellingClues" binding-mode="TwoWay"/>
+                    <ui:DataBinding property="value" data-source-path="showSpellingClues" binding-mode="TwoWay"/>
                     <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17491977990144)"/>
                 </Bindings>
             </ui:Toggle>
@@ -64,12 +64,12 @@
                     <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(36785994493952)"/>
                 </Bindings>
             </UnityEngine.Localization.LanguageSelection>
-            <ui:Label class="settings-header-label lsp-h2">
+            <ui:Label name="audioHeader" class="settings-header-label lsp-h2">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17616599150592)"/>
                 </Bindings>
             </ui:Label>
-            <ui:Slider high-value="1" name="settingsSoundEffectVolumne">
+            <ui:Slider high-value="1" name="settingsSoundEffectVolume">
                 <Bindings>
                     <ui:DataBinding property="value" data-source-path="soundEffectVolume" binding-mode="TwoWay"/>
                     <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17717329555456)"/>
@@ -81,7 +81,7 @@
                     <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(17842659553280)"/>
                 </Bindings>
             </ui:Slider>
-            <ui:Label text="Appearance" class="settings-header-label lsp-h2">
+            <ui:Label name="appearanceHeader" text="Appearance" class="settings-header-label lsp-h2">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(18100730884096)"/>
                 </Bindings>
@@ -99,12 +99,12 @@
                     <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(19534851502080)"/>
                 </Bindings>
             </ui:Slider>
-            <ui:Label class="settings-header-label lsp-h2">
+            <ui:Label name="settingsHeader" class="settings-header-label lsp-h2">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(1468861612453888)"/>
                 </Bindings>
             </ui:Label>
-            <ui:VisualElement name="VisualElement" class="unity-base-field" style="flex-grow: 1;">
+            <ui:VisualElement class="unity-base-field" style="flex-grow: 1;">
                 <ui:Label class="unity-base-field__label">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(1469259735789568)"/>

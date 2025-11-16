@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Linq;
 using Unity.Properties;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 using Unity.Samples.ScreenReader;
 using UnityEditor;
+using UnityEngine.Localization.Settings;
 using Button = UnityEngine.UIElements.Button;
 
 namespace Unity.Samples.LetterSpell
@@ -154,6 +156,9 @@ namespace Unity.Samples.LetterSpell
 
             m_LetterLabel = new Label();
             m_LetterLabel.GetOrCreateAccessibleProperties().ignored = true;
+            
+            accessible.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT_UNSELECTED");
+            
             Add(m_LetterLabel);
 
             style.position = Position.Absolute;
@@ -161,8 +166,6 @@ namespace Unity.Samples.LetterSpell
             RegisterCallback<MouseDownEvent>(OnMouseDown);
             RegisterCallback<MouseMoveEvent>(OnMouseMove);
             RegisterCallback<MouseUpEvent>(OnMouseUp);
-            RegisterCallback<FocusInEvent>(OnFocusIn);
-            RegisterCallback<BlurEvent>(OnBlur);
             RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
             
             this.letter = letter;
@@ -173,8 +176,11 @@ namespace Unity.Samples.LetterSpell
             if (m_LetterLabel == null)
                 return;
             
-            m_LetterLabel.text = letter.ToString();
-            accessible.label = letter.ToString();
+            var cultureInfo = LocalizationSettings.SelectedLocale?.Identifier.CultureInfo ?? CultureInfo.CurrentUICulture;
+            var localizedText = letter.ToString();
+
+            m_LetterLabel.text = localizedText.ToUpper(cultureInfo);
+            accessible.label = localizedText;
         }
 
         /// <summary>
@@ -188,12 +194,8 @@ namespace Unity.Samples.LetterSpell
             if (cardView.selectedCard != this)
             {
                 cardView.selectedCard = this;
-
-                // Announce that the card has been selected.
-                // The announcement should only be done when the card is interactively selected via this method.
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(
-                    $"Card {letter} selected. Swipe Left or Right to move the card." +
-                    (focused ? "Or Double tap to unselect it." : ""));
+                
+                accessible.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT_SELECTED");
             }
         }
 
@@ -205,32 +207,15 @@ namespace Unity.Samples.LetterSpell
             if (cardView == null || !selected)
                 return;
 
-            // check whether we are focused or not
+            // Check whether the card is focused or not.
             cardView.selectedCard = null;
 
-            // Announce that the card has been deselected.
-            // The announcement should only be done when the card is interactively deselected via this method.
-            AssistiveSupport.notificationDispatcher.SendAnnouncement($"Card {letter} deselected." +
-                                                                     (focused ? "Double tap to select it." : ""));
+            accessible.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT_UNSELECTED");
         }
 
         void OnAttachToPanel(AttachToPanelEvent e)
         {
             cardView.DoLayout();
-        }
-
-        void OnFocusIn(FocusInEvent e)
-        {
-            AssistiveSupport.notificationDispatcher.SendAnnouncement(
-                $"Double tap to select Card {letter} and start moving.");
-            NotifyPropertyChanged(focusedProperty);
-            e.StopPropagation();
-        }
-
-        void OnBlur(BlurEvent e)
-        {
-            NotifyPropertyChanged(focusedProperty);
-            e.StopPropagation();
         }
 
         void UpdateStyleClasses()

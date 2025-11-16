@@ -3,6 +3,8 @@ using System.Linq;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.Accessibility;
+using UnityEngine.Localization;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 using UnityEngine.UIElements;
 
 namespace Unity.Samples.LetterSpell
@@ -392,8 +394,7 @@ namespace Unity.Samples.LetterSpell
         public void StartDragging(LetterCardViewItem card)
         {
             m_StartIndex = IndexOf(card);
-            // style.position = Position.Absolute;
-            card.PlaceInFront(this.Children().Last());
+            card.PlaceInFront(Children().Last());
             Insert(m_StartIndex, m_InsertionPlaceholder);
             ComputeInsertionIndex(card);
             DoLayout();
@@ -555,17 +556,48 @@ namespace Unity.Samples.LetterSpell
                 return false;
             }
 
-            // var accElement = draggable.transform.GetComponent<AccessibleElement>();
+            var selectedCardText = m_SelectedCard.letter.ToString();
 
             if (shouldMoveLeft ? MoveCardLeft(draggable, count) : MoveCardRight(draggable, count))
             {
                 var index = IndexOf(draggable);
                 var otherSiblingIndex = shouldMoveLeft ? index + count : index - count;
                 var otherSibling = this[otherSiblingIndex] as LetterCardViewItem;
-                var message = $"Moved {draggable.letter} {(shouldMoveLeft ? "before" : "after")} {otherSibling.letter}";
+                var otherCardText = otherSibling.letter.ToString();
 
                 // Announce that the card was moved.
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(message);
+                var localizedString = new LocalizedString
+                {
+                    TableReference = "Game Text",
+                    TableEntryReference = "ANNOUNCEMENT_CARD_MOVED"
+                };
+
+                var selectedLetter = new StringVariable
+                {
+                    Value = selectedCardText
+                };
+
+                var moveLeft = new BoolVariable
+                {
+                    Value = shouldMoveLeft
+                };
+
+                var otherLetter = new StringVariable
+                {
+                    Value = otherCardText
+                };
+
+                localizedString.Add("selectedLetter", selectedLetter);
+                localizedString.Add("shouldMoveLeft", moveLeft);
+                localizedString.Add("otherLetter", otherLetter);
+
+                // Give a bit of time for the layout change notification to be processed first so that the announcement
+                // is not interrupted by the focus change.
+                schedule.Execute(() =>
+                {
+                    localizedString.StringChanged += announcement =>
+                        AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);
+                }).ExecuteLater(200);
                 return true;
             }
 

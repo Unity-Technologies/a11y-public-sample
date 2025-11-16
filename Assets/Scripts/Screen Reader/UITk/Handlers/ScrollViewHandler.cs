@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Scripting;
 using UnityEngine.UIElements;
 
@@ -7,6 +8,14 @@ namespace Unity.Samples.ScreenReader
     [Preserve]
     public class ScrollViewHandler : VisualElementAccessibilityHandler
     {
+#if UNITY_6000_3_OR_NEWER
+        public override AccessibilityRole GetRole() => AccessibilityRole.ScrollView;
+#else // UNITY_6000_3_OR_NEWER
+        public override bool IsActive() =>
+            Application.platform != RuntimePlatform.Android &&
+            Application.platform != RuntimePlatform.IPhonePlayer;
+#endif // UNITY_6000_3_OR_NEWER
+
         protected override void BindToElement(VisualElement ve)
         {
             var scrollView = ve as ScrollView;
@@ -27,16 +36,11 @@ namespace Unity.Samples.ScreenReader
 
         void OnScrollValueChanged(ChangeEvent<float> evt)
         {
-            // OnScreenDebug.Log("ScrollView value changed " + evt.newValue);
-
             NotifyChange(VersionChangeType.Transform | VersionChangeType.Layout);
         }
 
         void OnGeometryChanged(GeometryChangedEvent evt)
         {
-            // OnScreenDebug.Log("Geometry Changed " + evt.target + " old: " + (evt.target as VisualElement).layout);
-            // OnScreenDebug.Log("Geometry Changed " + evt.target + " old: " + evt.oldRect + " new: " + evt.newRect);
-
             NotifyChange(VersionChangeType.Transform | VersionChangeType.Layout);
         }
     }

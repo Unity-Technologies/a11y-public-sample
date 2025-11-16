@@ -23,9 +23,6 @@ namespace Unity.Samples.ScreenReader
         Coroutine m_ActiveCoroutine;
         AccessibleElement[] m_Options;
 
-        const string k_DropdownClosedHint = "Double tap to expand options.";
-        const string k_DropdownOpenHint = "Swipe left to navigate options. Double tap to close options.";
-
         void Start()
         {
 #if UNITY_6000_3_OR_NEWER
@@ -50,8 +47,6 @@ namespace Unity.Samples.ScreenReader
             {
                 UpdateValue(m_Dropdown.value);
             }
-
-            hint = k_DropdownClosedHint;
         }
 
         protected override void BindToControl()
@@ -112,8 +107,6 @@ namespace Unity.Samples.ScreenReader
             yield return new WaitUntil(IsDropdownOpen);
             yield return new WaitForEndOfFrame();
 
-            hint = k_DropdownOpenHint;
-
 #if UNITY_6000_3_OR_NEWER
             state |= AccessibilityState.Expanded;
             SetNodeProperties();
@@ -132,8 +125,6 @@ namespace Unity.Samples.ScreenReader
         IEnumerator WaitForDropdownClose(AccessibilityNode parentNode)
         {
             yield return new WaitUntil(() => !IsDropdownOpen());
-
-            hint = k_DropdownClosedHint;
 
 #if UNITY_6000_3_OR_NEWER
             state &= ~AccessibilityState.Expanded;
@@ -172,7 +163,7 @@ namespace Unity.Samples.ScreenReader
         {
             foreach (var option in m_Options)
             {
-                AccessibilityManager.GetService<UGuiAccessibilityService>()?.AddToHierarchy(option, parent);
+                UGuiAccessibilityManager.instance.AddToHierarchy(option, parent);
             }
         }
 
@@ -180,7 +171,7 @@ namespace Unity.Samples.ScreenReader
         {
             foreach (var option in m_Options)
             {
-                AccessibilityManager.GetService<UGuiAccessibilityService>()?.RemoveFromHierarchy(option);
+                UGuiAccessibilityManager.instance.RemoveFromHierarchy(option);
             }
         }
 

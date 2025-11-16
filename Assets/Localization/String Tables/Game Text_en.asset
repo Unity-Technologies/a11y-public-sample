@@ -160,25 +160,74 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 45343066714112
-    m_Localized: 'The game is over!
-
-      You found {orderedWordCount} words out
-      of {totalWordCount}'
+    m_Localized: The game is over!\n\nYou found {orderedWordCount:plural:{} word|{}
+      words} out of {totalWordCount}.
     m_Metadata:
       m_Items:
       - rid: 2216566543976235777
   - m_Id: 1468861612453888
-    m_Localized: OS Settings (read-only)
+    m_Localized: System Settings (read-only)
     m_Metadata:
       m_Items: []
   - m_Id: 1469259735789568
     m_Localized: Closed Captions
     m_Metadata:
       m_Items: []
-  - m_Id: 1475968126578688
+  - m_Id: 1486964262072320
+    m_Localized: A fun spelling game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1782766347907072
+    m_Localized: Submit to select, then navigate left or right to move.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1782851584552960
+    m_Localized: 'You found the correct word: \"{word}\".'
+    m_Metadata:
+      m_Items:
+      - rid: 2216566543976235777
+  - m_Id: 1784705534029824
+    m_Localized: Off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1784705072656384
+    m_Localized: On
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1785195248381952
+    m_Localized: Clue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1785227762626560
+    m_Localized: Pause the game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1788997179437056
     m_Localized: Bold Text
     m_Metadata:
       m_Items: []
+  - m_Id: 1789109230268416
+    m_Localized: Font Scale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3064538126606336
+    m_Localized: Correct
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17102792500961280
+    m_Localized: Navigate left or right to move. Submit to unselect.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17103729613332480
+    m_Localized: Moved \"{selectedLetter}\" {shouldMoveLeft:before|after} \"{otherLetter}\".
+    m_Metadata:
+      m_Items:
+      - rid: 2216566543976235777
+  - m_Id: 17143825305690112
+    m_Localized: 'The letters are now: {letters}.'
+    m_Metadata:
+      m_Items:
+      - rid: 2216566543976235777
   references:
     version: 2
     RefIds:
@@ -188,3 +237,6 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 45343066714112
+        - id: 1782851584552960
+        - id: 17103729613332480
+        - id: 17143825305690112

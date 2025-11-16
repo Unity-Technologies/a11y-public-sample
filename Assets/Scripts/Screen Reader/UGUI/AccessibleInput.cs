@@ -50,8 +50,6 @@ namespace Unity.Samples.ScreenReader
                 m_PlaceholderText = (m_InputField.placeholder as Text)?.text;
                 UpdateValue(m_InputField.text);
             }
-
-            hint = "Double tap to edit.";
         }
 
         protected override void BindToControl()

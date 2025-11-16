@@ -78,12 +78,12 @@ namespace Unity.Samples.ScreenReader
                         break;
                     }
 
-                    if (type.IsGenericType && type.GetGenericTypeDefinition() == m_VisualElementGenericTypeDefinition)
+                    if (type is { IsGenericType: true } && type.GetGenericTypeDefinition() == m_VisualElementGenericTypeDefinition)
                     {
                         return true;
                     }
 
-                    type = type.BaseType;
+                    type = type?.BaseType;
                 }
 
                 return false;
@@ -93,10 +93,10 @@ namespace Unity.Samples.ScreenReader
             {
                 var type = element.GetType();
 
-                // Find the exact BaseField<> class type is
-                while (!(type.IsGenericType && type.GetGenericTypeDefinition() == m_VisualElementGenericTypeDefinition))
+                // Find the exact BaseField<> class type.
+                while (!(type is { IsGenericType: true } && type.GetGenericTypeDefinition() == m_VisualElementGenericTypeDefinition))
                 {
-                    type = type.BaseType;
+                    type = type?.BaseType;
                 }
 
                 var args = type.GetGenericArguments();
@@ -184,10 +184,14 @@ namespace Unity.Samples.ScreenReader
 
             RegisterFactory<Label, LabelHandler>();
             RegisterFactory<Button, ButtonHandler>();
-            RegisterGenericFactory(typeof(BaseField<>), typeof(BaseFieldHandler<>));
+            // RegisterGenericFactory(typeof(BaseField<>), typeof(BaseFieldHandler<>));
             RegisterGenericFactory(typeof(BaseSlider<>), typeof(BaseSliderHandler<>));
+            RegisterGenericFactory(typeof(BasePopupField<,>), typeof(BasePopupFieldHandler<,>));
             RegisterFactory<TextField, TextFieldFieldHandler>();
-            RegisterFactory<DropdownField, DropdownFieldHandler>();
+            RegisterFactory<Toggle, ToggleHandler>();
+            RegisterFactory<RadioButton, RadioButtonHandler>();
+
+            //RegisterFactory<DropdownField, DropdownFieldHandler>();
             RegisterFactory<ListView, ListViewHandler>();
             RegisterFactory<ScrollView, ScrollViewHandler>();
             RegisterFactory(new ListViewItemHandlerCreator());

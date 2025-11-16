@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Unity.Samples.ScreenReader
@@ -10,9 +11,10 @@ namespace Unity.Samples.ScreenReader
     /// </summary>
     [AddComponentMenu("Accessibility/Accessible Slider"), DisallowMultipleComponent]
     [ExecuteAlways]
-    public sealed class AccessibleSlider : AccessibleElement
+    public class AccessibleSlider : AccessibleElement
     {
-        Slider m_Slider;
+        protected Slider m_Slider;
+
         Text m_Text;
         TMP_Text m_TMPText;
 
@@ -49,6 +51,11 @@ namespace Unity.Samples.ScreenReader
 
                 incremented += OnIncremented;
                 decremented += OnDecremented;
+
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                {
+                    focused += OnSliderFocused;
+                }
             }
         }
 
@@ -60,10 +67,30 @@ namespace Unity.Samples.ScreenReader
 
                 incremented -= OnIncremented;
                 decremented -= OnDecremented;
+
+                if (Application.platform == RuntimePlatform.WindowsPlayer)
+                {
+                    focused -= OnSliderFocused;
+                }
             }
         }
 
-        void OnIncremented()
+        void OnSliderFocused(bool isFocused)
+        {
+            if (isFocused)
+            {
+                if (m_Slider != null && m_Slider.IsActive() && m_Slider.IsInteractable())
+                {
+                    m_Slider.Select();
+                }
+            }
+            else if (!EventSystem.current.alreadySelecting)
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+            }
+        }
+
+        protected virtual void OnIncremented()
         {
             if (m_Slider.IsActive() && m_Slider.IsInteractable())
             {
@@ -73,7 +100,7 @@ namespace Unity.Samples.ScreenReader
             }
         }
 
-        void OnDecremented()
+        protected virtual void OnDecremented()
         {
             if (m_Slider.IsActive() && m_Slider.IsInteractable())
             {
@@ -83,7 +110,7 @@ namespace Unity.Samples.ScreenReader
             }
         }
 
-        void UpdateValue(float newValue)
+        protected virtual void UpdateValue(float newValue)
         {
             value = $"{newValue:P0}";
             SetNodeProperties();

@@ -34,23 +34,10 @@ namespace Unity.Samples.ScreenReader
                     return;
                 }
 
-                DisconnectFromFocusChanged();
-                DisconnectFromSelected();
-                DisconnectFromIncremented();
-                DisconnectFromDecremented();
-                DisconnectFromScrolled();
-                DisconnectFromDismissed();
-
+                DisconnectFromNode();
                 m_Node = value;
-
                 SetNodeProperties();
-
-                ConnectToFocusChanged();
-                ConnectToSelected();
-                ConnectToIncremented();
-                ConnectToDecremented();
-                ConnectToScrolled();
-                ConnectToDismissed();
+                ConnectToNode();
             }
         }
 
@@ -83,7 +70,6 @@ namespace Unity.Samples.ScreenReader
         public event Action incremented;
         public event Action decremented;
 
-#if UNITY_6000_3_OR_NEWER
         event Func<AccessibilityScrollDirection, bool> m_Scrolled;
         public event Func<AccessibilityScrollDirection, bool> scrolled
         {
@@ -102,7 +88,6 @@ namespace Unity.Samples.ScreenReader
                 }
             }
         }
-#endif // UNITY_6000_3_OR_NEWER
 
         event Func<bool> m_Dismissed;
         public event Func<bool> dismissed
@@ -125,7 +110,7 @@ namespace Unity.Samples.ScreenReader
 
         void Awake()
         {
-            frameGetter = () => UGuiAccessibilityService.GetFrame(gameObject.transform as RectTransform);
+            frameGetter = () => UGuiAccessibilityManager.GetFrame(gameObject.transform as RectTransform);
         }
 
         void OnEnable()
@@ -175,6 +160,26 @@ namespace Unity.Samples.ScreenReader
 #endif // UNITY_6000_3_OR_NEWER
         }
 
+        void ConnectToNode()
+        {
+            ConnectToFocusChanged();
+            ConnectToSelected();
+            ConnectToIncremented();
+            ConnectToDecremented();
+            ConnectToScrolled();
+            ConnectToDismissed();
+        }
+
+        void DisconnectFromNode()
+        {
+            DisconnectFromFocusChanged();
+            DisconnectFromSelected();
+            DisconnectFromIncremented();
+            DisconnectFromDecremented();
+            DisconnectFromScrolled();
+            DisconnectFromDismissed();
+        }
+
         void ConnectToFocusChanged()
         {
             if (node == null)
@@ -184,6 +189,21 @@ namespace Unity.Samples.ScreenReader
 
             node.focusChanged -= InvokeFocused;
             node.focusChanged += InvokeFocused;
+        }
+
+        void DisconnectFromFocusChanged()
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            node.focusChanged -= InvokeFocused;
+        }
+
+        void InvokeFocused(AccessibilityNode accessibilityNode, bool isFocused)
+        {
+            focused?.Invoke(isFocused);
         }
 
         void ConnectToSelected()
@@ -204,6 +224,25 @@ namespace Unity.Samples.ScreenReader
 #endif // UNITY_6000_3_OR_NEWER
         }
 
+        void DisconnectFromSelected()
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+#if UNITY_6000_3_OR_NEWER
+            node.invoked -= InvokeSelected;
+#else // UNITY_6000_3_OR_NEWER
+            node.selected -= InvokeSelected;
+#endif // UNITY_6000_3_OR_NEWER
+        }
+
+        bool InvokeSelected()
+        {
+            return m_Selected?.Invoke() ?? false;
+        }
+
         void ConnectToIncremented()
         {
             if (node == null)
@@ -213,6 +252,21 @@ namespace Unity.Samples.ScreenReader
 
             node.incremented -= InvokeIncremented;
             node.incremented += InvokeIncremented;
+        }
+
+        void DisconnectFromIncremented()
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            node.incremented -= InvokeIncremented;
+        }
+
+        void InvokeIncremented()
+        {
+            incremented?.Invoke();
         }
 
         void ConnectToDecremented()
@@ -226,17 +280,49 @@ namespace Unity.Samples.ScreenReader
             node.decremented += InvokeDecremented;
         }
 
+        void DisconnectFromDecremented()
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+            node.decremented -= InvokeDecremented;
+        }
+
+        void InvokeDecremented()
+        {
+            decremented?.Invoke();
+        }
+
         void ConnectToScrolled()
         {
-#if UNITY_6000_3_OR_NEWER
             if (node == null || m_Scrolled == null)
             {
                 return;
             }
 
+#if UNITY_6000_3_OR_NEWER
             node.scrolled -= InvokeScrolled;
             node.scrolled += InvokeScrolled;
 #endif // UNITY_6000_3_OR_NEWER
+        }
+
+        void DisconnectFromScrolled()
+        {
+            if (node == null)
+            {
+                return;
+            }
+
+#if UNITY_6000_3_OR_NEWER
+            node.scrolled -= InvokeScrolled;
+#endif // UNITY_6000_3_OR_NEWER
+        }
+
+        bool InvokeScrolled(AccessibilityScrollDirection direction)
+        {
+            return m_Scrolled?.Invoke(direction) ?? false;
         }
 
         void ConnectToDismissed()
@@ -255,62 +341,6 @@ namespace Unity.Samples.ScreenReader
 #endif // UNITY_2023_3_OR_NEWER
         }
 
-        void DisconnectFromFocusChanged()
-        {
-            if (node == null)
-            {
-                return;
-            }
-
-            node.focusChanged -= InvokeFocused;
-        }
-
-        void DisconnectFromSelected()
-        {
-            if (node == null)
-            {
-                return;
-            }
-
-#if UNITY_6000_3_OR_NEWER
-            node.invoked -= InvokeSelected;
-#else // UNITY_6000_3_OR_NEWER
-            node.selected -= InvokeSelected;
-#endif // UNITY_6000_3_OR_NEWER
-        }
-
-        void DisconnectFromIncremented()
-        {
-            if (node == null)
-            {
-                return;
-            }
-
-            node.incremented -= InvokeIncremented;
-        }
-
-        void DisconnectFromDecremented()
-        {
-            if (node == null)
-            {
-                return;
-            }
-
-            node.decremented -= InvokeDecremented;
-        }
-
-        void DisconnectFromScrolled()
-        {
-            if (node == null)
-            {
-                return;
-            }
-
-#if UNITY_6000_3_OR_NEWER
-            node.scrolled -= InvokeScrolled;
-#endif // UNITY_6000_3_OR_NEWER
-        }
-
         void DisconnectFromDismissed()
         {
             if (node == null)
@@ -323,41 +353,9 @@ namespace Unity.Samples.ScreenReader
 #endif // UNITY_2023_3_OR_NEWER
         }
 
-        void InvokeFocused(AccessibilityNode accessibilityNode, bool isFocused)
-        {
-            focused?.Invoke(isFocused);
-        }
-
-        bool InvokeSelected()
-        {
-            var success = m_Selected != null && m_Selected.Invoke();
-
-            node.value = value;
-            node.state = state;
-
-            return success;
-        }
-
-        internal void InvokeIncremented()
-        {
-            incremented?.Invoke();
-        }
-
-        internal void InvokeDecremented()
-        {
-            decremented?.Invoke();
-        }
-
-#if UNITY_6000_3_OR_NEWER
-        bool InvokeScrolled(AccessibilityScrollDirection direction)
-        {
-            return m_Scrolled != null && m_Scrolled.Invoke(direction);
-        }
-#endif // UNITY_6000_3_OR_NEWER
-
         bool InvokeDismissed()
         {
-            return m_Dismissed != null && m_Dismissed.Invoke();
+            return m_Dismissed?.Invoke() ?? false;
         }
 
         public void SetNodeProperties()
@@ -684,7 +682,7 @@ namespace Unity.Samples.ScreenReader
                     {
                         // Go to the next sibling.
                         var sibling = siblings[++siblingIndex];
-                        var siblingElement = AccessibilityManager.GetService<UGuiAccessibilityService>()?.GetAccessibleElementForNode(sibling);
+                        var siblingElement = UGuiAccessibilityManager.instance.GetAccessibleElementForNode(sibling);
 
                         if (siblingElement == null)
                         {
@@ -722,7 +720,7 @@ namespace Unity.Samples.ScreenReader
                     {
                         // Go to the previous sibling.
                         var sibling = siblings[--siblingIndex];
-                        var siblingElement = AccessibilityManager.GetService<UGuiAccessibilityService>()?.GetAccessibleElementForNode(sibling);
+                        var siblingElement = UGuiAccessibilityManager.instance.GetAccessibleElementForNode(sibling);
 
                         if (siblingElement == null)
                         {
@@ -761,7 +759,7 @@ namespace Unity.Samples.ScreenReader
             foreach (var index in activeSiblingIndexes)
             {
                 var sibling = siblings[index];
-                var siblingElement = AccessibilityManager.GetService<UGuiAccessibilityService>()?.GetAccessibleElementForNode(sibling);
+                var siblingElement = UGuiAccessibilityManager.instance.GetAccessibleElementForNode(sibling);
 
                 if (siblingElement != null && siblingElement.IsVisibleInScrollView())
                 {

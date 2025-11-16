@@ -72,14 +72,8 @@ namespace Unity.Samples.LetterSpell
 
         PopupOverlay m_Overlay;
 
-        ClosePolicy m_ClosePolicy = ClosePolicy.CloseOnPressOutside | ClosePolicy.CloseOnEscape;
-
         [UxmlAttribute, CreateProperty]
-        public ClosePolicy closePolicy
-        {
-            get => m_ClosePolicy;
-            set => m_ClosePolicy = value;
-        }
+        public ClosePolicy closePolicy { get; set; } = ClosePolicy.CloseOnPressOutside | ClosePolicy.CloseOnEscape;
 
         public Popup()
         {
@@ -99,14 +93,16 @@ namespace Unity.Samples.LetterSpell
         {
             MoveChildrenToContentContainer();
             panel.visualTree.Add(m_Overlay);
-            var updater = panel.GetAccessibilityUpdater();
+
+            var updater = UITkAccessibilityManager.instance?.accessiblityUpdater;
             updater?.OnVersionChanged(panel.visualTree, VersionChangeType.Hierarchy);
         }
 
         public void Close()
         {
             m_Overlay?.RemoveFromHierarchy();
-            var updater = panel?.GetAccessibilityUpdater();
+
+            var updater = UITkAccessibilityManager.instance?.accessiblityUpdater;
             updater?.OnVersionChanged(panel.visualTree, VersionChangeType.Hierarchy);
         }
 

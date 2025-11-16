@@ -32,11 +32,11 @@ namespace UnityEngine.Localization
             var element = context.targetElement;
             var result = GetLocalizedString();
             var resultArray = result.Split(separator, System.StringSplitOptions.RemoveEmptyEntries).ToList();
+            var index = -1;
 
-            int index = -1;
-            if (element is DropdownField)
+            if (element is DropdownField dropdownField)
             {
-                index = ((DropdownField)element).index;
+                index = dropdownField.index;
             }
 
             if (ConverterGroups.TrySetValueGlobal(ref element, context.bindingId, resultArray, out var errorCode))

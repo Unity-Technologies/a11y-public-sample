@@ -32,12 +32,12 @@ namespace Unity.Samples.LetterSpell
         /// The player's username.
         /// </summary>
         [CreateProperty]
-        public string userName
+        public string username
         {
             get => PlayerPrefs.GetString(k_UsernamePref);
             set
             {
-                if (userName == value)
+                if (username == value)
                 {
                     return;
                 }
@@ -110,12 +110,12 @@ namespace Unity.Samples.LetterSpell
         /// Indicates whether spelling clues are shown during gameplay.
         /// </summary>
         [CreateProperty]
-        public bool showsSpellingClues
+        public bool showSpellingClues
         {
             get => PlayerPrefs.GetInt(k_CluePref, 0) == 1;
             set
             {
-                if (showsSpellingClues == value)
+                if (showSpellingClues == value)
                 {
                     return;
                 }
@@ -228,7 +228,7 @@ namespace Unity.Samples.LetterSpell
         /// Notifies that a property has changed.
         /// </summary>
         /// <param name="property"></param>
-        void Notify([CallerMemberName] string property = "")
+        internal void Notify([CallerMemberName] string property = "")
         {
             propertyChanged?.Invoke(this, new BindablePropertyChangedEventArgs(property));
         }

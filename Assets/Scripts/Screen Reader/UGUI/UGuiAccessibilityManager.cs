@@ -1,19 +1,21 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Accessibility;
+using UnityEngine.Pool;
 using Object = UnityEngine.Object;
 
 namespace Unity.Samples.ScreenReader
 {
     /// <summary>
     /// This class is added to the scene in order to detect the screen reader being turned on/off and automatically
-    /// convert the GUI from the game object hierarchy into the accessibility hierarchy (data model) that the screen
+    /// convert the UGui hierarchy of game objects into the accessibility hierarchy (data model) that the screen
     /// reader needs.
     /// The accessibility hierarchy order reflects the order of the game object hierarchy.
     /// </summary>
-    public class UGuiAccessibilityService : AccessibilityService
+    public class UGuiAccessibilityManager : AccessibilityManager
     {
         /// <summary>
         /// Utility struct to help translate the game object hierarchy into the accessibility hierarchy.
@@ -23,6 +25,11 @@ namespace Unity.Samples.ScreenReader
             public Transform transform;
             public AccessibilityNode node;
         }
+        
+        /// <summary>
+        /// Static instance of the UGuiAccessibilityManager in the scene.
+        /// </summary>
+        public new static UGuiAccessibilityManager instance => AccessibilityManager.instance as UGuiAccessibilityManager;
 
         /// <summary>
         /// Mapping from the AccessibilityNode from the accessibility hierarchy to the MonoBehavior instance it was
@@ -30,14 +37,7 @@ namespace Unity.Samples.ScreenReader
         /// positions, for example.
         /// </summary>
         Dictionary<AccessibilityNode, AccessibleElement> m_NodeToElement = new();
-
-        /// <summary>
-        /// Constructor for the UGuiAccessibleSystem class.
-        /// </summary>
-        public UGuiAccessibilityService() : base("UGui", 90)
-        {
-        }
-
+        
         public AccessibleElement GetAccessibleElementForNode(AccessibilityNode node)
         {
             return m_NodeToElement.GetValueOrDefault(node);
@@ -160,9 +160,15 @@ namespace Unity.Samples.ScreenReader
             hierarchy.RemoveNode(element.node, removeChildren);
         }
 
-        public override void SetUp(Scene activeScene)
+        protected override void UpdateManager()
         {
-            var components = Object.FindObjectsByType<AccessibleElement>(FindObjectsInactive.Include,
+        }
+        
+        protected override void GenerateHierarchy(Scene scene)
+        {
+            m_NodeToElement.Clear();
+            
+            var components = Object.FindObjectsByType<AccessibleElement>(FindObjectsInactive.Include, 
                 FindObjectsSortMode.None);
 
             if (components == null || components.Length == 0)
@@ -178,7 +184,7 @@ namespace Unity.Samples.ScreenReader
             // using the screen reader.
             foreach (var component in components)
             {
-                if (component.gameObject.scene != activeScene)
+                if (component.gameObject.scene != scene)
                 {
                     continue;
                 }
@@ -273,11 +279,6 @@ namespace Unity.Samples.ScreenReader
                     Traverse(child);
                 }
             }
-        }
-
-        public override void CleanUp()
-        {
-            m_NodeToElement.Clear();
         }
     }
 }

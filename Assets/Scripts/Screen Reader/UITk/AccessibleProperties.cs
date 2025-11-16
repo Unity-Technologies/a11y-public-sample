@@ -44,7 +44,7 @@ namespace Unity.Samples.ScreenReader
 
                 if (panel != null)
                 {
-                    var updater = panel.GetAccessibilityUpdater();
+                    var updater = UITkAccessibilityManager.instance?.accessiblityUpdater;
                     updater?.OnVersionChanged(element, VisualElementAccessibilityHandler.k_AccessibilityChange);
                 }
             }
@@ -53,6 +53,7 @@ namespace Unity.Samples.ScreenReader
         internal Value<bool> m_IsActive = new(true);
         internal Value<string> m_Label;
         internal Value<AccessibilityRole> m_Role;
+        internal Value<AccessibilityState> m_State;
         internal Value<bool> m_Ignored;
         internal Value<bool> m_Modal;
         internal Value<string> m_Value;
@@ -97,6 +98,13 @@ namespace Unity.Samples.ScreenReader
         }
 
         [UxmlAttribute, CreateProperty]
+        public AccessibilityState state
+        {
+            get => m_State.Get();
+            set => m_State.Set(this, value);
+        }
+
+        [UxmlAttribute, CreateProperty]
         public string value
         {
             get => m_Value.Get();
@@ -117,9 +125,21 @@ namespace Unity.Samples.ScreenReader
             set => m_AllowsDirectInteraction.Set(this, value);
         }
 
+        public event Action<bool> focused;
         public event Func<bool> selected;
-        public Action incremented;
-        public Action decremented;
+        public event Action incremented;
+        public event Action decremented;
+        public event Func<AccessibilityScrollDirection, bool> scrolled;
+        public event Func<bool> dismissed;
+
+        public bool selectable => selected != null;
+        public bool scrollable => scrolled != null;
+        public bool dismissable => dismissed != null;
+
+        internal void InvokeFocused(AccessibilityNode accessibilityNode, bool isFocused)
+        {
+            focused?.Invoke(isFocused);
+        }
 
         internal bool InvokeSelected()
         {
@@ -135,15 +155,25 @@ namespace Unity.Samples.ScreenReader
         {
             decremented?.Invoke();
         }
+
+        internal bool InvokeScrolled(AccessibilityScrollDirection direction)
+        {
+            return scrolled?.Invoke(direction) ?? false;
+        }
+
+        internal bool InvokeDismissed()
+        {
+            return dismissed?.Invoke() ?? false;
+        }
     }
 
     public static class AccessibilityVisualElementExtensions
     {
-        static Dictionary<VisualElement, AccessibleProperties> m_AttachedAccessibleProperties = new();
+        static Dictionary<VisualElement, AccessibleProperties> s_AttachedAccessibleProperties = new();
 
         static AccessibleProperties GetAttachedAccessibleProperties(VisualElement ve)
         {
-            return m_AttachedAccessibleProperties.GetValueOrDefault(ve);
+            return s_AttachedAccessibleProperties.GetValueOrDefault(ve);
         }
 
         static AccessibleProperties AttachAccessibleProperties(VisualElement ve)
@@ -151,7 +181,7 @@ namespace Unity.Samples.ScreenReader
             var accessible = new AccessibleProperties();
             accessible.owner = ve;
 
-            m_AttachedAccessibleProperties[ve] = accessible;
+            s_AttachedAccessibleProperties[ve] = accessible;
 
             return accessible;
         }

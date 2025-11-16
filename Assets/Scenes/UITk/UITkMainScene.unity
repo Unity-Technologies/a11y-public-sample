@@ -330,7 +330,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5012405393f7e415e88d313458d31a4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Unity.Samples.LetterSpell.Gameplay
-  wordDatabase: {fileID: 5022602860645237092, guid: 622030c59d5b7447c9676d0e8669dfb8, type: 3}
   currentWordIndexChanged:
     m_PersistentCalls:
       m_Calls:
@@ -385,7 +384,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66a490018701b4695b76ee10a2adfc51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Unity.Samples.LetterSpell.MainView
-  splashScreenDuration: 2000
   gameplay: {fileID: 1705503797}
 --- !u!114 &1705503799
 MonoBehaviour:

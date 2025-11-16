@@ -8,14 +8,12 @@ namespace Unity.Samples.ScreenReader
     {
         public override string GetLabel()
         {
-            var field = ownerElement as BaseField<TValueType>;
-            return field?.label;
+            return (ownerElement as BaseField<TValueType>)?.label;
         }
 
         public override string GetValue()
         {
-            var field = ownerElement as BaseField<TValueType>;
-            return "" + field.value;
+            return ownerElement is BaseField<TValueType> field ? $"{field.value}" : "";
         }
 
         protected override void BindToElement(VisualElement ve)
@@ -33,8 +31,15 @@ namespace Unity.Samples.ScreenReader
 
         void OnValueChanged(ChangeEvent<TValueType> e)
         {
-            EnsureLabelIsNotAccessible();
-            NotifyChange();
+            if (ownerElement is Toggle or RadioButton or Slider)
+            {
+                var updater = UITkAccessibilityManager.instance?.accessiblityUpdater;
+                updater?.UpdateNode(this);
+            }
+            else
+            {
+                NotifyChange();
+            }
         }
 
         void EnsureLabelIsNotAccessible()

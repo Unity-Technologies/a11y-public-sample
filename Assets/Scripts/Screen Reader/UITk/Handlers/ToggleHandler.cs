@@ -5,9 +5,9 @@ using UnityEngine.UIElements;
 namespace Unity.Samples.ScreenReader
 {
     [Preserve]
-    class ButtonHandler : VisualElementAccessibilityHandler
+    class ToggleHandler : BaseFieldHandler<bool>
     {
-        public ButtonHandler()
+        public ToggleHandler()
         {
             selected += () =>
             {
@@ -21,12 +21,16 @@ namespace Unity.Samples.ScreenReader
 
         public override string GetLabel()
         {
-            return ownerElement is Button button ? button.text : base.GetLabel();
+            return ownerElement is Toggle toggle ? toggle.label : base.GetLabel();
         }
 
-        public override AccessibilityRole GetRole() => AccessibilityRole.Button;
+        public override string GetValue() => "";
 
-        public override AccessibilityState GetState() => ownerElement is Button { hasCheckedPseudoState: true }
+#if UNITY_2023_3_OR_NEWER
+        public override AccessibilityRole GetRole() => AccessibilityRole.Toggle;
+#endif // UNITY_2023_3_OR_NEWER
+
+        public override AccessibilityState GetState() => ownerElement is Toggle { value: true }
             ? AccessibilityState.Selected
             : AccessibilityState.None;
     }

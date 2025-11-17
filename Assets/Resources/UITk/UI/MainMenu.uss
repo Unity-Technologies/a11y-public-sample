@@ -6,4 +6,5 @@
 }
 
 .choice-button {
+    color: var(--unity-colors-button-color);
 }

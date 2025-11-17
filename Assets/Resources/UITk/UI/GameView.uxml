@@ -6,7 +6,11 @@
             <ui:Label text="#clue" name="clueLabel" class="lsp-h1" style="-unity-text-align: middle-center;"/>
             <ui:VisualElement name="successPill" class="lsp-pill">
                 <ui:VisualElement name="successPillCheckmark"/>
-                <ui:Label text="Correct" class="success-pill__label"/>
+                <ui:Label text="Correct" class="success-pill__label">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3064538126606336)"/>
+                    </Bindings>
+                </ui:Label>
             </ui:VisualElement>
         </ui:VisualElement>
         <Unity.Samples.LetterSpell.LetterCardView name="letterCardView" style="flex-grow: 1;"/>

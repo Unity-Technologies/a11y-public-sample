@@ -163,9 +163,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 45343066714112
     m_Localized: "\u0627\u0646\u062A\u0647\u062A \u0627\u0644\u0644\u0639\u0628\u0629!\\n\\n\u0644\u0642\u062F
-      \u0648\u062C\u062F\u062A {orderedWordCount:plural:{} \u0643\u0644\u0645\u0629
-      |{} \u0643\u0644\u0645\u0627\u062A} \u0645\u0646 \u0625\u062C\u0645\u0627\u0644\u064A
-      {totalWordCount}"
+      \u0648\u062C\u062F\u062A {orderedWordCount} \u0643\u0644\u0645\u0627\u062A
+      \u0645\u0646 \u0625\u062C\u0645\u0627\u0644\u064A {totalWordCount}"
     m_Metadata:
       m_Items:
       - rid: 2216566543976235776

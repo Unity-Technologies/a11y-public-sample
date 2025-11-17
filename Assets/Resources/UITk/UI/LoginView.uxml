@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/Resources/UITk/UI/LoginView.uss?fileID=7433441132597879392&amp;guid=d15e33b7f758a47be978203fb8bd9ec3&amp;type=3#LoginView"/>
     <ui:VisualElement name="root" style="flex-grow: 1; align-items: center; justify-content: center;">
         <ui:VisualElement name="logo" class="lsp-logo"/>
-        <ui:TextField placeholder-text="Enter your name" name="userNameField" label="What is your name?" style="min-width: 252px; width: 949px;">
+        <ui:TextField placeholder-text="Enter your name" name="userNameField" label="What is your name?" language-direction="LTR" style="min-width: 252px; width: 949px;">
             <Bindings>
                 <ui:DataBinding property="value" data-source-path="username" binding-mode="TwoWay"/>
                 <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(775025750016)"/>

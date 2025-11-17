@@ -15,12 +15,12 @@
                     <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(2876929896448)"/>
                 </Bindings>
             </ui:TextField>
-            <ui:Label  name="gameplayHeader" class="lsp-h2">
+            <ui:Label name="gameplayHeader" class="lsp-h2">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3051354222592)"/>
                 </Bindings>
             </ui:Label>
-            <ui:TextField label="Username" placeholder-text="Enter your name" name="settingsUserNameField">
+            <ui:TextField label="Username" placeholder-text="Enter your name" name="settingsUserNameField" language-direction="LTR">
                 <Bindings>
                     <ui:DataBinding property="value" data-source-path="username" binding-mode="TwoWay"/>
                     <UnityEngine.Localization.LocalizedString property="label" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(3183403495424)"/>
@@ -119,7 +119,7 @@
             <ui:VisualElement class="unity-base-field" style="flex-grow: 1;">
                 <ui:Label text="Bold Text" class="unity-base-field__label">
                     <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(1475968126578688)"/>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(1788997179437056)"/>
                     </Bindings>
                 </ui:Label>
                 <ui:Label text="On" name="boldTextLabel">
@@ -131,7 +131,7 @@
             <ui:VisualElement class="unity-base-field" style="flex-grow: 1;">
                 <ui:Label class="unity-base-field__label">
                     <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(1476009310449664)"/>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(1789109230268416)"/>
                     </Bindings>
                 </ui:Label>
                 <ui:Label text="1.0" name="fontScaleLabel">

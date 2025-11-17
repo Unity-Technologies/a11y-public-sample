@@ -4,6 +4,7 @@
 :root {
     font-size: var(--lsp-font-size-md);
     color: var(--lsp-primary-text-color);
+    -unity-text-generator: advanced;
 }
 
 /* BaseField */

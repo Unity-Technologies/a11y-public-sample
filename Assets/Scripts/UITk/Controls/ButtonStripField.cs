@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Unity.Properties;
 using Unity.Samples.ScreenReader;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Unity.Samples.LetterSpell

@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:lsp="Unity.Samples.LetterSpell" xmlns:sr="Unity.Samples.ScreenReader" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/UITk/UI/SplashScreen.uss?fileID=7433441132597879392&amp;guid=a9755bc03de5f448cb7ae43e99ccbcb8&amp;type=3#SplashScreen"/>
+    <ui:VisualElement name="root" style="flex-grow: 1;">
+        <ui:VisualElement name="background" class="lsp-splashscreen-bg" style="flex-grow: 1;"/>
+        <ui:Label text="A fun spelling game" name="subTitle" class="lsp-splashscreen-subtitle"/>
+    </ui:VisualElement>
+</ui:UXML>

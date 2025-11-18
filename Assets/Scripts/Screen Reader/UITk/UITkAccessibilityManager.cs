@@ -100,6 +100,11 @@ namespace Unity.Samples.ScreenReader
             }
         }
         
+        public AccessibilityNode GetNodeForVisualElement(VisualElement element)
+        {
+            return m_AccessibilityUpdater.GetNodeForVisualElement(element);
+        }
+        
         public VisualElement GetVisualElementForNode(AccessibilityNode node)
         {
             return m_AccessibilityUpdater.GetVisualElementForNode(node);

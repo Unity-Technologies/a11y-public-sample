@@ -1,0 +1,10 @@
+:root {
+}
+
+#choiceButtonContainer {
+    flex-direction: row;
+}
+
+.choice-button {
+    color: var(--unity-colors-button-color);
+}

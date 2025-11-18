@@ -1,0 +1,22 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xmlns:lsp="Unity.Samples.LetterSpell" xmlns:sr="Unity.Samples.ScreenReader" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/UITk/UI/PopupWindow.uss?fileID=7433441132597879392&amp;guid=6f40ef823557b4df8b9928233720a4ad&amp;type=3#PopupWindow"/>
+    <ui:VisualElement name="root" class="lsp-popup-content" style="flex-grow: 1;">
+        <ui:Label text="Game Paused">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(76489584640)"/>
+            </Bindings>
+        </ui:Label>
+        <ui:VisualElement name="exitPopupButtonBox" class="lsp-button-box">
+            <ui:Button name="exitGameButton">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(20147798700032)"/>
+                </Bindings>
+            </ui:Button>
+            <ui:Button name="resumeGameButton" class="lsp-primary-accent-button">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:cc1d194facb1d9d4380a9ea2032c10ca" entry="Id(20374383390720)"/>
+                </Bindings>
+            </ui:Button>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

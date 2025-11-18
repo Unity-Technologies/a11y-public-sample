@@ -1,0 +1,38 @@
+:root {
+    --lsp-color-green: rgb(2, 197, 132);
+    --lsp-color-transparent: rgba(0, 0, 0, 0);
+    --lsp-color-white: white;
+    --lsp-color-black: black;
+    --lsp-color-gray-164: rgb(164, 164, 164);
+    --lsp-color-yellow-light: rgb(255, 251, 232);
+    --lsp-color-yellow-lighter-130: rgb(255, 241, 200);
+    --lsp-color-yellow-lighter-110: rgb(242, 200, 0);
+    --lsp-color-yellow: rgb(220, 180, 0);
+    --lsp-color-yellow-darker-120: rgb(200, 160, 0);
+    --lsp-color-yellow-darker-130: rgb(170, 130, 0);
+    --lsp-color-yellow-darker-180: rgb(120, 80, 0);
+    --lsp-color-blue-600: #59a7f6;
+    --lsp-color-purple: rgb(161, 116, 244);
+    --lsp-color-purple-lighter-130: rgb(191, 156, 255);
+    --lsp-color-purple-darker-120: rgb(121, 76, 194);
+    --lsp-color-blue: rgb(1, 168, 255);
+    --lsp-color-blue-lighter-130: rgb(114, 207, 255);
+    --lsp-color-blue-lighter-110: rgb(57, 188, 255);
+    --lsp-color-blue-darker-120: rgb(0, 118, 197);
+    --lsp-color-blue-light: rgb(114, 207, 255);
+    
+    /* Images */
+    --lsp-images-splash: url("project://database/Assets/UI/Images/Splash-Screen.png");
+    --lsp-images-logo: url("project://database/Assets/UI/Images/LetterSpell_smallLogo.png?fileID=2800000&guid=75dc9c01c37ed4403948da36191f22df&type=3#LetterSpell_smallLogo");
+    --lsp-images-logo-w: 330px;
+    --lsp-images-logo-h: 82px;
+    
+    --unity-icons-dropdown: url("project://database/Assets/UI/Images/Dropdown-Arrow.png?fileID=2800000&guid=29e091d0e13ce4d928a786bc1ff99351&type=3#Dropdown-Arrow");
+    --lsp-icons-pause: url("project://database/Assets/UI/Images/PauseIcon.png?fileID=2800000&guid=c9d90502b54df4fb8a6679c396a05fc0&type=3#PauseIcon");
+    --lsp-icons-pause-w: 45px;
+    --lsp-icons-pause-h: 44px;
+
+    --lsp-icons-success-check: url("project://database/Assets/UI/Images/Success-Check.png?fileID=2800000&guid=8eb6e6371b15149a7b6e3cd6117749c1&type=3#Success-Check");
+    --lsp-icons-success-check-w: 52px;
+    --lsp-icons-success-check-h: 47px;
+}

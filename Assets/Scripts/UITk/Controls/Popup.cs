@@ -47,9 +47,6 @@ namespace Unity.Samples.LetterSpell
                 m_ContentContainer.GetOrCreateAccessibleProperties().modal = true;
                 hierarchy.Add(m_ContentContainer);
 
-                var styleSheet = Resources.Load<StyleSheet>("UITk/Themes/LetterSpellTheme");
-                styleSheets.Add(styleSheet);
-
                 RegisterCallback<PointerDownEvent>(OnPointerDown);
             }
 

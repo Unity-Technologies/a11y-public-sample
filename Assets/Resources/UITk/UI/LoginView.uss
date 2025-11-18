@@ -1,0 +1,13 @@
+:root {
+}
+
+#userNameField {
+    flex-direction: column;
+}
+
+#userNameField > .unity-base-field__label {
+    -unity-text-align: middle-center;
+    color: var(--lsp-secondary-text-color);
+    -unity-font-definition: var(--lsp-font-bold);
+    margin-bottom: var(--lsp-spacing-md);
+}

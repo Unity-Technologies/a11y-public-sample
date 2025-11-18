@@ -156,9 +156,7 @@ namespace Unity.Samples.LetterSpell
 
             m_LetterLabel = new Label();
             m_LetterLabel.GetOrCreateAccessibleProperties().ignored = true;
-            
-            accessible.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT_UNSELECTED");
-            
+     
             Add(m_LetterLabel);
 
             style.position = Position.Absolute;
@@ -169,6 +167,21 @@ namespace Unity.Samples.LetterSpell
             RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
             
             this.letter = letter;
+
+            accessible.hint = LocalizationSettings.StringDatabase.GetLocalizedString("Game Text", "LETTER_CARD_HINT_UNSELECTED");
+            accessible.selected += () =>
+            {
+                if (!selected)
+                {
+                    Select();
+                }
+                else
+                {
+                    Deselect();
+                }
+
+                return true;
+            };
         }
         
         void UpdateLabel()
@@ -251,6 +264,11 @@ namespace Unity.Samples.LetterSpell
             if (!cardView.interactable || m_Active)
             {
                 e.StopImmediatePropagation();
+                return;
+            }
+
+            if (panel?.GetCapturingElement(PointerId.mousePointerId) != null)
+            {
                 return;
             }
 

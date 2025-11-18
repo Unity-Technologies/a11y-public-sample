@@ -330,7 +330,6 @@ namespace Unity.Samples.LetterSpell
         void OnFontScaleValueChanged(float fontScale)
         {
             m_MainView.panel.visualTree.style.fontSize = 64 * fontScale;
-            m_LetterCardView.ApplyFontScale();
             m_FontScaleLabel.text = $"{fontScale:0.00}";
         }
 

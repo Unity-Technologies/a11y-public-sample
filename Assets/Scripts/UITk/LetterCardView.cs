@@ -156,25 +156,6 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
-        /* void ApplyFontScale()
-         {
-             style.fontSize = fontScale * 130;
-             cardSize = (int)(itemSize * fontScale);
-         }
-
-         public float fontScale
-         {
-             get => s_FontScale;
-             set
-             {
-                 s_FontScale = value;
-                 style.fontSize = value * 130;
-                 cardSize = (int)(itemSize * value);
-             }
-         }
-
-         public int spacing = 30;*/
-
         /// <summary>
         /// Indicates whether the user can interact with the letter cards.
         /// </summary>
@@ -467,7 +448,6 @@ namespace Unity.Samples.LetterSpell
         {
             m_Active = true;
             m_StartMousePos = e.localMousePosition;
-            // Debug.Log("Mouse Down");
         }
 
         void OnMouseMove(MouseMoveEvent e)
@@ -510,12 +490,6 @@ namespace Unity.Samples.LetterSpell
         void OnSwipeRight()
         {
             MoveSelectedCardRight();
-        }
-        
-        internal void ApplyFontScale()
-        {
-           // style.fontSize = fontScale * 130;
-           // cardSize = (int)(itemSize * fontScale);
         }
 
         /// <summary>

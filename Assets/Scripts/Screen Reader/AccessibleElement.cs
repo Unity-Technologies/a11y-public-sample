@@ -128,8 +128,8 @@ namespace Unity.Samples.ScreenReader
                 return;
             }
 
-            node.selected -= InvokeSelected;
-            node.selected += InvokeSelected;
+            node.invoked -= InvokeSelected;
+            node.invoked += InvokeSelected;
         }
 
         void ConnectNodeToDismissed()
@@ -154,7 +154,7 @@ namespace Unity.Samples.ScreenReader
             }
 
             // Disconnect even if selected is implemented when the node is unset.
-            node.selected -= InvokeSelected;
+            node.invoked -= InvokeSelected;
         }
 
         void DisconnectNodeFromDismissed()

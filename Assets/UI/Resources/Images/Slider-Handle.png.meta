@@ -171,6 +171,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
     nameFileIdTable:
       Slider-Handle_0: -4569095454909155970
   mipmapLimitGroupName: 

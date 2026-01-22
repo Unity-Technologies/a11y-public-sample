@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/UITK/USS/letter-card.uss?fileID=7433441132597879392&amp;guid=a43ea5d3f248e4091b8c9ea9f74eee5e&amp;type=3#letter-card"/>
+    <ui:Button text="X" name="" __unity-builder-selected-element="" class="letter-button"/>
+</ui:UXML>

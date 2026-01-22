@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Image source="project://database/Assets/UI/Resources/Images/Splash-Screen.png?fileID=4602334432413793429&amp;guid=364b68ded9ed04f07848b6c7de25fdad&amp;type=3#Intro Screen_0" scale-mode="ScaleAndCrop" name="" style="flex-grow: 1;"/>
+</ui:UXML>

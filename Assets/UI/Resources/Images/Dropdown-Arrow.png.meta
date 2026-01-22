@@ -171,6 +171,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
     nameFileIdTable:
       Dropdown-Arrow_0: 7570771543587889735
   mipmapLimitGroupName: 

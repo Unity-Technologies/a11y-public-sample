@@ -171,6 +171,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
     nameFileIdTable:
       Main Menu-1-Name Input_0: 7601968805574212021
   mipmapLimitGroupName: 

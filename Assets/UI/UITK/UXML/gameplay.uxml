@@ -1,0 +1,51 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="letter-card" src="project://database/Assets/UI/UITK/UXML/letter-card.uxml?fileID=9197481963319205126&amp;guid=8f1f5587b93b84179b4ec350225f5b28&amp;type=3#letter-card"/>
+    <Style src="project://database/Assets/UI/UITK/USS/main.uss?fileID=7433441132597879392&amp;guid=8951db20a14ff40e892103983ef380b5&amp;type=3#main"/>
+    <Style src="project://database/Assets/UI/UITK/USS/gameplay.uss?fileID=7433441132597879392&amp;guid=a335810bcc80449f3be75a58e1332016&amp;type=3#gameplay"/>
+    <ui:VisualElement name="gameplay-container">
+        <ui:VisualElement name="game-container">
+            <ui:Label text="When you hear the doorbell." name="clue-label"/>
+            <ui:VisualElement name="success-image">
+                <ui:Image source="project://database/Assets/UI/Resources/Images/Success-Check.png?fileID=-9040358768007008051&amp;guid=cba63604506fe4fcfa0f3523cfb6c5fd&amp;type=3#Success-Check_0"/>
+                <ui:Label text="Correct" name="success-label"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="letter-card-container">
+                <ui:Instance template="letter-card" name="" class="letter-card"/>
+                <ui:Instance template="letter-card" name="" class="letter-card"/>
+                <ui:Instance template="letter-card" name="" class="letter-card"/>
+                <ui:Instance template="letter-card" name="" class="letter-card"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="buttons-container">
+            <ui:VisualElement name="left-buttons-container">
+                <ui:Button text="I I" name="pause-button" class="letter-spell-button letter-spell-button-secondary"/>
+                <ui:Button text="Options " name="options-button" class="letter-spell-button letter-spell-button-secondary"/>
+            </ui:VisualElement>
+            <ui:Button text="Next Word" name="next-button" class="letter-spell-button letter-spell-button-primary"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="pause-screen" class="pause-screen">
+        <ui:VisualElement name="" class="pause-screen-dialog">
+            <ui:VisualElement name="" class="pause-screen-label-container">
+                <ui:Label text="Game paused" name="pause-label" class="pause-screen-label"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="" class="pause-screen-buttons-container">
+                <ui:Button text="End game" class="letter-spell-button letter-spell-button-secondary pause-screen-button"/>
+                <ui:VisualElement style="flex-grow: 1;"/>
+                <ui:Button text="Resume" class="letter-spell-button letter-spell-button-primary pause-screen-button"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="results-screen" class="pause-screen">
+        <ui:VisualElement name="" class="pause-screen-dialog">
+            <ui:VisualElement name="" class="pause-screen-label-container">
+                <ui:Label text="Game over" name="results-label" class="pause-screen-label"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="" class="pause-screen-buttons-container">
+                <ui:Button text="Main menu" class="letter-spell-button letter-spell-button-secondary pause-screen-button"/>
+                <ui:VisualElement style="flex-grow: 1;"/>
+                <ui:Button text="Play again" class="letter-spell-button letter-spell-button-primary pause-screen-button"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

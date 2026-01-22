@@ -1,0 +1,194 @@
+:root {
+    background-color: rgb(2, 197, 132);
+}
+
+#gameplay-container {
+    margin-top: 3%;
+    margin-right: 5%;
+    margin-bottom: 3%;
+    margin-left: 5%;
+    flex-grow: 1;
+}
+
+#game-container {
+    flex-grow: 1;
+    align-items: center;
+    margin-top: 8%;
+    margin-bottom: 5%;
+}
+
+#clue-label {
+    color: rgb(255, 255, 255);
+    -unity-text-align: upper-center;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    height: 13%;
+    max-height: 80px;
+    white-space: nowrap;
+}
+
+#success-image {
+    background-color: rgb(255, 255, 255);
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    flex-direction: row;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 2%;
+    padding-left: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    max-height: 85px;
+    height: 15%;
+    max-width: 380px;
+    width: 22%;
+    opacity: 0;
+    transition-property: opacity;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.2s;
+}
+
+#success-label {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 15px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+#letter-card-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    max-height: 250px;
+    height: 40%;
+}
+
+.letter-card {
+    aspect-ratio: 1;
+    height: 100%;
+    margin-left: 18px;
+    margin-right: 18px;
+}
+
+#buttons-container {
+    flex-direction: row;
+    width: 100%;
+    height: 14%;
+    max-height: 140px;
+}
+
+#left-buttons-container {
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+#pause-button {
+    margin-right: 5%;
+    max-width: 190px;
+    width: 14%;
+    -unity-font-definition: resource("Fonts/Inter-Bold");
+}
+
+#options-button {
+    max-width: 390px;
+    width: 31%;
+}
+
+#next-button {
+    width: 27%;
+    max-width: 470px;
+}
+
+#pause-screen {
+    display: none;
+    opacity: 0;
+}
+
+#results-screen {
+    display: none;
+    opacity: 0;
+}
+
+.pause-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.49);
+    transition-property: opacity;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.2s;
+}
+
+.pause-screen-dialog {
+    background-color: rgb(255, 255, 255);
+    width: 50%;
+    height: 40%;
+    border-left-color: rgb(27, 27, 27);
+    border-right-color: rgb(27, 27, 27);
+    border-top-color: rgb(27, 27, 27);
+    border-bottom-color: rgb(27, 27, 27);
+    border-top-width: 10px;
+    border-right-width: 10px;
+    border-bottom-width: 10px;
+    border-left-width: 10px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    padding-top: 2%;
+    padding-right: 2%;
+    padding-bottom: 2%;
+    padding-left: 2%;
+    max-height: 460px;
+    max-width: 1100px;
+}
+
+.pause-screen-label-container {
+    flex-grow: 1;
+    margin-bottom: 3%;
+    justify-content: center;
+    align-items: center;
+}
+
+.pause-screen-label {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    -unity-text-align: upper-center;
+    max-height: 80px;
+    height: 50%;
+}
+
+.pause-screen-buttons-container {
+    flex-direction: row;
+    height: 40%;
+    max-height: 140px;
+}
+
+.pause-screen-button {
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 4%;
+    padding-right: 4%;
+}

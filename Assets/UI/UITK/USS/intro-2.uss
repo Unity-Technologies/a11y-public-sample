@@ -1,0 +1,70 @@
+:root {
+    background-image: resource("Images/Background-Intro");
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+#intro-2-container {
+    flex-grow: 1;
+    margin-top: 60px;
+    margin-right: 60px;
+    margin-left: 60px;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+#options-button {
+    align-self: flex-end;
+    height: 14%;
+    width: 22%;
+    max-height: 140px;
+    max-width: 390px;
+}
+
+#play-buttons-outer-container {
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+    width: 100%;
+}
+
+#play-buttons-inner-container {
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+    height: 44%;
+    max-height: 360px;
+    margin-bottom: 5%;
+}
+
+#play-buttons-spacing {
+    width: 9%;
+    max-width: 170px;
+}
+
+.letter-spell-button-play {
+    color: rgb(0, 0, 0);
+    width: 34%;
+    max-width: 590px;
+    max-height: 360px;
+    font-size: 75px;
+    -unity-text-auto-size: best-fit 37px 75px;
+    -unity-text-generator: advanced;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+#play-easy-button {
+    background-color: rgb(255, 190, 0);
+    border-left-color: rgb(255, 251, 232);
+    border-right-color: rgb(255, 251, 232);
+    border-top-color: rgb(255, 251, 232);
+    border-bottom-color: rgb(255, 251, 232);
+}
+
+#play-hard-button {
+    background-color: rgb(1, 168, 255);
+    border-left-color: rgb(114, 207, 255);
+    border-right-color: rgb(114, 207, 255);
+    border-top-color: rgb(114, 207, 255);
+    border-bottom-color: rgb(114, 207, 255);
+}

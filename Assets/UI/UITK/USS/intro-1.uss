@@ -1,0 +1,51 @@
+:root {
+    background-image: resource("Images/Background-Intro");
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+#intro-1-container {
+    width: 50%;
+    align-self: center;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+    margin-top: 60px;
+    margin-right: 60px;
+    margin-bottom: 60px;
+    margin-left: 60px;
+}
+
+#intro-1-label {
+    color: rgb(255, 255, 255);
+    -unity-text-align: upper-center;
+    width: 100%;
+    white-space: normal;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    max-height: 80px;
+    height: 9%;
+}
+
+#intro-1-text-field {
+    margin-top: 60px;
+    margin-bottom: 60px;
+    max-height: 140px;
+    height: 15%;
+}
+
+#intro-1-text-field > TextInput {
+    -unity-text-align: middle-center;
+}
+
+#next-button {
+    max-width: 290px;
+    max-height: 140px;
+    width: 30%;
+    height: 14%;
+}

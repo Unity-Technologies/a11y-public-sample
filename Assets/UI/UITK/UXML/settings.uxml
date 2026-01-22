@@ -1,0 +1,64 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/UITK/USS/main.uss?fileID=7433441132597879392&amp;guid=8951db20a14ff40e892103983ef380b5&amp;type=3#main"/>
+    <Style src="project://database/Assets/UI/UITK/USS/settings.uss?fileID=7433441132597879392&amp;guid=f46885d983ff648d694023b013e396d9&amp;type=3#settings"/>
+    <ui:Button text="Back " name="back-button" class="letter-spell-button letter-spell-button-secondary"/>
+    <ui:ScrollView name="settings-scroll-view" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden">
+        <ui:TextField label="" placeholder-text="Search options" name="search-text-field" class="letter-spell-text-field"/>
+        <ui:Label text="Gameplay" name="" class="settings-heading"/>
+        <ui:VisualElement class="settings-row">
+            <ui:Label text="Difficulty level" class="settings-label"/>
+            <ui:ToggleButtonGroup name="difficulty-toggle-group" label="" value="01" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-grow: 1;">
+                <ui:Button text="Easy" class="settings-tab-button settings-tab-button-left"/>
+                <ui:Button text="Hard" class="settings-tab-button settings-tab-button-right"/>
+            </ui:ToggleButtonGroup>
+        </ui:VisualElement>
+        <ui:VisualElement name="" class="settings-row">
+            <ui:Label text="Number of words" class="settings-label"/>
+            <ui:RadioButtonGroup name="words-radio-group" label="" value="0" class="settings-field settings-radio-button-group">
+                <ui:RadioButton label="Three" class="settings-radio-button"/>
+                <ui:RadioButton label="Six" class="settings-radio-button"/>
+            </ui:RadioButtonGroup>
+        </ui:VisualElement>
+        <ui:VisualElement class="settings-row">
+            <ui:Label text="Show clues" name="" class="settings-label"/>
+            <ui:Toggle name="clues-toggle" label="On" value="true" class="settings-toggle"/>
+        </ui:VisualElement>
+        <ui:Label text="Audio" name="" class="settings-heading"/>
+        <ui:VisualElement class="settings-row">
+            <ui:Label text="SFX volume" class="settings-label"/>
+            <ui:Slider name="sfx-volume-slider" label="" value="50" high-value="100" class="settings-field settings-slider unity-slider"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="settings-row">
+            <ui:Label text="Music volume" class="settings-label"/>
+            <ui:Slider name="music-volume-slider" label="" value="50" high-value="100" class="settings-field settings-slider"/>
+        </ui:VisualElement>
+        <ui:Label text="Appearance" name="" class="settings-heading"/>
+        <ui:VisualElement class="settings-row">
+            <ui:Label text="Color theme" class="settings-label"/>
+            <ui:DropdownField name="color-theme-dropdown" label="" choices="Original,High Contrast" index="0" class="settings-field letter-spell-text-field"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="settings-row">
+            <ui:Label text="Text size" class="settings-label"/>
+            <ui:SliderInt name="display-size-slider" label="" value="1" high-value="2" class="settings-field settings-slider"/>
+        </ui:VisualElement>
+        <ui:Label text="Profile" name="" class="settings-heading"/>
+        <ui:VisualElement class="settings-row">
+            <ui:Label text="Username" class="settings-label"/>
+            <ui:TextField name="username-text-field" label="" placeholder-text="Enter your name" class="letter-spell-text-field settings-field"/>
+        </ui:VisualElement>
+        <ui:Label text="System Settings (read-only)" name="" class="settings-heading"/>
+        <ui:VisualElement class="settings-row">
+            <ui:Label text="Font scale " class="settings-label"/>
+            <ui:Label text="1" class="settings-label"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="settings-row">
+            <ui:Label text="Bold text" class="settings-label"/>
+            <ui:Label text="Off" class="settings-label"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="settings-row">
+            <ui:Label text="Closed captions" class="settings-label"/>
+            <ui:Label text="Off" class="settings-label"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="settings-row"/>
+    </ui:ScrollView>
+</ui:UXML>

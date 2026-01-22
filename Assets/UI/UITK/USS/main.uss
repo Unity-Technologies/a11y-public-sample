@@ -1,0 +1,98 @@
+:root {
+    font-size: 64px;
+    -unity-font-definition: resource("Fonts/Inter-Regular");
+    -unity-text-generator: advanced;
+    -unity-text-auto-size: best-fit 32px 64px;
+}
+
+#logo {
+    top: 60px;
+    left: 60px;
+    position: absolute;
+    width: 18%;
+    max-width: 330px;
+}
+
+.letter-spell-text-field {
+    border-top-width: 10px;
+    border-right-width: 10px;
+    border-bottom-width: 10px;
+    border-left-width: 10px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    width: 100%;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    border-left-color: rgb(27, 27, 27);
+    border-right-color: rgb(27, 27, 27);
+    border-top-color: rgb(27, 27, 27);
+    border-bottom-color: rgb(27, 27, 27);
+}
+
+.letter-spell-text-field > .unity-base-field__input {
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 3%;
+    padding-right: 3%;
+    background-color: rgb(255, 255, 255);
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+.letter-spell-text-field > .unity-base-text-field__input--placeholder {
+    color: rgba(0, 0, 0, 0.31);
+}
+
+.letter-spell-text-field .unity-base-popup-field__arrow {
+    background-image: resource("Images/Dropdown-Arrow");
+    width: 50px;
+    height: 40px;
+}
+
+.letter-spell-button {
+    border-top-width: 10px;
+    border-right-width: 10px;
+    border-bottom-width: 10px;
+    border-left-width: 10px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    padding-top: 1%;
+    padding-left: 3%;
+    padding-bottom: 1%;
+    padding-right: 3%;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+    transition-property: scale;
+    border-left-color: rgb(27, 27, 27);
+    border-right-color: rgb(27, 27, 27);
+    border-top-color: rgb(27, 27, 27);
+    border-bottom-color: rgb(27, 27, 27);
+}
+
+.letter-spell-button:hover {
+    transition-property: scale;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+    scale: 1.05 1.05;
+}
+
+.letter-spell-button-primary {
+    background-color: rgb(161, 116, 243);
+    color: rgb(255, 255, 255);
+}
+
+.letter-spell-button-secondary {
+    background-color: rgb(255, 255, 255);
+}

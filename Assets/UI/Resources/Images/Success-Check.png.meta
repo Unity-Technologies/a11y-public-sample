@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 672cdafa50b5e4313a282614e1c58ce9
+guid: cba63604506fe4fcfa0f3523cfb6c5fd
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5548797473707963332
-    second: Large-Button-UI-PlayEasy_0
+      213: -9040358768007008051
+    second: Success-Check_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -122,40 +122,27 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: CloudRendering
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Large-Button-UI-PlayEasy_0
+      name: Success-Check_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 592
-        height: 360
+        x: 2
+        y: 4
+        width: 49
+        height: 39
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 30, y: 30, z: 30, w: 30}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c3c4d01b816bef2b0800000000000000
-      internalID: -5548797473707963332
+      spriteID: dc0bade29913a8280800000000000000
+      internalID: -9040358768007008051
       vertices: []
       indices: 
       edges: []
@@ -164,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: ff3c8e0b429264100baa6cd83e21b71f
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -174,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Large-Button-UI-PlayEasy_0: -5548797473707963332
+      Success-Check_0: -9040358768007008051
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

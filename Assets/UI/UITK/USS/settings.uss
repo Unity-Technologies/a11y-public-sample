@@ -1,0 +1,281 @@
+:root {
+    background-color: rgb(255, 251, 232);
+}
+
+#back-button {
+    align-self: flex-start;
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-bottom: 3%;
+    max-width: 300px;
+    max-height: 140px;
+    width: 16%;
+    height: 14%;
+}
+
+#settings-scroll-view {
+    margin-top: 0;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 3%;
+    flex-grow: 1;
+}
+
+#search-text-field {
+    width: 70%;
+}
+
+.settings-heading {
+    font-size: 75px;
+    -unity-font-definition: resource("Fonts/Inter-Bold");
+    margin-top: 6%;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    -unity-text-generator: advanced;
+    -unity-text-auto-size: best-fit 37px 75px;
+}
+
+.settings-row {
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    margin-top: 3%;
+    flex-shrink: 0;
+    flex-grow: 1;
+}
+
+.settings-label {
+    width: 50%;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 60px;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.settings-field {
+    width: 50%;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.settings-tab-button {
+    padding-top: 1%;
+    padding-left: 3%;
+    padding-bottom: 1%;
+    padding-right: 3%;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out;
+    transition-property: background-color;
+    border-left-color: rgb(27, 27, 27);
+    border-right-color: rgb(27, 27, 27);
+    border-top-color: rgb(27, 27, 27);
+    border-bottom-color: rgb(27, 27, 27);
+    background-color: rgb(161, 116, 243);
+    color: rgb(255, 255, 255);
+    width: 27%;
+    min-width: 200px;
+    min-height: 110px;
+    max-height: 140px;
+    max-width: 300px;
+}
+
+.settings-tab-button:hover {
+    transition-property: background-color;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out;
+    background-color: rgb(139, 84, 238);
+}
+
+.settings-tab-button:checked {
+    transition-property: background-color;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out;
+    background-color: rgb(117, 49, 241);
+}
+
+.settings-tab-button-left {
+    border-top-width: 10px;
+    border-right-width: 10px;
+    border-bottom-width: 10px;
+    border-left-width: 10px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+
+.settings-tab-button-middle {
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    border-right-width: 10px;
+}
+
+.settings-tab-button-right {
+    border-top-width: 10px;
+    border-right-width: 10px;
+    border-bottom-width: 10px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.settings-radio-button-group #contentContainer {
+    flex-direction: row;
+}
+
+.settings-radio-button {
+    flex-direction: row-reverse;
+    align-self: flex-start;
+    margin-top: 0;
+    margin-right: 20%;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.settings-radio-button > Label {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 40px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.settings-radio-button:focus > Label {
+    color: rgb(27, 27, 27);
+}
+
+.settings-radio-button .unity-radio-button__checkmark-background {
+    width: 40px;
+    height: 40px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-left-color: rgb(27, 27, 27);
+    border-right-color: rgb(27, 27, 27);
+    border-top-color: rgb(27, 27, 27);
+    border-bottom-color: rgb(27, 27, 27);
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    background-color: rgb(255, 255, 255);
+}
+
+.settings-radio-button #unity-checkmark {
+    background-color: rgb(161, 116, 244);
+    width: 30px;
+    height: 30px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+}
+
+.settings-toggle {
+    flex-direction: row-reverse;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.settings-toggle > Label {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 40px;
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+}
+
+.settings-toggle:focus > Label {
+    color: rgb(27, 27, 27);
+}
+
+.settings-toggle #unity-checkmark {
+    width: 40px;
+    height: 40px;
+    border-left-color: rgb(27, 27, 27);
+    border-right-color: rgb(27, 27, 27);
+    border-top-color: rgb(27, 27, 27);
+    border-bottom-color: rgb(27, 27, 27);
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    -unity-background-image-tint-color: rgb(161, 116, 244);
+}
+
+.settings-slider #unity-tracker {
+    background-color: rgb(27, 27, 27);
+    height: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.settings-slider #unity-dragger {
+    background-color: rgb(161, 116, 244);
+    width: 30px;
+    height: 55px;
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    border-left-color: rgb(27, 27, 27);
+    border-right-color: rgb(27, 27, 27);
+    border-top-color: rgb(27, 27, 27);
+    border-bottom-color: rgb(27, 27, 27);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    margin-top: -27px;
+}
+
+.settings-slider #unity-dragger:hover {
+    background-color: rgb(139, 84, 238);
+}

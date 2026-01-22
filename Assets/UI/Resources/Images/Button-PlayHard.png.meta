@@ -171,6 +171,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
     nameFileIdTable:
       Large-Button-UI-PlayHard_0: 6008418101965696397
   mipmapLimitGroupName: 

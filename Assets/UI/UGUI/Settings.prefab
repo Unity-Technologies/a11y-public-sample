@@ -346,6 +346,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -482,7 +483,7 @@ MonoBehaviour:
   label: Three words
   value: 
   hint: 
-  role: 256
+  role: 9
   allowsDirectInteraction: 0
   state: 2
 --- !u!1 &243781750027007362
@@ -588,6 +589,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -686,7 +688,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Bold Text
+  m_text: Bold text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
   m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
@@ -724,6 +726,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -860,7 +863,7 @@ MonoBehaviour:
   label: Hard
   value: 
   hint: 
-  role: 257
+  role: 9
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &461047669902816682
@@ -966,6 +969,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1139,7 +1143,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Color Theme
+  m_text: Color theme
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
   m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
@@ -1177,6 +1181,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1386,7 +1391,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Closed Captions
+  m_text: Closed captions
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
   m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
@@ -1424,6 +1429,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1703,6 +1709,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1839,6 +1846,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2013,10 +2021,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: OS Settings (read-only)
+  m_text: System Settings (read-only)
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
-  m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 04e24ff0f0d4a476fb15262b93039a10, type: 2}
+  m_sharedMaterial: {fileID: 5948856775851822210, guid: 04e24ff0f0d4a476fb15262b93039a10, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2051,6 +2059,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2100,7 +2109,7 @@ MonoBehaviour:
   label: OS Settings (read-only)
   value: 
   hint: 
-  role: 36
+  role: 39
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &1573560452804987921
@@ -2206,6 +2215,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2342,6 +2352,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2478,7 +2489,7 @@ MonoBehaviour:
   label: Easy
   value: 
   hint: 
-  role: 257
+  role: 9
   allowsDirectInteraction: 0
   state: 2
 --- !u!1 &1697250857768942575
@@ -2494,7 +2505,6 @@ GameObject:
   - component: {fileID: 2916398594516293448}
   - component: {fileID: 4600201504503255796}
   - component: {fileID: 6066428071665044461}
-  - component: {fileID: 2043504402925422223}
   - component: {fileID: 5090711576096038594}
   m_Layer: 5
   m_Name: Settings
@@ -2617,22 +2627,6 @@ MonoBehaviour:
   closedCaptionAccessibleElement: {fileID: 5418576544578412643}
   fontScaleValue: {fileID: 9120855495489382998}
   fontScaleAccessibleElement: {fileID: 1032149493865476688}
---- !u!114 &2043504402925422223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697250857768942575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acde05a60ba1f4ca7b11ad13d53745fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  usernameInputField: {fileID: 0}
-  transitionImage: {fileID: 0}
-  autoTransitionOut: 0
-  nextSceneName: 
 --- !u!114 &5090711576096038594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2890,7 +2884,7 @@ MonoBehaviour:
   label: Sound Effects Volume
   value: 50 %
   hint: 
-  role: 128
+  role: 136
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &2016058441411154975
@@ -3109,10 +3103,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Search Options
+  m_text: Search options
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
+  m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3147,6 +3141,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3308,9 +3303,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8106558842212262887}
-  - {fileID: 2414723659697977082}
-  - {fileID: 6002946523343053112}
   - {fileID: 1850989198063577580}
+  - {fileID: 6002946523343053112}
+  - {fileID: 2414723659697977082}
   m_Father: {fileID: 4999150622559213632}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3447,7 +3442,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Display Size
+  m_text: Text size
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
   m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
@@ -3485,6 +3480,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3699,6 +3695,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4301,19 +4298,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 839637077071105043}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2043504402925422223}
-        m_TargetAssemblyTypeName: SceneTransition, Assembly-CSharp
-        m_MethodName: UnloadSettingsScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1407600719298339212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4490,7 +4475,7 @@ MonoBehaviour:
   label: Display Size
   value: Medium
   hint: 
-  role: 128
+  role: 136
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &3698204483276341362
@@ -4561,8 +4546,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Gameplay
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
-  m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 04e24ff0f0d4a476fb15262b93039a10, type: 2}
+  m_sharedMaterial: {fileID: 5948856775851822210, guid: 04e24ff0f0d4a476fb15262b93039a10, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4597,6 +4582,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4646,7 +4632,7 @@ MonoBehaviour:
   label: Gameplay
   value: 
   hint: 
-  role: 36
+  role: 39
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &3714791186766654022
@@ -4716,8 +4702,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
+  m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4752,6 +4738,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4906,7 +4893,7 @@ MonoBehaviour:
   label: Closed Captions
   value: Off
   hint: 
-  role: 4
+  role: 7
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &3743615638839807349
@@ -5201,7 +5188,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sound Effects Volume
+  m_text: SFX volume
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
   m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
@@ -5239,6 +5226,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -5337,7 +5325,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Show Spelling Clues
+  m_text: Show clues
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
   m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
@@ -5375,6 +5363,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -5511,6 +5500,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -5737,7 +5727,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActive: 1
   label: 
-  value: Search Options
+  value: Search options
   hint: Double tap to edit.
   role: 8
   allowsDirectInteraction: 0
@@ -5808,7 +5798,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Number of Words
+  m_text: Number of words
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
   m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
@@ -5846,6 +5836,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -5895,7 +5886,7 @@ MonoBehaviour:
   label: Number of Words
   value: 
   hint: 
-  role: 4
+  role: 7
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &4317582134122504015
@@ -6001,7 +5992,7 @@ MonoBehaviour:
   label: Six words
   value: 
   hint: 
-  role: 256
+  role: 9
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &4664855338590506763
@@ -6305,7 +6296,7 @@ MonoBehaviour:
   label: Show Spelling Clues
   value: 
   hint: 
-  role: 256
+  role: 9
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &4870884420652122847
@@ -6411,6 +6402,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -6705,8 +6697,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2571921907921901972}
   m_HandleRect: {fileID: 5297557754652293036}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.3364486
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6751,7 +6743,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00007758662}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &662464997218039509
@@ -7074,7 +7066,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game Difficulty
+  m_text: Difficulty level
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
   m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
@@ -7112,6 +7104,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -7161,7 +7154,7 @@ MonoBehaviour:
   label: Game Difficulty
   value: 
   hint: 
-  role: 4
+  role: 7
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &5984227225325411283
@@ -7321,7 +7314,7 @@ MonoBehaviour:
   label: Font Scale
   value: 1
   hint: 
-  role: 4
+  role: 7
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &6374626976740921640
@@ -7539,7 +7532,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Font Scale
+  m_text: Font scale
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
   m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
@@ -7577,6 +7570,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -8057,6 +8051,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -8286,7 +8281,7 @@ MonoBehaviour:
   label: Bold Text
   value: Off
   hint: 
-  role: 4
+  role: 7
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &7044983625226489781
@@ -8611,6 +8606,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -8974,6 +8970,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -9309,6 +9306,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -9463,7 +9461,7 @@ MonoBehaviour:
   label: Music Volume
   value: 50 %
   hint: 
-  role: 128
+  role: 136
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &8170295642794785437
@@ -9772,7 +9770,7 @@ MonoBehaviour:
   label: 
   value: 
   hint: 
-  role: 256
+  role: 0
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &8520189312112386005
@@ -9840,7 +9838,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Music Volume
+  m_text: Music volume
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
   m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
@@ -9878,6 +9876,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -10329,8 +10328,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Appearance
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
-  m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 04e24ff0f0d4a476fb15262b93039a10, type: 2}
+  m_sharedMaterial: {fileID: 5948856775851822210, guid: 04e24ff0f0d4a476fb15262b93039a10, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10365,6 +10364,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -10414,7 +10414,7 @@ MonoBehaviour:
   label: Appearance
   value: 
   hint: 
-  role: 36
+  role: 39
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &8840736596794677660
@@ -10592,8 +10592,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Audio
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
-  m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 04e24ff0f0d4a476fb15262b93039a10, type: 2}
+  m_sharedMaterial: {fileID: 5948856775851822210, guid: 04e24ff0f0d4a476fb15262b93039a10, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10628,6 +10628,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -10677,6 +10678,6 @@ MonoBehaviour:
   label: Audio
   value: 
   hint: 
-  role: 36
+  role: 39
   allowsDirectInteraction: 0
   state: 0

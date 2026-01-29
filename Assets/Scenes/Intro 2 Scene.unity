@@ -262,6 +262,39 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 833070863163783670, guid: 8b6e3161c333c4883b7e9c66c1cfc60b, type: 3}
   m_PrefabInstance: {fileID: 790285917}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &790285920 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 134392815453234483, guid: 8b6e3161c333c4883b7e9c66c1cfc60b, type: 3}
+  m_PrefabInstance: {fileID: 790285917}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &790285921 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6925488710422184658, guid: 8b6e3161c333c4883b7e9c66c1cfc60b, type: 3}
+  m_PrefabInstance: {fileID: 790285917}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &790285922 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8239705321491445342, guid: 8b6e3161c333c4883b7e9c66c1cfc60b, type: 3}
+  m_PrefabInstance: {fileID: 790285917}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1377400736
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,6 +360,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1796031455}
   - component: {fileID: 1796031454}
+  - component: {fileID: 1796031456}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -366,6 +400,22 @@ Transform:
   - {fileID: 1377400737}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1796031456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796031453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53f93aee2c114ee2ad02fd7818124956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Unity.Samples.LetterSpell.SecondIntroScreenController
+  uguiOptionsButton: {fileID: 790285922}
+  uguiPlayEasyButton: {fileID: 790285921}
+  uguiPlayHardButton: {fileID: 790285920}
+  uitkDocument: {fileID: 1377400738}
 --- !u!1 &1837244696
 GameObject:
   m_ObjectHideFlags: 0

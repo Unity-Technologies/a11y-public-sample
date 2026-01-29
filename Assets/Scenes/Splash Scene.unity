@@ -265,7 +265,7 @@ MonoBehaviour:
   m_PanelSettings: {fileID: 11400000, guid: a8a32b664268140a3be195e53a65f230, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 0}
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Position: 0
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
@@ -298,7 +298,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1449450412}
   - component: {fileID: 1449450413}
-  - component: {fileID: 1449450414}
   m_Layer: 0
   m_Name: UITK
   m_TagString: Untagged
@@ -344,22 +343,6 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
---- !u!114 &1449450414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1449450411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acde05a60ba1f4ca7b11ad13d53745fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Unity.Samples.LetterSpell.SceneTransition
-  usernameInputField: {fileID: 0}
-  transitionImage: {fileID: 0}
-  autoTransitionOut: 1
-  nextSceneName: Intro 1 Scene
 --- !u!1 &1632149405
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,14 +597,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 304675880359246067, guid: 39bf0c0c2385b452bb587f447261386b, type: 3}
-      propertyPath: m_AspectMode
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 680733657259497898, guid: 39bf0c0c2385b452bb587f447261386b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3915460758340467484, guid: 39bf0c0c2385b452bb587f447261386b, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -636,14 +611,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3915460758340467484, guid: 39bf0c0c2385b452bb587f447261386b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6278572986494581950, guid: 39bf0c0c2385b452bb587f447261386b, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6278572986494581950, guid: 39bf0c0c2385b452bb587f447261386b, type: 3}
-      propertyPath: m_PreserveAspect
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6461814294135600107, guid: 39bf0c0c2385b452bb587f447261386b, type: 3}

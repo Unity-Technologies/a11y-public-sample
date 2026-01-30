@@ -115,14 +115,14 @@ namespace Unity.Samples.LetterSpell
 
         public static void PlayMoveTile()
         {
-            s_Instance.m_MoveTileSource.volume = PlayerPrefs.GetFloat(PlayerSettings.soundEffectsPreference, 0.5f);
+            s_Instance.m_MoveTileSource.volume = PlayerPrefs.GetFloat(PlayerSettings.sfxPreference, 0.5f);
             s_Instance.m_MoveTileSource.Play();
         }
 
         public static void PlayResult(bool success)
         {
             s_Instance.m_ResultSource.clip = success ? successEffect : failureEffect;
-            s_Instance.m_ResultSource.volume = PlayerPrefs.GetFloat(PlayerSettings.soundEffectsPreference, 0.5f);
+            s_Instance.m_ResultSource.volume = PlayerPrefs.GetFloat(PlayerSettings.sfxPreference, 0.5f);
             s_Instance.m_ResultSource.Play();
 
             audioPlayingStatusChanged?.Invoke(s_Instance.m_ResultSource);

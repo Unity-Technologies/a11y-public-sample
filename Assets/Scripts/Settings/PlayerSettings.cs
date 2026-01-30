@@ -19,11 +19,11 @@ namespace Unity.Samples.LetterSpell
         public Toggle threeWordsToggle;
         public Toggle sixWordsToggle;
         public Toggle clueToggle;
-        public Slider soundEffectsSlider;
+        public Slider sfxSlider;
         public Slider musicSlider;
         public TMP_Dropdown colorThemeDropdown;
         public Slider displaySizeSlider;
-        
+
         // Read-only settings
         public TMP_Text boldTextValue;
         public AccessibleElement boldTextAccessibleElement;
@@ -33,15 +33,16 @@ namespace Unity.Samples.LetterSpell
         public AccessibleElement fontScaleAccessibleElement;
 
         public const string usernamePreference = "Username";
-        public const string difficultyPreference = "GameDifficulty";
-        public const string wordsPreference = "GameWords";
+        public const string difficultyPreference = "DifficultyLevel";
+        public const string wordsPreference = "WordNumber";
         public const string cluePreference = "ShowClues";
-        public const string soundEffectsPreference = "SoundEffectsVolume";
+        public const string sfxPreference = "SoundEffectsVolume";
         public const string musicPreference = "MusicVolume";
-        const string k_ColorThemePreference = "ColorTheme";
-        const string k_DisplaySizePreference = "DisplaySize";
-        const string k_SettingOn = "On";
-        const string k_SettingOff = "Off";
+        public const string colorThemePreference = "ColorTheme";
+        public const string displaySizePreference = "DisplaySize";
+
+        public const string settingOn = "On";
+        public const string settingOff = "Off";
 
         void Update()
         {
@@ -51,26 +52,21 @@ namespace Unity.Samples.LetterSpell
                 OnDismissed();
             }
         }
-        
+
         void OnEnable()
         {
-            if (Gameplay.instance != null)
-            {
-                Gameplay.instance.PauseGame();
-            }
-
             // Close this screen when the screen reader user performs the dismiss gesture.
             backButton.GetComponent<AccessibleButton>().dismissed += OnDismissed;
-            
+
             // Load and apply the saved player preferences.
             LoadInputFieldState(usernameInputField, usernamePreference);
             LoadToggleGroupState(difficultyToggleGroup, difficultyPreference);
             LoadToggleGroupState(wordsToggleGroup, wordsPreference);
             LoadToggleState(clueToggle, cluePreference, 1);
-            LoadSliderState(soundEffectsSlider, soundEffectsPreference, 0.5f);
+            LoadSliderState(sfxSlider, sfxPreference, 0.5f);
             LoadSliderState(musicSlider, musicPreference, 0.5f);
-            LoadDropdownState(colorThemeDropdown, k_ColorThemePreference);
-            LoadSliderState(displaySizeSlider, k_DisplaySizePreference, 1f);
+            LoadDropdownState(colorThemeDropdown, colorThemePreference);
+            LoadSliderState(displaySizeSlider, displaySizePreference, 1f);
 
             usernameInputField.onValueChanged.AddListener(OnUsernameValueChanged);
             easyDifficultyToggle.onValueChanged.AddListener(OnDifficultyValueChanged);
@@ -78,26 +74,26 @@ namespace Unity.Samples.LetterSpell
             threeWordsToggle.onValueChanged.AddListener(OnWordsValueChanged);
             sixWordsToggle.onValueChanged.AddListener(OnWordsValueChanged);
             clueToggle.onValueChanged.AddListener(OnClueValueChanged);
-            soundEffectsSlider.onValueChanged.AddListener(OnSoundEffectsValueChanged);
+            sfxSlider.onValueChanged.AddListener(OnSfxValueChanged);
             musicSlider.onValueChanged.AddListener(OnMusicValueChanged);
             colorThemeDropdown.onValueChanged.AddListener(OnColorThemeValueChanged);
             displaySizeSlider.onValueChanged.AddListener(OnDisplaySizeValueChanged);
-            
+
             // Disable the settings that can't be changed during active gameplay.
             if (Gameplay.instance != null && Gameplay.instance.state != Gameplay.State.Stopped)
             {
                 EnableToggleGroup(difficultyToggleGroup, false);
                 EnableToggleGroup(wordsToggleGroup, false);
             }
-            
+
+            AccessibilitySettings.fontScaleChanged += OnFontScaleValueChanged;
             AccessibilitySettings.boldTextStatusChanged += OnBoldTextStatusChanged;
             AccessibilitySettings.closedCaptioningStatusChanged += OnClosedCaptioningStatusChanged;
-            AccessibilitySettings.fontScaleChanged += OnFontScaleValueChanged;
-            
+
             // Initialize the values for the read-only settings.
+            OnFontScaleValueChanged(AccessibilitySettings.fontScale);
             OnBoldTextStatusChanged(AccessibilitySettings.isBoldTextEnabled);
             OnClosedCaptioningStatusChanged(AccessibilitySettings.isClosedCaptioningEnabled);
-            OnFontScaleValueChanged(AccessibilitySettings.fontScale);
         }
 
         void OnDisable()
@@ -110,19 +106,14 @@ namespace Unity.Samples.LetterSpell
             threeWordsToggle.onValueChanged.RemoveListener(OnWordsValueChanged);
             sixWordsToggle.onValueChanged.RemoveListener(OnWordsValueChanged);
             clueToggle.onValueChanged.RemoveListener(OnClueValueChanged);
-            soundEffectsSlider.onValueChanged.RemoveListener(OnSoundEffectsValueChanged);
+            sfxSlider.onValueChanged.RemoveListener(OnSfxValueChanged);
             musicSlider.onValueChanged.RemoveListener(OnMusicValueChanged);
             colorThemeDropdown.onValueChanged.RemoveListener(OnColorThemeValueChanged);
             displaySizeSlider.onValueChanged.RemoveListener(OnDisplaySizeValueChanged);
-            
+
+            AccessibilitySettings.fontScaleChanged -= OnFontScaleValueChanged;
             AccessibilitySettings.boldTextStatusChanged -= OnBoldTextStatusChanged;
             AccessibilitySettings.closedCaptioningStatusChanged -= OnClosedCaptioningStatusChanged;
-            AccessibilitySettings.fontScaleChanged -= OnFontScaleValueChanged;
-            
-            if (Gameplay.instance != null)
-            {
-                Gameplay.instance.ResumeGame();
-            }
         }
 
         bool OnDismissed()
@@ -156,6 +147,7 @@ namespace Unity.Samples.LetterSpell
         {
             var savedToggleState = PlayerPrefs.GetInt(prefName, defaultValue);
             var toggles = toggleGroup.GetComponentsInChildren<Toggle>();
+
             toggles[savedToggleState].isOn = true;
         }
 
@@ -210,9 +202,9 @@ namespace Unity.Samples.LetterSpell
             PlayerPrefs.SetInt(cluePreference, value ? 1 : 0);
         }
 
-        static void OnSoundEffectsValueChanged(float value)
+        static void OnSfxValueChanged(float value)
         {
-            PlayerPrefs.SetFloat(soundEffectsPreference, value);
+            PlayerPrefs.SetFloat(sfxPreference, value);
         }
 
         static void OnMusicValueChanged(float value)
@@ -224,44 +216,12 @@ namespace Unity.Samples.LetterSpell
 
         static void OnColorThemeValueChanged(int value)
         {
-            PlayerPrefs.SetInt(k_ColorThemePreference, value);
+            PlayerPrefs.SetInt(colorThemePreference, value);
         }
 
         static void OnDisplaySizeValueChanged(float value)
         {
-            PlayerPrefs.SetFloat(k_DisplaySizePreference, value);
-        }
-        
-        void OnBoldTextStatusChanged(bool boldTextStatus)
-        {
-            if (boldTextStatus)
-            {
-                boldTextAccessibleElement.value = k_SettingOn;
-                boldTextValue.text = k_SettingOn;
-            }
-            else
-            {
-                boldTextAccessibleElement.value = k_SettingOff;
-                boldTextValue.text = k_SettingOff;
-            }
-
-            boldTextAccessibleElement.SetNodeProperties();
-        }
-        
-        void OnClosedCaptioningStatusChanged(bool closedCaptioningStatus)
-        {
-            if (closedCaptioningStatus)
-            {
-                closedCaptionAccessibleElement.value = k_SettingOn;
-                closedCaptionValue.text = k_SettingOn;
-            }
-            else
-            {
-                closedCaptionAccessibleElement.value = k_SettingOff;
-                closedCaptionValue.text = k_SettingOff;
-            }
-
-            closedCaptionAccessibleElement.SetNodeProperties();
+            PlayerPrefs.SetFloat(displaySizePreference, value);
         }
 
         void OnFontScaleValueChanged(float fontScale)
@@ -272,6 +232,38 @@ namespace Unity.Samples.LetterSpell
             fontScaleValue.text = fontScaleText;
 
             fontScaleAccessibleElement.SetNodeProperties();
+        }
+
+        void OnBoldTextStatusChanged(bool boldTextStatus)
+        {
+            if (boldTextStatus)
+            {
+                boldTextAccessibleElement.value = settingOn;
+                boldTextValue.text = settingOn;
+            }
+            else
+            {
+                boldTextAccessibleElement.value = settingOff;
+                boldTextValue.text = settingOff;
+            }
+
+            boldTextAccessibleElement.SetNodeProperties();
+        }
+
+        void OnClosedCaptioningStatusChanged(bool closedCaptioningStatus)
+        {
+            if (closedCaptioningStatus)
+            {
+                closedCaptionAccessibleElement.value = settingOn;
+                closedCaptionValue.text = settingOn;
+            }
+            else
+            {
+                closedCaptionAccessibleElement.value = settingOff;
+                closedCaptionValue.text = settingOff;
+            }
+
+            closedCaptionAccessibleElement.SetNodeProperties();
         }
     }
 }

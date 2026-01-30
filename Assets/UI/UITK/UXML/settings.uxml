@@ -9,7 +9,11 @@
             <ui:Label text="Difficulty level" class="settings-label"/>
             <ui:ToggleButtonGroup name="difficulty-toggle-group" label="" value="01" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-grow: 1;">
                 <ui:Button text="Easy" class="settings-tab-button settings-tab-button-left"/>
-                <ui:Button text="Hard" class="settings-tab-button settings-tab-button-right"/>
+                <ui:Button text="Hard" name="" class="settings-tab-button settings-tab-button-right"/>
+                <Bindings>
+                    <ui:DataBinding property="value" data-source-path="difficulty" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
+                    <ui:DataBinding property="enabledSelf" data-source-path="difficultyEnabled" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                </Bindings>
             </ui:ToggleButtonGroup>
         </ui:VisualElement>
         <ui:VisualElement name="" class="settings-row">
@@ -17,47 +21,87 @@
             <ui:RadioButtonGroup name="words-radio-group" label="" value="0" class="settings-field settings-radio-button-group">
                 <ui:RadioButton label="Three" class="settings-radio-button"/>
                 <ui:RadioButton label="Six" class="settings-radio-button"/>
+                <Bindings>
+                    <ui:DataBinding property="value" data-source-path="words" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
+                    <ui:DataBinding property="enabledSelf" data-source-path="wordsEnabled" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                </Bindings>
             </ui:RadioButtonGroup>
         </ui:VisualElement>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Show clues" name="" class="settings-label"/>
-            <ui:Toggle name="clues-toggle" label="On" value="true" class="settings-toggle"/>
+            <ui:Toggle name="clues-toggle" label="On" value="true" class="settings-toggle">
+                <Bindings>
+                    <ui:DataBinding property="value" data-source-path="showClues" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
+                </Bindings>
+            </ui:Toggle>
         </ui:VisualElement>
         <ui:Label text="Audio" name="" class="settings-heading"/>
         <ui:VisualElement class="settings-row">
             <ui:Label text="SFX volume" class="settings-label"/>
-            <ui:Slider name="sfx-volume-slider" label="" value="50" high-value="100" class="settings-field settings-slider unity-slider"/>
+            <ui:Slider name="sfx-volume-slider" label="" value="0.5" high-value="1" class="settings-field settings-slider unity-slider">
+                <Bindings>
+                    <ui:DataBinding property="value" data-source-path="sfxVolume" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
+                </Bindings>
+            </ui:Slider>
         </ui:VisualElement>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Music volume" class="settings-label"/>
-            <ui:Slider name="music-volume-slider" label="" value="50" high-value="100" class="settings-field settings-slider"/>
+            <ui:Slider name="music-volume-slider" label="" value="0.5" high-value="1" class="settings-field settings-slider">
+                <Bindings>
+                    <ui:DataBinding property="value" data-source-path="musicVolume" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
+                </Bindings>
+            </ui:Slider>
         </ui:VisualElement>
         <ui:Label text="Appearance" name="" class="settings-heading"/>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Color theme" class="settings-label"/>
-            <ui:DropdownField name="color-theme-dropdown" label="" choices="Original,High Contrast" index="0" class="settings-field letter-spell-text-field"/>
+            <ui:DropdownField name="color-theme-dropdown" label="" choices="Original,High Contrast" index="0" class="settings-field letter-spell-text-field">
+                <Bindings>
+                    <ui:DataBinding property="index" data-source-path="colorTheme" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
+                </Bindings>
+            </ui:DropdownField>
         </ui:VisualElement>
         <ui:VisualElement class="settings-row">
-            <ui:Label text="Text size" class="settings-label"/>
-            <ui:SliderInt name="display-size-slider" label="" value="1" high-value="2" class="settings-field settings-slider"/>
+            <ui:Label text="Display size" class="settings-label"/>
+            <ui:SliderInt name="display-size-slider" label="" value="1" high-value="2" class="settings-field settings-slider">
+                <Bindings>
+                    <ui:DataBinding property="value" data-source-path="displaySize" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
+                </Bindings>
+            </ui:SliderInt>
         </ui:VisualElement>
         <ui:Label text="Profile" name="" class="settings-heading"/>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Username" class="settings-label"/>
-            <ui:TextField name="username-text-field" label="" placeholder-text="Enter your name" class="letter-spell-text-field settings-field"/>
+            <ui:TextField name="username-text-field" label="" placeholder-text="Enter your name" class="letter-spell-text-field settings-field">
+                <Bindings>
+                    <ui:DataBinding property="value" data-source-path="username" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
+                </Bindings>
+            </ui:TextField>
         </ui:VisualElement>
         <ui:Label text="System Settings (read-only)" name="" class="settings-heading"/>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Font scale " class="settings-label"/>
-            <ui:Label text="1" class="settings-label"/>
+            <ui:Label text="1.00" name="font-scale-value" class="settings-label">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="fontScale" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                </Bindings>
+            </ui:Label>
         </ui:VisualElement>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Bold text" class="settings-label"/>
-            <ui:Label text="Off" class="settings-label"/>
+            <ui:Label text="Off" name="bold-text-value" class="settings-label">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="boldText" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                </Bindings>
+            </ui:Label>
         </ui:VisualElement>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Closed captions" class="settings-label"/>
-            <ui:Label text="Off" class="settings-label"/>
+            <ui:Label text="Off" name="closed-captions-value" class="settings-label">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="closedCaptions" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                </Bindings>
+            </ui:Label>
         </ui:VisualElement>
         <ui:VisualElement class="settings-row"/>
     </ui:ScrollView>

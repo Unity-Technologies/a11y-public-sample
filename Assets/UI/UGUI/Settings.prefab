@@ -2617,7 +2617,7 @@ MonoBehaviour:
   threeWordsToggle: {fileID: 8012804045824746018}
   sixWordsToggle: {fileID: 4720325743531541401}
   clueToggle: {fileID: 1395127527005517333}
-  soundEffectsSlider: {fileID: 2882709612227697136}
+  sfxSlider: {fileID: 2882709612227697136}
   musicSlider: {fileID: 5198369365576489553}
   colorThemeDropdown: {fileID: 1243546494373347251}
   displaySizeSlider: {fileID: 1338734565172107814}
@@ -2777,7 +2777,7 @@ GameObject:
   - component: {fileID: 5186865707922931977}
   - component: {fileID: 8716501277651718253}
   m_Layer: 5
-  m_Name: Sound Panel
+  m_Name: SFX Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3442,7 +3442,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Text size
+  m_text: Display size
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
   m_sharedMaterial: {fileID: 6410947241130929700, guid: 313e834b6edab4c32935686b623321ea, type: 2}
@@ -5135,7 +5135,7 @@ GameObject:
   - component: {fileID: 3419332276387980648}
   - component: {fileID: 3742596624231183725}
   m_Layer: 5
-  m_Name: Sound Text (TMP)
+  m_Name: SFX Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6499,7 +6499,7 @@ GameObject:
   - component: {fileID: 2560018324834025818}
   - component: {fileID: 2882709612227697136}
   m_Layer: 5
-  m_Name: Sound Slider
+  m_Name: SFX Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

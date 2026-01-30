@@ -13,16 +13,13 @@ namespace Unity.Samples.ClosedCaptions
     /// </summary>
     public class ClosedCaptionsManager : MonoBehaviour
     {
-        public Subtitle[] subtitles;
-
-        SubtitleDisplaySettings m_DisplaySettings;
-        SubtitlePlayer m_SubtitlePlayer;
-        SubtitleViewer m_SubtitleViewer;
-        Dictionary<string, Subtitle> m_SubtitleMap = new();
-
         static ClosedCaptionsManager s_Instance;
 
-        // Initializes the singleton instance and creates the necessary components to display subtitles.
+        SubtitlePlayer m_SubtitlePlayer;
+        SubtitleViewer m_SubtitleViewer;
+
+        Dictionary<string, Subtitle> m_SubtitleMap = new();
+
         void Awake()
         {
             if (s_Instance != null && s_Instance != this)
@@ -32,22 +29,33 @@ namespace Unity.Samples.ClosedCaptions
             }
 
             s_Instance = this;
+
+            // Keep the Closed Captions Manager alive across scenes.
             DontDestroyOnLoad(gameObject);
 
-            m_SubtitlePlayer = gameObject.AddComponent<SubtitlePlayer>();
-            m_SubtitleViewer = gameObject.AddComponent<SubtitleViewer>();
+            var document = gameObject.AddComponent<UIDocument>();
+            document.panelSettings = Resources.Load<PanelSettings>("PanelSettings");
+            document.sortingOrder = short.MaxValue; // Ensure that subtitles are displayed on top of all other UI.
 
+            m_SubtitlePlayer = gameObject.AddComponent<SubtitlePlayer>();
+
+            m_SubtitleViewer = gameObject.AddComponent<SubtitleViewer>();
             m_SubtitleViewer.player = m_SubtitlePlayer;
-            m_SubtitleViewer.surface = GetComponent<UIDocument>();
-            m_SubtitleViewer.displaySettings = m_DisplaySettings;
-        }
-        
-        void Start()
-        {
+            m_SubtitleViewer.surface = document;
+            m_SubtitleViewer.displaySettings = Resources.Load<SubtitleDisplaySettings>("Subtitles/DisplaySettings");
+
             // Create a map of audio clip names to subtitles.
-            m_SubtitleMap.Add(AudioManager.instance.welcomeEffect.name, subtitles[0]);
-            m_SubtitleMap.Add(AudioManager.instance.successEffect.name, subtitles[1]);
-            m_SubtitleMap.Add(AudioManager.instance.failureEffect.name, subtitles[2]);
+            m_SubtitleMap.Add(AudioManager.welcomeEffect.name, Resources.Load<Subtitle>("Subtitles/WelcomeEffect"));
+            m_SubtitleMap.Add(AudioManager.successEffect.name, Resources.Load<Subtitle>("Subtitles/SuccessEffect"));
+            m_SubtitleMap.Add(AudioManager.failureEffect.name, Resources.Load<Subtitle>("Subtitles/FailEffect"));
+        }
+
+        void OnDestroy()
+        {
+            if (s_Instance == this)
+            {
+                s_Instance = null;
+            }
         }
 
         void OnEnable()
@@ -60,11 +68,6 @@ namespace Unity.Samples.ClosedCaptions
             AudioManager.audioPlayingStatusChanged -= OnAudioPlayingStatusChanged;
         }
 
-        void OnDestroy()
-        {
-            s_Instance = null;
-        }
-
         // Displays the corresponding subtitle when an audio clip plays.
         void OnAudioPlayingStatusChanged(AudioSource audioSource)
         {
@@ -75,7 +78,7 @@ namespace Unity.Samples.ClosedCaptions
 
             if (audioSource.isPlaying)
             {
-                if (m_SubtitleMap.TryGetValue(audioSource.clip.name, out Subtitle subtitle))
+                if (m_SubtitleMap.TryGetValue(audioSource.clip.name, out var subtitle))
                 {
                     m_SubtitlePlayer.subtitle = subtitle;
                     m_SubtitlePlayer.Play();

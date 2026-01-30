@@ -219,10 +219,7 @@ namespace Unity.Samples.LetterSpell
         {
             PlayerPrefs.SetFloat(musicPreference, value);
 
-            if (AudioManager.instance != null)
-            {
-                AudioManager.instance.SetMusicVolume(value);
-            }
+            AudioManager.SetMusicVolume(value);
         }
 
         static void OnColorThemeValueChanged(int value)

@@ -33,7 +33,7 @@ namespace Unity.Samples.LetterSpell
         }
 
         public static Gameplay instance;
-        
+
         /// <summary>
         /// The database of words.
         /// </summary>
@@ -56,12 +56,12 @@ namespace Unity.Samples.LetterSpell
         /// </summary>
         public char[] currentWordState => m_CurrentWordState;
         char[] m_CurrentWordState;
-        
+
         /// <summary>
         /// The number of words that were successfully reordered.
         /// </summary>
         public int reorderedWordCount { get; private set; }
-        
+
         /// <summary>
         /// Sent when the current word has been changed.
         /// </summary>
@@ -71,17 +71,17 @@ namespace Unity.Samples.LetterSpell
         /// Sent when the current word has been reordered.
         /// </summary>
         public UnityEvent<int, int> wordReordered = new();
-        
+
         /// <summary>
         /// Sent when the current word has been completed.
         /// </summary>
         public UnityEvent wordReorderingCompleted = new();
-        
+
         /// <summary>
         /// Sent when the game has started.
         /// </summary>
         public UnityEvent gameStarted = new();
-        
+
         /// <summary>
         /// Sent when the game has finished.
         /// </summary>
@@ -110,7 +110,7 @@ namespace Unity.Samples.LetterSpell
         /// Sent when the state of the game has changed.
         /// </summary>
         public UnityEvent<State> stateChanged = new();
-        
+
         /// <summary>
         /// The difficulty level of the game.
         /// </summary>
@@ -123,7 +123,7 @@ namespace Unity.Samples.LetterSpell
         };
 
         System.Random m_Randomizer = new();
-        
+
         /// <summary>
         /// Starts a new game.
         /// </summary>
@@ -142,7 +142,7 @@ namespace Unity.Samples.LetterSpell
 
             gameStarted?.Invoke();
         }
-        
+
         /// <summary>
         /// Stops the current game.
         /// </summary>
@@ -187,7 +187,7 @@ namespace Unity.Samples.LetterSpell
         void RebuildWords()
         {
             m_Words.Clear();
-            
+
             using var _ = HashSetPool<int>.Get(out var indexesAlreadyAdded);
             var wordsSource = difficultyLevel == DifficultyLevel.Easy
                 ? wordDatabase.words.easy
@@ -199,7 +199,7 @@ namespace Unity.Samples.LetterSpell
             while (m_Words.Count < wordCount)
             {
                 var index = m_Randomizer.Next(0, wordsSource.Length);
-                
+
                 if (indexesAlreadyAdded.Contains(index))
                 {
                     continue;
@@ -308,22 +308,26 @@ namespace Unity.Samples.LetterSpell
 
                 word[newIndex] = tmp;
 
-                if (AudioManager.instance != null)
-                {
-                    AudioManager.instance.PlayMoveTile();
-                }
+                AudioManager.PlayMoveTile();
             }
         }
 
         void Awake()
         {
-            if (instance == null)
-            {
-                instance = this;
-            }
-            else
+            if (instance != null && instance != this)
             {
                 Destroy(gameObject);
+                return;
+            }
+
+            instance = this;
+        }
+
+        void OnDestroy()
+        {
+            if (instance == this)
+            {
+                instance = null;
             }
         }
 

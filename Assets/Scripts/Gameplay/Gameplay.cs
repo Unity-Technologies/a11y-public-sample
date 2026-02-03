@@ -54,8 +54,7 @@ namespace Unity.Samples.LetterSpell
         /// <summary>
         /// The current state of the word being reordered.
         /// </summary>
-        public char[] currentWordState => m_CurrentWordState;
-        char[] m_CurrentWordState;
+        public char[] currentWordState { get; private set; }
 
         /// <summary>
         /// The number of words that were successfully reordered.
@@ -244,16 +243,16 @@ namespace Unity.Samples.LetterSpell
             {
                 do
                 {
-                    m_CurrentWordState = new char[currentWord.word.Length];
+                    currentWordState = new char[currentWord.word.Length];
 
                     // Shuffle the letters.
-                    currentWord.word.CopyTo(0, m_CurrentWordState, 0, currentWord.word.Length);
+                    currentWord.word.CopyTo(0, currentWordState, 0, currentWord.word.Length);
 
-                    for (var n = m_CurrentWordState.Length; n > 1;)
+                    for (var n = currentWordState.Length; n > 1;)
                     {
                         var k = m_Randomizer.Next(n);
                         --n;
-                        (m_CurrentWordState[n], m_CurrentWordState[k]) = (m_CurrentWordState[k], m_CurrentWordState[n]);
+                        (currentWordState[n], currentWordState[k]) = (currentWordState[k], currentWordState[n]);
                     }
                 }
 
@@ -262,7 +261,7 @@ namespace Unity.Samples.LetterSpell
             }
             else
             {
-                m_CurrentWordState = null;
+                currentWordState = null;
             }
         }
 
@@ -278,7 +277,7 @@ namespace Unity.Samples.LetterSpell
                 return;
             }
 
-            MoveLetter(m_CurrentWordState, oldIndex, newIndex);
+            MoveLetter(currentWordState, oldIndex, newIndex);
             wordReordered?.Invoke(oldIndex, newIndex);
 
             if (IsWordComplete())
@@ -348,7 +347,7 @@ namespace Unity.Samples.LetterSpell
         /// </summary>
         public bool IsWordComplete()
         {
-            return m_Words[m_CurrentWordIndex].word.SequenceEqual(m_CurrentWordState);
+            return m_Words[m_CurrentWordIndex].word.SequenceEqual(currentWordState);
         }
 
         /// <summary>

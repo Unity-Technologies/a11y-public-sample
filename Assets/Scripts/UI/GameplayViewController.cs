@@ -10,13 +10,8 @@ namespace Unity.Samples.LetterSpell
     /// <summary>
     /// Controls the content of the game view.
     /// </summary>
-    class GameViewController : MonoBehaviour
+    class GameplayViewController : MonoBehaviour
     {
-        /// <summary>
-        /// The Gameplay manager.
-        /// </summary>
-        public Gameplay gameplay;
-
         /// <summary>
         /// The template used to create visual instances of letter cards.
         /// </summary>
@@ -52,9 +47,9 @@ namespace Unity.Samples.LetterSpell
         void OnEnable()
         {
             m_Model.letterCardsChanged += OnLetterCardsChanged;
-            m_Model.gameplay = gameplay;
+            m_Model.Setup();
 
-            gameplay.stateChanged.AddListener(ShowOrHideClue);
+            Gameplay.instance.stateChanged.AddListener(ShowOrHideClue);
 
             AssistiveSupport.nodeFocusChanged += OnNodeFocusChanged;
             AssistiveSupport.screenReaderStatusChanged += OnScreenReaderStatusChanged;
@@ -63,7 +58,8 @@ namespace Unity.Samples.LetterSpell
         void OnDisable()
         {
             m_Model.letterCardsChanged -= OnLetterCardsChanged;
-            m_Model.gameplay = null;
+            m_Model.Cleanup();
+
             m_AccessibilityFocusedCard = null;
 
             AssistiveSupport.nodeFocusChanged -= OnNodeFocusChanged;
@@ -74,22 +70,22 @@ namespace Unity.Samples.LetterSpell
         {
             successImage.gameObject.SetActive(false);
 
-            if (gameplay.IsShowingLastWord())
+            if (Gameplay.instance.IsShowingLastWord())
             {
-                AudioManager.PlayResult(gameplay.reorderedWordCount == gameplay.words.Count);
+                AudioManager.PlayResult(Gameplay.instance.reorderedWordCount == Gameplay.instance.words.Count);
 
-                gameplay.StopGame();
-                resultsScreen.ShowResults(gameplay.reorderedWordCount, gameplay.words.Count);
+                Gameplay.instance.StopGame();
+                resultsScreen.ShowResults(Gameplay.instance.reorderedWordCount, Gameplay.instance.words.Count);
             }
             else
             {
-                gameplay.ShowNextWord();
+                Gameplay.instance.ShowNextWord();
             }
         }
 
         public void OnCurrentWordIndexChanged(int index)
         {
-            var clue = gameplay.currentWord.clue;
+            var clue = Gameplay.instance.currentWord.clue;
 
             clueText.GetComponent<TextMeshProUGUI>().text = clue;
             clueText.GetComponent<AccessibleElement>().value = clue;
@@ -132,7 +128,7 @@ namespace Unity.Samples.LetterSpell
                 card.name = letterCardModel.letter.ToString();
                 card.GetComponent<LetterCard>().dropped += (oldIndex, newIndex) =>
                 {
-                    gameplay.ReorderLetter(oldIndex, newIndex);
+                    Gameplay.instance.ReorderLetter(oldIndex, newIndex);
                 };
 
                 var element = card.AddComponent<AccessibleElement>();

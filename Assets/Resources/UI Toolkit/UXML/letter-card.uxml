@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/UI%20Toolkit/USS/letter-card.uss?fileID=7433441132597879392&amp;guid=a43ea5d3f248e4091b8c9ea9f74eee5e&amp;type=3#letter-card"/>
+    <ui:Button text="A" name="" class="letter-button"/>
+</ui:UXML>

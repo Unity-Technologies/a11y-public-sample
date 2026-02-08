@@ -65,7 +65,7 @@ namespace Unity.Samples.LetterSpell
                 documentObject.transform.SetParent(transform, false);
 
                 var document = documentObject.AddComponent<UIDocument>();
-                document.panelSettings = Resources.Load<PanelSettings>("PanelSettings");
+                document.panelSettings = Resources.Load<PanelSettings>("UI Toolkit/PanelSettings");
                 document.sortingOrder = short.MaxValue; // Ensure the transition document is on top of all other UI.
 
                 m_UitkTransitionImage = new UnityEngine.UIElements.Image

@@ -34,7 +34,7 @@ namespace Unity.Samples.ClosedCaptions
             DontDestroyOnLoad(gameObject);
 
             var document = gameObject.AddComponent<UIDocument>();
-            document.panelSettings = Resources.Load<PanelSettings>("PanelSettings");
+            document.panelSettings = Resources.Load<PanelSettings>("UI Toolkit/PanelSettings");
             document.sortingOrder = short.MaxValue; // Ensure that subtitles are displayed on top of all other UI.
 
             m_SubtitlePlayer = gameObject.AddComponent<SubtitlePlayer>();

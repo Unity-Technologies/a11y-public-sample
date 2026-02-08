@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/UITK/USS/main.uss?fileID=7433441132597879392&amp;guid=8951db20a14ff40e892103983ef380b5&amp;type=3#main"/>
-    <Style src="project://database/Assets/UI/UITK/USS/settings.uss?fileID=7433441132597879392&amp;guid=f46885d983ff648d694023b013e396d9&amp;type=3#settings"/>
+    <Style src="project://database/Assets/Resources/UI%20Toolkit/USS/main.uss?fileID=7433441132597879392&amp;guid=8951db20a14ff40e892103983ef380b5&amp;type=3#main"/>
+    <Style src="project://database/Assets/Resources/UI%20Toolkit/USS/settings.uss?fileID=7433441132597879392&amp;guid=f46885d983ff648d694023b013e396d9&amp;type=3#settings"/>
     <ui:Button text="Back " name="back-button" class="letter-spell-button letter-spell-button-secondary"/>
     <ui:ScrollView name="settings-scroll-view" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden">
         <ui:TextField label="" placeholder-text="Search options" name="search-text-field" class="letter-spell-text-field"/>

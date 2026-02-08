@@ -65,7 +65,7 @@ namespace Unity.Samples.ScreenReader
 
         public static AccessibleElement GetAccessibleElementForNode(AccessibilityNode node)
         {
-            return s_Instance.m_ElementForNodeMap.TryGetValue(node, out var element) ? element : null;
+            return s_Instance.m_ElementForNodeMap.GetValueOrDefault(node);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Unity.Samples.ScreenReader
         /// </summary>
         public static void RefreshHierarchy()
         {
-            s_Instance.RebuildHierarchy();
+            s_Instance?.RebuildHierarchy();
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Unity.Samples.ScreenReader
             AssistiveSupport.activeHierarchy = null;
 
             var lastLoadedScene = GetLastLoadedScene();
-            
+
             if (lastLoadedScene.IsValid())
             {
                 StartCoroutine(DelayRebuildHierarchy(lastLoadedScene));
@@ -227,7 +227,7 @@ namespace Unity.Samples.ScreenReader
 
         IEnumerator DelayInitialize()
         {
-            // Wait until the end of the frame to make sure all of the GUI positions have been calculated.
+            // Wait until the end of the frame to make sure all GUI positions have been calculated.
             yield return new WaitForEndOfFrame();
 
             // As scenes get loaded/unloaded, the accessibility hierarchy must be updated.
@@ -240,9 +240,7 @@ namespace Unity.Samples.ScreenReader
 
             // Generate the accessibility hierarchy for the current scene and set it to AssistiveSupport.activeHierarchy
             // so that the screen reader can use it.
-            var lastLoadedScene = GetLastLoadedScene();
-            GenerateHierarchy(lastLoadedScene);
-            AssistiveSupport.activeHierarchy = hierarchy;
+            RebuildHierarchy();
         }
 
         IEnumerator OnOrientationChanged()
@@ -347,7 +345,7 @@ namespace Unity.Samples.ScreenReader
                 var elementObject = element.transform;
                 AccessibilityNode node = null;
 
-                // If this is a root element or it is the first of its ancestors to be an AccessibleElement, add it as a
+                // If this is a root element, or it's the first of its ancestors to be an AccessibleElement, add it as a
                 // root node of the hierarchy.
                 if (elementObject.parent == null || elementObject.parent.GetComponentInParent<AccessibleElement>() == null)
                 {
@@ -357,8 +355,8 @@ namespace Unity.Samples.ScreenReader
                 {
                     var item = hierarchyStack.Pop();
 
-                    // Pop until we empty the hierarchy stack or we find a pair with one of the element's ancestors.
-                    while (hierarchyStack.Count > 0 && elementObject.IsChildOf(item.transform) == false)
+                    // Pop until we empty the hierarchy stack or find a pair with one of the element's ancestors.
+                    while (hierarchyStack.Count > 0 && !elementObject.IsChildOf(item.transform))
                     {
                         item = hierarchyStack.Pop();
                     }

@@ -54,10 +54,9 @@ namespace Unity.Samples.LetterSpell
         /// </summary>
         LetterCard m_AccessibilitySelectedCard;
 
-        /// <summary>
-        /// Keeps track of whether the hierarchy was refreshed using AccessibilityManager.RefreshHierarchy();
-        /// </summary>
-        bool m_WasHierarchyRefreshed;
+        const string k_LetterCardDefaultHint = "Submit to select and start moving.";
+        const string k_LetterCardSelectedHint = "Navigate left or right to move. Submit to unselect.";
+        const string k_SuccessAnnouncement = "Bravo! You found the correct word.";
 
         void OnEnable()
         {
@@ -220,6 +219,12 @@ namespace Unity.Samples.LetterSpell
 
         public void OnWordCompleted()
         {
+            if (!m_UseUIToolkit)
+            {
+                m_AccessibilitySelectedCard.SetDraggingVisuals(false);
+                m_AccessibilitySelectedCard = null;
+            }
+
             StartCoroutine(DelayWordCompleted());
             return;
 
@@ -231,9 +236,8 @@ namespace Unity.Samples.LetterSpell
                 // This delay is needed to ensure that the screen reader has enough time to announce the word reordering.
                 // It also ensures that the announcement is not ignored by the screen reader.
                 const float announcementDelay = 1f;
-                const string successAnnouncement = "Bravo! You found the correct word.";
                 yield return new WaitForSeconds(announcementDelay);
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(successAnnouncement);
+                AssistiveSupport.notificationDispatcher.SendAnnouncement(k_SuccessAnnouncement);
 
                 const float fadeOutDelay = 1f;
                 yield return new WaitForSeconds(fadeOutDelay);
@@ -303,7 +307,7 @@ namespace Unity.Samples.LetterSpell
 
             if (Gameplay.instance != null && Gameplay.instance.state != Gameplay.State.Stopped)
             {
-                this.DelayRefreshHierarchy();
+                AccessibilityManager.RefreshHierarchy();
 
                 Invoke(nameof(MoveAccessibilityFocusOnClue), 1f);
             }
@@ -331,7 +335,10 @@ namespace Unity.Samples.LetterSpell
                 AccessibilityManager.ActivateOtherAccessibilityNodes(false, uguiLetterCardContainer);
 
                 letterCard.SetDraggingVisuals(true);
-                SetLetterCardsAccessibilityLabel(false);
+
+                var element = letterCard.GetComponent<AccessibleElement>();
+                element.hint = k_LetterCardSelectedHint;
+                element.SetNodeProperties();
             }
             else
             {
@@ -340,7 +347,10 @@ namespace Unity.Samples.LetterSpell
                 AccessibilityManager.ActivateOtherAccessibilityNodes(true, uguiLetterCardContainer);
 
                 letterCard.SetDraggingVisuals(false);
-                SetLetterCardsAccessibilityLabel(true);
+
+                var element = letterCard.GetComponent<AccessibleElement>();
+                element.hint = k_LetterCardDefaultHint;
+                element.SetNodeProperties();
             }
 
             return true;
@@ -381,13 +391,6 @@ namespace Unity.Samples.LetterSpell
                 return;
             }
 
-            // Don't move the card if the focus change occurred because of a hierarchy rebuild.
-            if (m_WasHierarchyRefreshed)
-            {
-                m_WasHierarchyRefreshed = false;
-                return;
-            }
-
             // If we reach this code, it means we're dragging the card.
             var selectedCardIndex = m_AccessibilitySelectedCard.transform.GetSiblingIndex();
             var focusedCardIndex = m_AccessibilityFocusedCard.transform.GetSiblingIndex();
@@ -400,17 +403,6 @@ namespace Unity.Samples.LetterSpell
             else if (selectedCardIndex < focusedCardIndex)
             {
                 MoveCard(false, focusedCardIndex - selectedCardIndex);
-            }
-        }
-
-        void SetLetterCardsAccessibilityLabel(bool hasLabel)
-        {
-            foreach (Transform letterCardTransform in uguiLetterCardContainer)
-            {
-                var element = letterCardTransform.GetComponent<AccessibleElement>();
-                element.label = hasLabel ? letterCardTransform.name : null;
-                element.hint = hasLabel ? "Double tap to start moving." : null;
-                element.SetNodeProperties();
             }
         }
 
@@ -431,33 +423,24 @@ namespace Unity.Samples.LetterSpell
                 var otherSibling = draggable.transform.parent.GetChild(otherSiblingIndex);
 
                 // Make the letter uppercase to ensure correct phonetic pronunciation.
-                var announcement = $"Moved {draggable.name.ToUpper()} {(shouldMoveLeft ? "before" : "after")} {otherSibling.name.ToUpper()}";
+                var announcement = $"Moved \"{draggable.name.ToUpper()}\" {(shouldMoveLeft ? "before" : "after")} \"{otherSibling.name.ToUpper()}\"";
 
                 // Announce that the card was moved.
                 AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);
 
-                // On iOS, the accessibility hierarchy is flattened. This means that nodes don't have parents or
-                // children, so functions that require them (like AccessibilityHierarchy.MoveNode) won't work. Hence,
-                // we need to recreate the whole hierarchy instead.
-                if (Application.platform == RuntimePlatform.IPhonePlayer)
+                AccessibilityManager.hierarchy.MoveNode(element.node, element.node.parent,
+                    element.transform.GetSiblingIndex());
+
+                // After the move, the screen reader will refocus on the other card, but with a little delay. Move the
+                // focus to the selected card, but wait a bit to let the first focus change complete. Otherwise, the
+                // screen reader will focus on the selected card first, then still on the other card, triggering an
+                // infinite swap of the two cards.
+                StartCoroutine(DelaySendLayoutChanged());
+                return;
+
+                IEnumerator DelaySendLayoutChanged()
                 {
-                    AccessibilityManager.RefreshHierarchy();
-                    m_WasHierarchyRefreshed = true;
-
-                    // Add the node count to the element ID to match the ID of the node in the refreshed hierarchy,
-                    // ensuring consistent focus even after rebuilding.
-                    var nodeToFocusId = element.node.id + AccessibilityManager.hierarchy.rootNodes.Count;
-                    nodeToFocusId += shouldMoveLeft ? -count : count;
-
-                    this.DelayFocusOnNode(nodeToFocusId);
-                }
-                else
-                {
-                    AccessibilityManager.hierarchy.MoveNode(element.node, element.node.parent,
-                        element.transform.GetSiblingIndex());
-
-                    // Only refresh the frames for now to leave the announcement request to be handled.
-                    this.DelayRefreshNodeFrames();
+                    yield return new WaitForEndOfFrame();
 
                     AssistiveSupport.notificationDispatcher.SendLayoutChanged(element.node);
                 }

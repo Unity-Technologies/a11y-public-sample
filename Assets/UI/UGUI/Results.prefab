@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 235497322962998885}
   - component: {fileID: 4477294813857603993}
   m_Layer: 5
-  m_Name: New Game Button
+  m_Name: Dismiss Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,19 +197,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4164136233597792557}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 996433016023606484}
-        m_TargetAssemblyTypeName: PauseScreen, Assembly-CSharp
-        m_MethodName: StartGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &4477294813857603993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,6 +324,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -385,7 +374,7 @@ MonoBehaviour:
   label: 3 of 3 correct
   value: 
   hint: 
-  role: 4
+  role: 7
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &3288070168320293324
@@ -402,7 +391,7 @@ GameObject:
   - component: {fileID: 5599167038713902672}
   - component: {fileID: 3416657045614378823}
   m_Layer: 5
-  m_Name: End Game Button
+  m_Name: Submit Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -509,19 +498,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8082395280832955892}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 996433016023606484}
-        m_TargetAssemblyTypeName: PauseScreen, Assembly-CSharp
-        m_MethodName: EndGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &3416657045614378823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,7 +527,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4609461272796875309}
-  - component: {fileID: 996433016023606484}
   - component: {fileID: 4458053060096149119}
   m_Layer: 0
   m_Name: Results
@@ -579,20 +555,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &996433016023606484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5086025856925529095}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f786dab0832ef4806bc397795e62082c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  statusText: {fileID: 5784633083465774046}
-  dismissButton: {fileID: 235497322962998885}
 --- !u!114 &4458053060096149119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -710,6 +672,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -924,6 +887,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

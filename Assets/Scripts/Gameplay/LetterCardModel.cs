@@ -47,13 +47,13 @@ namespace Unity.Samples.LetterSpell
 
         public void Setup()
         {
-            Gameplay.instance?.currentWordIndexChanged.AddListener(OnWordIndexChanged);
+            Gameplay.instance?.wordIndexChanged.AddListener(OnWordIndexChanged);
             Gameplay.instance?.wordReordered.AddListener(OnWordReordered);
         }
 
         public void Cleanup()
         {
-            Gameplay.instance?.currentWordIndexChanged.RemoveListener(OnWordIndexChanged);
+            Gameplay.instance?.wordIndexChanged.RemoveListener(OnWordIndexChanged);
             Gameplay.instance?.wordReordered.RemoveListener(OnWordReordered);
         }
 

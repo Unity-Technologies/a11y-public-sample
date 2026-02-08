@@ -64,7 +64,7 @@ namespace Unity.Samples.LetterSpell
         /// <summary>
         /// Sent when the current word has been changed.
         /// </summary>
-        public UnityEvent<int> currentWordIndexChanged = new();
+        public UnityEvent<int> wordIndexChanged = new();
 
         /// <summary>
         /// Sent when the current word has been reordered.
@@ -74,7 +74,7 @@ namespace Unity.Samples.LetterSpell
         /// <summary>
         /// Sent when the current word has been completed.
         /// </summary>
-        public UnityEvent wordReorderingCompleted = new();
+        public UnityEvent wordCompleted = new();
 
         /// <summary>
         /// Sent when the game has started.
@@ -153,7 +153,7 @@ namespace Unity.Samples.LetterSpell
             }
 
             state = State.Stopped;
-            SetCurrentWordIndex(-1);
+            SetWordIndex(-1);
 
             gameEnded?.Invoke();
         }
@@ -220,11 +220,11 @@ namespace Unity.Samples.LetterSpell
             }
             else
             {
-                SetCurrentWordIndex(m_CurrentWordIndex + 1);
+                SetWordIndex(m_CurrentWordIndex + 1);
             }
         }
 
-        void SetCurrentWordIndex(int index)
+        void SetWordIndex(int index)
         {
             if (m_CurrentWordIndex == index)
             {
@@ -234,7 +234,7 @@ namespace Unity.Samples.LetterSpell
             m_CurrentWordIndex = index;
             InitializeCurrentWordState();
 
-            currentWordIndexChanged?.Invoke(index);
+            wordIndexChanged?.Invoke(index);
         }
 
         void InitializeCurrentWordState()
@@ -283,7 +283,7 @@ namespace Unity.Samples.LetterSpell
             if (IsWordComplete())
             {
                 reorderedWordCount++;
-                wordReorderingCompleted?.Invoke();
+                wordCompleted?.Invoke();
             }
 
             return;
@@ -332,13 +332,6 @@ namespace Unity.Samples.LetterSpell
 
         void Start()
         {
-            StartCoroutine(DelayStartGame());
-        }
-
-        IEnumerator DelayStartGame()
-        {
-            yield return new WaitForEndOfFrame();
-
             StartGame();
         }
 

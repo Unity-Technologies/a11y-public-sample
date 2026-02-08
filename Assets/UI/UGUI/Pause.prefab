@@ -103,6 +103,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -150,7 +151,7 @@ GameObject:
   - component: {fileID: 765567081797423582}
   - component: {fileID: 3869468997850196433}
   m_Layer: 5
-  m_Name: Resume Button
+  m_Name: Dismiss Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -257,19 +258,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5492500043774158232}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2366475021356899973}
-        m_TargetAssemblyTypeName: PauseScreen, Assembly-CSharp
-        m_MethodName: ResumeGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &3869468997850196433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,6 +382,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -442,7 +432,7 @@ MonoBehaviour:
   label: Game Paused
   value: 
   hint: 
-  role: 4
+  role: 7
   allowsDirectInteraction: 0
   state: 0
 --- !u!1 &3325404743404711950
@@ -454,7 +444,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4672603894427161874}
-  - component: {fileID: 2366475021356899973}
   - component: {fileID: 3010598783434537444}
   m_Layer: 0
   m_Name: Pause
@@ -483,20 +472,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2366475021356899973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3325404743404711950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f786dab0832ef4806bc397795e62082c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  statusText: {fileID: 545744992819355778}
-  dismissButton: {fileID: 765567081797423582}
 --- !u!114 &3010598783434537444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -525,7 +500,7 @@ GameObject:
   - component: {fileID: 8771485882738023357}
   - component: {fileID: 3200984677826006547}
   m_Layer: 5
-  m_Name: End Game Button
+  m_Name: Submit Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -632,19 +607,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6360786671579084414}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2366475021356899973}
-        m_TargetAssemblyTypeName: PauseScreen, Assembly-CSharp
-        m_MethodName: EndGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &3200984677826006547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,6 +730,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

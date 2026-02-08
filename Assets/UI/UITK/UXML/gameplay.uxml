@@ -4,7 +4,11 @@
     <Style src="project://database/Assets/UI/UITK/USS/gameplay.uss?fileID=7433441132597879392&amp;guid=a335810bcc80449f3be75a58e1332016&amp;type=3#gameplay"/>
     <ui:VisualElement name="gameplay-container">
         <ui:VisualElement name="game-container">
-            <ui:Label text="When you hear the doorbell." name="clue-label"/>
+            <ui:Label text="This is your clue." name="clue-label">
+                <Bindings>
+                    <ui:DataBinding property="style.display" data-source-path="showClues" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                </Bindings>
+            </ui:Label>
             <ui:VisualElement name="success-image">
                 <ui:Image source="project://database/Assets/UI/Resources/Images/Success-Check.png?fileID=-9040358768007008051&amp;guid=cba63604506fe4fcfa0f3523cfb6c5fd&amp;type=3#Success-Check_0"/>
                 <ui:Label text="Correct" name="success-label"/>
@@ -30,9 +34,8 @@
                 <ui:Label text="Game paused" name="pause-label" class="pause-screen-label"/>
             </ui:VisualElement>
             <ui:VisualElement name="" class="pause-screen-buttons-container">
-                <ui:Button text="End game" class="letter-spell-button letter-spell-button-secondary pause-screen-button"/>
-                <ui:VisualElement style="flex-grow: 1;"/>
-                <ui:Button text="Resume" class="letter-spell-button letter-spell-button-primary pause-screen-button"/>
+                <ui:Button text="End game" name="submit-button" class="letter-spell-button letter-spell-button-secondary pause-screen-button"/>
+                <ui:Button text="Resume" name="dismiss-button" class="letter-spell-button letter-spell-button-primary pause-screen-button"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
@@ -42,9 +45,8 @@
                 <ui:Label text="Game over" name="results-label" class="pause-screen-label"/>
             </ui:VisualElement>
             <ui:VisualElement name="" class="pause-screen-buttons-container">
-                <ui:Button text="Main menu" class="letter-spell-button letter-spell-button-secondary pause-screen-button"/>
-                <ui:VisualElement style="flex-grow: 1;"/>
-                <ui:Button text="Play again" class="letter-spell-button letter-spell-button-primary pause-screen-button"/>
+                <ui:Button text="Main menu" name="submit-button" class="letter-spell-button letter-spell-button-secondary pause-screen-button"/>
+                <ui:Button text="Play again" name="dismiss-button" class="letter-spell-button letter-spell-button-primary pause-screen-button"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

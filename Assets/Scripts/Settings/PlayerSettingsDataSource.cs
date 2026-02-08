@@ -11,13 +11,39 @@ namespace Unity.Samples.LetterSpell
     /// </summary>
     public class PlayerSettingsDataSource : IDisposable, INotifyBindablePropertyChanged
     {
+        static PlayerSettingsDataSource s_Instance;
+        static int s_ReferenceCount;
+
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
-        public PlayerSettingsDataSource()
+        PlayerSettingsDataSource()
         {
             AccessibilitySettings.fontScaleChanged += OnFontScaleChanged;
             AccessibilitySettings.boldTextStatusChanged += OnBoldTextStatusChanged;
             AccessibilitySettings.closedCaptioningStatusChanged += OnClosedCaptioningStatusChanged;
+        }
+
+        public static PlayerSettingsDataSource Acquire()
+        {
+            s_Instance ??= new PlayerSettingsDataSource();
+            s_ReferenceCount++;
+            return s_Instance;
+        }
+
+        public static void Release()
+        {
+            s_ReferenceCount--;
+
+            if (s_ReferenceCount == 0)
+            {
+                s_Instance.Dispose();
+                s_Instance = null;
+            }
+
+            if (s_ReferenceCount < 0)
+            {
+                s_ReferenceCount = 0;
+            }
         }
 
         public void Dispose()
@@ -182,6 +208,19 @@ namespace Unity.Samples.LetterSpell
         void NotifyPropertyChanged(string propertyName)
         {
             propertyChanged?.Invoke(this, new BindablePropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    /// <summary>
+    /// Registers a converter from bool to DisplayStyle for UI Toolkit bindings.
+    /// </summary>
+    public static class BoolToDisplayStyleConverter
+    {
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void Register()
+        {
+            ConverterGroups.RegisterGlobalConverter((ref bool value) =>
+                new StyleEnum<DisplayStyle>(value ? DisplayStyle.Flex : DisplayStyle.None));
         }
     }
 }

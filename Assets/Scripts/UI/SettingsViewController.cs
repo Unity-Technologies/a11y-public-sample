@@ -12,7 +12,6 @@ namespace Unity.Samples.LetterSpell
         [Header("UI Toolkit References")]
         public UIDocument uitkDocument;
 
-        PlayerSettingsDataSource m_UitkDataSource;
         Button m_UitkBackButton;
 
         bool m_UseUIToolkit;
@@ -45,7 +44,7 @@ namespace Unity.Samples.LetterSpell
 
                 var root = uitkDocument.rootVisualElement;
 
-                root.dataSource = m_UitkDataSource = new PlayerSettingsDataSource();
+                root.dataSource = PlayerSettingsDataSource.Acquire();
 
                 m_UitkBackButton = root.Q<Button>("back-button");
                 m_UitkBackButton.clicked += SceneTransitionManager.UnloadSettingsScene;
@@ -65,8 +64,7 @@ namespace Unity.Samples.LetterSpell
         {
             if (m_UseUIToolkit)
             {
-                m_UitkDataSource?.Dispose();
-                uitkDocument.rootVisualElement.dataSource = null;
+                PlayerSettingsDataSource.Release();
 
                 m_UitkBackButton.clicked -= SceneTransitionManager.UnloadSettingsScene;
             }

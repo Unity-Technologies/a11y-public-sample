@@ -3,7 +3,7 @@ using Unity.Samples.ScreenReader;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 namespace Unity.Samples.LetterSpell
 {
@@ -15,17 +15,32 @@ namespace Unity.Samples.LetterSpell
         /// <summary>
         /// The template used to create visual instances of letter cards.
         /// </summary>
-        public GameObject letterCardTemplate;
+        [Header("uGUI References")]
+        public GameObject uguiLetterCardTemplate;
 
         /// <summary>
         /// The container of the letter cards.
         /// </summary>
-        public Transform letterCardContainer;
+        public Transform uguiLetterCardContainer;
 
-        public TMP_Text clueText;
-        public Image successImage;
-        public PauseScreen pauseScreen;
-        public PauseScreen resultsScreen;
+        public TMP_Text uguiClueLabel;
+        public UnityEngine.UI.Image uguiSuccessImage;
+
+        public UnityEngine.UI.Button uguiPauseButton;
+        public UnityEngine.UI.Button uguiOptionsButton;
+        public UnityEngine.UI.Button uguiNextButton;
+
+        [Header("UI Toolkit References")]
+        public UIDocument uitkDocument;
+
+        Label m_UitkClueLabel;
+        VisualElement m_UitkSuccessImage;
+
+        Button m_UitkPauseButton;
+        Button m_UitkOptionsButton;
+        Button m_UitkNextButton;
+
+        bool m_UseUIToolkit;
 
         LetterCardListModel m_Model = new();
 
@@ -46,10 +61,12 @@ namespace Unity.Samples.LetterSpell
 
         void OnEnable()
         {
-            m_Model.letterCardsChanged += OnLetterCardsChanged;
-            m_Model.Setup();
+            m_UseUIToolkit = PlayerPrefs.GetInt(UISystemToggler.useUIToolkitPreference) == 1;
 
-            Gameplay.instance.stateChanged.AddListener(ShowOrHideClue);
+            SetupUI();
+
+            m_Model.Setup();
+            m_Model.letterCardsChanged += OnLetterCardsChanged;
 
             AssistiveSupport.nodeFocusChanged += OnNodeFocusChanged;
             AssistiveSupport.screenReaderStatusChanged += OnScreenReaderStatusChanged;
@@ -57,6 +74,8 @@ namespace Unity.Samples.LetterSpell
 
         void OnDisable()
         {
+            CleanupUI();
+
             m_Model.letterCardsChanged -= OnLetterCardsChanged;
             m_Model.Cleanup();
 
@@ -66,16 +85,101 @@ namespace Unity.Samples.LetterSpell
             AssistiveSupport.screenReaderStatusChanged -= OnScreenReaderStatusChanged;
         }
 
-        public void ShowNextWord()
+        void SetupUI()
         {
-            successImage.gameObject.SetActive(false);
+            if (m_UseUIToolkit)
+            {
+                if (uitkDocument == null)
+                {
+                    Debug.LogError($"{nameof(uitkDocument)} is not assigned for {GetType().Name}.");
+                    return;
+                }
+
+                var root = uitkDocument.rootVisualElement;
+
+                root.dataSource = PlayerSettingsDataSource.Acquire();
+
+                m_UitkClueLabel = root.Q<Label>("clue-label");
+                m_UitkSuccessImage = root.Q<VisualElement>("success-image");
+
+                m_UitkPauseButton = root.Q<Button>("pause-button");
+                m_UitkPauseButton.clicked += PauseViewController.PauseGame;
+
+                m_UitkOptionsButton = root.Q<Button>("options-button");
+                m_UitkOptionsButton.clicked += SceneTransitionManager.LoadSettingsScene;
+
+                m_UitkNextButton = root.Q<Button>("next-button");
+                m_UitkNextButton.clicked += ShowNextWord;
+            }
+            else
+            {
+                if (uguiClueLabel == null)
+                {
+                    Debug.LogError($"{nameof(uguiClueLabel)} is not assigned for {GetType().Name}.");
+                }
+
+                if (uguiSuccessImage == null)
+                {
+                    Debug.LogError($"{nameof(uguiSuccessImage)} is not assigned for {GetType().Name}.");
+                }
+
+                if (uguiPauseButton == null)
+                {
+                    Debug.LogError($"{nameof(uguiPauseButton)} is not assigned for {GetType().Name}.");
+                }
+
+                if (uguiOptionsButton == null)
+                {
+                    Debug.LogError($"{nameof(uguiOptionsButton)} is not assigned for {GetType().Name}.");
+                }
+
+                if (uguiNextButton == null)
+                {
+                    Debug.LogError($"{nameof(uguiNextButton)} is not assigned for {GetType().Name}.");
+                }
+
+                uguiSuccessImage?.canvasRenderer.SetAlpha(0f);
+
+                uguiPauseButton?.onClick.AddListener(PauseViewController.PauseGame);
+                uguiOptionsButton?.onClick.AddListener(SceneTransitionManager.LoadSettingsScene);
+                uguiNextButton?.onClick.AddListener(ShowNextWord);
+            }
+        }
+
+        void CleanupUI()
+        {
+            if (m_UseUIToolkit)
+            {
+                PlayerSettingsDataSource.Release();
+
+                m_UitkPauseButton.clicked -= PauseViewController.PauseGame;
+                m_UitkOptionsButton.clicked -= SceneTransitionManager.LoadSettingsScene;
+                m_UitkNextButton.clicked -= ShowNextWord;
+            }
+            else
+            {
+                uguiPauseButton?.onClick.RemoveListener(PauseViewController.PauseGame);
+                uguiOptionsButton?.onClick.RemoveListener(SceneTransitionManager.LoadSettingsScene);
+                uguiNextButton?.onClick.RemoveListener(ShowNextWord);
+            }
+        }
+
+        void ShowNextWord()
+        {
+            if (m_UseUIToolkit)
+            {
+                m_UitkSuccessImage.style.opacity = 0f;
+            }
+            else
+            {
+                uguiSuccessImage?.gameObject.SetActive(false);
+            }
 
             if (Gameplay.instance.IsShowingLastWord())
             {
                 AudioManager.PlayResult(Gameplay.instance.reorderedWordCount == Gameplay.instance.words.Count);
 
-                Gameplay.instance.StopGame();
-                resultsScreen.ShowResults(Gameplay.instance.reorderedWordCount, Gameplay.instance.words.Count);
+                PauseViewController.EndGame(Gameplay.instance.reorderedWordCount, Gameplay.instance.words.Count);
             }
             else
             {
@@ -83,27 +187,87 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
-        public void OnCurrentWordIndexChanged(int index)
+        public void OnGameStateChanged(Gameplay.State state)
+        {
+            if (state != Gameplay.State.Playing)
+            {
+                return;
+            }
+
+            if (!m_UseUIToolkit)
+            {
+                var showClue = PlayerPrefs.GetInt(PlayerSettings.cluePreference, 1) == 1;
+
+                uguiClueLabel.GetComponent<TextMeshProUGUI>().enabled = showClue;
+                uguiClueLabel.GetComponent<AccessibleElement>().enabled = showClue;
+            }
+        }
+
+        public void OnWordIndexChanged(int _)
         {
             var clue = Gameplay.instance.currentWord.clue;
 
-            clueText.GetComponent<TextMeshProUGUI>().text = clue;
-            clueText.GetComponent<AccessibleElement>().value = clue;
-
-            ShowOrHideClue(Gameplay.State.Playing);
-        }
-
-        void ShowOrHideClue(Gameplay.State newState)
-        {
-            if (PlayerPrefs.GetInt(PlayerSettings.cluePreference, 1) == 1)
+            if (m_UseUIToolkit)
             {
-                clueText.GetComponent<TextMeshProUGUI>().enabled = true;
-                clueText.GetComponent<AccessibleElement>().enabled = true;
+                m_UitkClueLabel.text = clue;
             }
             else
             {
-                clueText.GetComponent<TextMeshProUGUI>().enabled = false;
-                clueText.GetComponent<AccessibleElement>().enabled = false;
+                uguiClueLabel.GetComponent<TextMeshProUGUI>().text = clue;
+                uguiClueLabel.GetComponent<AccessibleElement>().value = clue;
+            }
+        }
+
+        public void OnWordCompleted()
+        {
+            StartCoroutine(DelayWordCompleted());
+            return;
+
+            IEnumerator DelayWordCompleted()
+            {
+                const float fadeDuration = 0.2f;
+                FadeSuccessImageIn(fadeDuration);
+
+                // This delay is needed to ensure that the screen reader has enough time to announce the word reordering.
+                // It also ensures that the announcement is not ignored by the screen reader.
+                const float announcementDelay = 1f;
+                const string successAnnouncement = "Bravo! You found the correct word.";
+                yield return new WaitForSeconds(announcementDelay);
+                AssistiveSupport.notificationDispatcher.SendAnnouncement(successAnnouncement);
+
+                const float fadeOutDelay = 1f;
+                yield return new WaitForSeconds(fadeOutDelay);
+                FadeSuccessImageOut(fadeDuration);
+
+                const float announcementDuration = 2.5f;
+                const float nextWordDelay = announcementDuration - fadeOutDelay;
+                yield return new WaitForSeconds(nextWordDelay);
+                ShowNextWord();
+            }
+
+            void FadeSuccessImageIn(float duration)
+            {
+                if (m_UseUIToolkit)
+                {
+                    m_UitkSuccessImage.style.opacity = 1f;
+                }
+                else
+                {
+                    uguiSuccessImage?.gameObject.SetActive(true);
+                    uguiSuccessImage?.CrossFadeAlpha(1f, duration, false);
+                }
+            }
+
+            void FadeSuccessImageOut(float duration)
+            {
+                if (m_UseUIToolkit)
+                {
+                    m_UitkSuccessImage.style.opacity = 0f;
+                }
+                else
+                {
+                    uguiSuccessImage?.CrossFadeAlpha(0f, duration, false);
+                }
             }
         }
 
@@ -115,7 +279,7 @@ namespace Unity.Samples.LetterSpell
             m_AccessibilityFocusedCard = null;
 
             // Remove all cards.
-            foreach (Transform letterCardTransform in letterCardContainer)
+            foreach (Transform letterCardTransform in uguiLetterCardContainer)
             {
                 Destroy(letterCardTransform.gameObject);
             }
@@ -123,7 +287,7 @@ namespace Unity.Samples.LetterSpell
             // Generate new cards.
             foreach (var letterCardModel in m_Model.letterCards)
             {
-                var card = Instantiate(letterCardTemplate, letterCardContainer);
+                var card = Instantiate(uguiLetterCardTemplate, uguiLetterCardContainer);
                 card.GetComponentInChildren<TextMeshProUGUI>().text = letterCardModel.letter.ToString();
                 card.name = letterCardModel.letter.ToString();
                 card.GetComponent<LetterCard>().dropped += (oldIndex, newIndex) =>
@@ -145,6 +309,12 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
+        void MoveAccessibilityFocusOnClue()
+        {
+            var nodeToFocus = uguiClueLabel.GetComponent<AccessibleElement>().node;
+            AssistiveSupport.notificationDispatcher.SendLayoutChanged(nodeToFocus);
+        }
+
         /// <summary>
         /// Toggles the ability of the focused letter card to be reordered using the screen reader.
         /// </summary>
@@ -158,7 +328,7 @@ namespace Unity.Samples.LetterSpell
 
                 // When a letter card is selected, deactivate all accessibility nodes except the ones corresponding to
                 // the letter cards to allow the selected card to be moved correctly.
-                AccessibilityManager.ActivateOtherAccessibilityNodes(false, letterCardContainer);
+                AccessibilityManager.ActivateOtherAccessibilityNodes(false, uguiLetterCardContainer);
 
                 letterCard.SetDraggingVisuals(true);
                 SetLetterCardsAccessibilityLabel(false);
@@ -167,48 +337,13 @@ namespace Unity.Samples.LetterSpell
             {
                 m_AccessibilitySelectedCard = null;
 
-                AccessibilityManager.ActivateOtherAccessibilityNodes(true, letterCardContainer);
+                AccessibilityManager.ActivateOtherAccessibilityNodes(true, uguiLetterCardContainer);
 
                 letterCard.SetDraggingVisuals(false);
                 SetLetterCardsAccessibilityLabel(true);
             }
 
             return true;
-        }
-
-        void MoveAccessibilityFocusOnClue()
-        {
-            var nodeToFocus = clueText.GetComponent<AccessibleElement>().node;
-            AssistiveSupport.notificationDispatcher.SendLayoutChanged(nodeToFocus);
-        }
-
-        public void OnWordReorderingCompleted()
-        {
-            StartCoroutine(DelayWordReorderingCompleted());
-            return;
-
-            // This delay is needed to ensure that the screen reader has enough time to announce the word reordering.
-            // It also ensures that the announcement is not ignored by the screen reader.
-            IEnumerator DelayWordReorderingCompleted()
-            {
-                const float fadeDuration = 0.3f;
-                FadeSuccessImageIn(fadeDuration);
-
-                const float announcementDelay = 1f;
-                const string successAnnouncement = "Bravo! You found the correct word.";
-                yield return new WaitForSeconds(announcementDelay);
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(successAnnouncement);
-
-                const float imageDuration = 2f;
-                const float fadeOutDelay = imageDuration - announcementDelay - fadeDuration;
-                yield return new WaitForSeconds(fadeOutDelay);
-                FadeSuccessImageOut(fadeDuration);
-
-                const float announcementDuration = 2.5f;
-                const float nextWordDelay = announcementDuration - fadeOutDelay;
-                yield return new WaitForSeconds(nextWordDelay);
-                ShowNextWord();
-            }
         }
 
         /// <summary>
@@ -270,7 +405,7 @@ namespace Unity.Samples.LetterSpell
 
         void SetLetterCardsAccessibilityLabel(bool hasLabel)
         {
-            foreach (Transform letterCardTransform in letterCardContainer)
+            foreach (Transform letterCardTransform in uguiLetterCardContainer)
             {
                 var element = letterCardTransform.GetComponent<AccessibleElement>();
                 element.label = hasLabel ? letterCardTransform.name : null;
@@ -327,34 +462,6 @@ namespace Unity.Samples.LetterSpell
                     AssistiveSupport.notificationDispatcher.SendLayoutChanged(element.node);
                 }
             }
-        }
-
-        void FadeSuccessImageIn(float duration)
-        {
-            successImage.gameObject.SetActive(true);
-            StartCoroutine(FadeGraphic(successImage, 1f, duration));
-        }
-
-        void FadeSuccessImageOut(float duration)
-        {
-            StartCoroutine(FadeGraphic(successImage, 0f, duration));
-        }
-
-        static IEnumerator FadeGraphic(Graphic graphic, float targetAlpha, float duration)
-        {
-            var startAlpha = graphic.color.a;
-            var time = 0f;
-
-            while (time < duration)
-            {
-                time += Time.deltaTime;
-                var normalizedTime = time / duration;
-                var alpha = Mathf.Lerp(startAlpha, targetAlpha, normalizedTime);
-                graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, alpha);
-                yield return null;
-            }
-
-            graphic.color = new Color(graphic.color.r, graphic.color.g, graphic.color.b, targetAlpha);
         }
     }
 }

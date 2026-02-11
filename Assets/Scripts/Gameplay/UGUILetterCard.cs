@@ -167,7 +167,6 @@ namespace Unity.Samples.LetterSpell
             selectedImage.gameObject.SetActive(selected);
 
             m_AccessibleElement.hint = selected ? k_LetterCardSelectedHint : k_LetterCardDefaultHint;
-            m_AccessibleElement.SetNodeProperties();
 
             if (AssistiveSupport.isScreenReaderEnabled && !m_IsSelected)
             {

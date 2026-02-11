@@ -21,7 +21,9 @@ namespace Unity.Samples.ScreenReader
 
         void Start()
         {
-            role |= AccessibilityRole.Toggle;
+#if UNITY_2023_3_OR_NEWER
+            role = AccessibilityRole.Toggle;
+#endif // UNITY_2023_3_OR_NEWER
 
             m_Toggle = GetComponentInChildren<Toggle>();
             m_Text = GetComponentInChildren<Text>();
@@ -82,10 +84,32 @@ namespace Unity.Samples.ScreenReader
         {
             if (m_Toggle != null)
             {
-                selected -= OnSelected;
-
                 m_Toggle.onValueChanged.RemoveListener(UpdateValue);
+
+                selected -= OnSelected;
             }
+        }
+
+        bool IsInsideDropdown()
+        {
+            var currentTransform = transform.parent;
+
+            // Traverse up the parent hierarchy.
+            while (currentTransform != null)
+            {
+                // Check if the current parent has a dropdown component.
+                if (currentTransform.GetComponent<MultiSelectDropdown>() != null ||
+                    currentTransform.GetComponent<TMP_Dropdown>() != null ||
+                    currentTransform.GetComponent<Dropdown>() != null)
+                {
+                    return true; // Found the dropdown.
+                }
+
+                // Move to the next parent.
+                currentTransform = currentTransform.parent;
+            }
+
+            return false; // No dropdown found.
         }
 
         bool OnSelected()
@@ -109,30 +133,6 @@ namespace Unity.Samples.ScreenReader
             {
                 state &= ~AccessibilityState.Selected;
             }
-
-            SetNodeProperties();
-        }
-
-        bool IsInsideDropdown()
-        {
-            var currentTransform = transform.parent;
-
-            // Traverse up the parent hierarchy.
-            while (currentTransform != null)
-            {
-                // Check if the current parent has a dropdown component.
-                if (currentTransform.GetComponent<MultiSelectDropdown>() != null ||
-                    currentTransform.GetComponent<TMP_Dropdown>() != null ||
-                    currentTransform.GetComponent<Dropdown>() != null)
-                {
-                    return true; // Found the dropdown.
-                }
-
-                // Move to the next parent.
-                currentTransform = currentTransform.parent;
-            }
-
-            return false; // No dropdown found.
         }
     }
 }

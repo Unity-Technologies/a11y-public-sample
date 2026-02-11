@@ -537,13 +537,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d2fff1d08d374180ccfa2c9cfe7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Next
-  value: 
-  hint: 
-  role: 1
-  allowsDirectInteraction: 0
-  state: 0
+  isKeyboardKey: 0
+  isTabButton: 0
 --- !u!1 &5306834653462147696
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,13 +779,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb0eb6211051ca48a0dc52987bf95be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: What is your name?
-  value: 
-  hint: 
-  role: 7
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &7697361125906967128
 GameObject:
   m_ObjectHideFlags: 0
@@ -1256,13 +1244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e676a57ea59e5044e8184b3ddea130b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: 
-  value: Enter your name
-  hint: Double tap to edit.
-  role: 0
-  allowsDirectInteraction: 0
-  state: 0
+  isSearchField: 0
 --- !u!1 &8887425754827889259
 GameObject:
   m_ObjectHideFlags: 0

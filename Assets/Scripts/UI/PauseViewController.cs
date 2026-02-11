@@ -230,7 +230,6 @@ namespace Unity.Samples.LetterSpell
 
                 var accessibleText = s_Instance.uguiResultsLabel.GetComponent<AccessibleText>();
                 accessibleText.label = s_Instance.uguiResultsLabel.text;
-                accessibleText.SetNodeProperties();
             }
 
             s_Instance.StartCoroutine(s_Instance.Show());

@@ -606,13 +606,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d2fff1d08d374180ccfa2c9cfe7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Play Hard
-  value: 
-  hint: 
-  role: 1
-  allowsDirectInteraction: 0
-  state: 0
+  isKeyboardKey: 0
+  isTabButton: 0
 --- !u!114 &5797528437591058794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,13 +755,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d2fff1d08d374180ccfa2c9cfe7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Options
-  value: 
-  hint: 
-  role: 1
-  allowsDirectInteraction: 0
-  state: 0
+  isKeyboardKey: 0
+  isTabButton: 0
 --- !u!1 &6321014636955978685
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,13 +1105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d2fff1d08d374180ccfa2c9cfe7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Play Easy
-  value: 
-  hint: 
-  role: 1
-  allowsDirectInteraction: 0
-  state: 0
+  isKeyboardKey: 0
+  isTabButton: 0
 --- !u!114 &8255467058012150612
 MonoBehaviour:
   m_ObjectHideFlags: 0

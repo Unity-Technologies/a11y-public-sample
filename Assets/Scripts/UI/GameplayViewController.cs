@@ -213,7 +213,7 @@ namespace Unity.Samples.LetterSpell
             else
             {
                 uguiClueLabel.GetComponent<TextMeshProUGUI>().text = clue;
-                uguiClueLabel.GetComponent<AccessibleElement>().value = clue;
+                uguiClueLabel.GetComponent<AccessibleElement>().label = clue;
             }
         }
 
@@ -316,7 +316,7 @@ namespace Unity.Samples.LetterSpell
 
             if (Gameplay.instance != null && Gameplay.instance.state != Gameplay.State.Stopped)
             {
-                AccessibilityManager.RefreshHierarchy();
+                AccessibilityManager.RebuildHierarchy();
 
                 Invoke(nameof(MoveAccessibilityFocusOnClue), 1f);
             }

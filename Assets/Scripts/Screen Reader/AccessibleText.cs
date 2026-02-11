@@ -17,7 +17,7 @@ namespace Unity.Samples.ScreenReader
 
         void Start()
         {
-            role |= AccessibilityRole.StaticText;
+            role = AccessibilityRole.StaticText;
 
             m_Text = GetComponentInChildren<Text>();
             m_TMPText = GetComponentInChildren<TMP_Text>();

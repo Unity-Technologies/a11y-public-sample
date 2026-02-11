@@ -12,7 +12,7 @@ namespace Unity.Samples.ScreenReader
     {
         void Start()
         {
-            role |= AccessibilityRole.Image;
+            role = AccessibilityRole.Image;
         }
     }
 }

@@ -171,13 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d2fff1d08d374180ccfa2c9cfe7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Next Word
-  value: 
-  hint: 
-  role: 1
-  allowsDirectInteraction: 0
-  state: 0
+  isKeyboardKey: 0
+  isTabButton: 0
 --- !u!114 &38633794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1000,13 +995,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d2fff1d08d374180ccfa2c9cfe7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Options
-  value: 
-  hint: 
-  role: 1
-  allowsDirectInteraction: 0
-  state: 0
+  isKeyboardKey: 0
+  isTabButton: 0
 --- !u!114 &756528507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1239,13 +1229,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb0eb6211051ca48a0dc52987bf95be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Clue
-  value: 
-  hint: 
-  role: 7
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &790545105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1331,13 +1314,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13258adc548672489ea1069022f25b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 0
-  label: words
-  value: 
-  hint: 
-  role: 0
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!114 &790545113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1581,13 +1557,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d2fff1d08d374180ccfa2c9cfe7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Pause
-  value: 
-  hint: 
-  role: 1
-  allowsDirectInteraction: 0
-  state: 0
+  isKeyboardKey: 0
+  isTabButton: 0
 --- !u!114 &1468917306
 MonoBehaviour:
   m_ObjectHideFlags: 0

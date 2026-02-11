@@ -230,8 +230,6 @@ namespace Unity.Samples.LetterSpell
 
             fontScaleAccessibleElement.value = fontScaleText;
             fontScaleValue.text = fontScaleText;
-
-            fontScaleAccessibleElement.SetNodeProperties();
         }
 
         void OnBoldTextStatusChanged(bool boldTextStatus)
@@ -246,8 +244,6 @@ namespace Unity.Samples.LetterSpell
                 boldTextAccessibleElement.value = settingOff;
                 boldTextValue.text = settingOff;
             }
-
-            boldTextAccessibleElement.SetNodeProperties();
         }
 
         void OnClosedCaptioningStatusChanged(bool closedCaptioningStatus)
@@ -262,8 +258,6 @@ namespace Unity.Samples.LetterSpell
                 closedCaptionAccessibleElement.value = settingOff;
                 closedCaptionValue.text = settingOff;
             }
-
-            closedCaptionAccessibleElement.SetNodeProperties();
         }
     }
 }

@@ -2,13 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Samples.ScreenReader;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using TMPro;
-using UnityEngine.Accessibility;
 
 namespace Unity.Samples.Controls
 {
@@ -952,20 +950,6 @@ namespace Unity.Samples.Controls
                 if (item == null)
                     continue;
 
-                if (i == 0)
-                {
-                    var acc = item.GetComponentInChildren<AccessibleToggle>();
-
-                    if (acc != null)
-                    {
-                        acc.label = data.text;
-                        if (acc.node != null)
-                        {
-                            AssistiveSupport.notificationDispatcher.SendLayoutChanged(acc.node);
-                        }
-                    }
-                }
-
                 // Automatically set up a toggle state change listener
                 item.toggle.isOn = values.Contains(i);
                 item.toggle.onValueChanged.AddListener(x => OnSelectItem(item.toggle));
@@ -1044,8 +1028,6 @@ namespace Unity.Samples.Controls
             // Make drop-down template and item template inactive
             m_Template.gameObject.SetActive(false);
             itemTemplate.gameObject.SetActive(false);
-
-            AccessibilityManager.RefreshHierarchy();
 
             m_Blocker = CreateBlocker(rootCanvas);
         }

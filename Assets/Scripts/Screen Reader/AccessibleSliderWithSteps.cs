@@ -10,58 +10,9 @@ namespace Unity.Samples.ScreenReader
     /// </summary>
     [AddComponentMenu("Accessibility/Accessible Slider With Steps"), DisallowMultipleComponent]
     [ExecuteAlways]
-    public sealed class AccessibleSliderWithSteps : AccessibleElement
+    public sealed class AccessibleSliderWithSteps : AccessibleSlider
     {
-        Slider m_Slider;
-        Text m_Text;
-        TMP_Text m_TMPText;
-
-        void Start()
-        {
-            role |= AccessibilityRole.Slider;
-
-            m_Slider = GetComponentInChildren<Slider>();
-            m_Text = GetComponentInChildren<Text>();
-            m_TMPText = GetComponentInChildren<TMP_Text>();
-
-            if (m_Text != null)
-            {
-                label ??= m_Text.text;
-            }
-            else if (m_TMPText != null)
-            {
-                label ??= m_TMPText.text;
-            }
-
-            if (m_Slider != null)
-            {
-                UpdateValue(m_Slider.value);
-            }
-        }
-        
-        protected override void BindToControl()
-        {
-            if (m_Slider != null)
-            {
-                m_Slider.onValueChanged.AddListener(UpdateValue);
-
-                incremented += OnIncremented;
-                decremented += OnDecremented;
-            }
-        }
-        
-        protected override void UnbindFromControl()
-        {
-            if (m_Slider != null)
-            {
-                m_Slider.onValueChanged.RemoveListener(UpdateValue);
-
-                incremented -= OnIncremented;
-                decremented -= OnDecremented;
-            }
-        }
-
-        void OnIncremented()
+        protected override void OnIncremented()
         {
             if (m_Slider.IsActive() && m_Slider.IsInteractable() && m_Slider.value < 2)
             {
@@ -69,7 +20,7 @@ namespace Unity.Samples.ScreenReader
             }
         }
 
-        void OnDecremented()
+        protected override void OnDecremented()
         {
             if (m_Slider.IsActive() && m_Slider.IsInteractable() && m_Slider.value > 0)
             {
@@ -77,7 +28,7 @@ namespace Unity.Samples.ScreenReader
             }
         }
 
-        void UpdateValue(float newValue)
+        protected override void UpdateValue(float newValue)
         {
             value = newValue switch
             {
@@ -86,8 +37,6 @@ namespace Unity.Samples.ScreenReader
                 2 => "Large",
                 _ => "Medium"
             };
-
-            SetNodeProperties();
         }
     }
 }

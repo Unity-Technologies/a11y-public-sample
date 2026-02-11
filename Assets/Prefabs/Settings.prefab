@@ -479,13 +479,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ce76ae2d9761b4aa94ecc803a91007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Three words
-  value: 
-  hint: 
-  role: 9
-  allowsDirectInteraction: 0
-  state: 2
 --- !u!1 &243781750027007362
 GameObject:
   m_ObjectHideFlags: 0
@@ -859,13 +852,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ce76ae2d9761b4aa94ecc803a91007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Hard
-  value: 
-  hint: 
-  role: 9
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &461047669902816682
 GameObject:
   m_ObjectHideFlags: 0
@@ -2105,13 +2091,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb0eb6211051ca48a0dc52987bf95be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: OS Settings (read-only)
-  value: 
-  hint: 
-  role: 39
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &1573560452804987921
 GameObject:
   m_ObjectHideFlags: 0
@@ -2485,13 +2464,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ce76ae2d9761b4aa94ecc803a91007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Easy
-  value: 
-  hint: 
-  role: 9
-  allowsDirectInteraction: 0
-  state: 2
 --- !u!1 &1697250857768942575
 GameObject:
   m_ObjectHideFlags: 0
@@ -2880,13 +2852,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e7b70c65985b954cb25b9d7f691fd6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Sound Effects Volume
-  value: 50 %
-  hint: 
-  role: 136
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &2016058441411154975
 GameObject:
   m_ObjectHideFlags: 0
@@ -4311,13 +4276,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c2d2fff1d08d374180ccfa2c9cfe7ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Back
-  value: 
-  hint: 
-  role: 1
-  allowsDirectInteraction: 0
-  state: 0
+  isKeyboardKey: 0
+  isTabButton: 0
 --- !u!1 &3342329697695631977
 GameObject:
   m_ObjectHideFlags: 0
@@ -4471,13 +4431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af16b91fe074445db9a0ae0b130f5d05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Display Size
-  value: Medium
-  hint: 
-  role: 136
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &3698204483276341362
 GameObject:
   m_ObjectHideFlags: 0
@@ -4628,13 +4581,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb0eb6211051ca48a0dc52987bf95be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Gameplay
-  value: 
-  hint: 
-  role: 39
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &3714791186766654022
 GameObject:
   m_ObjectHideFlags: 0
@@ -4889,13 +4835,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb0eb6211051ca48a0dc52987bf95be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Closed Captions
-  value: Off
-  hint: 
-  role: 7
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &3743615638839807349
 GameObject:
   m_ObjectHideFlags: 0
@@ -5017,13 +4956,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fcb2f1291c364591bf9fbc0f1748fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 0
-  label: 
-  value: 
-  hint: 
-  role: 0
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &3750214486088276250
 GameObject:
   m_ObjectHideFlags: 0
@@ -5116,13 +5048,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13258adc548672489ea1069022f25b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 0
-  label: 
-  value: 
-  hint: 
-  role: 64
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &3825575370488703473
 GameObject:
   m_ObjectHideFlags: 0
@@ -5725,13 +5650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e676a57ea59e5044e8184b3ddea130b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: 
-  value: Search options
-  hint: Double tap to edit.
-  role: 8
-  allowsDirectInteraction: 0
-  state: 0
+  isSearchField: 0
 --- !u!1 &4273510479233619046
 GameObject:
   m_ObjectHideFlags: 0
@@ -5882,13 +5801,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb0eb6211051ca48a0dc52987bf95be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Number of Words
-  value: 
-  hint: 
-  role: 7
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &4317582134122504015
 GameObject:
   m_ObjectHideFlags: 0
@@ -5988,13 +5900,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ce76ae2d9761b4aa94ecc803a91007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Six words
-  value: 
-  hint: 
-  role: 9
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &4664855338590506763
 GameObject:
   m_ObjectHideFlags: 0
@@ -6292,13 +6197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ce76ae2d9761b4aa94ecc803a91007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Show Spelling Clues
-  value: 
-  hint: 
-  role: 9
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &4870884420652122847
 GameObject:
   m_ObjectHideFlags: 0
@@ -6993,13 +6891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e676a57ea59e5044e8184b3ddea130b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Username
-  value: Enter your name
-  hint: Double tap to edit.
-  role: 0
-  allowsDirectInteraction: 0
-  state: 0
+  isSearchField: 0
 --- !u!1 &5534174713171414159
 GameObject:
   m_ObjectHideFlags: 0
@@ -7150,13 +7042,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb0eb6211051ca48a0dc52987bf95be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Game Difficulty
-  value: 
-  hint: 
-  role: 7
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &5984227225325411283
 GameObject:
   m_ObjectHideFlags: 0
@@ -7310,13 +7195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb0eb6211051ca48a0dc52987bf95be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Font Scale
-  value: 1
-  hint: 
-  role: 7
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &6374626976740921640
 GameObject:
   m_ObjectHideFlags: 0
@@ -8277,13 +8155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb0eb6211051ca48a0dc52987bf95be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Bold Text
-  value: Off
-  hint: 
-  role: 7
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &7044983625226489781
 GameObject:
   m_ObjectHideFlags: 0
@@ -9457,13 +9328,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e7b70c65985b954cb25b9d7f691fd6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Music Volume
-  value: 50 %
-  hint: 
-  role: 136
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &8170295642794785437
 GameObject:
   m_ObjectHideFlags: 0
@@ -9766,13 +9630,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ce76ae2d9761b4aa94ecc803a91007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: 
-  value: 
-  hint: 
-  role: 0
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &8520189312112386005
 GameObject:
   m_ObjectHideFlags: 0
@@ -10027,13 +9884,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce26736487ab478db5567e8bd1ef513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Color Theme
-  value: Option A
-  hint: Double tap to expand options.
-  role: 0
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &8575487069470763406
 GameObject:
   m_ObjectHideFlags: 0
@@ -10410,13 +10260,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb0eb6211051ca48a0dc52987bf95be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Appearance
-  value: 
-  hint: 
-  role: 39
-  allowsDirectInteraction: 0
-  state: 0
 --- !u!1 &8840736596794677660
 GameObject:
   m_ObjectHideFlags: 0
@@ -10674,10 +10517,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bb0eb6211051ca48a0dc52987bf95be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
-  label: Audio
-  value: 
-  hint: 
-  role: 39
-  allowsDirectInteraction: 0
-  state: 0

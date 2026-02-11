@@ -80,6 +80,9 @@
     height: 100%;
     margin-left: 18px;
     margin-right: 18px;
+    transition-property: rotate;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out;
 }
 
 #buttons-container {

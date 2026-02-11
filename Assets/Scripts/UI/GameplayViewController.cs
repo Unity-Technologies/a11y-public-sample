@@ -35,6 +35,7 @@ namespace Unity.Samples.LetterSpell
 
         Label m_UitkClueLabel;
         VisualElement m_UitkSuccessImage;
+        VisualElement m_UitkLetterCardContainer;
 
         Button m_UitkPauseButton;
         Button m_UitkOptionsButton;
@@ -47,15 +48,13 @@ namespace Unity.Samples.LetterSpell
         /// <summary>
         /// The focused card.
         /// </summary>
-        LetterCard m_AccessibilityFocusedCard;
+        UGUILetterCard m_AccessibilityFocusedCard;
 
         /// <summary>
         /// The card that is being dragged by the screen reader.
         /// </summary>
-        LetterCard m_AccessibilitySelectedCard;
+        UGUILetterCard m_AccessibilitySelectedCard;
 
-        const string k_LetterCardDefaultHint = "Submit to select and start moving.";
-        const string k_LetterCardSelectedHint = "Navigate left or right to move. Submit to unselect.";
         const string k_SuccessAnnouncement = "Bravo! You found the correct word.";
 
         void OnEnable()
@@ -100,6 +99,7 @@ namespace Unity.Samples.LetterSpell
 
                 m_UitkClueLabel = root.Q<Label>("clue-label");
                 m_UitkSuccessImage = root.Q<VisualElement>("success-image");
+                m_UitkLetterCardContainer = root.Q<VisualElement>("letter-card-container");
 
                 m_UitkPauseButton = root.Q<Button>("pause-button");
                 m_UitkPauseButton.clicked += PauseViewController.PauseGame;
@@ -221,7 +221,6 @@ namespace Unity.Samples.LetterSpell
         {
             if (!m_UseUIToolkit)
             {
-                m_AccessibilitySelectedCard.SetDraggingVisuals(false);
                 m_AccessibilitySelectedCard = null;
             }
 
@@ -280,29 +279,39 @@ namespace Unity.Samples.LetterSpell
         /// </summary>
         void OnLetterCardsChanged()
         {
-            m_AccessibilityFocusedCard = null;
-
-            // Remove all cards.
-            foreach (Transform letterCardTransform in uguiLetterCardContainer)
+            if (m_UseUIToolkit)
             {
-                Destroy(letterCardTransform.gameObject);
-            }
+                // Remove all cards.
+                m_UitkLetterCardContainer.Clear();
 
-            // Generate new cards.
-            foreach (var letterCardModel in m_Model.letterCards)
-            {
-                var card = Instantiate(uguiLetterCardTemplate, uguiLetterCardContainer);
-                card.GetComponentInChildren<TextMeshProUGUI>().text = letterCardModel.letter.ToString();
-                card.name = letterCardModel.letter.ToString();
-                card.GetComponent<LetterCard>().dropped += (oldIndex, newIndex) =>
+                // Generate new cards.
+                foreach (var letterCard in m_Model.letterCards)
                 {
-                    Gameplay.instance.ReorderLetter(oldIndex, newIndex);
-                };
+                    var card = new UITKLetterCard
+                    {
+                        letter = letterCard.letter.ToString().ToUpper()
+                    };
 
-                var element = card.AddComponent<AccessibleElement>();
-                element.label = letterCardModel.letter.ToString();
-                element.hint = "Double tap to start moving.";
-                element.selected += OnLetterCardSelected;
+                    m_UitkLetterCardContainer.Add(card);
+                }
+            }
+            else
+            {
+                m_AccessibilityFocusedCard = null;
+
+                // Remove all cards.
+                foreach (Transform card in uguiLetterCardContainer)
+                {
+                    Destroy(card.gameObject);
+                }
+
+                // Generate new cards.
+                foreach (var letterCardModel in m_Model.letterCards)
+                {
+                    var card = Instantiate(uguiLetterCardTemplate, uguiLetterCardContainer);
+                    card.GetComponent<UGUILetterCard>().letter = letterCardModel.letter.ToString().ToUpper();
+                    card.GetComponent<AccessibleElement>().selected += OnLetterCardSelected;
+                }
             }
 
             if (Gameplay.instance != null && Gameplay.instance.state != Gameplay.State.Stopped)
@@ -315,8 +324,11 @@ namespace Unity.Samples.LetterSpell
 
         void MoveAccessibilityFocusOnClue()
         {
-            var nodeToFocus = uguiClueLabel.GetComponent<AccessibleElement>().node;
-            AssistiveSupport.notificationDispatcher.SendLayoutChanged(nodeToFocus);
+            if (!m_UseUIToolkit)
+            {
+                var nodeToFocus = uguiClueLabel.GetComponent<AccessibleElement>().node;
+                AssistiveSupport.notificationDispatcher.SendLayoutChanged(nodeToFocus);
+            }
         }
 
         /// <summary>
@@ -324,33 +336,24 @@ namespace Unity.Samples.LetterSpell
         /// </summary>
         bool OnLetterCardSelected()
         {
-            var letterCard = m_AccessibilityFocusedCard.GetComponent<LetterCard>();
-
-            if (m_AccessibilitySelectedCard == null)
+            if (!m_UseUIToolkit)
             {
-                m_AccessibilitySelectedCard = letterCard;
+                var letterCard = m_AccessibilityFocusedCard.GetComponent<UGUILetterCard>();
 
-                // When a letter card is selected, deactivate all accessibility nodes except the ones corresponding to
-                // the letter cards to allow the selected card to be moved correctly.
-                AccessibilityManager.ActivateOtherAccessibilityNodes(false, uguiLetterCardContainer);
+                if (m_AccessibilitySelectedCard == null)
+                {
+                    m_AccessibilitySelectedCard = letterCard;
 
-                letterCard.SetDraggingVisuals(true);
+                    // When a letter card is selected, deactivate all accessibility nodes except the ones corresponding to
+                    // the letter cards to allow the selected card to be moved correctly.
+                    AccessibilityManager.ActivateOtherAccessibilityNodes(false, uguiLetterCardContainer);
+                }
+                else
+                {
+                    m_AccessibilitySelectedCard = null;
 
-                var element = letterCard.GetComponent<AccessibleElement>();
-                element.hint = k_LetterCardSelectedHint;
-                element.SetNodeProperties();
-            }
-            else
-            {
-                m_AccessibilitySelectedCard = null;
-
-                AccessibilityManager.ActivateOtherAccessibilityNodes(true, uguiLetterCardContainer);
-
-                letterCard.SetDraggingVisuals(false);
-
-                var element = letterCard.GetComponent<AccessibleElement>();
-                element.hint = k_LetterCardDefaultHint;
-                element.SetNodeProperties();
+                    AccessibilityManager.ActivateOtherAccessibilityNodes(true, uguiLetterCardContainer);
+                }
             }
 
             return true;
@@ -359,90 +362,101 @@ namespace Unity.Samples.LetterSpell
         /// <summary>
         /// Resets the selected card when the screen reader status changes.
         /// </summary>
-        void OnScreenReaderStatusChanged(bool isScreenReaderEnabled)
+        void OnScreenReaderStatusChanged(bool _)
         {
-            if (m_AccessibilitySelectedCard != null)
+            if (!m_UseUIToolkit)
             {
-                m_AccessibilitySelectedCard.SetDraggingVisuals(false);
                 m_AccessibilitySelectedCard = null;
             }
         }
 
         void OnNodeFocusChanged(AccessibilityNode node)
         {
-            if (node != null)
+            if (!m_UseUIToolkit)
             {
-                var element = AccessibilityManager.GetAccessibleElementForNode(node);
-                m_AccessibilityFocusedCard = element != null ? element.GetComponent<LetterCard>() : null;
-                MoveSelectedCard();
-            }
-            else
-            {
-                m_AccessibilityFocusedCard = null;
+                if (node != null)
+                {
+                    var element = AccessibilityManager.GetAccessibleElementForNode(node);
+                    m_AccessibilityFocusedCard = element != null ? element.GetComponent<UGUILetterCard>() : null;
+                    MoveSelectedCard();
+                }
+                else
+                {
+                    m_AccessibilityFocusedCard = null;
+                }
             }
         }
 
         void MoveSelectedCard()
         {
-            if (!AssistiveSupport.isScreenReaderEnabled
-                || m_AccessibilitySelectedCard == null
-                || m_AccessibilityFocusedCard == null)
+            if (!AssistiveSupport.isScreenReaderEnabled)
             {
                 return;
             }
 
-            // If we reach this code, it means we're dragging the card.
-            var selectedCardIndex = m_AccessibilitySelectedCard.transform.GetSiblingIndex();
-            var focusedCardIndex = m_AccessibilityFocusedCard.transform.GetSiblingIndex();
+            if (!m_UseUIToolkit)
+            {
+                if (m_AccessibilitySelectedCard == null || m_AccessibilityFocusedCard == null)
+                {
+                    return;
+                }
 
-            // Move the card to the new position.
-            if (selectedCardIndex > focusedCardIndex)
-            {
-                MoveCard(true, selectedCardIndex - focusedCardIndex);
-            }
-            else if (selectedCardIndex < focusedCardIndex)
-            {
-                MoveCard(false, focusedCardIndex - selectedCardIndex);
+                // If we reach this code, it means we're dragging the card.
+                var selectedCardIndex = m_AccessibilitySelectedCard.transform.GetSiblingIndex();
+                var focusedCardIndex = m_AccessibilityFocusedCard.transform.GetSiblingIndex();
+
+                // Move the card to the new position.
+                if (selectedCardIndex > focusedCardIndex)
+                {
+                    MoveCard(true, selectedCardIndex - focusedCardIndex);
+                }
+                else if (selectedCardIndex < focusedCardIndex)
+                {
+                    MoveCard(false, focusedCardIndex - selectedCardIndex);
+                }
             }
         }
 
         void MoveCard(bool shouldMoveLeft, int count)
         {
-            var draggable = m_AccessibilitySelectedCard;
-            if (draggable == null)
+            if (!m_UseUIToolkit)
             {
-                return;
-            }
-
-            var element = draggable.transform.GetComponent<AccessibleElement>();
-
-            if (shouldMoveLeft ? draggable.MoveLeft(count) : draggable.MoveRight(count))
-            {
-                var index = draggable.transform.GetSiblingIndex();
-                var otherSiblingIndex = shouldMoveLeft ? index + 1 : index - 1;
-                var otherSibling = draggable.transform.parent.GetChild(otherSiblingIndex);
-
-                // Make the letter uppercase to ensure correct phonetic pronunciation.
-                var announcement = $"Moved \"{draggable.name.ToUpper()}\" {(shouldMoveLeft ? "before" : "after")} \"{otherSibling.name.ToUpper()}\"";
-
-                // Announce that the card was moved.
-                AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);
-
-                AccessibilityManager.hierarchy.MoveNode(element.node, element.node.parent,
-                    element.transform.GetSiblingIndex());
-
-                // After the move, the screen reader will refocus on the other card, but with a little delay. Move the
-                // focus to the selected card, but wait a bit to let the first focus change complete. Otherwise, the
-                // screen reader will focus on the selected card first, then still on the other card, triggering an
-                // infinite swap of the two cards.
-                StartCoroutine(DelaySendLayoutChanged());
-                return;
-
-                IEnumerator DelaySendLayoutChanged()
+                var draggable = m_AccessibilitySelectedCard;
+                if (draggable == null)
                 {
-                    yield return new WaitForEndOfFrame();
+                    return;
+                }
 
-                    AssistiveSupport.notificationDispatcher.SendLayoutChanged(element.node);
+                var element = draggable.transform.GetComponent<AccessibleElement>();
+
+                if (shouldMoveLeft ? draggable.MoveLeft(count) : draggable.MoveRight(count))
+                {
+                    var index = draggable.transform.GetSiblingIndex();
+                    var otherSiblingIndex = shouldMoveLeft ? index + 1 : index - 1;
+                    var otherSibling = draggable.transform.parent.GetChild(otherSiblingIndex);
+
+                    // Make the letter uppercase to ensure correct phonetic pronunciation.
+                    var announcement = $"Moved \"{draggable.name.ToUpper()}\" {(shouldMoveLeft ? "before" : "after")} \"{otherSibling.name.ToUpper()}\"";
+
+                    // Announce that the card was moved.
+                    AssistiveSupport.notificationDispatcher.SendAnnouncement(announcement);
+
+                    AccessibilityManager.hierarchy.MoveNode(element.node, element.node.parent,
+                        element.transform.GetSiblingIndex());
+
+                    // After the move, the screen reader will refocus on the other card, but with a little delay. Move the
+                    // focus to the selected card, but wait a bit to let the first focus change complete. Otherwise, the
+                    // screen reader will focus on the selected card first, then still on the other card, triggering an
+                    // infinite swap of the two cards.
+                    StartCoroutine(DelaySendLayoutChanged());
+                    return;
+
+                    IEnumerator DelaySendLayoutChanged()
+                    {
+                        yield return new WaitForEndOfFrame();
+
+                        AssistiveSupport.notificationDispatcher.SendLayoutChanged(element.node);
+                    }
                 }
             }
         }

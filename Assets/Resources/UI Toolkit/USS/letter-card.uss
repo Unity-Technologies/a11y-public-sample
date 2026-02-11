@@ -1,5 +1,3 @@
-
-
 .letter-button {
     font-size: 132px;
     -unity-text-generator: advanced;
@@ -36,5 +34,4 @@
     border-right-width: 10px;
     border-bottom-width: 10px;
     border-left-width: 10px;
-    rotate: -15deg;
 }

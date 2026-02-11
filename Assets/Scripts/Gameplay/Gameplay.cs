@@ -1,8 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Accessibility;
 using UnityEngine.Events;
 using UnityEngine.Pool;
 
@@ -280,10 +280,9 @@ namespace Unity.Samples.LetterSpell
             MoveLetter(currentWordState, oldIndex, newIndex);
             wordReordered?.Invoke(oldIndex, newIndex);
 
-            if (IsWordComplete())
+            if (!AssistiveSupport.isScreenReaderEnabled)
             {
-                reorderedWordCount++;
-                wordCompleted?.Invoke();
+                CheckWordComplete();
             }
 
             return;
@@ -333,6 +332,15 @@ namespace Unity.Samples.LetterSpell
         void Start()
         {
             StartGame();
+        }
+
+        public void CheckWordComplete()
+        {
+            if (IsWordComplete())
+            {
+                reorderedWordCount++;
+                wordCompleted?.Invoke();
+            }
         }
 
         /// <summary>

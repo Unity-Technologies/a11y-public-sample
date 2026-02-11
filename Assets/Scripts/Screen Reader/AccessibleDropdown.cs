@@ -14,15 +14,15 @@ namespace Unity.Samples.ScreenReader
     [ExecuteAlways]
     public sealed class AccessibleDropdown : AccessibleElement
     {
+        const string k_DropdownClosedHint = "Double tap to expand options.";
+        const string k_DropdownOpenHint = "Swipe left to navigate options. Double tap to close options.";
+
         MultiSelectDropdown m_MultiSelectDropdown;
         TMP_Dropdown m_TMPDropdown;
         Dropdown m_Dropdown;
 
         Coroutine m_ActiveCoroutine;
         bool m_WasDropdownOpenedOrClosed;
-
-        const string k_DropdownClosedHint = "Double tap to expand options.";
-        const string k_DropdownOpenHint = "Swipe left to navigate options. Double tap to close options.";
 
         void Start()
         {

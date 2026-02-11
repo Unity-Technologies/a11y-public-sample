@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.Events;
@@ -39,17 +38,19 @@ namespace Unity.Samples.LetterSpell
         /// </summary>
         public WordDatabase wordDatabase;
 
+        List<WordData> m_Words = new();
+
         /// <summary>
         /// The list of words to complete.
         /// </summary>
         public IReadOnlyList<WordData> words => m_Words.AsReadOnly();
-        List<WordData> m_Words = new();
+
+        int m_CurrentWordIndex = -1;
 
         /// <summary>
         /// The current word to reorder.
         /// </summary>
         public WordData currentWord => m_CurrentWordIndex != -1 ? m_Words[m_CurrentWordIndex] : default;
-        int m_CurrentWordIndex = -1;
 
         /// <summary>
         /// The current state of the word being reordered.
@@ -86,6 +87,8 @@ namespace Unity.Samples.LetterSpell
         /// </summary>
         public UnityEvent gameEnded = new();
 
+        State m_State;
+
         /// <summary>
         /// The state of the game.
         /// </summary>
@@ -103,7 +106,6 @@ namespace Unity.Samples.LetterSpell
                 stateChanged?.Invoke(value);
             }
         }
-        State m_State;
 
         /// <summary>
         /// Sent when the state of the game has changed.
@@ -348,7 +350,22 @@ namespace Unity.Samples.LetterSpell
         /// </summary>
         public bool IsWordComplete()
         {
-            return m_Words[m_CurrentWordIndex].word.SequenceEqual(currentWordState);
+            var word = currentWord.word;
+
+            if (word.Length != currentWordState.Length)
+            {
+                return false;
+            }
+
+            for (var i = 0; i < word.Length; i++)
+            {
+                if (word[i] != currentWordState[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>

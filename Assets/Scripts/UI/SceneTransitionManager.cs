@@ -10,15 +10,15 @@ namespace Unity.Samples.LetterSpell
 {
     public class SceneTransitionManager : MonoBehaviour
     {
+        const float k_TransitionDelay = 1.85f;
+        const float k_TransitionDuration = 0.15f;
+
+        static readonly Color k_FadeColor = new(2f / 255f, 197f / 255f, 132f / 255f, 1f);
+
         static SceneTransitionManager s_Instance;
 
         UnityEngine.UI.Image m_UguiTransitionImage;
         UnityEngine.UIElements.Image m_UitkTransitionImage;
-
-        static readonly Color k_FadeColor = new(2f / 255f, 197f / 255f, 132f / 255f, 1f);
-
-        const float k_TransitionDelay = 1.85f;
-        const float k_TransitionDuration = 0.15f;
 
         bool m_UseUIToolkit;
         bool m_SettingsSceneLoaded;

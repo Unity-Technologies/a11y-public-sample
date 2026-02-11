@@ -12,6 +12,8 @@ namespace Unity.Samples.LetterSpell
     /// </summary>
     class GameplayViewController : MonoBehaviour
     {
+        const string k_SuccessAnnouncement = "Bravo! You found the correct word.";
+
         /// <summary>
         /// The template used to create visual instances of letter cards.
         /// </summary>
@@ -54,8 +56,6 @@ namespace Unity.Samples.LetterSpell
         /// The card that is being dragged by the screen reader.
         /// </summary>
         UGUILetterCard m_AccessibilitySelectedCard;
-
-        const string k_SuccessAnnouncement = "Bravo! You found the correct word.";
 
         void OnEnable()
         {

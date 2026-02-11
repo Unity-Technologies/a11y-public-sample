@@ -7,12 +7,12 @@ namespace Unity.Samples.LetterSpell
 {
     public class FontManager : MonoBehaviour
     {
-        public TMP_FontAsset defaultFont;
-        public TMP_FontAsset boldFont;
-
         const float k_DefaultLetterCardFontSize = 132f;
         const float k_DefaultHeaderFontSize = 75f;
         const float k_DefaultFontSize = 64f;
+
+        public TMP_FontAsset defaultFont;
+        public TMP_FontAsset boldFont;
 
         List<TMP_Text> m_LetterCardTextComponents = new();
         List<TMP_Text> m_HeaderTextComponents = new();

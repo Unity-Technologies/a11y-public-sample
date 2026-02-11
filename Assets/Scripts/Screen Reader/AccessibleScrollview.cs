@@ -12,10 +12,10 @@ namespace Unity.Samples.ScreenReader
     [ExecuteAlways]
     public sealed class AccessibleScrollView : AccessibleElement
     {
-        ScrollRect m_ScrollRect;
-
         const float k_ExtraOffset = 50f;
         const float k_ScrollDuration = 0.2f;
+
+        ScrollRect m_ScrollRect;
 
         void Start()
         {

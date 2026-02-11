@@ -5,12 +5,12 @@ using UnityEngine.UIElements;
 [ExecuteInEditMode]
 public class UISystemToggler : MonoBehaviour
 {
+    public const string useUIToolkitPreference = "UseUIToolkit";
+
     public Canvas uguiCanvas;
     public UIDocument uitkDocument;
 
     public bool useUIToolkit;
-
-    public const string useUIToolkitPreference = "UseUIToolkit";
 
     bool m_Initialized;
 

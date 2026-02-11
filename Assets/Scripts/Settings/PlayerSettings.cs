@@ -9,6 +9,18 @@ namespace Unity.Samples.LetterSpell
 {
     public class PlayerSettings : MonoBehaviour
     {
+        public const string usernamePreference = "Username";
+        public const string difficultyPreference = "DifficultyLevel";
+        public const string wordsPreference = "WordNumber";
+        public const string cluePreference = "ShowClues";
+        public const string sfxPreference = "SoundEffectsVolume";
+        public const string musicPreference = "MusicVolume";
+        public const string colorThemePreference = "ColorTheme";
+        public const string displaySizePreference = "DisplaySize";
+
+        public const string settingOn = "On";
+        public const string settingOff = "Off";
+
         public Button backButton;
 
         public TMP_InputField usernameInputField;
@@ -31,18 +43,6 @@ namespace Unity.Samples.LetterSpell
         public AccessibleElement closedCaptionAccessibleElement;
         public TMP_Text fontScaleValue;
         public AccessibleElement fontScaleAccessibleElement;
-
-        public const string usernamePreference = "Username";
-        public const string difficultyPreference = "DifficultyLevel";
-        public const string wordsPreference = "WordNumber";
-        public const string cluePreference = "ShowClues";
-        public const string sfxPreference = "SoundEffectsVolume";
-        public const string musicPreference = "MusicVolume";
-        public const string colorThemePreference = "ColorTheme";
-        public const string displaySizePreference = "DisplaySize";
-
-        public const string settingOn = "On";
-        public const string settingOff = "Off";
 
         void Update()
         {

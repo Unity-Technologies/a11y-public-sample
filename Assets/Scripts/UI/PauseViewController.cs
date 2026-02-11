@@ -10,6 +10,8 @@ namespace Unity.Samples.LetterSpell
 {
     public class PauseViewController : MonoBehaviour
     {
+        const float k_FadeDuration = 0.2f;
+
         static PauseViewController s_Instance;
 
         [Header("uGUI References")]
@@ -27,8 +29,6 @@ namespace Unity.Samples.LetterSpell
 
         VisualElement m_UitkPauseScreen;
         VisualElement m_UitkResultsScreen;
-
-        const float k_FadeDuration = 0.2f;
 
         bool m_UseUIToolkit;
 

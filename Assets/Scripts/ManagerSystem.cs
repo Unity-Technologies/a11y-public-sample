@@ -12,17 +12,29 @@ namespace Unity.Samples.LetterSpell
         [RuntimeInitializeOnLoadMethod]
         static void Initialize()
         {
-            var accessibilityManagerObject = new GameObject("Accessibility Manager");
-            accessibilityManagerObject.AddComponent<AccessibilityManager>();
+            if (!GameObject.Find(nameof(AccessibilityManager)))
+            {
+                var gameObject = new GameObject(nameof(AccessibilityManager));
+                gameObject.AddComponent<AccessibilityManager>();
+            }
 
-            var audioManagerObject = new GameObject("Audio Manager");
-            audioManagerObject.AddComponent<AudioManager>();
+            if (!GameObject.Find(nameof(AudioManager)))
+            {
+                var gameObject = new GameObject(nameof(AudioManager));
+                gameObject.AddComponent<AudioManager>();
+            }
 
-            var ccManagerObject = new GameObject("Closed Captions Manager");
-            ccManagerObject.AddComponent<ClosedCaptionsManager>();
+            if (!GameObject.Find(nameof(ClosedCaptionsManager)))
+            {
+                var gameObject = new GameObject(nameof(ClosedCaptionsManager));
+                gameObject.AddComponent<ClosedCaptionsManager>();
+            }
 
-            var sceneTransitionManagerObject = new GameObject("Scene Transition Manager");
-            sceneTransitionManagerObject.AddComponent<SceneTransitionManager>();
+            if (!GameObject.Find(nameof(SceneTransitionManager)))
+            {
+                var gameObject = new GameObject(nameof(SceneTransitionManager));
+                gameObject.AddComponent<SceneTransitionManager>();
+            }
         }
     }
 }

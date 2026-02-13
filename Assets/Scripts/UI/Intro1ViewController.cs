@@ -14,7 +14,6 @@ namespace Unity.Samples.LetterSpell
         [Header("UI Toolkit References")]
         public UIDocument uitkDocument;
 
-        TextField m_UitkUsernameTextField;
         Button m_UitkContinueButton;
 
         bool m_UseUIToolkit;
@@ -43,7 +42,7 @@ namespace Unity.Samples.LetterSpell
 
                 var root = uitkDocument.rootVisualElement;
 
-                m_UitkUsernameTextField = root.Q<TextField>();
+                root.dataSource = PlayerSettingsDataSource.Acquire();
 
                 m_UitkContinueButton = root.Q<Button>();
                 m_UitkContinueButton.clicked += OnContinueButtonClicked;
@@ -68,6 +67,8 @@ namespace Unity.Samples.LetterSpell
         {
             if (m_UseUIToolkit)
             {
+                PlayerSettingsDataSource.Release();
+
                 m_UitkContinueButton.clicked -= OnContinueButtonClicked;
             }
             else
@@ -78,11 +79,14 @@ namespace Unity.Samples.LetterSpell
 
         void OnContinueButtonClicked()
         {
-            var username = m_UseUIToolkit ? m_UitkUsernameTextField?.value : uguiUsernameInputField?.text;
-
-            if (!string.IsNullOrEmpty(username))
+            if (!m_UseUIToolkit)
             {
-                PlayerPrefs.SetString(PlayerSettings.usernamePreference, username);
+                var username = uguiUsernameInputField?.text;
+
+                if (!string.IsNullOrEmpty(username))
+                {
+                    PlayerPrefs.SetString(PlayerSettings.usernamePreference, username);
+                }
             }
 
             SceneTransitionManager.TransitionToSecondIntroScene();

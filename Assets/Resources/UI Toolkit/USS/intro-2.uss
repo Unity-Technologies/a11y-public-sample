@@ -8,16 +8,11 @@
     margin-top: 60px;
     margin-right: 60px;
     margin-left: 60px;
-    align-items: center;
     margin-bottom: 60px;
 }
 
 #options-button {
     align-self: flex-end;
-    height: 14%;
-    width: 22%;
-    max-height: 140px;
-    max-width: 390px;
 }
 
 #play-buttons-outer-container {
@@ -29,26 +24,16 @@
 
 #play-buttons-inner-container {
     flex-direction: row;
-    width: 100%;
-    justify-content: center;
-    height: 44%;
-    max-height: 360px;
-    margin-bottom: 5%;
-}
-
-#play-buttons-spacing {
-    width: 9%;
-    max-width: 170px;
+    margin-bottom: 90px;
 }
 
 .letter-spell-button-play {
     color: rgb(0, 0, 0);
-    width: 34%;
-    max-width: 590px;
-    max-height: 360px;
-    font-size: 117%; /* 75px */
-    padding-top: 3%;
-    padding-bottom: 3%;
+    font-size: 117%;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    padding-left: 110px;
+    padding-right: 110px;
 }
 
 #play-easy-button {
@@ -57,6 +42,7 @@
     border-right-color: rgb(255, 251, 232);
     border-top-color: rgb(255, 251, 232);
     border-bottom-color: rgb(255, 251, 232);
+    margin-right: 170px;
 }
 
 #play-hard-button {

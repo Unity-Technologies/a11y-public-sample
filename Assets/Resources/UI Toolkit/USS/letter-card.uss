@@ -1,17 +1,16 @@
 .letter-button {
-    font-size: 206%; /* 132px */
+    font-size: 206%;
     background-color: rgb(255, 251, 232);
     aspect-ratio: 1;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
     border-bottom-left-radius: 30px;
-    height: 100%;
     -unity-text-align: middle-center;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
     border-top-width: 0;
     border-right-width: 0;
     border-bottom-width: 0;

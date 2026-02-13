@@ -7,8 +7,7 @@
     top: 60px;
     left: 60px;
     position: absolute;
-    width: 18%;
-    max-width: 330px;
+    width: 330px;
 }
 
 .letter-spell-text-field {
@@ -32,10 +31,10 @@
 }
 
 .letter-spell-text-field > .unity-base-field__input {
-    padding-top: 1%;
-    padding-bottom: 1%;
-    padding-left: 3%;
-    padding-right: 3%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 60px;
+    padding-right: 60px;
     background-color: rgb(255, 255, 255);
     margin-top: 0;
     margin-right: 0;
@@ -62,10 +61,10 @@
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
     border-bottom-left-radius: 30px;
-    padding-top: 1%;
-    padding-left: 3%;
-    padding-bottom: 1%;
-    padding-right: 3%;
+    padding-top: 20px;
+    padding-left: 60px;
+    padding-bottom: 20px;
+    padding-right: 60px;
     margin-top: 0;
     margin-right: 0;
     margin-bottom: 0;

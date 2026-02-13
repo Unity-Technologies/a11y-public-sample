@@ -7,7 +7,6 @@
         <ui:VisualElement name="play-buttons-outer-container">
             <ui:VisualElement name="play-buttons-inner-container">
                 <ui:Button text="Play Easy" name="play-easy-button" class="letter-spell-button letter-spell-button-play"/>
-                <ui:VisualElement name="play-buttons-spacing"/>
                 <ui:Button text="Play Hard" name="play-hard-button" class="letter-spell-button letter-spell-button-play"/>
             </ui:VisualElement>
         </ui:VisualElement>

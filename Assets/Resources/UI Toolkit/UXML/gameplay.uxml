@@ -9,7 +9,7 @@
                 </Bindings>
             </ui:Label>
             <ui:VisualElement name="success-image">
-                <ui:Image source="project://database/Assets/Resources/Images/Success-Check.png?fileID=-9040358768007008051&amp;guid=cba63604506fe4fcfa0f3523cfb6c5fd&amp;type=3#Success-Check_0"/>
+                <ui:Image source="project://database/Assets/Resources/Images/Success-Check.png?fileID=-9040358768007008051&amp;guid=cba63604506fe4fcfa0f3523cfb6c5fd&amp;type=3#Success-Check_0" name="success-icon"/>
                 <ui:Label text="Correct" name="success-label"/>
             </ui:VisualElement>
             <ui:VisualElement name="letter-card-container"/>
@@ -28,8 +28,8 @@
                 <ui:Label text="Game paused" name="pause-label" class="pause-screen-label"/>
             </ui:VisualElement>
             <ui:VisualElement name="" class="pause-screen-buttons-container">
-                <ui:Button text="End game" name="submit-button" class="letter-spell-button letter-spell-button-secondary pause-screen-button"/>
-                <ui:Button text="Resume" name="dismiss-button" class="letter-spell-button letter-spell-button-primary pause-screen-button"/>
+                <ui:Button text="End game" name="submit-button" class="letter-spell-button letter-spell-button-secondary pause-screen-button-left"/>
+                <ui:Button text="Resume" name="dismiss-button" class="letter-spell-button letter-spell-button-primary"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
@@ -39,8 +39,8 @@
                 <ui:Label text="Game over" name="results-label" class="pause-screen-label"/>
             </ui:VisualElement>
             <ui:VisualElement name="" class="pause-screen-buttons-container">
-                <ui:Button text="Main menu" name="submit-button" class="letter-spell-button letter-spell-button-secondary pause-screen-button"/>
-                <ui:Button text="Play again" name="dismiss-button" class="letter-spell-button letter-spell-button-primary pause-screen-button"/>
+                <ui:Button text="Main menu" name="submit-button" class="letter-spell-button letter-spell-button-secondary pause-screen-button-left"/>
+                <ui:Button text="Play again" name="dismiss-button" class="letter-spell-button letter-spell-button-primary"/>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

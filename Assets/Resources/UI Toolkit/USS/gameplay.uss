@@ -3,18 +3,18 @@
 }
 
 #gameplay-container {
-    margin-top: 3%;
-    margin-right: 5%;
-    margin-bottom: 3%;
-    margin-left: 5%;
+    margin-top: 60px;
+    margin-right: 100px;
+    margin-bottom: 60px;
+    margin-left: 100px;
     flex-grow: 1;
 }
 
 #game-container {
     flex-grow: 1;
     align-items: center;
-    margin-top: 8%;
-    margin-bottom: 5%;
+    margin-bottom: 80px;
+    justify-content: center;
 }
 
 #clue-label {
@@ -28,8 +28,6 @@
     padding-right: 0;
     padding-bottom: 0;
     padding-left: 0;
-    height: 13%;
-    max-height: 80px;
     white-space: nowrap;
 }
 
@@ -42,18 +40,21 @@
     flex-direction: row;
     padding-top: 5px;
     padding-bottom: 5px;
-    padding-right: 2%;
-    padding-left: 2%;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    max-height: 85px;
-    height: 15%;
-    max-width: 380px;
-    width: 22%;
+    padding-right: 40px;
+    padding-left: 40px;
+    margin-top: 40px;
+    margin-bottom: 40px;
     opacity: 0;
     transition-property: opacity;
     transition-timing-function: ease-in-out;
     transition-duration: 0.2s;
+    align-items: stretch;
+}
+
+#success-icon {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    aspect-ratio: 1;
 }
 
 #success-label {
@@ -69,15 +70,9 @@
 
 #letter-card-container {
     flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    max-height: 250px;
-    height: 40%;
 }
 
 .letter-card {
-    aspect-ratio: 1;
-    height: 100%;
     margin-left: 18px;
     margin-right: 18px;
     transition-property: rotate;
@@ -88,8 +83,6 @@
 #buttons-container {
     flex-direction: row;
     width: 100%;
-    height: 14%;
-    max-height: 140px;
 }
 
 #left-buttons-container {
@@ -98,20 +91,8 @@
 }
 
 #pause-button {
-    margin-right: 5%;
-    max-width: 190px;
-    width: 14%;
+    margin-right: 60px;
     -unity-font-definition: resource("Fonts/Inter-Bold");
-}
-
-#options-button {
-    max-width: 390px;
-    width: 31%;
-}
-
-#next-button {
-    width: 27%;
-    max-width: 470px;
 }
 
 #pause-screen {
@@ -136,10 +117,10 @@
     transition-property: opacity;
     transition-timing-function: ease-in-out;
     transition-duration: 0.2s;
-    padding-top: 3%;
-    padding-right: 3%;
-    padding-bottom: 3%;
-    padding-left: 3%;
+    padding-top: 60px;
+    padding-right: 60px;
+    padding-bottom: 60px;
+    padding-left: 60px;
 }
 
 .pause-screen-dialog {
@@ -156,10 +137,10 @@
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
     border-bottom-left-radius: 30px;
-    padding-top: 3%;
-    padding-right: 3%;
-    padding-bottom: 3%;
-    padding-left: 3%;
+    padding-top: 50px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+    padding-left: 50px;
     align-items: center;
 }
 
@@ -179,18 +160,14 @@
     padding-bottom: 0;
     padding-left: 0;
     -unity-text-align: middle-center;
+    white-space: normal;
 }
 
 .pause-screen-buttons-container {
     flex-direction: row;
-    height: 140px;
-    width: 1000px;
     justify-content: space-between;
 }
 
-.pause-screen-button {
-    padding-top: 2%;
-    padding-bottom: 2%;
-    padding-left: 4%;
-    padding-right: 4%;
+.pause-screen-button-left {
+    margin-right: 100px;
 }

@@ -28,24 +28,13 @@
     padding-right: 0;
     padding-bottom: 0;
     padding-left: 0;
-    max-height: 80px;
-    height: 9%;
 }
 
 #intro-1-text-field {
     margin-top: 60px;
     margin-bottom: 60px;
-    max-height: 140px;
-    height: 15%;
 }
 
 #intro-1-text-field > TextInput {
     -unity-text-align: middle-center;
-}
-
-#next-button {
-    max-width: 290px;
-    max-height: 140px;
-    width: 30%;
-    height: 14%;
 }

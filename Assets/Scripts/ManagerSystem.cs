@@ -24,6 +24,12 @@ namespace Unity.Samples.LetterSpell
                 gameObject.AddComponent<AudioManager>();
             }
 
+            if (!GameObject.Find(nameof(FontManager)))
+            {
+                var gameObject = new GameObject(nameof(FontManager));
+                gameObject.AddComponent<FontManager>();
+            }
+
             if (!GameObject.Find(nameof(ClosedCaptionsManager)))
             {
                 var gameObject = new GameObject(nameof(ClosedCaptionsManager));

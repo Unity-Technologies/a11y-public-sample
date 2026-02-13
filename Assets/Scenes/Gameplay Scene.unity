@@ -507,7 +507,6 @@ GameObject:
   - component: {fileID: 547764374}
   - component: {fileID: 547764380}
   - component: {fileID: 547764379}
-  - component: {fileID: 547764383}
   m_Layer: 5
   m_Name: UGUI
   m_TagString: Untagged
@@ -636,20 +635,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 547764373}
   m_CullTransparentMesh: 1
---- !u!114 &547764383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 547764373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b36baef6d228543f9b299c797ea18375, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultFont: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
-  boldFont: {fileID: 11400000, guid: 04e24ff0f0d4a476fb15262b93039a10, type: 2}
 --- !u!1 &665215063
 GameObject:
   m_ObjectHideFlags: 0

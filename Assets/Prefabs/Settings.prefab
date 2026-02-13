@@ -2477,7 +2477,6 @@ GameObject:
   - component: {fileID: 2916398594516293448}
   - component: {fileID: 4600201504503255796}
   - component: {fileID: 6066428071665044461}
-  - component: {fileID: 5090711576096038594}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -2599,20 +2598,6 @@ MonoBehaviour:
   closedCaptionAccessibleElement: {fileID: 5418576544578412643}
   fontScaleValue: {fileID: 9120855495489382998}
   fontScaleAccessibleElement: {fileID: 1032149493865476688}
---- !u!114 &5090711576096038594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697250857768942575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b36baef6d228543f9b299c797ea18375, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultFont: {fileID: 11400000, guid: 313e834b6edab4c32935686b623321ea, type: 2}
-  boldFont: {fileID: 11400000, guid: 04e24ff0f0d4a476fb15262b93039a10, type: 2}
 --- !u!1 &1723554244594887049
 GameObject:
   m_ObjectHideFlags: 0

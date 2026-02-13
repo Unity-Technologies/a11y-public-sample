@@ -46,9 +46,7 @@
     width: 34%;
     max-width: 590px;
     max-height: 360px;
-    font-size: 75px;
-    -unity-text-auto-size: best-fit 37px 75px;
-    -unity-text-generator: advanced;
+    font-size: 117%; /* 75px */
     padding-top: 3%;
     padding-bottom: 3%;
 }

@@ -26,7 +26,7 @@
 }
 
 .settings-heading {
-    font-size: 75px;
+    font-size: 117%; /* 75px */
     -unity-font-definition: resource("Fonts/Inter-Bold");
     margin-top: 6%;
     padding-top: 0;
@@ -36,8 +36,6 @@
     margin-right: 0;
     margin-bottom: 0;
     margin-left: 0;
-    -unity-text-generator: advanced;
-    -unity-text-auto-size: best-fit 37px 75px;
 }
 
 .settings-row {

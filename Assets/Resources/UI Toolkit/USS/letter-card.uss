@@ -1,7 +1,5 @@
 .letter-button {
-    font-size: 132px;
-    -unity-text-generator: advanced;
-    -unity-text-auto-size: best-fit 66px 132px;
+    font-size: 206%; /* 132px */
     background-color: rgb(255, 251, 232);
     aspect-ratio: 1;
     border-top-left-radius: 30px;

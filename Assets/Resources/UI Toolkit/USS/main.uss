@@ -1,8 +1,6 @@
 :root {
     font-size: 64px;
     -unity-font-definition: resource("Fonts/Inter-Regular");
-    -unity-text-generator: advanced;
-    -unity-text-auto-size: best-fit 32px 64px;
 }
 
 #logo {

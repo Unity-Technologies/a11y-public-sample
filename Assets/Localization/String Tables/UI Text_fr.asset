@@ -1,0 +1,184 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: UI Text_fr
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 32ff085df32494067bdccc549d381ccb, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 7404714372039705248
+  m_TableData:
+  - m_Id: 3782602645504
+    m_Localized: Quel est votre nom ?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4029257080832
+    m_Localized: Entrez votre nom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4239110692864
+    m_Localized: Suivant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4569999335424
+    m_Localized: Jouer Facile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4678120103936
+    m_Localized: Jouer Difficile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4706649759744
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5209827827712
+    m_Localized: Correct
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5240945369088
+    m_Localized: Mot Suivant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5511960322048
+    m_Localized: Jeu en pause
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5519497486336
+    m_Localized: Reprendre
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5523050061824
+    m_Localized: "Le jeu est termin\xE9!\n\nTu as trouv\xE9 {completedWords:plural:{}
+      mot|{} mots} sur {totalWords}."
+    m_Metadata:
+      m_Items:
+      - rid: 7404714372039705248
+  - m_Id: 5531639996416
+    m_Localized: Menu Principal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5684086169600
+    m_Localized: Rejouer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7603764584448
+    m_Localized: Retour
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8068858372096
+    m_Localized: Rechercher des options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8163066634240
+    m_Localized: Gameplay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8166006841344
+    m_Localized: "Niveau de difficult\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8166782787584
+    m_Localized: Facile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8167411933184
+    m_Localized: Difficile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8168074633216
+    m_Localized: Nombre de mots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8168741527552
+    m_Localized: Afficher des indices
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8169362284544
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8170050150400
+    m_Localized: Volume des effets sonores
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8170817708032
+    m_Localized: Volume de la musique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8171627208704
+    m_Localized: Apparence
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8174714216448
+    m_Localized: "Th\xE8me de couleur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9481613205504
+    m_Localized: Original
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10233236676608
+    m_Localized: "Contraste \xC9lev\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10235811979264
+    m_Localized: Taille d'affichage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10416632619008
+    m_Localized: Profil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10416661979136
+    m_Localized: Nom d'utilisateur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10417215627264
+    m_Localized: "Param\xE8tres Syst\xE8me (lecture seule)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10417970601984
+    m_Localized: "\xC9chelle de police"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10418926903296
+    m_Localized: Texte en gras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10419623157760
+    m_Localized: Sous-titres
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10980837810176
+    m_Localized: "Activ\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11013301723136
+    m_Localized: "D\xE9sactiv\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2256257154015232
+    m_Localized: Langue
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 7404714372039705248
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 5523050061824

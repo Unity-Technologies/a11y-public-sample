@@ -1,0 +1,187 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: UI Text_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 32ff085df32494067bdccc549d381ccb, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 7404714372039705247
+  m_TableData:
+  - m_Id: 3782602645504
+    m_Localized: What is your name?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4029257080832
+    m_Localized: Enter your name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4239110692864
+    m_Localized: Next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4569999335424
+    m_Localized: Play Easy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4678120103936
+    m_Localized: Play Hard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4706649759744
+    m_Localized: Options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5209827827712
+    m_Localized: Correct
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5240945369088
+    m_Localized: Next Word
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5511960322048
+    m_Localized: Game paused
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5519497486336
+    m_Localized: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5523050061824
+    m_Localized: 'The game is over!
+
+
+      You found {completedWords:plural:{} word|{}
+      words} out of {totalWords}.'
+    m_Metadata:
+      m_Items:
+      - rid: 7404714372039705247
+  - m_Id: 5531639996416
+    m_Localized: Main Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5684086169600
+    m_Localized: Play Again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7603764584448
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8068858372096
+    m_Localized: Search options
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8163066634240
+    m_Localized: Gameplay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8166006841344
+    m_Localized: Difficulty level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8166782787584
+    m_Localized: Easy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8167411933184
+    m_Localized: Hard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8168074633216
+    m_Localized: Number of words
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8168741527552
+    m_Localized: Show clues
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8169362284544
+    m_Localized: Audio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8170050150400
+    m_Localized: SFX volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8170817708032
+    m_Localized: Music volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8171627208704
+    m_Localized: Appearance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8174714216448
+    m_Localized: Color theme
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9481613205504
+    m_Localized: Original
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10233236676608
+    m_Localized: High Contrast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10235811979264
+    m_Localized: Display size
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10416632619008
+    m_Localized: Profile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10416661979136
+    m_Localized: Username
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10417215627264
+    m_Localized: System Settings (read-only)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10417970601984
+    m_Localized: Font scale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10980837810176
+    m_Localized: On
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11013301723136
+    m_Localized: Off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10419623157760
+    m_Localized: Closed captions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10418926903296
+    m_Localized: Bold text
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2256257154015232
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 7404714372039705247
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 5523050061824

@@ -1,0 +1,180 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: UI Text Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: UI Text
+  m_TableCollectionNameGuidString: 32ff085df32494067bdccc549d381ccb
+  m_Entries:
+  - m_Id: 3782602645504
+    m_Key: SETTINGS_USERNAME_QUESTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4029257080832
+    m_Key: SETTINGS_USERNAME_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4239110692864
+    m_Key: BUTTON_NEXT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4569999335424
+    m_Key: BUTTON_PLAY_EASY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4678120103936
+    m_Key: BUTTON_PLAY_HARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4706649759744
+    m_Key: BUTTON_SETTINGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5209827827712
+    m_Key: GAME_CORRECT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5240945369088
+    m_Key: BUTTON_NEXT_WORD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5511960322048
+    m_Key: GAME_PAUSED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5531639996416
+    m_Key: BUTTON_MAIN_MENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5519497486336
+    m_Key: BUTTON_RESUME_GAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5523050061824
+    m_Key: GAME_OVER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5684086169600
+    m_Key: BUTTON_PLAY_AGAIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7603764584448
+    m_Key: BUTTON_BACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8068858372096
+    m_Key: SETTINGS_SEARCH_PLACEHOLDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8163066634240
+    m_Key: SETTINGS_GAMEPLAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8166006841344
+    m_Key: SETTINGS_DIFFICULTY_LEVEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8166782787584
+    m_Key: SETTINGS_DIFFICULTY_EASY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8167411933184
+    m_Key: SETTINGS_DIFFICULTY_HARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8168074633216
+    m_Key: SETTINGS_WORDS_NUMBER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8168741527552
+    m_Key: SETTINGS_SHOW_CLUES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8169362284544
+    m_Key: SETTINGS_AUDIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8170050150400
+    m_Key: SETTINGS_SFX_VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8170817708032
+    m_Key: SETTINGS_MUSIC_VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8171627208704
+    m_Key: SETTINGS_APPEARANCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8174714216448
+    m_Key: SETTINGS_COLOR_THEME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9481613205504
+    m_Key: SETTINGS_COLOR_THEME_ORIGINAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10233236676608
+    m_Key: SETTINGS_COLOR_THEME_HIGH_CONTRAST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10235811979264
+    m_Key: SETTINGS_DISPLAY_SIZE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2256257154015232
+    m_Key: SETTINGS_LANGUAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10416632619008
+    m_Key: SETTINGS_PROFILE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10416661979136
+    m_Key: SETTINGS_USERNAME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10417215627264
+    m_Key: SETTINGS_SYSTEM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10417970601984
+    m_Key: SETTINGS_FONT_SCALE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10418926903296
+    m_Key: SETTINGS_BOLD_TEXT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10419623157760
+    m_Key: SETTINGS_CLOSED_CAPTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10980837810176
+    m_Key: SETTINGS_ON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11013301723136
+    m_Key: SETTINGS_OFF
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 7404714217125708198
+  references:
+    version: 2
+    RefIds:
+    - rid: 7404714217125708198
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1771860983617

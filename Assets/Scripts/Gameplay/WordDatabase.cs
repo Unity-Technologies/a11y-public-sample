@@ -16,7 +16,7 @@ namespace Unity.Samples.LetterSpell
         [SerializeField] public WordData[] easy;
         [SerializeField] public WordData[] hard;
     }
-    
+
     [CreateAssetMenu(menuName = "LetterSpell/WordDatabase")]
     public class WordDatabase : ScriptableObject
     {

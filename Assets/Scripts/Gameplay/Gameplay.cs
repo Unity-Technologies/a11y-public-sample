@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Accessibility;
 using UnityEngine.Events;
+using UnityEngine.Localization;
 using UnityEngine.Pool;
 
 namespace Unity.Samples.LetterSpell
@@ -33,10 +34,12 @@ namespace Unity.Samples.LetterSpell
 
         public static Gameplay instance;
 
+        WordDatabase m_WordDatabase;
+
         /// <summary>
         /// The database of words.
         /// </summary>
-        public WordDatabase wordDatabase;
+        public LocalizedAsset<WordDatabase> localizedWordDatabase;
 
         List<WordData> m_Words = new();
 
@@ -125,6 +128,43 @@ namespace Unity.Samples.LetterSpell
 
         System.Random m_Randomizer = new();
 
+        void Awake()
+        {
+            if (instance != null && instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            instance = this;
+        }
+
+        void OnDestroy()
+        {
+            if (instance == this)
+            {
+                instance = null;
+            }
+        }
+
+        void OnEnable()
+        {
+            localizedWordDatabase.AssetChanged += UpdateWordDatabase;
+        }
+
+        void OnDisable()
+        {
+            localizedWordDatabase.AssetChanged -= UpdateWordDatabase;
+        }
+
+        void UpdateWordDatabase(WordDatabase database)
+        {
+            m_WordDatabase = database;
+
+            StopGame();
+            StartGame();
+        }
+
         /// <summary>
         /// Starts a new game.
         /// </summary>
@@ -191,8 +231,8 @@ namespace Unity.Samples.LetterSpell
 
             using var _ = HashSetPool<int>.Get(out var indexesAlreadyAdded);
             var wordsSource = difficultyLevel == DifficultyLevel.Easy
-                ? wordDatabase.words.easy
-                : wordDatabase.words.hard;
+                ? m_WordDatabase.words.easy
+                : m_WordDatabase.words.hard;
 
             var wordCount = (PlayerPrefs.GetInt(PlayerSettings.wordsPreference, 0) + 1) * 3;
 
@@ -310,30 +350,6 @@ namespace Unity.Samples.LetterSpell
 
                 AudioManager.PlayMoveTile();
             }
-        }
-
-        void Awake()
-        {
-            if (instance != null && instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            instance = this;
-        }
-
-        void OnDestroy()
-        {
-            if (instance == this)
-            {
-                instance = null;
-            }
-        }
-
-        void Start()
-        {
-            StartGame();
         }
 
         public void CheckWordComplete()

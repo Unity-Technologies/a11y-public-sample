@@ -3,6 +3,7 @@ using Unity.Samples.ScreenReader;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;
+using UnityEngine.Localization;
 using UnityEngine.UI;
 
 namespace Unity.Samples.LetterSpell
@@ -17,9 +18,19 @@ namespace Unity.Samples.LetterSpell
         public const string musicPreference = "MusicVolume";
         public const string colorThemePreference = "ColorTheme";
         public const string displaySizePreference = "DisplaySize";
+        public const string languagePreference = "Language";
 
-        public const string settingOn = "On";
-        public const string settingOff = "Off";
+        static readonly LocalizedString k_LocalizedColorThemeOriginal = new("UI Text", "SETTINGS_COLOR_THEME_ORIGINAL");
+        public static string colorThemeOriginal => k_LocalizedColorThemeOriginal.GetLocalizedString();
+
+        static readonly LocalizedString k_LocalizedColorThemeHighContrast = new("UI Text", "SETTINGS_COLOR_THEME_HIGH_CONTRAST");
+        public static string colorThemeHighContrast => k_LocalizedColorThemeHighContrast.GetLocalizedString();
+
+        static readonly LocalizedString k_LocalizedSettingOn = new("UI Text", "SETTINGS_ON");
+        public static string settingOn => k_LocalizedSettingOn.GetLocalizedString();
+
+        static readonly LocalizedString k_LocalizedSettingOff = new("UI Text", "SETTINGS_OFF");
+        public static string settingOff => k_LocalizedSettingOff.GetLocalizedString();
 
         public Button backButton;
 

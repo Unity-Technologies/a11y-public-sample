@@ -3,12 +3,21 @@
     <Style src="project://database/Assets/Resources/UI%20Toolkit/USS/intro-1.uss?fileID=7433441132597879392&amp;guid=8bee7424943bc4f379accdb090856bec&amp;type=3#intro-1"/>
     <ui:Image source="project://database/Assets/Resources/Images/LetterSpell_smallLogo-DARK.png?fileID=8590585893174155451&amp;guid=067a8caf405d84e4f9574086004547c2&amp;type=3#LetterSpell_smallLogo-DARK_0" name="logo"/>
     <ui:VisualElement name="intro-1-container">
-        <ui:Label text="What is your name?" name="intro-1-label"/>
+        <ui:Label text="What is your name?" name="intro-1-label">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(3782602645504)"/>
+            </Bindings>
+        </ui:Label>
         <ui:TextField label="" placeholder-text="Enter your name" name="intro-1-text-field" class="letter-spell-text-field">
             <Bindings>
                 <ui:DataBinding property="value" data-source-path="username" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
+                <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(4029257080832)"/>
             </Bindings>
         </ui:TextField>
-        <ui:Button text="Next" name="next-button" class="letter-spell-button letter-spell-button-primary"/>
+        <ui:Button text="Next" name="next-button" class="letter-spell-button letter-spell-button-primary">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(4239110692864)"/>
+            </Bindings>
+        </ui:Button>
     </ui:VisualElement>
 </ui:UXML>

@@ -1,0 +1,149 @@
+{
+    "words": {
+        "easy": [
+            {
+                "clue": "Très poilu et mignon !",
+                "word": "chat"
+            },
+            {
+                "clue": "L’argent dans ma tirelire.",
+                "word": "pièce"
+            },
+            {
+                "clue": "Pour frapper la balle de baseball.",
+                "word": "batte"
+            },
+            {
+                "clue": "C’est mignon et ça aboie.",
+                "word": "chien"
+            },
+            {
+                "clue": "Pour marcher dessus !",
+                "word": "tapis"
+            },
+            {
+                "clue": "Jouer avec des amis !",
+                "word": "jeu"
+            },
+            {
+                "clue": "Pour écrire des choses.",
+                "word": "stylo"
+            },
+            {
+                "clue": "Tire sur la corde !",
+                "word": "tirer"
+            },
+            {
+                "clue": "La terre mouillée après la pluie.",
+                "word": "boue"
+            },
+            {
+                "clue": "L’eau qui tombe du ciel.",
+                "word": "pluie"
+            },
+            {
+                "clue": "Le roi de la jungle.",
+                "word": "lion"
+            },
+            {
+                "clue": "Un plat servi en triangles.",
+                "word": "pizza"
+            },
+            {
+                "clue": "Ce n’est pas le jour.",
+                "word": "nuit"
+            }
+        ],
+        "hard": [
+            {
+                "clue": "À porter quand il fait soleil !",
+                "word": "chapeau"
+            },
+            {
+                "clue": "Tu peux presque voler !",
+                "word": "sauter"
+            },
+            {
+                "clue": "Comme sauter.",
+                "word": "bondir"
+
+            },
+            {
+              "clue": "Très lumineux dehors.",
+              "word": "soleil"
+            },
+            {
+              "clue": "Pour donner des coups de pied !",
+              "word": "ballon"
+            },
+            {
+                "clue": "Groin, groin.",
+                "word": "cochon"
+            },
+            {
+                "clue": "Quand tu entends la sonnette.",
+                "word": "sonner"
+            },
+            {
+                "clue": "Petit-déjeuner, déjeuner et dîner.",
+                "word": "nourriture"
+            },
+            {
+                "clue": "Le soda va ici.",
+                "word": "canette"
+            },
+            {
+                "clue": "Le contraire de se lever.",
+                "word": "asseoir"
+            },
+            {
+                "clue": "Ce que tu fais au téléphone.",
+                "word": "parler"
+            },
+            {
+                "clue": "Ce que tu fais sur les trottoirs.",
+                "word": "marcher"
+            },
+            {
+                "clue": "Un chat ou un chien.",
+                "word": "animal"
+            },
+            {
+                "clue": "Le goûter préféré du panda.",
+                "word": "bambou"
+            },
+            {
+                "clue": "Capitale de l’Allemagne.",
+                "word": "berlin"
+            },
+            {
+                "clue": "Se lit dans les deux sens.",
+                "word": "anagramme"
+            },
+            {
+                "clue": "Ce n’est pas une carte de débit.",
+                "word": "crédit"
+            },
+            {
+                "clue": "Une roche venant de l’espace.",
+                "word": "météore"
+            },
+            {
+                "clue": "La nourriture après le repas.",
+                "word": "dessert"
+            },
+            {
+                "clue": "Ce que tu fais au baseball.",
+                "word": "attraper"
+            },
+            {
+                "clue": "Ne pas faire la tête.",
+                "word": "sourire"
+            },
+            {
+                "clue": "Marcher sur quelque chose.",
+                "word": "écraser"
+            }
+        ]
+    }
+}

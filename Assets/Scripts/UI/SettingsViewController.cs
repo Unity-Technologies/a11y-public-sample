@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
 namespace Unity.Samples.LetterSpell
@@ -13,6 +16,7 @@ namespace Unity.Samples.LetterSpell
         public UIDocument uitkDocument;
 
         Button m_UitkBackButton;
+        DropdownField m_UitkColorThemeDropdown;
 
         bool m_UseUIToolkit;
 
@@ -23,11 +27,15 @@ namespace Unity.Samples.LetterSpell
             m_UseUIToolkit = PlayerPrefs.GetInt(UISystemToggler.useUIToolkitPreference) == 1;
 
             SetupUI();
+
+            LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
         }
 
         void OnDisable()
         {
             CleanupUI();
+
+            LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
 
             Gameplay.instance?.ResumeGame();
         }
@@ -48,6 +56,9 @@ namespace Unity.Samples.LetterSpell
 
                 m_UitkBackButton = root.Q<Button>("back-button");
                 m_UitkBackButton.clicked += SceneTransitionManager.UnloadSettingsScene;
+
+                m_UitkColorThemeDropdown = root.Q<DropdownField>("color-theme-dropdown");
+                UpdateColorThemeChoices();
             }
             else
             {
@@ -72,6 +83,24 @@ namespace Unity.Samples.LetterSpell
             {
                 uguiBackButton?.onClick.RemoveListener(SceneTransitionManager.UnloadSettingsScene);
             }
+        }
+
+        void OnLocaleChanged(Locale locale)
+        {
+            UpdateColorThemeChoices();
+        }
+
+        void UpdateColorThemeChoices()
+        {
+            var index = m_UitkColorThemeDropdown.index;
+
+            m_UitkColorThemeDropdown.choices = new List<string>
+            {
+                PlayerSettings.colorThemeOriginal,
+                PlayerSettings.colorThemeHighContrast
+            };
+
+            m_UitkColorThemeDropdown.index = index;
         }
     }
 }

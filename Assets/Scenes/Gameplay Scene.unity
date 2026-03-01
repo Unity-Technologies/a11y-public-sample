@@ -1393,7 +1393,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5012405393f7e415e88d313458d31a4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wordDatabase: {fileID: 5022602860645237092, guid: 622030c59d5b7447c9676d0e8669dfb8, type: 3}
+  localizedWordDatabase:
+    m_TableReference:
+      m_TableCollectionName: GUID:43743e52562cd487f8e4b4d5cf18be59
+    m_TableEntryReference:
+      m_KeyId: 39488315392
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
   wordIndexChanged:
     m_PersistentCalls:
       m_Calls:

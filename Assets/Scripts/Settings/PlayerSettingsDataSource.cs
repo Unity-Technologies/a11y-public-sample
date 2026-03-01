@@ -2,6 +2,8 @@ using System;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.Accessibility;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
 
 namespace Unity.Samples.LetterSpell
@@ -21,6 +23,8 @@ namespace Unity.Samples.LetterSpell
             AccessibilitySettings.fontScaleChanged += OnFontScaleChanged;
             AccessibilitySettings.boldTextStatusChanged += OnBoldTextStatusChanged;
             AccessibilitySettings.closedCaptioningStatusChanged += OnClosedCaptioningStatusChanged;
+
+            LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
         }
 
         public static PlayerSettingsDataSource Acquire()
@@ -51,6 +55,8 @@ namespace Unity.Samples.LetterSpell
             AccessibilitySettings.fontScaleChanged -= OnFontScaleChanged;
             AccessibilitySettings.boldTextStatusChanged -= OnBoldTextStatusChanged;
             AccessibilitySettings.closedCaptioningStatusChanged -= OnClosedCaptioningStatusChanged;
+
+            LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
         }
 
         void OnFontScaleChanged(float _)
@@ -65,6 +71,12 @@ namespace Unity.Samples.LetterSpell
 
         void OnClosedCaptioningStatusChanged(bool _)
         {
+            NotifyPropertyChanged(nameof(closedCaptions));
+        }
+
+        void OnLocaleChanged(Locale locale)
+        {
+            NotifyPropertyChanged(nameof(boldText));
             NotifyPropertyChanged(nameof(closedCaptions));
         }
 
@@ -190,6 +202,26 @@ namespace Unity.Samples.LetterSpell
                 {
                     PlayerPrefs.SetFloat(PlayerSettings.displaySizePreference, value);
                     NotifyPropertyChanged(nameof(displaySize));
+                }
+            }
+        }
+
+        [CreateProperty]
+        public int language
+        {
+            get => PlayerPrefs.GetInt(PlayerSettings.languagePreference, 0);
+            set
+            {
+                if (language != value)
+                {
+                    PlayerPrefs.SetInt(PlayerSettings.languagePreference, value);
+                    NotifyPropertyChanged(nameof(language));
+
+                    var locales = LocalizationSettings.AvailableLocales.Locales;
+                    if (value >= 0 && value < locales.Count)
+                    {
+                        LocalizationSettings.SelectedLocale = locales[value];
+                    }
                 }
             }
         }

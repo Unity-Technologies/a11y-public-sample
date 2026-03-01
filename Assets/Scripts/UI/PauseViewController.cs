@@ -4,6 +4,8 @@ using Unity.Samples.ScreenReader;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Accessibility;
+using UnityEngine.Localization;
+using UnityEngine.Localization.SmartFormat.PersistentVariables;
 using UnityEngine.UIElements;
 
 namespace Unity.Samples.LetterSpell
@@ -11,6 +13,8 @@ namespace Unity.Samples.LetterSpell
     public class PauseViewController : MonoBehaviour
     {
         const float k_FadeDuration = 0.2f;
+
+        static readonly LocalizedString k_LocalizedGameOver = new("UI Text", "GAME_OVER");
 
         static PauseViewController s_Instance;
 
@@ -218,15 +222,35 @@ namespace Unity.Samples.LetterSpell
 
             Gameplay.instance.StopGame();
 
-            var text = $"The game is over!\n\nYou found {completedWords} out of {totalWords} words.";
-
             if (s_Instance.m_UseUIToolkit)
             {
-                s_Instance.m_UitkResultsScreen.Q<Label>("results-label").text = text;
+                var label = s_Instance.m_UitkResultsScreen.Q<Label>("results-label");
+
+                if (label.GetBinding("text") is LocalizedString localizedString)
+                {
+                    if (localizedString[nameof(completedWords)] is IntVariable completedWordsVariable)
+                    {
+                        completedWordsVariable.Value = completedWords;
+                    }
+
+                    if (localizedString[nameof(totalWords)] is IntVariable totalWordsVariable)
+                    {
+                        totalWordsVariable.Value = totalWords;
+                    }
+                }
             }
             else
             {
-                s_Instance.uguiResultsLabel.text = text;
+                k_LocalizedGameOver.Arguments = new object[]
+                {
+                    new
+                    {
+                        completedWords = completedWords,
+                        totalWords = totalWords
+                    }
+                };
+
+                s_Instance.uguiResultsLabel.text = k_LocalizedGameOver.GetLocalizedString();
 
                 var accessibleText = s_Instance.uguiResultsLabel.GetComponent<AccessibleText>();
                 accessibleText.label = s_Instance.uguiResultsLabel.text;

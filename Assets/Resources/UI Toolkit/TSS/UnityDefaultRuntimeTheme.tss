@@ -1,1 +1,38 @@
 @import url("unity-theme://default");
+
+.unity-base-dropdown {
+    color: rgb(27, 27, 27);
+    font-size: 64px;
+    -unity-font-definition: resource("Fonts/Inter-Regular");
+}
+
+.unity-base-dropdown__container-outer {
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.unity-base-dropdown__container-inner {
+    border-top-width: 10px;
+    border-right-width: 10px;
+    border-bottom-width: 10px;
+    border-left-width: 10px;
+    border-left-color: rgb(27, 27, 27);
+    border-right-color: rgb(27, 27, 27);
+    border-top-color: rgb(27, 27, 27);
+    border-bottom-color: rgb(27, 27, 27);
+    background-color: rgb(255, 255, 255);
+}
+
+.unity-base-dropdown__item:hover:enabled {
+    color: rgb(255, 255, 255);
+    background-color: rgb(161, 116, 243);
+}
+
+.unity-base-dropdown__checkmark {
+    -unity-background-image-tint-color: rgb(161, 116, 243);
+    width: auto;
+    height: auto;
+    aspect-ratio: 1;
+}

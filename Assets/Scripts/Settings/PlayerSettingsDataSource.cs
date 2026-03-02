@@ -76,6 +76,7 @@ namespace Unity.Samples.LetterSpell
 
         void OnLocaleChanged(Locale locale)
         {
+            NotifyPropertyChanged(nameof(languageDirection));
             NotifyPropertyChanged(nameof(boldText));
             NotifyPropertyChanged(nameof(closedCaptions));
         }
@@ -227,6 +228,10 @@ namespace Unity.Samples.LetterSpell
         }
 
         [CreateProperty]
+        public LanguageDirection languageDirection => LocalizationSettings.SelectedLocale.Identifier.Code == "ar" ?
+                LanguageDirection.RTL : LanguageDirection.LTR;
+
+        [CreateProperty]
         public string fontScale => AccessibilitySettings.fontScale.ToString("0.00");
 
         [CreateProperty]
@@ -248,11 +253,86 @@ namespace Unity.Samples.LetterSpell
     /// </summary>
     public static class BoolToDisplayStyleConverter
     {
+#if UNITY_EDITOR
+        [UnityEditor.InitializeOnLoadMethod]
+#else
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+#endif
         static void Register()
         {
             ConverterGroups.RegisterGlobalConverter((ref bool value) =>
                 new StyleEnum<DisplayStyle>(value ? DisplayStyle.Flex : DisplayStyle.None));
+        }
+    }
+
+    /// <summary>
+    /// Registers converters from LanguageDirection to various style properties for UI Toolkit bindings.
+    /// </summary>
+    public static class LanguageDirectionConverters
+    {
+#if UNITY_EDITOR
+        [UnityEditor.InitializeOnLoadMethod]
+#else
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+#endif
+        static void Register()
+        {
+            var leftGroup = new ConverterGroup("LanguageDirectionToLeft");
+
+            leftGroup.AddConverter((ref LanguageDirection value) => value == LanguageDirection.LTR ?
+                new StyleLength(new Length(60f)) : new StyleLength(StyleKeyword.Auto));
+
+            var rightGroup = new ConverterGroup("LanguageDirectionToRight");
+
+            rightGroup.AddConverter((ref LanguageDirection value) => value == LanguageDirection.LTR ?
+                new StyleLength(StyleKeyword.Auto) : new StyleLength(new Length(60f)));
+
+            var ltrBorderGroup = new ConverterGroup("LanguageDirectionToBorderLTR");
+
+            ltrBorderGroup.AddConverter((ref LanguageDirection value) => value == LanguageDirection.LTR ?
+                new StyleFloat(10f) : new StyleFloat(0f));
+
+            var rtlBorderGroup = new ConverterGroup("LanguageDirectionToBorderRTL");
+
+            rtlBorderGroup.AddConverter((ref LanguageDirection value) => value == LanguageDirection.LTR ?
+                new StyleFloat(0f) : new StyleFloat(10f));
+
+            var flexDirectionReverseGroup = new ConverterGroup("LanguageDirectionToFlexDirectionReverse");
+
+            flexDirectionReverseGroup.AddConverter((ref LanguageDirection value) => value == LanguageDirection.LTR ?
+                new StyleEnum<FlexDirection>(FlexDirection.RowReverse) :
+                new StyleEnum<FlexDirection>(FlexDirection.Row));
+
+            var alignSelfStartGroup = new ConverterGroup("LanguageDirectionToAlignSelfStart");
+
+            alignSelfStartGroup.AddConverter((ref LanguageDirection value) => value == LanguageDirection.LTR ?
+                new StyleEnum<Align>(Align.FlexStart) : new StyleEnum<Align>(Align.FlexEnd));
+
+            var alignSelfEndGroup = new ConverterGroup("LanguageDirectionToAlignSelfEnd");
+
+            alignSelfEndGroup.AddConverter((ref LanguageDirection value) => value == LanguageDirection.LTR ?
+                new StyleEnum<Align>(Align.FlexEnd) : new StyleEnum<Align>(Align.FlexStart));
+
+            var invertedGroup = new ConverterGroup("LanguageDirectionToInverted");
+
+            invertedGroup.AddConverter((ref LanguageDirection value) => value == LanguageDirection.RTL);
+
+            ConverterGroups.RegisterConverterGroup(leftGroup);
+            ConverterGroups.RegisterConverterGroup(rightGroup);
+            ConverterGroups.RegisterConverterGroup(ltrBorderGroup);
+            ConverterGroups.RegisterConverterGroup(rtlBorderGroup);
+            ConverterGroups.RegisterConverterGroup(flexDirectionReverseGroup);
+            ConverterGroups.RegisterConverterGroup(alignSelfStartGroup);
+            ConverterGroups.RegisterConverterGroup(alignSelfEndGroup);
+            ConverterGroups.RegisterConverterGroup(invertedGroup);
+
+            ConverterGroups.RegisterGlobalConverter((ref LanguageDirection value) => value == LanguageDirection.LTR ?
+                new StyleEnum<FlexDirection>(FlexDirection.Row) :
+                new StyleEnum<FlexDirection>(FlexDirection.RowReverse));
+
+            ConverterGroups.RegisterGlobalConverter((ref LanguageDirection value) => value == LanguageDirection.LTR ?
+                new StyleEnum<TextAnchor>(TextAnchor.MiddleLeft) :
+                new StyleEnum<TextAnchor>(TextAnchor.MiddleRight));
         }
     }
 }

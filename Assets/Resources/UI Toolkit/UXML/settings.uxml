@@ -4,34 +4,42 @@
     <ui:Button text="Back" name="back-button" class="letter-spell-button letter-spell-button-secondary">
         <Bindings>
             <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(7603764584448)"/>
+            <ui:DataBinding property="style.alignSelf" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToAlignSelfStart"/>
         </Bindings>
     </ui:Button>
     <ui:ScrollView name="settings-scroll-view" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden">
         <ui:TextField label="" placeholder-text="Search options" name="search-text-field" class="letter-spell-text-field">
             <Bindings>
                 <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(8068858372096)"/>
+                <ui:DataBinding property="style.alignSelf" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToAlignSelfStart"/>
             </Bindings>
         </ui:TextField>
         <ui:Label text="Gameplay" name="" class="settings-heading">
             <Bindings>
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(8163066634240)"/>
+                <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
             </Bindings>
         </ui:Label>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Difficulty level" class="settings-label">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(8166006841344)"/>
+                    <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.paddingLeft" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    <ui:DataBinding property="style.paddingRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
                 </Bindings>
             </ui:Label>
-            <ui:ToggleButtonGroup name="difficulty-toggle-group" label="" value="01" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-grow: 1;">
-                <ui:Button text="Easy" class="settings-tab-button settings-tab-button-left">
+            <ui:ToggleButtonGroup name="difficulty-toggle-group" label="" value="01" class="settings-toggle-button-group">
+                <ui:Button text="Easy" class="settings-tab-button">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(8166782787584)"/>
+                        <ui:DataBinding property="style.borderRightWidth" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToBorderLTR"/>
                     </Bindings>
                 </ui:Button>
-                <ui:Button text="Hard" name="" class="settings-tab-button settings-tab-button-right">
+                <ui:Button text="Hard" name="" class="settings-tab-button">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(8167411933184)"/>
+                        <ui:DataBinding property="style.borderRightWidth" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToBorderRTL"/>
                     </Bindings>
                 </ui:Button>
                 <Bindings>
@@ -39,73 +47,118 @@
                     <ui:DataBinding property="enabledSelf" data-source-path="difficultyEnabled" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
                 </Bindings>
             </ui:ToggleButtonGroup>
+            <Bindings>
+                <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+            </Bindings>
         </ui:VisualElement>
         <ui:VisualElement name="" class="settings-row">
             <ui:Label text="Number of words" class="settings-label">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(8168074633216)"/>
+                    <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.paddingLeft" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    <ui:DataBinding property="style.paddingRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
                 </Bindings>
             </ui:Label>
             <ui:RadioButtonGroup name="words-radio-group" label="" value="0" class="settings-field settings-radio-button-group">
-                <ui:RadioButton label="3" class="settings-radio-button"/>
-                <ui:RadioButton label="6" class="settings-radio-button"/>
+                <ui:RadioButton label="3" class="settings-radio-button">
+                    <Bindings>
+                        <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToFlexDirectionReverse"/>
+                        <ui:DataBinding property="style.marginRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
+                    </Bindings>
+                </ui:RadioButton>
+                <ui:RadioButton label="6" class="settings-radio-button">
+                    <Bindings>
+                        <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToFlexDirectionReverse"/>
+                        <ui:DataBinding property="style.marginRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    </Bindings>
+                </ui:RadioButton>
                 <Bindings>
                     <ui:DataBinding property="value" data-source-path="words" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
                     <ui:DataBinding property="enabledSelf" data-source-path="wordsEnabled" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
                 </Bindings>
             </ui:RadioButtonGroup>
+            <Bindings>
+                <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+            </Bindings>
         </ui:VisualElement>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Show clues" name="" class="settings-label">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(8168741527552)"/>
+                    <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.paddingLeft" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    <ui:DataBinding property="style.paddingRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
                 </Bindings>
             </ui:Label>
             <ui:Toggle name="clues-toggle" label="On" value="true" class="settings-toggle">
                 <Bindings>
                     <ui:DataBinding property="value" data-source-path="showClues" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
                     <UnityEngine.Localization.LocalizedString property="label" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(10980837810176)"/>
+                    <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToFlexDirectionReverse"/>
                 </Bindings>
             </ui:Toggle>
+            <Bindings>
+                <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+            </Bindings>
         </ui:VisualElement>
         <ui:Label text="Audio" name="" class="settings-heading">
             <Bindings>
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(8169362284544)"/>
+                <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
             </Bindings>
         </ui:Label>
         <ui:VisualElement class="settings-row">
             <ui:Label text="SFX volume" class="settings-label">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(8170050150400)"/>
+                    <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.paddingLeft" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    <ui:DataBinding property="style.paddingRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
                 </Bindings>
             </ui:Label>
             <ui:Slider name="sfx-volume-slider" label="" value="0.5" high-value="1" class="settings-field settings-slider unity-slider">
                 <Bindings>
                     <ui:DataBinding property="value" data-source-path="sfxVolume" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
+                    <ui:DataBinding property="inverted" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToInverted"/>
                 </Bindings>
             </ui:Slider>
+            <Bindings>
+                <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+            </Bindings>
         </ui:VisualElement>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Music volume" class="settings-label">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(8170817708032)"/>
+                    <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.paddingLeft" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    <ui:DataBinding property="style.paddingRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
                 </Bindings>
             </ui:Label>
             <ui:Slider name="music-volume-slider" label="" value="0.5" high-value="1" class="settings-field settings-slider">
                 <Bindings>
                     <ui:DataBinding property="value" data-source-path="musicVolume" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
+                    <ui:DataBinding property="inverted" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToInverted"/>
                 </Bindings>
             </ui:Slider>
+            <Bindings>
+                <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+            </Bindings>
         </ui:VisualElement>
         <ui:Label text="Appearance" name="" class="settings-heading">
             <Bindings>
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(8171627208704)"/>
+                <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
             </Bindings>
         </ui:Label>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Color theme" class="settings-label">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(8174714216448)"/>
+                    <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.paddingLeft" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    <ui:DataBinding property="style.paddingRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
                 </Bindings>
             </ui:Label>
             <ui:DropdownField name="color-theme-dropdown" label="" choices="Original,High Contrast" index="0" class="settings-field letter-spell-text-field">
@@ -113,40 +166,60 @@
                     <ui:DataBinding property="index" data-source-path="colorTheme" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
                 </Bindings>
             </ui:DropdownField>
+            <Bindings>
+                <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+            </Bindings>
         </ui:VisualElement>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Display size" class="settings-label">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(10235811979264)"/>
+                    <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.paddingLeft" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    <ui:DataBinding property="style.paddingRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
                 </Bindings>
             </ui:Label>
             <ui:SliderInt name="display-size-slider" label="" value="1" high-value="2" class="settings-field settings-slider">
                 <Bindings>
                     <ui:DataBinding property="value" data-source-path="displaySize" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
+                    <ui:DataBinding property="inverted" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToInverted"/>
                 </Bindings>
             </ui:SliderInt>
+            <Bindings>
+                <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+            </Bindings>
         </ui:VisualElement>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Language" class="settings-label">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(2256257154015232)"/>
+                    <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.paddingLeft" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    <ui:DataBinding property="style.paddingRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
                 </Bindings>
             </ui:Label>
-            <ui:DropdownField name="language-dropdown" label="" choices="English,Français" index="0" class="settings-field letter-spell-text-field">
+            <ui:DropdownField name="language-dropdown" label="" choices="English,Français,العربية" index="0" class="settings-field letter-spell-text-field">
                 <Bindings>
                     <ui:DataBinding property="index" data-source-path="language" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="TwoWay"/>
                 </Bindings>
             </ui:DropdownField>
+            <Bindings>
+                <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+            </Bindings>
         </ui:VisualElement>
         <ui:Label text="Profile" name="" class="settings-heading">
             <Bindings>
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(10416632619008)"/>
+                <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
             </Bindings>
         </ui:Label>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Username" class="settings-label">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(10416661979136)"/>
+                    <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.paddingLeft" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    <ui:DataBinding property="style.paddingRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
                 </Bindings>
             </ui:Label>
             <ui:TextField name="username-text-field" label="" placeholder-text="Enter your name" class="letter-spell-text-field settings-field">
@@ -155,47 +228,78 @@
                     <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(4029257080832)"/>
                 </Bindings>
             </ui:TextField>
+            <Bindings>
+                <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+            </Bindings>
         </ui:VisualElement>
         <ui:Label text="System Settings (read-only)" name="" class="settings-heading">
             <Bindings>
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(10417215627264)"/>
+                <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
             </Bindings>
         </ui:Label>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Font scale" class="settings-label">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(10417970601984)"/>
+                    <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.paddingLeft" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    <ui:DataBinding property="style.paddingRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
                 </Bindings>
             </ui:Label>
             <ui:Label text="1.00" name="font-scale-value" class="settings-label">
                 <Bindings>
                     <ui:DataBinding property="text" data-source-path="fontScale" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.paddingLeft" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    <ui:DataBinding property="style.paddingRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
                 </Bindings>
             </ui:Label>
+            <Bindings>
+                <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+            </Bindings>
         </ui:VisualElement>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Bold text" class="settings-label">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(10418926903296)"/>
+                    <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.paddingLeft" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    <ui:DataBinding property="style.paddingRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
                 </Bindings>
             </ui:Label>
             <ui:Label text="Off" name="bold-text-value" class="settings-label">
                 <Bindings>
                     <ui:DataBinding property="text" data-source-path="boldText" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.paddingLeft" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    <ui:DataBinding property="style.paddingRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
                 </Bindings>
             </ui:Label>
+            <Bindings>
+                <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+            </Bindings>
         </ui:VisualElement>
         <ui:VisualElement class="settings-row">
             <ui:Label text="Closed captions" class="settings-label">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(10419623157760)"/>
+                    <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.paddingLeft" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    <ui:DataBinding property="style.paddingRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
                 </Bindings>
             </ui:Label>
             <ui:Label text="Off" name="closed-captions-value" class="settings-label">
                 <Bindings>
                     <ui:DataBinding property="text" data-source-path="closedCaptions" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.unityTextAlign" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="style.paddingLeft" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToRight"/>
+                    <ui:DataBinding property="style.paddingRight" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="LanguageDirectionToLeft"/>
                 </Bindings>
             </ui:Label>
+            <Bindings>
+                <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+            </Bindings>
         </ui:VisualElement>
         <ui:VisualElement class="settings-row"/>
     </ui:ScrollView>

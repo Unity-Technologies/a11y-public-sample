@@ -34,6 +34,8 @@
     padding-bottom: 120px;
     padding-left: 110px;
     padding-right: 110px;
+    margin-right: 85px;
+    margin-left: 85px;
 }
 
 #play-easy-button {
@@ -42,7 +44,6 @@
     border-right-color: rgb(255, 251, 232);
     border-top-color: rgb(255, 251, 232);
     border-bottom-color: rgb(255, 251, 232);
-    margin-right: 170px;
 }
 
 #play-hard-button {

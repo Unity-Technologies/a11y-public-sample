@@ -4,6 +4,7 @@
     color: rgb(27, 27, 27);
     font-size: 64px;
     -unity-font-definition: resource("Fonts/Inter-Regular");
+    -unity-text-generator: advanced;
 }
 
 .unity-base-dropdown__container-outer {

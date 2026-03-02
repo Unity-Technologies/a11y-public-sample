@@ -39,5 +39,6 @@ MonoBehaviour:
           m_TableCodes:
           - en
           - fr
+          - ar
         m_TypeString: Unity.Samples.LetterSpell.WordDatabase, Assembly-CSharp, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null

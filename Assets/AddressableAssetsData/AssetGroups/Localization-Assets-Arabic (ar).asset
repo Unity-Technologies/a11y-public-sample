@@ -10,14 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Default Local Group
+  m_Name: Localization-Assets-Arabic (ar)
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
-  m_GroupName: Default Local Group
-  m_GUID: ebfdc49a57e3d4c5a996db9730d4471c
-  m_SerializeEntries: []
-  m_ReadOnly: 0
+  m_GroupName: Localization-Assets-Arabic (ar)
+  m_GUID: 28a8f15df83b64bc9ab21177634f6cd5
+  m_SerializeEntries:
+  - m_GUID: 8ccafcddd204543aca15f58aa4bc87ae
+    m_Address: words_ar
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ar
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: f7ff996652b524cd4aa27f5cad7556db, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 6cef10b6df5fb41c09d87cacfe163cb3, type: 2}
-    - {fileID: 11400000, guid: efe634af887fe4d0cb3f08057d653502, type: 2}
+    - {fileID: 11400000, guid: afd13d2cc2e6a406e84f70cc977f9259, type: 2}
+    - {fileID: 11400000, guid: bd0edefab9d5f4186b4514031af60491, type: 2}

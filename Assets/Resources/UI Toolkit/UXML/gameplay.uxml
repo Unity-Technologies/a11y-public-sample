@@ -10,28 +10,39 @@
             </ui:Label>
             <ui:VisualElement name="success-image">
                 <ui:Image source="project://database/Assets/Resources/Images/Success-Check.png?fileID=-9040358768007008051&amp;guid=cba63604506fe4fcfa0f3523cfb6c5fd&amp;type=3#Success-Check_0" name="success-icon"/>
+                <ui:VisualElement style="width: 15px;"/>
                 <ui:Label text="Correct" name="success-label">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(5209827827712)"/>
                     </Bindings>
                 </ui:Label>
+                <Bindings>
+                    <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                </Bindings>
             </ui:VisualElement>
             <ui:VisualElement name="letter-card-container"/>
         </ui:VisualElement>
         <ui:VisualElement name="buttons-container">
             <ui:VisualElement name="left-buttons-container">
                 <ui:Button text="I I" name="pause-button" class="letter-spell-button letter-spell-button-secondary"/>
+                <ui:VisualElement style="width: 60px;"/>
                 <ui:Button text="Options" name="options-button" class="letter-spell-button letter-spell-button-secondary">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(4706649759744)"/>
                     </Bindings>
                 </ui:Button>
+                <Bindings>
+                    <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                </Bindings>
             </ui:VisualElement>
             <ui:Button text="Next Word" name="next-button" class="letter-spell-button letter-spell-button-primary">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(5240945369088)"/>
                 </Bindings>
             </ui:Button>
+            <Bindings>
+                <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+            </Bindings>
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="pause-screen" class="pause-screen">
@@ -44,16 +55,20 @@
                 </ui:Label>
             </ui:VisualElement>
             <ui:VisualElement name="" class="pause-screen-buttons-container">
-                <ui:Button text="Main Menu" name="submit-button" class="letter-spell-button letter-spell-button-secondary pause-screen-button-left">
+                <ui:Button text="Main Menu" name="submit-button" class="letter-spell-button letter-spell-button-secondary">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(5531639996416)"/>
                     </Bindings>
                 </ui:Button>
+                <ui:VisualElement style="width: 100px;"/>
                 <ui:Button text="Resume" name="dismiss-button" class="letter-spell-button letter-spell-button-primary">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(5519497486336)"/>
                     </Bindings>
                 </ui:Button>
+                <Bindings>
+                    <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                </Bindings>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
@@ -76,16 +91,20 @@
                 </ui:Label>
             </ui:VisualElement>
             <ui:VisualElement name="" class="pause-screen-buttons-container">
-                <ui:Button text="Main Menu" name="submit-button" class="letter-spell-button letter-spell-button-secondary pause-screen-button-left">
+                <ui:Button text="Main Menu" name="submit-button" class="letter-spell-button letter-spell-button-secondary">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(5531639996416)"/>
                     </Bindings>
                 </ui:Button>
+                <ui:VisualElement style="width: 100px;"/>
                 <ui:Button text="Play Again" name="dismiss-button" class="letter-spell-button letter-spell-button-primary">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:32ff085df32494067bdccc549d381ccb" entry="Id(5684086169600)"/>
                     </Bindings>
                 </ui:Button>
+                <Bindings>
+                    <ui:DataBinding property="style.flexDirection" data-source-path="languageDirection" data-source-type="Unity.Samples.LetterSpell.PlayerSettingsDataSource, Assembly-CSharp" binding-mode="ToTarget"/>
+                </Bindings>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

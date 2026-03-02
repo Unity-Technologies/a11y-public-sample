@@ -44,6 +44,8 @@ namespace Unity.Samples.LetterSpell
 
                 var root = uitkDocument.rootVisualElement;
 
+                root.dataSource = PlayerSettingsDataSource.Acquire();
+
                 m_UitkOptionsButton = root.Q<Button>("options-button");
                 m_UitkOptionsButton.clicked += SceneTransitionManager.LoadSettingsScene;
 
@@ -80,6 +82,8 @@ namespace Unity.Samples.LetterSpell
         {
             if (m_UseUIToolkit)
             {
+                PlayerSettingsDataSource.Release();
+
                 m_UitkOptionsButton.clicked -= SceneTransitionManager.LoadSettingsScene;
                 m_UitkPlayEasyButton.clicked -= SceneTransitionManager.PlayEasy;
                 m_UitkPlayHardButton.clicked -= SceneTransitionManager.PlayHard;

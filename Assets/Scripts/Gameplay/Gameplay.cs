@@ -159,6 +159,11 @@ namespace Unity.Samples.LetterSpell
 
         void UpdateWordDatabase(WordDatabase database)
         {
+            if (m_WordDatabase == database)
+            {
+                return;
+            }
+
             m_WordDatabase = database;
 
             StopGame();
@@ -170,6 +175,11 @@ namespace Unity.Samples.LetterSpell
         /// </summary>
         public void StartGame()
         {
+            if (!GameplayViewController.initialized || m_WordDatabase == null)
+            {
+                return;
+            }
+
             if (state != State.Stopped)
             {
                 return;

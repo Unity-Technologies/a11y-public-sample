@@ -14,6 +14,8 @@ namespace Unity.Samples.LetterSpell
     {
         const string k_SuccessAnnouncement = "Bravo! You found the correct word.";
 
+        internal static bool initialized;
+
         /// <summary>
         /// The template used to create visual instances of letter cards.
         /// </summary>
@@ -68,6 +70,10 @@ namespace Unity.Samples.LetterSpell
 
             AssistiveSupport.nodeFocusChanged += OnNodeFocusChanged;
             AssistiveSupport.screenReaderStatusChanged += OnScreenReaderStatusChanged;
+
+            initialized = true;
+
+            Gameplay.instance.StartGame();
         }
 
         void OnDisable()
@@ -81,6 +87,8 @@ namespace Unity.Samples.LetterSpell
 
             AssistiveSupport.nodeFocusChanged -= OnNodeFocusChanged;
             AssistiveSupport.screenReaderStatusChanged -= OnScreenReaderStatusChanged;
+
+            initialized = false;
         }
 
         void SetupUI()

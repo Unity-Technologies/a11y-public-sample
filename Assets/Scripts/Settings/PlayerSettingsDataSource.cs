@@ -95,7 +95,7 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
-        [CreateProperty]
+        [CreateProperty(ReadOnly = true)]
         public bool difficultyEnabled => Gameplay.instance == null ||
             Gameplay.instance.state == Gameplay.State.Stopped;
 
@@ -118,7 +118,7 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
-        [CreateProperty]
+        [CreateProperty(ReadOnly = true)]
         public bool wordsEnabled => Gameplay.instance == null || Gameplay.instance.state == Gameplay.State.Stopped;
 
         [CreateProperty]
@@ -227,18 +227,18 @@ namespace Unity.Samples.LetterSpell
             }
         }
 
-        [CreateProperty]
-        public LanguageDirection languageDirection => LocalizationSettings.SelectedLocale.Identifier.Code == "ar" ?
-                LanguageDirection.RTL : LanguageDirection.LTR;
+        [CreateProperty(ReadOnly = true)]
+        public LanguageDirection languageDirection => LocalizationSettings.SelectedLocale.Identifier.CultureInfo.TextInfo.IsRightToLeft ?
+            LanguageDirection.RTL : LanguageDirection.LTR;
 
-        [CreateProperty]
+        [CreateProperty(ReadOnly = true)]
         public string fontScale => AccessibilitySettings.fontScale.ToString("0.00");
 
-        [CreateProperty]
+        [CreateProperty(ReadOnly = true)]
         public string boldText => AccessibilitySettings.isBoldTextEnabled ?
             PlayerSettings.settingOn : PlayerSettings.settingOff;
 
-        [CreateProperty]
+        [CreateProperty(ReadOnly = true)]
         public string closedCaptions => AccessibilitySettings.isClosedCaptioningEnabled ?
             PlayerSettings.settingOn : PlayerSettings.settingOff;
 
